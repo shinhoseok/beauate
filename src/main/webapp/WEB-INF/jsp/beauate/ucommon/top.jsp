@@ -10,9 +10,19 @@
 			<li><a href="#">뷰아떼 스토리</a></li>
 		</ul>
 		<ul class="header-util header-util-right">
+		<c:choose>
+		<c:when test="${sessionScope.loginVO != null}">
+			<strong>${sessionScope.loginVO.usrNm}</strong> 님 환영합니다.
+			<li><a href="javascript:void(0);" onclick="fn_loginPopUpLayer();">비밀번호 변경</a></li>
+		</c:when>
+		<c:otherwise>
 			<li><a href="javascript:void(0);" onclick="fn_loginPopUpLayer();">로그인</a></li>
 			<li><a href="${basePath}/user/a/t/userInsert.do">회원가입</a></li>
 			<li><a href="#" class="line">멘토지원</a></li>
+		</c:otherwise>
+		</c:choose>
+		
+
 		</ul>
 	</div>
 </div>
