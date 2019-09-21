@@ -10,9 +10,6 @@
 <link rel="stylesheet" type="text/css" href="${cssPath}/common.css"/>
 <link rel="stylesheet" type="text/css" href="${cssPath}/contents.css"/>
 <link rel="stylesheet" type="text/css" href="${cssPath}/contents-my1.css"/>
-<link rel="stylesheet" type="text/css" href="${cssPath}/contents-my2.css"/>
-<link rel="stylesheet" type="text/css" href="${cssPath}/contents-my3.css"/>
-<link rel="stylesheet" type="text/css" href="${cssPath}/contents-my4.css"/>
 <script type="text/javascript" src="${scriptPath}/jquery.min.js"></script>
 <script type="text/javascript" src="${scriptPath}/jquery.modal.min.js"></script>
 <script type="text/javascript" src="${scriptPath}/jquery.blockUI.js"></script>

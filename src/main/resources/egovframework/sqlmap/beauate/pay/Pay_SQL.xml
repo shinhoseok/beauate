@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beauate.pay.service.PayDao">
+    <resultMap id="payResultMap" type="com.beauate.pay.service.PayVO">
+        <id column="pay_sq" property="paySq"/>
+        <result column="c_sq" property="cSq"/>
+        <result column="u_sq" property="uSq"/>
+        <result column="cpn_sq" property="cpnSq"/>
+        <result column="pay_dt" property="payDt"/>
+        <result column="pay_st" property="paySt"/>
+        <result column="pay_method_st" property="payMethodSt"/>
+        <result column="pay_cost_no" property="payCostNo"/>
+        <association property="cpn" javaType="com.beauate.cpn.service.AdminCpnVO">
+	        <id column="cpn_sq" property="cpnSq"/>
+	        <result column="cpn_start_dt" property="cpnStartDt"/>
+	        <result column="cpn_nm" property="cpnNm"/>
+	        <result column="cpn_rate" property="cpnRate"/>
+	        <result column="cpn_end_dt" property="cpnEndDt"/>
+	        <result column="cpn_st" property="cpnSt"/>
+        </association>
+        <collection column="u_sq" property="userList" javaType="java.util.ArrayList" ofType="userVO"/>
+    </resultMap>
+    <resultMap id="userVO" type="com.beauate.admin.user.service.UserVO">
+        <id column="u_sq" property="usrId"/>
+        <result column="u_email" property="emailAddr"/>
+        <result column="join_dt" property="joinDt"/>
+        <result column="u_nm" property="usrNm"/>
+        <result column="phone_no" property="mblPno"/>
+        <result column="u_pw" property="usrPw"/>
+        <result column="login_dt" property="loginDt"/>
+        <result column="u_st" property="userSt" />
+    </resultMap>
+    <resultMap id="adminCpnVO" type="com.beauate.cpn.service.AdminCpnVO">
+        <id column="cpn_sq" property="cpnSq"/>
+        <result column="cpn_start_dt" property="cpnStartDt"/>
+        <result column="cpn_nm" property="cpnNm"/>
+        <result column="cpn_rate" property="cpnRate"/>
+        <result column="cpn_end_dt" property="cpnEndDt"/>
+        <result column="cpn_st" property="cpnSt"/>
+    </resultMap>
+	<select id="selectPayByUserSq" parameterType="payVO" resultMap="payResultMap">
+		SELECT
+		c.c_sq,
+		c.u_sq,
+		c.img_sq,
+		c.c_dt,
+		c.c_st,
+		c.c_gb,
+		c.c_category_st,
+		c.c_area_st,
+		c.c_title,
+		c.u_start_dt,
+		c.c_end_dt,
+		c.c_time,
+		c.c_small_no,
+		c.c_big_no,
+		c.c_apply_no,
+		c.c_adr,
+		c.c_cost_no,
+		c.c_web_adr,
+		p.pay_sq,
+		p.cpn_sq,
+		p.pay_dt,
+		p.pay_st,
+		p.pay_method_st,
+		p.pay_cost_no,
+		u.u_sq,
+		u.u_email,
+		u.join_dt,
+		u.u_nm,
+		u.phone_no,
+		u.u_pw,
+		u.login_dt,
+		u.u_st,
+		u.u_out_dt
+	FROM
+		off_class c LEFT JOIN pay p ON c.c_sq = p.c_sq
+		LEFT JOIN users u ON p.u_sq = u.u_sq
+		LEFT JOIN u_cpn cpn ON p.cpn_sq = cpn.cpn_sq
+		WHERE u.u_sq = #{uSq}
+	</select>
+
+
+	
+</mapper>
+
