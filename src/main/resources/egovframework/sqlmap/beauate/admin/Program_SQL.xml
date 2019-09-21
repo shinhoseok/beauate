@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beauate.admin.program.service.ProgramDao">
+
+	<resultMap type="programVO" id="programResultMap">
+		<result column="PGM_ID" property="pgmId" />
+		<result column="PGM_NAME" property="pgmName" />
+		<result column="PGM_URL" property="pgmUrl" />
+		<result column="PGM_DES" property="pgmDes" />
+		<result column="PGM_PARAM" property="pgmParam" />
+		<result column="RG_ID" property="rgId" />
+		<result column="RG_DT" property="rgDt" />
+		<result column="MOD_ID" property="modId" />
+		<result column="MOD_DT" property="modDt" />
+	</resultMap>
+	
+	<sql id="pgmGubunSql">
+		<where>
+			<if test="pgmGubun != null or  pgmGubun !='' and pgmGubun == 'Y'">
+		       AND NOT EXISTS
+		              (SELECT C.PGM_ID
+		                 FROM MENU_MNG C
+		                WHERE B.PGM_ID = C.PGM_ID)	
+			</if>
+			<if test="searchKeyword != null and searchKeyword != ''">
+				<choose>
+					<when test="searchCondition == 'pgmName'">
+						AND B.PGM_NAME LIKE '%'|| #{searchKeyword} ||'%'
+					</when>
+					<when test="searchCondition == 'pgmParam'">
+						AND B.PGM_PARAM LIKE '%'|| #{searchKeyword} ||'%'
+					</when>
+				</choose>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 
+	쿼리명 : 프로그램 리스트
+	  설명 : 프로그램 리스트
+	수정일      		수정자  	수정내용
+	==========  ======  ===================
+	2019. 5.12	신호석		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.12
+	-->		
+	<select id="selectProgramList" parameterType="programVO" resultMap="programResultMap">
+		<![CDATA[
+		SELECT A.*
+		  FROM (SELECT ROW_NUMBER () OVER (
+		]]>	
+		<choose>
+			<when test="sortSubject == 'pgmId'">
+			ORDER BY B.PGM_ID
+			</when>
+			<when test="sortSubject == 'pgmName'">
+			ORDER BY B.PGM_NAME
+			</when>
+			<when test="sortSubject == 'pgmParam'">
+			ORDER BY B.PGM_PARAM
+			</when>
+			<otherwise>
+			ORDER BY B.PGM_ID
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="sortDescend == 'asc'">
+			ASC
+			</when>
+			<otherwise>
+			DESC
+			</otherwise>
+		</choose>
+		<![CDATA[
+		  			 ) RNUM,
+		               B.PGM_ID,
+		               B.PGM_NAME,
+		               B.PGM_URL,
+		               B.PGM_DES,
+		               B.PGM_PARAM,
+		               B.RG_ID,
+		               B.RG_DT,
+		               B.MOD_ID,
+		               B.MOD_DT
+		          FROM PRM_MNG B
+		]]>		
+		<include refid="pgmGubunSql"/>
+		<![CDATA[
+		       ) A
+		 WHERE A.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
+		]]>		
+	</select>
+	
+	<!-- 
+	쿼리명 : 프로그램 리스트 카운트
+	  설명 : 프로그램 리스트 카운트
+	수정일     		 수정자 	 수정내용
+	==========  ======  ===================
+	2019. 5.12	신호석		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.12
+	-->	
+	<select id="selectProgramListCnt" parameterType="programVO" resultType="int">
+		<![CDATA[
+		SELECT COUNT (*) CNT FROM PRM_MNG B
+		]]>
+		<include refid="pgmGubunSql"/>	
+	</select>
+	
+	<!-- 
+	쿼리명 : 프로그램 상세 조회
+	  설명 : 프로그램 상세 조회
+	수정일      		수정자  	수정내용
+	==========  ======  ===================
+	2019. 5.16 	 신호석 	 최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.16
+	-->	
+	<select id="selectProgram" parameterType="programVO" resultMap="programResultMap">
+		<![CDATA[
+		SELECT PGM_ID,
+			   PGM_NAME,
+			   PGM_URL,
+			   PGM_DES,
+			   PGM_PARAM,
+			   RG_ID,
+			   RG_DT,
+			   MOD_ID,
+			   MOD_DT
+		  FROM PRM_MNG
+		 WHERE PGM_ID = #{pgmId, jdbcType=VARCHAR}
+		]]>
+	</select>
+	
+	<!-- 
+	쿼리명 : 프로그램 변수 중복 검사
+	  설명 : 프로그램 변수는 중복 되면 안됨
+	수정일      		수정자  	수정내용
+	==========  ======  ===================
+	2019. 5.16	신호석  	최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.16
+	-->	
+	<select id="pgmParamChk" parameterType="programVO" resultType="int">
+		<![CDATA[
+			SELECT COUNT (*) CNT
+			  FROM PRM_MNG
+			 WHERE UPPER (PGM_PARAM) = UPPER (#{pgmParam, jdbcType=VARCHAR})
+		]]>
+		<if test="pgmId != '' and pgmId != null">
+				   AND PGM_ID != #{pgmId}
+		</if>
+	</select>
+	
+	<!-- 
+	쿼리명 : 프로그램 등록
+	  설명 : 프로그램 등록
+	수정일      		수정자  	수정내용
+	==========  ======  ===================
+	2019. 5.13 	신호석 		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.13
+	-->	
+	<insert id="insertProgram" parameterType="programVO">
+		<![CDATA[
+	    INSERT INTO PRM_MNG 
+	    		(PGM_ID,
+                 PGM_NAME,
+                 PGM_URL,
+                 PGM_DES,
+                 PGM_PARAM,
+                 RG_ID,
+                 RG_DT)
+	    VALUES	(#{pgmId}, 
+	             #{pgmName}, 
+	             #{pgmUrl}, 
+	             #{pgmDes}, 
+	             #{pgmParam}, 
+	             #{usrId, jdbcType=VARCHAR}, 
+	             sysdate) 
+		]]>
+	</insert>
+
+	<!-- 
+	쿼리명 : 프로그램 수정
+	  설명 : 프로그램 수정
+	수정일      		수정자  	수정내용
+	==========  ======  ===================
+	2019. 5.13	신호석		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.13
+	-->	
+	<update id="updateProgram" parameterType="programVO">
+		<![CDATA[
+		UPDATE PRM_MNG
+		   SET PGM_NAME = #{pgmName, jdbcType=VARCHAR},
+		       PGM_URL = #{pgmUrl},
+		       PGM_DES = #{pgmDes, jdbcType=VARCHAR},
+		       PGM_PARAM = #{pgmParam},
+		       MOD_ID = #{usrId, jdbcType=VARCHAR},
+		       MOD_DT = sysdate
+		 WHERE PGM_ID = #{pgmId, jdbcType=VARCHAR}
+		]]>
+		<include refid="Cmmn.menuRlSql"/>
+	</update>
+	
+	<!-- 
+	쿼리명 : 프로그램 삭제
+	  설명 : 프로그램 삭제
+	수정일      		수정자  	수정내용
+	==========  ======  ===================
+	2019. 5.18	신호석		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.18
+	-->	
+	<delete id="deleteProgram" parameterType="programVO">
+		<![CDATA[
+		DELETE FROM PRM_MNG WHERE PGM_ID = #{pgmId, jdbcType=VARCHAR}
+		]]>
+		<include refid="Cmmn.menuRlSql"/>
+	</delete>
+	
+	<!-- 
+	쿼리명 : 메뉴테이블 프로그램ID 수정
+	  설명 : 프로그램 삭제시 메뉴테이블에 맵핑 되어있는 프로그램ID null 처리
+	수정일     		 수정자 	 수정내용
+	==========  ======  ===================
+	2019. 5.18  신호석  최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.18
+	-->	
+	<update id="updatePgmIdMenu" parameterType="programVO">
+		<![CDATA[
+		UPDATE PRM_MNG
+		   SET PGM_ID = null
+		 WHERE PGM_ID = #{pgmId, jdbcType=VARCHAR}
+		]]>
+	</update>
+	
+	<!-- 
+	쿼리명 : 프로그램 이용률 검색 및 출력
+	  설명 : 메뉴이용률테이블에서 조건날짜에 맞는 컴럼중 프로그램목록에 등록된 프로그램 총건수
+	수정일      		수정자  	수정내용
+	==========  ======  ===================
+	2019. 7. 1	신호석 	 	최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 7. 1
+	-->	
+	<select id="selectProgramChart" parameterType="MenuStatsVO" resultType="EgovMap">
+		<![CDATA[
+			SELECT C.MENU_ID,
+				   D.PGM_ID,
+				   D.PGM_NAME,
+				   D.PGM_PARAM,
+				   D.PGM_URL,
+				   C.CNT
+			  FROM PRM_MNG D, (SELECT B.MENU_ID,
+										 B.PGM_ID,
+										 A.CNT
+									FROM PRM_MNG B, (SELECT MENU_ID,
+															   COUNT(*) CNT
+														  FROM TB_MENU_STATS
+														 WHERE TO_CHAR(VISIT_DATE, 'YYYY-MM-DD')
+															   BETWEEN #{startDate} AND #{endDate}
+													  GROUP BY MENU_ID) A
+								   WHERE B.MENU_ID = A.MENU_ID) C
+			 WHERE D.PGM_ID = C.PGM_ID
+			 ORDER BY PGM_ID DESC
+		]]>
+	</select>
+</mapper>

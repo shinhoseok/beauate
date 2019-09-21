@@ -1,0 +1,75 @@
+@charset "UTF-8";
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+html{overflow-y:scroll; overflow-x:auto; font-size:20px; color:#000;}
+body,p,h1,h2,h3,h4,h5,ul,ol,li,dl,dt,dd,table,th,td,form,fieldset,legend,input,textarea,button,select,span,a,div,fieldset,button,em,address,label,strong{margin:0;padding:0;letter-spacing:-0.05em; color:inherit;}
+body,input,textarea,select,button,table{font-family:'Noto Sans KR', 'Dotum', '돋움', 'Apple SD Gothic Neo', sans-serif; font-size:inherit; line-height:1.6;font-weight:normal;-webkit-text-size-adjust:none;-webkit-font-smoothing:antialiased}
+body{color:#000;}
+img,fieldset,button{border:0 none;}
+ul,ol,li{list-style:none}
+img{max-width:100%;}
+input,select,button{font-size:20px;}
+input{background:#fff;/*-webkit-appearance:none;*/}
+em,address{font-style:normal}
+a{text-decoration:none;}
+button{margin:0;padding:0;background:none}
+h1,h2,h3,h4,h5,h6,b{color:#000}
+table{border-collapse:collapse;border-spacing:0; width:100%;}
+td,th{border-collapse:collapse;border-spacing:0;word-wrap:break-word;word-break:break-all}
+caption{overflow:hidden;position:absolute; width:0;height:0;margin:-1px 0;font-size:1px;line-height:0}
+legend{display:none}
+label,button{cursor:pointer}
+label {line-height:24px;font-size:16px; color:inherit;}
+a,
+span,
+strong,
+em{color:inherit;}
+iframe {border:0;}
+
+input[type='checkbox'],
+input[type='radio'] {cursor:pointer;}
+
+select {font-size:15px;}
+select,
+textarea,
+input[type=text],
+input[type=tel],
+input[type=search],
+input[type=number],
+input[type=password],
+input[type=email] {width:100%;height:40px;line-height:37px; font-size:16px;font-weight:400; color:#000; box-sizing:border-box; outline:none; border:0;border-bottom:1px solid #ccc;}
+input[type=password] {font-family:'NotoSansKR', sans-serif; font-weight:900; letter-spacing:-0.5px;}
+input[type=password]::placeholder{font-weight:400; font-family:'Noto Sans KR', 'Malgun Gothic','맑은 고딕', 'Dotum', '돋움', 'Apple SD Gothic Neo', sans-serif;}
+input[type=password]:-ms-input-placeholder{font-weight:400; font-family:'Noto Sans KR', 'Malgun Gothic','맑은 고딕', 'Dotum', '돋움', 'Apple SD Gothic Neo', sans-serif;}
+input[type=password]::-webkit-input-placeholder{font-weight:400; font-family:'Noto Sans KR', 'Malgun Gothic','맑은 고딕', 'Dotum', '돋움', 'Apple SD Gothic Neo', sans-serif;}
+input:focus {border-color:#6a2cfe;}
+textarea {width:100%; height:100px; padding:10px 20px; vertical-align:top; line-height:20px; font-size:15px; overflow:hidden;overflow-y:auto;resize:none;background:#fff;word-break:break-all;word-wrap:break-word;white-space:pre-line;}
+textarea:focus {border-color:#000;}
+input[disabled],
+input[readonly],
+textarea[disabled],
+textarea[readonly] {cursor:default; color:#8a8a8a; border-color:#ccc; background:#f8f8f8;}
+
+input[type=number]{-moz-appearance:textfield;}
+input[type=number]::-webkit-inner-spin-button {-webkit-appearance: none;}
+input:-ms-input-placeholder {font-size:16px;font-weight:normal;color:#8a8a8a !important;}
+textarea:-ms-input-placeholder {font-size:16px;font-weight:normal;color:#8a8a8a !important;}
+input::placeholder,
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder{font-size:16px;font-weight:normal;color:#8a8a8a !important;}
+
+input:disabled:-ms-input-placeholder,
+textarea:disabled:-ms-input-placeholder {color:#ccc !important;}
+input:disabled::-webkit-input-placeholder,
+textarea:disabled::-webkit-input-placeholder {color:#ccc !important;}
+
+input::-ms-clear {display:none;}
+input::-webkit-search-cancel-button {display:none;}
+
+/*input::-internal-autofill-selected {background-color:#fff !important;}*/
+
+button {color:#000;box-sizing:border-box;}
+button > span {position:relative;}
+
+.blind {position:absolute; top:0; left:-9999px;}
+

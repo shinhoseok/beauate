@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<bean id="egov.lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" lazy-init="true" />
+
+	<!-- SqlMap setup for iBATIS Database Layer -->
+	<!--  spring4 로 넘어가며 ibatis에 대한 지원이 종료되었습니다.
+	  현재는 ibatis 대용으로 mybatis의 지원이 되며, 3.5의 실행환경에서 ibatis를 사용할 수 있도록 실행환경에 SqlMapClientFactoryBean을 추가해 놓은 것입니다.
+	   Deprecated는 해당 메소드가 곧 삭제될 예정이라는 표시로, 사용은 문제없이 가능하다.
+	 -->
+	<bean id="sqlMapClient" class="egovframework.rte.psl.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:/egovframework/sqlmap/rte/sql-map-config.xml"/>
+		<property name="dataSource" ref="dataSource"/>
+		<property name="lobHandler" ref="egov.lobHandler"/>
+	</bean>
+
+</beans>

@@ -1,0 +1,17 @@
+.metadata/
+.recommenders/
+RemoteSystemsTempFiles/
+Servers/
+.svn/
+*.class
+.externalToolBuilders
+.settings/
+build/
+reports/
+target/
+.classpath
+.pmd
+.project
+.springBeans
+.tern-project
+doc/

@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beauate.admin.code.service.CodeDao">
+
+	<!-- 쿼리명 : 대분류코드관리 공통 조건절
+	설명 : 대분류코드관리 공통 조건절
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 5. 17     		신호석          최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5. 17
+	-->	
+	<sql id="getCodeManageWhereClause">
+		<where>
+			<if test="searchKeyword != null and searchKeyword != ''">
+				<choose>
+					<when test="searchCondition == 'lclsNm'">
+						AND LCLS_NM LIKE '%' || #{searchKeyword} || '%'
+					</when>
+					<when test="searchCondition == 'lclsCd'">
+						AND LCLS_CD LIKE '%' || #{searchKeyword} || '%'
+					</when>
+				</choose>
+			</if>
+			<if test="useYn != null and useYn != ''">
+				AND USE_YN = #{useYn}
+			</if>
+		</where>
+	</sql>	
+
+	<!-- 쿼리명 : 공통코드 대분류 리스트 조회
+	설명 : 공통코드 대분류 리스트 조회
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 5. 17     		신호석          최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5. 17
+	-->
+	<select id="selectCodeManageList" parameterType="codeVO" resultType="codeVO">
+		<![CDATA[
+			SELECT A.*
+			  FROM (SELECT ROW_NUMBER () OVER (ORDER BY LCLS_CD DESC) RNUM,
+			               LCLS_ID lclsId,
+			               LCLS_NM lclsNm,
+			               LCLS_CD lclsCd,
+			               LCLS_EPL lclsEpl,
+			               USE_YN useYn,
+			               RG_ID rgId,
+			               RG_DT rgDt,
+			               MOD_ID modId,
+			               MOD_DT modDt
+			          FROM COMMON_CD_LCLS
+		 ]]>
+		<include refid="getCodeManageWhereClause" /> 
+		<![CDATA[
+				  ) A
+		WHERE A.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
+		]]>
+	</select>
+	
+	<!-- 쿼리명 : 공통코드 리스트의 총 건수
+	설명 : 공통코드 리스트의 총 건수
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 5. 17     		신호석          최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5. 17
+	-->
+	<select id="selectCodeManageListCnt" parameterType="codeVO" resultType="int">
+		<![CDATA[
+		SELECT COUNT (*) CNT FROM COMMON_CD_LCLS 
+		]]>
+		<include refid="getCodeManageWhereClause" /> 
+	</select>
+	
+	<!-- 쿼리명 : 공통코드 대분류 상세, 소분류 리스트(소분류)
+	설명 : 공통코드 대분류 상세, 소분류 리스트(소분류)
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 5. 17     		신호석          최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5. 17
+	-->	
+	<select id="selectMcodeListCnt" parameterType="codeVO" resultType="Integer">
+		<![CDATA[
+		  SELECT COUNT(B.LCLS_ID) AS cnt
+		    FROM COMMON_CD_LCLS A, COMMON_CD_SCLS B
+		   WHERE A.LCLS_ID = B.LCLS_ID AND B.LCLS_ID = #{lclsId}
+		]]>
+	</select>
+
+	<!-- 쿼리명 : 공통코드 대분류 상세, 소분류 리스트(소분류)
+	설명 : 공통코드 대분류 상세, 소분류 리스트(소분류)
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 5. 17     		신호석          최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5. 17
+	-->	
+	<select id="selectMcodeList" parameterType="codeVO" resultType="codeVO">
+		<![CDATA[
+		  SELECT A.LCLS_ID lclsId,
+		         A.LCLS_NM lclsNm,
+		         A.LCLS_CD lclsCd,
+		         B.LCLS_ID lclsId,
+		         B.MCLS_ID mclsId,
+		         B.MCLS_NM mclsNm,
+		         B.MCLS_CD mclsCd,
+		         B.ORD ord,
+		         B.MCLS_EPL mclsEpl,
+		         B.USE_YN useYn2,
+		         B.RG_ID rgId,
+		         B.RG_DT rgDt,
+		         B.MOD_ID modId,
+		         B.MOD_DT modDt
+		    FROM COMMON_CD_LCLS A, COMMON_CD_SCLS B
+		   WHERE A.LCLS_ID = B.LCLS_ID AND B.LCLS_ID = #{lclsId}
+		ORDER BY B.ORD ASC
+		]]>
+	</select>
+	
+	<!-- 쿼리명 : 공통코드 대분류 상세, 소분류 리스트(대분류)
+	설명 : 공통코드 대분류 상세, 소분류 리스트(대분류)
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 5. 17     		신호석          최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5. 17
+	-->
+	<select id="selectLCodeView" parameterType="codeVO" resultType="codeVO">
+		<![CDATA[
+		SELECT LCLS_ID lclsId,
+				   LCLS_NM lclsNm,
+				   LCLS_CD lclsCd,
+				   LCLS_EPL lclsEpl,
+				   USE_YN useYn,
+				   RG_ID rgId,
+				   RG_DT rgDt,
+				   MOD_ID modId,
+				   MOD_DT modDt
+		 FROM COMMON_CD_LCLS
+	   WHERE LCLS_ID=#{lclsId}
+		]]>
+	</select>
+	
+	<!-- 쿼리명 : 공통코드 대분류 상세 수정, 소분류 입력&수정&삭제
+	설명 : 대분류 수정
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 5. 17     		신호석          최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5. 17
+	-->
+	<update id="updateLCode" parameterType="codeVO">
+		<![CDATA[
+		UPDATE COMMON_CD_LCLS
+			  SET LCLS_NM = #{lclsNm},
+					LCLS_CD = #{lclsCd},
+					LCLS_EPL = #{lclsEpl, jdbcType=VARCHAR},
+					USE_YN = #{useYn},
+					MOD_ID = #{modId},
+					MOD_DT = sysdate
+	 	 WHERE LCLS_ID = #{lclsId}
+		]]>
+	</update>
+	
+	<!-- 쿼리명 : 공통코드 대분류 상세 수정, 소분류 입력&수정&삭제
+	설명 : 소분류 입력
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 5. 17     		신호석          최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5. 17
+	-->
+	<insert id="insertMCodeManager" parameterType="codeVO">
+		<![CDATA[
+		INSERT INTO COMMON_CD_SCLS
+		(
+			MCLS_ID,
+			LCLS_ID,
+			MCLS_NM,
+			MCLS_CD,
+			ORD,
+			MCLS_EPL,
+			USE_YN,
+			RG_ID,
+			RG_DT,
+			LCLS_CD
+		)VALUES(
+			#{mclsId},
+			#{lclsId},
+			#{mclsNm},
+			#{mclsCd},
+			#{ord},
+			#{mclsEpl, jdbcType=VARCHAR},
+			#{useYn2},
+			#{rgId},
+			sysdate,
+			(SELECT LCLS_CD FROM COMMON_CD_LCLS WHERE LCLS_ID = #{lclsId})
+		)
+		]]>
+	</insert>
+	
+	<!-- 쿼리명 : 공통코드 대분류 상세 수정, 소분류 입력&수정&삭제
+	설명 : 소분류 수정
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 5. 17     		신호석          최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5. 17
+	-->
+	<update id="updateMCodeManager" parameterType="codeVO">
+		<![CDATA[
+		UPDATE COMMON_CD_SCLS
+			  SET MCLS_NM = #{mclsNm},
+					MCLS_CD = #{mclsCd},
+					MCLS_EPL = #{mclsEpl, jdbcType=VARCHAR},
+					ORD = #{ord},
+					USE_YN = #{useYn2},
+					MOD_ID = #{modId},
+					MOD_DT = sysdate
+		 WHERE MCLS_ID = #{mclsId}
+		]]>
+	</update>
+	
+	<!-- 쿼리명 : 공통코드 대분류 상세 수정, 소분류 입력&수정&삭제
+	설명 : 소분류 삭제
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 5. 17     		신호석          최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5. 17
+	-->
+	<delete id="deleteMCodeManager" parameterType="codeVO">
+		<![CDATA[
+		DELETE FROM COMMON_CD_SCLS WHERE MCLS_ID = #{mclsId}
+		]]>
+	</delete>
+	
+	<!-- 쿼리명 : 공통코드 대분류 입력화면 저장
+	설명 : 공통코드 대분류 입력화면 저장
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 5. 17     		신호석          최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5. 17
+	-->
+	<insert id="insertCodeManageList" parameterType="codeVO">
+		<![CDATA[
+		INSERT INTO COMMON_CD_LCLS
+		(
+			LCLS_ID,
+			LCLS_NM,
+			LCLS_CD,
+			LCLS_EPL,
+			USE_YN,
+			RG_ID,
+			RG_DT
+		)VALUES(
+			#{lclsId},
+			#{lclsNm},
+			#{lclsCd},
+			#{lclsEpl, jdbcType=VARCHAR},
+			#{useYn},
+			#{rgId},
+			sysdate
+		)
+		]]>
+	</insert>
+	
+	<!-- 쿼리명 : 공통코드 소분류 조회
+	설명 : 공통코드 소분류 조회
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 5. 17     		신호석          최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5. 17
+	-->
+	<select id="selectLastcodeView" parameterType="codeVO" resultType="codeVO">
+		<![CDATA[
+		SELECT A.LCLS_ID lclsId,
+				   A.LCLS_NM lclsNm,
+				   A.LCLS_CD lclsCd,
+				   B.MCLS_ID mclsId,
+				   B.MCLS_NM mclsNm,
+				   B.MCLS_CD mclsCd,
+				   B.MCLS_EPL mclsEpl,
+				   B.USE_YN useYn,
+				   B.ORD ord,
+				   B.RG_ID rgId,
+				   B.RG_DT rgDt,
+				   B.MOD_ID modId,
+				   B.MOD_DT modDt
+          FROM COMMON_CD_LCLS A, COMMON_CD_SCLS B
+         WHERE A.LCLS_ID = B.LCLS_ID
+            AND B.MCLS_ID = #{mclsId}
+		]]>
+	</select>
+	
+	<!-- 쿼리명 : 공통코드 소분류 상세화면 수정
+	설명 : 공통코드 소분류 상세화면 수정
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 5. 17     		신호석          최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5. 17
+	-->
+	<update id="updateSCode" parameterType="codeVO">
+		<![CDATA[
+		UPDATE COMMON_CD_SCLS
+			  SET MCLS_NM = #{mclsNm},
+					MCLS_CD = #{mclsCd},
+					MCLS_EPL = #{mclsEpl, jdbcType=VARCHAR},
+					USE_YN = #{useYn},
+					MOD_ID = #{modId},
+					MOD_DT = sysdate
+		 WHERE MCLS_ID = #{mclsId}
+		]]>
+	</update>
+	
+	<!-- 쿼리명 : 공통코드 대분류 중복체크
+	설명 : 공통코드 대분류 중복체크
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 5. 17     		신호석          최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5. 17
+	-->
+	<select id="lclsCdChk" parameterType="codeVO" resultType="int">
+		<![CDATA[
+		SELECT COUNT (*) CNT 
+		 FROM COMMON_CD_LCLS 
+		WHERE LCLS_CD = TRIM (#{lclsCd})
+		]]>
+	</select>
+	
+	<!-- 쿼리명 : 공통코드 소분류 중복체크
+	설명 : 공통코드 소분류 중복체크
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 5. 17     		신호석          최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5. 17
+	수정사항 : test 조건이 myBatis에 적용가능토록 변경
+	-->
+	<select id="mclsCdChk" parameterType="codeVO" resultType="int">
+		<![CDATA[
+		SELECT COUNT (*) CNT 
+		 FROM COMMON_CD_LCLS A, COMMON_CD_SCLS B
+		WHERE A.LCLS_CD = B.LCLS_CD
+		   AND B.LCLS_CD = #{lclsCd}
+		   AND MCLS_CD = TRIM (#{mclsCd})
+		]]>
+	</select>
+	
+	<!-- 쿼리명 : 대분류 코드에 의한 소분류 리스트
+	설명 : 대분류 코드에 의한 소분류 리스트
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 9. 17     		신호석          최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 9. 17
+	-->
+	<select id="selectScodeList" parameterType="java.lang.String" resultType="codeVO">
+		<![CDATA[
+		  SELECT A.LCLS_ID lclsId,
+		         A.LCLS_NM lclsNm,
+		         A.LCLS_CD lclsCd,
+		         B.LCLS_ID lclsId,
+		         B.MCLS_ID mclsId,
+		         B.MCLS_NM mclsNm,
+		         B.MCLS_CD mclsCd,
+		         B.ORD ord,
+		         B.MCLS_EPL mclsEpl,
+		         B.USE_YN useYn2,
+		         B.RG_ID rgId,
+		         B.RG_DT rgDt,
+		         B.MOD_ID modId,
+		         B.MOD_DT modDt
+		    FROM COMMON_CD_LCLS A, COMMON_CD_SCLS B
+		   WHERE A.LCLS_ID = B.LCLS_ID AND B.LCLS_CD = #{lclsId}
+		ORDER BY B.ORD ASC
+		]]>
+	</select>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Cmmn">
+
+	<!-- (사용자 권한-메뉴-프로그램) 에 따라 공통 조건문 : w권한일때 사용자와 등록자를 비교한다-->
+	<sql id="menuRlSql">
+		<if test='menuRlDiv =="W"'>
+			AND RG_ID = #{usrId}
+		</if>
+	</sql>
+	
+	<!-- 사용자 ID 로 자신의 권한그룹의 메뉴 리스트  -->
+	<sql id="usrRoleMenuListSql">
+		SELECT E.*
+		  FROM MENU_MNG E,
+		       (SELECT DISTINCT G.MENU_ID
+		          FROM MENU_RL_MPPG G
+		         WHERE EXISTS
+		                  (SELECT RL_ID
+		                     FROM (SELECT RL_ID
+		                             FROM RL_USER_MPPG
+		                            WHERE U_SQ = #{usrId}
+		                           UNION ALL
+		                           SELECT RL_ID
+		                             FROM RL_MNG
+		                            WHERE RL_CD = 'authenticated') H
+		                    WHERE G.RL_ID = H.RL_ID)) F
+		 WHERE E.MENU_ID = F.MENU_ID
+	</sql>
+</mapper>

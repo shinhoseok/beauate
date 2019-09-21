@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.beauate.common.service.CommonDao">
+	
+	<!-- 
+	쿼리명 : 인터셉터에서  uri 정보로 메뉴 권한 가져오기
+	  설명 : 인터셉터에서  uri 정보로 메뉴 권한 가져오기
+	수정일      수정자  수정내용
+	==========  ======  ===================
+	2019. 6.3   신호석  최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6.3
+	-->		
+	<select id="selectMenuRole" parameterType="menuVO" resultType="java.lang.String">
+		SELECT MAX (A.RL_DIV) AS menuRlDiv
+		  FROM MENU_RL_MPPG A,
+		       (SELECT MENU_ID
+		          FROM MENU_MNG
+		         WHERE PGM_ID = (SELECT PGM_ID
+		                           FROM PRM_MNG
+		                          WHERE PGM_PARAM = #{pgmParam})) B
+		 WHERE     A.MENU_ID = B.MENU_ID
+		       AND EXISTS
+		              (SELECT RL_ID
+		                 FROM (SELECT RL_ID
+		                         FROM RL_USER_MPPG
+		                        WHERE U_SQ = #{usrId}
+		                       UNION ALL
+		                       SELECT RL_ID
+		                         FROM RL_MNG
+		                        WHERE RL_CD = 'authenticated') D
+		                WHERE A.RL_ID = D.RL_ID)       
+	</select>	
+	
+	<!-- 
+	쿼리명 : 현재 선택되어야하는 메뉴의 1 ,2, 3레벨 값을 세팅
+	  설명 : 현재 선택되어야하는 메뉴의 1 ,2, 3레벨 값을 세팅
+	수정일      수정자  수정내용
+	==========  ======  ===================
+	2019. 6.3   신호석  최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6.3
+	-->		
+	<select id="selectSearchMenuId" parameterType="menuVO" resultType="menuVO">
+		SELECT CASE
+		          WHEN B.MENU_LVL = 2 THEN B.MENU_ID
+		          WHEN B.MENU_LVL = 4 THEN A.UPR_MENU_ID
+		          ELSE A.MENU_ID
+		       END
+		          menuId1Lvl,
+		       CASE
+		          WHEN B.MENU_LVL = 2 THEN NULL
+		          WHEN B.MENU_LVL = 4 THEN A.MENU_ID
+		          ELSE B.MENU_ID
+		       END
+		          menuId2Lvl,
+		       CASE WHEN B.MENU_LVL = 4 THEN B.MENU_ID ELSE NULL END menuId3Lvl,
+		       B.MENU_LVL AS menuMiniLvl
+		  FROM MENU_MNG A,
+		       (SELECT C.MENU_LVL, C.UPR_MENU_ID, C.MENU_ID
+		          FROM MENU_MNG C, PRM_MNG D
+		         WHERE D.PGM_PARAM = #{pgmParam} AND C.PGM_ID = D.PGM_ID) B
+		 WHERE A.MENU_ID = B.UPR_MENU_ID
+	</select>
+	
+	<!-- 
+	쿼리명 : 탑 메뉴 리스트
+	  설명 : 사용자의 권한에 맞는 탑 메뉴 리스트
+	수정일      수정자  수정내용
+	==========  ======  ===================
+	2019. 6.3   신호석  최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6.3
+	-->		
+	<select id="selectTopMenuList" parameterType="menuVO" resultType="menuVO">
+		<![CDATA[	  
+		  SELECT DISTINCT
+		         B.MENU_ID AS menuId,
+		         B.UPR_MENU_ID AS uprMenuId,
+		         B.MENU_NAME AS menuName,
+		         B.PGM_ID AS pgmId,
+		         C.PGM_URL AS pgmUrl,
+		         B.MENU_LUP AS menuLup,
+		         B.OT_URL AS otUrl,
+		         B.MENU_DIV AS menuDiv,
+		         B.USE_YN AS useYn,
+		         CASE
+		            WHEN C.PGM_URL IS NOT NULL THEN 'I'
+		            ELSE 'B'
+		         END
+		            menuUrlGubun
+		    FROM MENU_RL_MPPG A,
+		         (SELECT *
+		            FROM MENU_MNG
+		           WHERE     UPR_MENU_ID =
+       	]]>
+       			 
+       	<choose>
+       		<when test="menuId1Lvl != null and menuId1Lvl != ''">
+       						(SELECT UPR_MENU_ID
+                               FROM MENU_MNG
+                              WHERE MENU_ID = #{menuId1Lvl}) 	
+       		</when>
+       		<otherwise>
+							(SELECT MENU_ID
+		                       FROM MENU_MNG
+		                      WHERE     MENU_DIV =
+		                                   (SELECT MENU_DIV
+		                                      FROM MENU_MNG
+		                                     WHERE PGM_ID =
+		                                              (SELECT PGM_ID
+		                                                 FROM PRM_MNG
+		                                                WHERE PGM_PARAM = #{pgmParam}))
+		                            AND UPR_MENU_ID IS NULL)
+       		</otherwise>
+       	</choose>          
+	   	<![CDATA[	  
+			            ) B,
+                 PRM_MNG C
+           WHERE     EXISTS
+                        (SELECT RL_ID
+                           FROM (SELECT RL_ID
+                                   FROM RL_USER_MPPG
+                                  WHERE U_SQ = #{usrId}
+                                 UNION ALL
+                                 SELECT RL_ID
+                                   FROM RL_MNG
+                                  WHERE RL_CD = 'authenticated') D
+                          WHERE A.RL_ID = D.RL_ID)
+                 AND B.USE_YN = 'Y'
+                 AND A.MENU_ID = B.MENU_ID
+                 AND B.PGM_ID = C.PGM_ID(+)
+        ORDER BY B.MENU_LUP ASC
+		]]>      
+	</select>
+	
+	<!-- 
+	쿼리명 : 자신의 관리 권한에 속한 메뉴중  프로그램이 연결되어있고 탑의 제일 앞, 레프트의 가장 상단 정렬을 하였을때
+	  설명 : 자신의 관리 권한에 속한 메뉴중  프로그램이 연결되어있고 탑의 제일 앞, 레프트의 가장 상단 정렬을 하였을때
+	수정일      수정자  수정내용
+	==========	======	===================
+	2019. 6.29   신호석  최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6.29
+	-->	
+	<select id="selectPortalAdminMenu" parameterType="menuVO" resultType="java.lang.String">
+		<![CDATA[	  
+		  SELECT C.PGM_URL
+		  FROM (           SELECT A.MENU_DIV,
+		                          A.PGM_ID,
+		                          A.MENU_ID,
+		                          A.MENU_LUP,
+		                          A.UPR_MENU_ID,
+		                          A.MENU_NAME
+		                     FROM (]]>
+		                     	   <include refid="Cmmn.usrRoleMenuListSql"/> 
+		                     	   <![CDATA[	  
+		                     	   AND E.MENU_DIV = '2'
+		                           UNION ALL
+		                           SELECT *
+		                             FROM MENU_MNG
+		                            WHERE MENU_DIV = '2' AND UPR_MENU_ID IS NULL) A
+		               START WITH A.UPR_MENU_ID IS NULL
+		               CONNECT BY PRIOR A.MENU_ID = A.UPR_MENU_ID
+		        ORDER SIBLINGS BY A.MENU_LUP) B,
+		      	PRM_MNG C
+		 WHERE     B.UPR_MENU_ID IS NOT NULL
+		       AND C.PGM_URL IS NOT NULL
+		       AND C.PGM_ID = B.PGM_ID
+		       AND ROWNUM = 1	
+		]]>      
+	</select>
+	
+	<!-- 
+	쿼리명 : 서브 컨텐츠 메뉴의 제목 옆에 메뉴에 대한 서브 타이틀 리스트
+	설명 :  서브 컨텐츠 메뉴의 제목 옆에 메뉴에 대한 서브 타이틀 리스트
+	수정일       수정자         수정내용
+	==========  ========  ===================
+	2019. 6.3   신호석  최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6.3
+	-->	
+	<select id="selectSubTitleList" parameterType="menuVO" resultType="menuVO">
+		SELECT MENU_NAME AS menuName, MENU_ID AS menuId
+		  FROM MENU_MNG E
+		 WHERE menu_id = #{menuId1Lvl}
+	 	<if test="menuId2Lvl != null and menuId2Lvl != ''">
+		UNION ALL
+		SELECT MENU_NAME AS menuName, MENU_ID AS menuId
+		  FROM MENU_MNG E
+		 WHERE menu_id = #{menuId2Lvl}
+	 	</if>
+	 	<if test="menuId3Lvl != null and menuId3Lvl != ''">
+		UNION ALL
+		SELECT MENU_NAME AS menuName, MENU_ID AS menuId
+		  FROM MENU_MNG E
+		 WHERE menu_id = #{menuId3Lvl}
+	 	</if>
+	</select>
+	
+	<!-- 
+	쿼리명 : 레프트 메뉴 리스트 
+	설명 :  사용자의 권한과 탑메뉴에 맞는 레프트 메뉴 리스트 
+	수정일       수정자         수정내용
+	==========  ========  ===================
+	2019. 6.3   신호석  최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6.3
+	-->	
+	<select id="selectLeftMenuList" parameterType="menuVO" resultType="menuVO">
+		SELECT C.MENU_ID AS menuId,
+		       C.UPR_MENU_ID AS uprMenuId,
+		       C.MENU_NAME AS menuName,
+		       C.PGM_ID AS pgmId,
+		       C.PGM_URL AS pgmUrl,
+		       C.MENU_LUP AS menuLup,
+		       C.OT_URL AS otUrl,
+		       C.MENU_DIV AS menuDiv,
+		       C.USE_YN AS useYn,
+		       LEVEL,
+		       CONNECT_BY_ISLEAF AS isleaf,
+		       CONNECT_BY_ROOT C.MENU_ID AS root,
+		       CASE
+		          WHEN C.PGM_URL IS NOT NULL THEN 'I'
+		          ELSE 'M'
+		       END
+		          menuUrlGubun
+		  FROM (SELECT A.MENU_ID,
+		               A.UPR_MENU_ID,
+		               A.MENU_NAME,
+		               B.PGM_ID,
+		               B.PGM_URL,
+		               A.MENU_LUP,
+		               A.OT_URL,
+		               A.MENU_DIV,
+		               A.USE_YN
+		          FROM (<include refid="Cmmn.usrRoleMenuListSql"/>) A,
+	                          PRM_MNG B
+	                    WHERE     A.USE_YN = 'Y'
+	                          AND A.PGM_ID = B.PGM_ID(+)) C
+	       START WITH C.UPR_MENU_ID = #{menuId1Lvl}
+	       CONNECT BY PRIOR C.MENU_ID = C.UPR_MENU_ID
+	ORDER SIBLINGS BY C.MENU_LUP	    
+	</select>
+
+     <!-- 
+	쿼리명 : 메뉴 정보 
+	설명 :  탑메뉴를 클릭했을때 이동해야하는 메뉴 정보 
+	수정일       수정자         수정내용
+	==========  ========  ===================
+	2019. 6.3   신호석  최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6.3
+	-->	
+	<select id="selectTopMenuBridge" parameterType="menuVO" resultType="java.lang.String">
+			SELECT C.PGM_URL
+		  FROM (           SELECT A.MENU_DIV,
+		                          A.PGM_ID,
+		                          A.MENU_ID,
+		                          A.MENU_LUP,
+		                          A.UPR_MENU_ID,
+		                          A.MENU_NAME
+		                     FROM (<include refid="Cmmn.usrRoleMenuListSql"/>) A
+		               START WITH A.UPR_MENU_ID = #{menuId}
+		               CONNECT BY PRIOR A.MENU_ID = A.UPR_MENU_ID
+		        ORDER SIBLINGS BY A.MENU_LUP) B,
+		           PRM_MNG C
+		 WHERE     C.PGM_ID = B.PGM_ID
+		       AND C.PGM_URL IS NOT NULL
+		       AND ROWNUM = 1	
+	</select>
+	
+	<select id="selectLeftMenuUrl" parameterType="menuVO" resultType="egovMap">
+		<![CDATA[
+			SELECT C.PGM_URL, B.MENU_ID
+			  FROM (           SELECT A.MENU_DIV,
+			                          A.PGM_ID,
+			                          A.MENU_ID,
+			                          A.MENU_LUP,
+			                          A.UPR_MENU_ID,
+			                          A.MENU_NAME
+			                     FROM MENU_MNG A
+			               START WITH A.UPR_MENU_ID = #{menuId}
+			               CONNECT BY PRIOR A.MENU_ID = A.UPR_MENU_ID
+			        ORDER SIBLINGS BY A.MENU_LUP) B,
+			       PRM_MNG C
+			 WHERE C.PGM_ID = B.PGM_ID AND C.PGM_URL IS NOT NULL AND ROWNUM = 1
+		]]>
+	</select>
+</mapper>

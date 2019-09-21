@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-4.0.xsd
+						http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+	<!-- (@Repository, @Service, @Controller 와 같은 어노테이션(Annotation) 을 통해 Bean 객체를 생성) 태그를 설정파일에 추가하면 해당 어노테이션이 적용된 클래스를 빈으로 등록하게 된다.
+		스캔 대상 클래스 범위 지정은
+		<context:include-filter> 태그와
+		<context:exclude-filter> 태그를 사용하면 자동 스캔 대상에 포함시킬 클래스와 포함시키지 않을 클래스를 구체적으로 명시할 수 있다.
+		<context:include-filter> : 포함
+		<context:exclude-filter> : 포함하지 않음. -->
+	<context:component-scan base-package="com.beauate, egovframework">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository" />
+	</context:component-scan>
+
+	<!-- 클라이언트로부터 http Request가 들어오면 핸들러맵핑은 요청 처리를 담당할 컨트롤러를 맵핑한다. -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="webBindingInitializer">
+			<bean class="egovframework.cmmn.web.EgovBindingInitializer" />
+		</property>
+		<property name="customArgumentResolvers">
+			<list>
+				<bean class="com.beauate.common.CommonArgumentResolver"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="portalInterceptor" />
+				<ref bean="localeChangeInterceptor" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 포탈 인터셉터 -->
+	<bean id="portalInterceptor" class="com.beauate.common.PortalInterceptor">
+		<!-- 인증 체크가 필요 없는 URL 리스트 (로그인, 메인화면과 egov파일관련)  -->
+		<property name="permittedURL">
+			<set>
+				<value>/login/a/n/[a-zA-Z]+\.do</value>
+				<value>/home/a/[a-zA-Z]+/[a-zA-Z]+\.do</value>
+				<value>/cmm/fms/[a-zA-Z]+\.do</value>
+			</set>
+		</property>
+	</bean>
+	
+
+	<!-- 쿠키를 이용한 Locale 이용시 <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"/> -->
+	<!-- 세션을 이용한 Locate -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+	<!-- 국제화(다국어) 인터셉터 -->
+	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="language" />
+	</bean>
+
+	<!-- 예외처리 -->
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="defaultErrorView" value="cmmn/egovError" />
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.springframework.dao.DataAccessException">cmmn/dataAccessFailure</prop>
+				<prop key="org.springframework.transaction.TransactionException">cmmn/transactionFailure</prop>
+				<prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">cmmn/egovError</prop>
+				<prop key="org.springframework.security.AccessDeniedException">cmmn/egovError</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- jsonView -->
+	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+	<bean id="bnViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0"/>		
+	
+	<!-- excelView -->
+	<bean id="excelView" class="com.beauate.common.CommonExcelView">
+		<property name="contentType" value="application/vnd.ms-excel; charset=UTF-8"></property>
+	</bean>
+	
+	<!-- 사용자에게 보여줄 view를 생성할때 prefix 와 suffix 로 지정해 줄수 있다. -->
+	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="1"
+		p:viewClass="org.springframework.web.servlet.view.JstlView"
+		p:prefix="/WEB-INF/jsp/beauate/" p:suffix=".jsp" />
+
+	<!-- For Pagination Tag -->
+	<bean id="imageRenderer" class="egovframework.cmmn.web.EgovImgPaginationRenderer" />
+
+	<bean id="paginationManager" class="egovframework.rte.ptl.mvc.tags.ui.pagination.DefaultPaginationManager">
+		<property name="rendererType">
+			<map>
+				<entry key="image" value-ref="imageRenderer" />
+			</map>
+		</property>
+	</bean>
+	<!-- /For Pagination Tag -->
+</beans>

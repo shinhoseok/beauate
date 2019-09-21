@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.beauate.login.service.LoginDao">
+	
+	<!-- 
+	쿼리명 : 로그인 사용자 정보
+	  설명 : 로그인 사용자 정보
+	수정일      수정자  수정내용
+	==========  ======  ===================
+	2016. 6.3   신호석  최초 생성
+	작성자 : 신호석
+	최초작성일 : 2016. 6.3
+	-->		
+	<select id="selectLoginUserInfo" parameterType="loginVO" resultType="loginVO">
+		<![CDATA[
+		SELECT U_SQ usrId,
+		       U_PW usrPw,
+		       U_NM usrNm,
+		       PHONE_NO mblPno,
+		       U_EMAIL emailAddr,
+		       JOIN_DT joinDt
+		  FROM USERS
+		 WHERE U_EMAIL = #{emailAddr}
+		   AND U_PW = #{usrPw}
+		 ]]>
+	</select>
+	
+	<!-- 사용자 권한 리스트 -->
+	<select id="selectUserRoleList" parameterType="loginVO" resultType="roleVO">
+		<![CDATA[
+		SELECT A.RL_ID AS rlId,
+		       B.RL_CD AS rlCd,
+		       B.RL_NAME AS rlName,
+		       B.RL_CLS AS rlCls
+		  FROM RL_USER_MPPG A INNER JOIN RL_MNG B ON A.RL_ID = B.RL_ID
+		 WHERE A.U_SQ = #{usrId}
+		 ]]>
+	</select>
+	
+	<!-- 사용자 포탈관리 메뉴에 권한이 있는 메뉴의 갯수 (상단의 포탈관리 버튼을 위한) -->
+	<select id="selectPortalManageRoleCnt" parameterType="loginVO" resultType="java.lang.Integer">
+		<![CDATA[
+		SELECT COUNT (*)
+		  FROM MENU_MNG C,
+		       (SELECT B.MENU_ID
+		          FROM    RL_USER_MPPG A
+		               INNER JOIN
+		                  MENU_RL_MPPG B
+		               ON A.RL_ID = B.RL_ID
+		         WHERE A.U_SQ = #{usrId}) D
+		 WHERE C.MENU_ID = D.MENU_ID AND C.MENU_DIV = 2
+		 ]]>
+	</select>
+</mapper>

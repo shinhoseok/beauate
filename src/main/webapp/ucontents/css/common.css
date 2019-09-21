@@ -1,0 +1,110 @@
+@charset "UTF-8";
+
+/* button  */
+.btn {display:inline-block;width:100%;height:72px;color:#fff;line-height:1.2;letter-spacing: -0.63px;text-align:center;background-color:#0a0a0a;}
+.btn:focus,
+.btn:hover {background-color:#6a2cfe !important;}
+
+/* 컨텐츠 네비 */
+.cont-nav {height:59px;border-bottom:1px solid #f9f9f9;}
+.cont-nav ul {overflow:hidden;width:1280px;margin:0 auto;}
+.cont-nav ul li {float:left;margin-right:80px;padding-top:25px;}
+.cont-nav ul li a {position:relative;display:block;height:35px;font-size:16px;line-height:1.5;letter-spacing:-0.5px;}
+.cont-nav ul li a:hover,
+.cont-nav ul li a:focus,
+.cont-nav ul li a.active {color:#6a2cfe;}
+.cont-nav ul li a:hover:before,
+.cont-nav ul li a:focus:before,
+.cont-nav ul li a.active:before {position:absolute;bottom:0;display:block;width:100%;height:2px;background-color:#6a2cfe;content:''}
+
+/* 제품리스트 */
+[class*='product-list'] .nodata{position:relative;}
+[class*='product-list'] .nodata:after {content:""; position:absolute; left:0; bottom:-30px; display:block; width:100%; border-bottom:1px solid #ddd;}
+[class*='product-list']:after {content:''; display:block; clear:both;}
+[data-column="4"] li {float:left;width:calc((100% - (38px * 3)) /4); margin-left:38px;}
+[data-column="4"] li:nth-child(4n+1) {clear:left;margin-left:0;}
+
+/* table */
+.table-wrap {position:relative;}
+.table-wrap .table-total-view {position:absolute;right:0;top:-25px;}
+.table-col{border-top:2px solid #444;border-bottom:1px solid #979797;table-layout:fixed;}
+.table-col thead tr + tr th {border-top: 1px solid #ddd;}
+.table-col thead th{padding:10px; border-top:none; background:#f5f7fa;padding:10px;font-weight:500;color:#000;border-top:1px solid #979797;color:#000;text-align:center;}
+.table-col tbody td {padding:20px 10px; border-top:1px solid #979797;color:#000;text-align:center;background:#fff;}
+.table-col tbody td .price01 {color:#8e8e8e;}
+.table-col tbody .product-thumb img {width:135px;height:135px;border:1px solid #bfbfbf;}
+.table-col tbody .row-block {padding-top:10px;text-align:left;}
+.table-col tbody .row-block  span {display:block;margin-bottom:10px;}
+.table-col tbody .table-btn a {display:inline-block;margin:0 1px;color:#fff;height:30px;line-height:28px;padding:0 15px;font-size:13px;}
+.table-col tbody .table-btn .btn-buy {background-color:#ad37e3;}
+.table-col tbody .table-btn .btn-del {background-color:#313131;}
+.table-col tbody .link {margin-top:10px;font-size:14px;color:#1b40de;}
+.table-col tbody .link a {text-decoration:underline;}
+
+/* paging */
+.paging{text-align:center; font-size:0;}
+.paging [class^=btn-]{width:32px; height:32px; border-radius:0; background:url('../images/common/btn_paging.png') no-repeat}
+.paging .btn-last{background-position-x:-50px;}
+.paging .btn-prev{margin-left:8px; background-position-x:0;}
+.paging .btn-next{margin-right:8px; background-position-y:-32px;}
+.paging [class^=btn-] span{display:block; text-indent:-999999px;}
+.paging ul{display:inline-block; margin:0 10px; vertical-align:top;}
+.paging li{display:inline-block; width:32px; height:32px; margin-left:20px; line-height:30px; text-align:center;}
+.paging li:first-child {margin-left:0;}
+.paging li a{display:block; height:32px; font-size:15px;color:#727272;}
+.paging li span{position:relative; display:block; font-size:15px;color:#6a2cfe;border-radius:50%;border:1px solid #6a2cfe;}
+
+/* checkbox */
+.input-checkbox + label {margin-left:10px;}
+label .input-checkbox {margin-right:10px;}
+label .input-checkbox + em {margin-right:4px;color:#6a2cfe;}
+.input-checkbox{position:relative; display:inline-block; vertical-align:middle; width:22px; height:22px; margin-top:-0.25em;}
+.input-checkbox input{position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; z-index:3;}
+.input-checkbox input:checked{background:blue;}
+.input-checkbox:after{content:''; display:block; width:22px; height:22px;box-sizing:border-box;border:1px solid #868686;border-radius:100%;background-color:#fff;}
+.active .input-checkbox:after,
+.input-checkbox.active:after{border:1px solid #6a2cfe;background:#6a2cfe url('../images/common/label_check.png') no-repeat 50%;}
+.input-checkbox.disabled:after{opacity:0.3;}
+
+
+
+
+.slider {position:relative;}
+		.slick-prev {z-index:1; position:absolute; left:0; top:0; padding:5px; background:Red;}
+		.slick-next {z-index:1; position:absolute; right:0; top:0; padding:5px; background:Red;}
+		.slider .slick-slide {text-align:center; box-sizing:border-box; font-size:40px; height:200px; border:10px solid #fee;}
+		.slider .slick-slide:before {content:''; display:inline-block; height:100%; vertical-align:middle;}
+		.slick-dots {margin-top:10px; text-align:center;}
+		.slick-dots li {display:inline-block;}
+		.slick-dots li button {padding:0 10px;}
+
+/* radio */
+.input-radio + label {margin-left:8px;}
+label .input-radio {margin-right:8px;}
+.input-radio{position:relative; display:inline-block; vertical-align:middle; margin-top:-0.25em; width:18px; height:18px; border:1px solid #d2d2d2; border-radius:100%;}
+.input-radio input{position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; z-index:3; background:red;}
+.input-radio input:checked{background:blue;}
+.input-radio.on{border-color:#0e5232; background:#0e5232}
+.input-radio.on:after{content:''; position:absolute; top:50%; left:50%; display:block; width:8px; height:8px; border-radius:100%; background:#fff; transform:translate(-50%, -50%); -ms-transform:translate(-50%, -50%);} /* 2019-07-09 ie9 -ms- transform 추가 */
+.input-radio.disabled.on{opacity:0.3; background:#0e5232;}
+.input-radio.disabled{background:#f8f8f8; opacity:1;}
+.input-radio.focus{border-color:#000;}
+label {line-height:24px;}
+
+/* accordion*/
+[data-accordion]{display:block;}
+[data-accordion].active + [data-adodion-contents]{display:block}
+[data-accordion-contents]{display:none;}
+
+/* tab */
+/* tab */
+[class^=tab-list]:after {content:""; display:block; clear:both;}
+[class^=tab-list] li {position:relative; float:left; width:50%; box-sizing:border-box; text-align:center;}
+.tab-list {position:relative; max-width:1278px; background-color:#f8f8f8;}
+.tab-list li:last-child a {border-right-color:#ddd}
+.tab-list a{display:block; height:60px; border:1px solid #ddd; border-right-color:transparent; box-sizing:border-box; line-height:58px; font-size:18px; color:#767676; text-align:center;}
+.tab-list .active a {height:40px; line-height:40px; font-size:15px;}
+.tab-list .active + li a{border-left-color:transparent !important;}
+
+[data-tab-content]{display:none !important}
+[data-tab-content].active{display:block !important;}

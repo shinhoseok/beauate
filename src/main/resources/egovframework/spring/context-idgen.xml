@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+	<!-- 
+		strategy: 아래에 정의된 MixPrefix 의 bean name 설정
+		blockSize : Id Generation 내부적으로 사용하는 정보로 ID 요청시 지정된 횟수가 될 경우만 DB에 접근해서 업데이트 한다.
+		prefix: 아이디의 앞에 고정적으로 붙이고자 하는 설정값 지정
+		cipers: prefix를 제외한 아이디의 길이 지정
+		fillChar: 0을 대신하여 표현되는 문자
+	 -->
+	 
+	<!-- 1. 사용자 관리 -->
+	<bean name="userPrefix" class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
+		<property name="prefix" value="USR-" />
+		<property name="cipers" value="6" />
+		<property name="fillChar" value="0" />
+	</bean>
+	<bean name="userIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+		<property name="dataSource" ref="dataSource" />
+		<property name="strategy" ref="userPrefix" />
+		<property name="blockSize" 	value="1"/>
+		<property name="table"	   	value="SQ_MNG"/>
+		<property name="tableName"	value="USERS"/>
+	</bean>
+	
+	<!-- 1.1 사용자 통계 -->
+	<bean name="userStatsPrefix" class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
+		<property name="prefix" value="" />
+		<property name="cipers" value="10" />
+		<property name="fillChar" value="0" />
+	</bean>
+	<bean name="userStatsIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+		<property name="dataSource" ref="dataSource" />
+		<property name="strategy" ref="userStatsPrefix" />
+		<property name="blockSize" 	value="1"/>
+		<property name="table"	   	value="SQ_MNG"/>
+		<property name="tableName"	value="ACCESS_LOG"/>
+	</bean>
+	
+	<!-- 2. 프로그램 관리 -->
+	<bean name="programPrefix" class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
+		<property name="prefix" value="PRG-" />
+		<property name="cipers" value="6" />
+		<property name="fillChar" value="0" />
+	</bean>
+	<bean name="programIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+		<property name="dataSource" ref="dataSource" />
+		<property name="strategy" ref="programPrefix" />
+		<property name="blockSize" 	value="1"/>
+		<property name="table"	   	value="SQ_MNG"/>
+		<property name="tableName"	value="PRGR_MNG"/>
+	</bean>
+			
+	<!-- 3. 메뉴관리 -->
+	<bean name="menuIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+		<property name="dataSource" ref="dataSource" />
+		<property name="strategy" 	ref="menuPrefix" />
+		<property name="blockSize" 	value="1"/>
+		<property name="table"	   	value="SQ_MNG"/>
+		<property name="tableName"	value="MENU_MNG"/>
+	</bean>
+	<bean name="menuPrefix" class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
+		<property name="prefix"   value="MEN-" />
+		<property name="cipers"   value="6" />
+		<property name="fillChar" value="0" />
+	</bean>	
+	
+	<!-- 4. 메뉴 권한 맵핑테이블 -->
+	<bean name="mnRlMappingIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+		<property name="dataSource" ref="dataSource" />
+		<property name="strategy" ref="mnRlMappingPrefix" />
+		<property name="blockSize" 	value="1"/>
+		<property name="table"	   	value="SQ_MNG"/>
+		<property name="tableName"	value="MENU_ATHR_MAPNG"/>
+	</bean>
+	<bean name="mnRlMappingPrefix" class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
+		<property name="prefix" value="MRM-" />
+		<property name="cipers" value="6" />
+		<property name="fillChar" value="0" />
+	</bean>
+	
+	<!-- 5. 권한관리 -->
+	<!-- 권한 그룹 아이디 -->
+	<bean name="roleIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+		<property name="dataSource"	ref="dataSource"/>
+		<property name="strategy"	ref="rolePrefix"/>
+		<property name="blockSize"	value="1"/>
+		<property name="table"		value="SQ_MNG"/>
+		<property name="tableName"	value="ATHR_MNG"/>
+	</bean>
+	<bean name="rolePrefix" class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
+		<property name="prefix"		value="ROL-"/>
+		<property name="cipers"		value="6"/>
+		<property name="fillChar"	value="0"/>
+	</bean>
+	
+	<!-- 권한별 사용자 매핑 아이디 -->
+	<bean name="roleUserMappingIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+		<property name="dataSource"	ref="dataSource"/>
+		<property name="strategy"	ref="roleUserMappingPrefix"/>
+		<property name="blockSize"	value="1"/>
+		<property name="table"		value="SQ_MNG"/>
+		<property name="tableName"	value="ATHR_USER_MAPNG"/>
+	</bean>
+	<bean name="roleUserMappingPrefix" class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
+		<property name="prefix"		value="RUM-"/>
+		<property name="cipers"		value="6"/>
+		<property name="fillChar"	value="0"/>
+	</bean>
+	
+	<!-- 6. 공통코드관리 -->
+	<!-- 공통코드 저장(대분류) -->
+	<bean name="codeIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+		<property name="dataSource" ref="dataSource" />
+		<property name="strategy" ref="codePrefix" />
+		<property name="blockSize" 	value="1"/>
+		<property name="table"	   	value="SQ_MNG"/>
+		<property name="tableName"	value="COMMON_CD_LCLS"/>
+	</bean>
+	<bean name="codePrefix"  class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
+		<property name="prefix" value="CODEL-" />
+		<property name="cipers" value="6" />
+		<property name="fillChar" value="0" />
+	</bean>
+	
+	<!-- 공통코드 저장(소분류) -->
+	<bean name="codeIdGnrServiceM" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+		<property name="dataSource" ref="dataSource" />
+		<property name="strategy" ref="codePrefixM" />
+		<property name="blockSize" 	value="1"/>
+		<property name="table"	   	value="SQ_MNG"/>
+		<property name="tableName"	value="COMMON_CD_SCLS"/>
+	</bean>
+	<bean name="codePrefixM" class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
+		<property name="prefix" value="CODEM-" />
+		<property name="cipers" value="6" />
+		<property name="fillChar" value="0" />
+	</bean>
+
+	<bean name="egovFileIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+		<property name="dataSource" ref="dataSource" />
+		<property name="strategy" ref="fileStrategy" />
+		<property name="blockSize" 	value="10"/>
+		<property name="table"	   	value="SQ_MNG"/>
+		<property name="tableName"	value="ADMIN_IMG"/>
+	</bean>
+	
+	<bean name="fileStrategy" class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
+		<property name="prefix" value="FILE_" />
+		<property name="cipers" value="15" />
+		<property name="fillChar" value="0" />
+	</bean>	
+</beans>

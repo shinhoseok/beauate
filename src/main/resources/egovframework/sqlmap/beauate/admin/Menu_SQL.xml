@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.beauate.admin.menu.service.MenuDao">
+	
+	<!-- 쿼리명 : 메뉴 리스트
+	설명 : 메뉴 트리 리스트 (계층형)
+	수정일         수정자          수정내용
+	==========    ========  ===================
+	2019. 5. 30    신호석          최초 생성
+	작성자 :  신호석
+	최초작성일 : 2019. 5. 30
+	-->	
+	<select id="selectMenuList" parameterType="menuVO" resultType="menuVO">
+		<![CDATA[
+		           SELECT MENU_ID AS menuId,
+		                  MENU_DIV AS menuDiv,
+		                  MENU_NAME AS menuName,
+		                  MENU_DES AS menuDes,
+		                  UPR_MENU_ID AS uprMenuId,
+		                  MENU_LUP AS menuLup,
+		                  PGM_ID AS pgmId,
+		                  OT_URL AS otUrl,
+		                  USE_YN AS useYn,
+		                  RG_ID AS rgId,
+		                  RG_DT AS rgDt,
+		                  MOD_ID AS modId,
+		                  MOD_DT AS modDt,
+		                  MENU_LVL AS menuLvl,
+		                  LEVEL,
+		                  CONNECT_BY_ISLEAF AS isleaf,
+		                  CONNECT_BY_ROOT MENU_ID AS root
+		             FROM MENU_MNG
+		       START WITH UPR_MENU_ID IS NULL
+		       CONNECT BY PRIOR MENU_ID = UPR_MENU_ID
+		ORDER SIBLINGS BY MENU_LUP
+		]]>	  
+	</select>
+	
+	<!-- 쿼리명 : 메뉴 상세 정보
+	설명 :  메뉴 상세
+	수정일         수정자        수정내용
+	===========   ========  ===================
+	2019. 6. 13    신호석        최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6. 13
+	-->	
+	<select id="selectMenu" parameterType="menuVO" resultType="menuVO">
+		<![CDATA[
+			SELECT MENU_ID AS menuId,
+			       MENU_DIV AS menuDiv,
+			       MENU_NAME AS menuName,
+			       MENU_DES AS menuDes,
+			       UPR_MENU_ID AS uprMenuId,
+			       MENU_LUP AS menuLup,
+			       B.PGM_ID AS pgmId,
+			       B.PGM_NAME AS pgmName,
+			       B.PGM_URL AS pgmUrl,
+			       B.PGM_PARAM AS pgmParam,
+			       OT_URL AS otUrl,
+			       USE_YN AS useYn,
+			       MENU_LVL AS menuLvl,
+			       A.RG_ID AS rgId,
+			       A.RG_DT AS rgDt,
+			       A.MOD_ID AS modId,
+			       A.MOD_DT AS modDt
+			  FROM MENU_MNG A, PRM_MNG B
+			 WHERE MENU_ID = #{menuId}
+			   AND A.PGM_ID = B.PGM_ID(+)
+		]]>		
+	</select>
+	
+	<!-- 쿼리명 : 메뉴 등록 
+	설명 : 메뉴 등록 
+	수정일         수정자        수정내용
+	===========   ========  ===================
+	2019. 6. 13    신호석        최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6. 13
+	-->	
+	<insert id="insertMenu" parameterType="menuVO">
+		<![CDATA[
+			INSERT INTO MENU_MNG (MENU_ID,
+			                        MENU_DIV,
+			                        MENU_NAME,
+			                        MENU_DES,
+			                        UPR_MENU_ID,
+			                        MENU_LUP,
+			                        PGM_ID,
+			                        OT_URL,
+			                        USE_YN,
+			                        MENU_LVL,
+			                        RG_ID,
+			                        RG_DT)
+			     VALUES (#{menuId},
+			             #{menuDiv},
+			             TRIM (#{menuName}),
+			             #{menuDes},
+			             #{uprMenuId},
+			             #{menuLup},
+			             #{pgmId},
+			             TRIM(#{otUrl, jdbcType=VARCHAR}),
+	                     #{useYn},
+	                     #{menuLvl},
+	                     #{rgId},
+	                     SYSDATE)
+		]]>
+	</insert>
+	
+	<!-- 쿼리명 : 메뉴 등록으로 인한 동레벨 메뉴 재정렬
+	설명 :  메뉴 등록으로 인한 동레벨 메뉴 재정렬
+	수정일         수정자        수정내용
+	===========   ========  ===================
+	2019. 6. 13    신호석        최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6. 13
+	-->	
+	<update id="insertMenuOrder" parameterType="menuVO">
+		<![CDATA[
+			UPDATE MENU_MNG
+			   SET MENU_LUP = MENU_LUP + 1
+			 WHERE     UPR_MENU_ID IS NOT NULL
+			       AND UPR_MENU_ID = #{uprMenuId}
+			       AND MENU_ID != #{menuId}
+			       AND MENU_LUP >= #{menuLup}
+		]]>
+	</update>
+	
+	<!-- 쿼리명 :  메뉴 갯수
+	설명 : 하위의 같은 레벨 메뉴의 갯수
+	수정일         수정자        수정내용
+	===========   ========  ===================
+	2019. 6. 13    신호석        최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6. 13
+	-->	
+	<select id="selectUprMenuCnt" parameterType="menuVO" resultType="int">
+		<![CDATA[
+		SELECT COUNT (*) cnt
+		  FROM MENU_MNG
+		 WHERE UPR_MENU_ID = #{uprMenuId}
+		]]>	
+	</select>
+	
+	<!-- 쿼리명 :  메뉴 수정 
+	설명 : 메뉴 수정 
+	수정일         수정자        수정내용
+	===========   ========  ===================
+	2019. 6. 13    신호석        최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6. 13
+	-->	
+	<update id="updateMenu" parameterType="menuVO">
+		<![CDATA[
+		UPDATE MENU_MNG
+		   SET MENU_NAME = TRIM (#{menuName}),
+		       MENU_DES = #{menuDes},
+		       MENU_LUP = #{menuLup},
+		       PGM_ID = #{pgmId, jdbcType=VARCHAR},
+		       OT_URL      = TRIM(#{otUrl, jdbcType=VARCHAR}),
+		       USE_YN = #{useYn},
+		       MOD_ID = #{modId},
+		       MOD_DT = SYSDATE
+		 WHERE UPR_MENU_ID IS NOT NULL AND MENU_ID = #{menuId}
+		]]>
+	</update>
+	
+	<!-- 쿼리명 :  메뉴 수정으로 인한 동레벨 메뉴 재정렬
+	설명 : 메뉴 수정시 메뉴 정렬값 수정 (1레벨 root 메뉴 수정금지)
+	수정일         수정자        수정내용
+	===========   ========  ===================
+	2019. 6. 13    신호석        최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6. 13
+	-->	
+	<update id="updateMenuOrder" parameterType="menuVO">
+		<![CDATA[
+		UPDATE MENU_MNG
+		   SET 
+		]]>
+		<choose>
+			<when test="preMenuLup > menuLup">
+				<![CDATA[
+					MENU_LUP = MENU_LUP+1,
+				]]>
+			</when>
+			<when test="preMenuLup lt menuLup">
+				<![CDATA[
+					MENU_LUP = MENU_LUP-1,
+				]]>
+			</when>
+		</choose>
+        <![CDATA[			
+			       MOD_ID      = #{modId},
+			       MOD_DT      = SYSDATE
+		 WHERE  UPR_MENU_ID IS NOT NULL
+		 	AND UPR_MENU_ID = #{uprMenuId}
+		]]>
+		<choose>
+			<when test="preMenuLup > menuLup">
+				<![CDATA[
+					AND MENU_LUP >= #{menuLup} AND MENU_LUP < #{preMenuLup}
+				]]>
+			</when>
+			<when test="preMenuLup lt menuLup">
+				<![CDATA[
+					AND MENU_LUP > #{preMenuLup} AND MENU_LUP <= #{menuLup}
+				]]>
+			</when>
+		</choose>
+	</update>
+	
+	<!-- 쿼리명 :   메뉴 삭제
+	설명 :  메뉴 삭제 (1레벨 root 메뉴 삭제금지)
+	수정일         수정자        수정내용
+	===========   ========  ===================
+	2019. 6. 13    신호석        최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6. 13
+	-->	
+	<delete id="deleteMenu" parameterType="menuVO">
+		<![CDATA[
+			DELETE FROM MENU_MNG WHERE UPR_MENU_ID IS NOT NULL AND MENU_ID = #{menuId}
+		]]>
+	</delete>
+	
+	<!-- 쿼리명 :   메뉴 삭제로 인한 동레벨 메뉴 재정렬
+	설명 :  메뉴 삭제로 인한 동레벨 메뉴 재정렬
+	수정일         수정자        수정내용
+	===========   ========  ===================
+	2019. 6. 13    신호석        최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6. 13
+	-->	
+	<update id="deletMenuOrder" parameterType="menuVO">
+		<![CDATA[
+			UPDATE MENU_MNG
+			   SET MENU_LUP = MENU_LUP - 1
+			 WHERE     UPR_MENU_ID IS NOT NULL
+			       AND UPR_MENU_ID = #{uprMenuId}
+			       AND MENU_LUP > #{menuLup}
+		]]>
+	</update>
+	
+	<select id="selectRolePopList" parameterType="menuVO" resultType="menuVO">
+		<![CDATA[
+		SELECT A.RL_ID AS rlId,
+		       A.RL_CD AS rlCd,
+		       A.RL_NAME AS rlName,
+		       A.RL_DES AS rlDes,
+		       A.RL_CLS AS rlCls
+		  FROM RL_MNG A
+		 WHERE     1 = 1
+		]]>
+		<if test="menuDiv == 2">
+			AND RL_CLS = #{rlCls}
+		</if>
+		<![CDATA[
+		       AND NOT EXISTS
+		              (SELECT B.RL_ID
+		                 FROM MENU_RL_MPPG B
+		                WHERE 1 = 1 AND MENU_ID = #{menuId} AND A.RL_ID = B.RL_ID)
+		]]>
+	</select>
+	
+	<!-- 쿼리명 : 권한 맵핑 리스트
+	설명 : 권한 팝업시 메뉴 맵핑 목록
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 6. 13    신호석        최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6. 13
+	-->	
+	<select id="selectRoleMappList" parameterType="menuVO" resultType="menuVO">
+		<![CDATA[
+		SELECT A.MPPG_ID AS mppgId,
+		       A.RL_ID AS rlId,
+		       A.MENU_ID AS menuId,
+		       A.RL_DIV AS rlDiv,
+		       B.RL_NAME AS rlName,
+		       B.RL_CD AS rlCd,
+		       A.RG_ID AS rgId,
+		       A.RG_DT AS rgDt
+		  FROM MENU_RL_MPPG A, RL_MNG B
+		 WHERE 1 = 1 
+		   AND A.MENU_ID = #{menuId} 
+		   AND A.RL_ID = B.RL_ID
+		]]>
+	</select>
+	
+	<!-- 쿼리명 : 권한 맵핑 삭제
+	설명 : 메뉴 권한 맵핑 삭제
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 6. 13    신호석        최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6. 13
+	-->	
+	<delete id="deleteRoleMappList" parameterType="menuVO">
+		<![CDATA[
+			DELETE FROM MENU_RL_MPPG WHERE MENU_ID = #{menuId}
+		]]>
+	</delete>
+	
+	<!-- 쿼리명 : 권한 맵핑 등록
+	설명 : 메뉴 권한 맵핑 등록 
+	수정일               수정자          수정내용
+	==========  ========  ===================
+	2019. 6. 13    신호석        최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6. 13
+	-->	
+	<insert id="insertRoleMappList" parameterType="menuVO">
+		<![CDATA[
+		INSERT INTO MENU_RL_MPPG (MPPG_ID,
+		                        RL_ID,
+		                        MENU_ID,
+		                        RL_DIV,
+		                        RG_ID,
+		                        RG_DT)
+		     VALUES (#{mppgId},
+		             #{rlId},
+		             #{menuId},
+		             #{rlDiv},
+		             #{rgId},
+		             SYSDATE
+		             )
+		]]>
+	</insert>
+	
+	<!-- 
+	쿼리명 : 인터셉터에서  uri 정보로 메뉴 권한 가져오기
+	  설명 : 인터셉터에서  uri 정보로 메뉴 권한 가져오기
+	수정일      수정자  수정내용
+	==========  ======  ===================
+	2019. 6.3   신호석  최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6.3
+	-->		
+	<insert id="menuStatsInsert" parameterType="menuStatsVO">
+		<![CDATA[
+		INSERT INTO MENU_STATS (STATS_ID,
+	                               MENU_ID,
+	                               ACCESS_URL,
+	                               ACCESS_IP,
+	                               U_SQ,
+	                               VISIT_DT)
+		     VALUES (#{statsId}, 
+		             #{menuId},
+		             #{accessUrl},
+		             #{accessIp},
+		             #{usrId, jdbcType=VARCHAR},
+		             SYSDATE)
+		]]>
+	</insert>
+
+	<!-- 
+	쿼리명 : 메뉴차트
+	  설명 : 메뉴차트
+	수정일      수정자  수정내용
+	==========  ======  ===================
+	2019. 6.3   신호석  최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6.3
+	-->		
+	<select id="selectMenuChart" parameterType="menuStatsVO" resultType="egovMap">
+		<![CDATA[
+		SELECT A.*
+		  FROM (SELECT COUNT (MENU_ID) OVER (PARTITION BY MENU_ID) AS ROW_SPAN1,
+		               ROW_NUMBER () OVER (PARTITION BY MENU_ID ORDER BY VISIT_DT)
+		                  AS ORDER_NUM1,
+		               (SELECT MENU_NAME
+		                  FROM MENU_MNG A
+		                 WHERE A.MENU_ID = B.MENU_ID)
+		                  AS MENU_NAME
+		          FROM MENU_STATS B
+		         WHERE TO_CHAR (VISIT_DT, 'YYYY-MM-DD') BETWEEN #{startDate} AND #{endDate}) A
+		 WHERE A.ROW_SPAN1 = ORDER_NUM1
+		]]>
+	</select>
+	
+	<!-- 
+	쿼리명 : 메뉴 차트 리스트
+	  설명 : 메뉴 차트 리스트
+	수정일      수정자  수정내용
+	==========  ======  ===================
+	2019. 6.3   신호석  최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6.3
+	-->		
+	<select id="selectMenuChartList" parameterType="menuStatsVO" resultType="egovMap">
+		<![CDATA[
+			SELECT A.*
+			  FROM (SELECT ROW_NUMBER () OVER (
+		]]>
+			<choose>
+				<when test="sortSubject == 'visitDate'">
+					ORDER BY VISIT_DT
+				</when>
+				<when test="sortSubject == 'menuName'">
+					ORDER BY MENU_NAME
+				</when>
+				<when test="sortSubject == 'accessUrl'">
+					ORDER BY ACCESS_URL
+				</when>
+				<when test="sortSubject == 'accessIp'">
+					ORDER BY ACCESS_IP
+				</when>
+				<otherwise>
+					ORDER BY U_SQ
+				</otherwise>
+			</choose>
+			<choose>
+				<when test="sortDescend == 'desc'">
+					DESC
+				</when>
+				<otherwise>
+					ASC
+				</otherwise>
+			</choose>
+		<![CDATA[
+			  			 ) RNUM, T.*
+	          FROM (SELECT TO_CHAR (VISIT_DT, 'YYYY-MM-DD') AS ACCESS_DATE,
+						   VISIT_DT,
+	                       (SELECT MENU_NAME
+	                          FROM MENU_MNG A
+	                         WHERE A.MENU_ID = B.MENU_ID)
+	                          AS MENU_NAME,
+	                       U_SQ,
+	                       ACCESS_URL,
+	                       ACCESS_IP
+	                  FROM MENU_STATS B
+	                 WHERE TO_CHAR (VISIT_DT, 'YYYY-MM-DD') BETWEEN #{startDate}
+			                                                      AND #{endDate}) T ) A
+			 WHERE A.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
+		]]>
+</select>
+
+	<!-- 
+	쿼리명 : 메뉴 차트 리스트 총 건수
+	  설명 : 메뉴 차트 리스트 총 건수
+	수정일      수정자  수정내용
+	==========  ======  ===================
+	2019. 6.21   신호석  최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 6.21
+	-->		
+	<select id="selectMenuChartListCnt" parameterType="menuStatsVO" resultType="int">
+		<![CDATA[
+			SELECT COUNT (TO_CHAR (VISIT_DT, 'YYYY-MM-DD')) AS CNT
+			  FROM MENU_STATS B
+			 WHERE TO_CHAR (VISIT_DT, 'YYYY-MM-DD') BETWEEN #{startDate}
+			                                              AND #{endDate}
+		]]>
+	</select>
+</mapper>

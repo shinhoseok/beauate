@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 의 interface 를 찾아가서 쿼리문의 id와 interface의 method 명으로 매핑 -->
+<mapper namespace="com.beauate.admin.role.service.RoleDao">
+
+	<!-- 권한 Database 검색 키워드 유무에 따른 쿼리 선택 -->
+	<sql id="searchClauseForRoleDB">
+		<if test="searchKeyword != null and searchKeyword != ''">
+			<choose>
+				<when test="searchCondition == 'rlName'">
+					AND UPPER(RL_NAME) LIKE '%'|| UPPER(#{searchKeyword}) ||'%'
+				</when>
+				<when test="searchCondition == 'rlCd'">
+					AND UPPER(RL_CD) LIKE '%'|| UPPER(#{searchKeyword}) ||'%'
+				</when>
+				<when test="searchCondition == 'rlCls'">
+					AND UPPER(RL_CLS) LIKE '%'|| UPPER(#{searchKeyword}) ||'%'
+				</when>
+				<when test="searchCondition == 'rlId'">
+					AND UPPER(RL_ID) LIKE '%'|| UPPER(#{searchKeyword}) ||'%'
+				</when>
+			</choose>
+		</if>
+	</sql>
+
+	<sql id="searchClauseForRoleUserList">
+		<if test="searchKeyword != null and searchKeyword != ''">
+			<choose>
+				<when test="searchCondition == 'usrId'">
+					AND UPPER(U.U_SQ) LIKE '%'|| UPPER(#{searchKeyword}) ||'%'
+				</when>
+				<when test="searchCondition == 'usrNm'">
+					AND UPPER(U.U_NM) LIKE '%'|| UPPER(#{searchKeyword}) ||'%'
+				</when>
+			</choose>
+		</if>
+	</sql>
+
+	<!-- 권한 Database 정렬 법칙 결정 -->
+	<sql id="sortClauseForRoleDB">
+		<choose>
+			<when test="sortSubject == 'rlId'">
+				ORDER BY RL_ID
+			</when>
+			<when test="sortSubject == 'rlCd'">
+				ORDER BY RL_CD
+			</when>
+			<otherwise>
+				ORDER BY RL_NAME
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="sortDescend == 'desc'">
+				DESC
+			</when>
+			<otherwise>
+				ASC
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<!-- 사용자 Database 정렬 법칙 결정 -->
+	<sql id="sortClauseForUserRoleList">
+		<choose>
+			<when test="sortSubject == 'userId'">
+				ORDER BY U.U_SQ
+			</when>
+			<otherwise>
+				ORDER BY U.U_NM
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="sortDescend == 'desc'">
+				DESC
+			</when>
+			<otherwise>
+				ASC
+			</otherwise>
+		</choose>
+	</sql>
+	
+
+	<sql id="sortClauseUserRoleList">
+		<choose>
+			<when test="sortSubject == 'usrId'">
+				ORDER BY U.U_SQ
+			</when>
+			<when test="sortSubject == 'usrNm'">
+				ORDER BY U.U_NM
+			</when>
+			<when test="sortSubject == 'psitNm'">
+				ORDER BY U.PSIT_NM
+			</when>
+			<when test="sortSubject == 'ogNm'">
+				ORDER BY D.OG_NM
+			</when>
+		</choose>
+		<choose>
+			<when test="sortDescend == 'desc'">
+				DESC
+			</when>
+			<otherwise>
+				ASC
+			</otherwise>
+		</choose>
+	</sql>
+
+	<resultMap type="roleVO" id="roleResultMap">
+		<result column="RL_ID" property="rlId" />
+		<result column="RL_CD" property="rlCd" />
+		<result column="RL_NAME" property="rlName" />
+		<result column="RL_DES" property="rlDes" />
+		<result column="RL_CLS" property="rlCls" />
+		<result column="RG_ID" property="rgId" />
+		<result column="RG_DT" property="rgDt" />
+		<result column="MOD_ID" property="modId" />
+		<result column="MOD_DT" property="modDt" />
+		<result column="MPPG_ID" property="mppgId" />
+	</resultMap>
+
+	<!--
+	쿼리명		: 권한 그룹 목록
+	설명			: 권한 관리의 첫 화면에 뿌려지는 권한 그룹 목록을 불러 온다.
+	작성자		: 신호석
+	
+	수정일				수정자			수정내용
+	============		========		===================
+	2019. 06.24			신호석			최초 생성
+	-->
+	<select id="selectRoleGroupList" resultType="roleVO" parameterType="roleVO">
+		SELECT
+			A.*
+		FROM
+			(SELECT
+				ROW_NUMBER () OVER (<include refid="sortClauseForRoleDB"/>) RNUM
+				, RL_ID AS rlId
+				, RL_CD AS rlCd
+				, RL_NAME AS rlName
+				, RL_DES AS rlDes
+				, RL_CLS AS rlCls
+				, RG_ID AS rgId
+				, RG_DT AS rgDt
+				, MOD_ID AS modId
+				, MOD_DT AS modDt
+			FROM
+				RL_MNG
+			WHERE 1 = 1
+			<include refid="searchClauseForRoleDB"/>
+			) A
+		WHERE A.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
+	</select>
+
+	<!--
+	쿼리명		: 권한 그룹 목록 갯수
+	설명			: 권한 그룹 목록의 페이징 처리를 위한 글 카운트를 가져온다.
+	작성자		: 신호석
+	
+	수정일				수정자			수정내용
+	============		========		===================
+	2019. 06.24			신호석			최초 생성
+	-->
+	<select id="selectRoleGroupListCnt" resultType="java.lang.Integer" parameterType="roleVO">
+		SELECT
+			COUNT (*) CNT
+		FROM
+			RL_MNG
+		WHERE 1 = 1
+		<include refid="searchClauseForRoleDB"/>
+	</select>
+	
+	<!--
+	쿼리명		: 권한 그룹 정보 상세 보기
+	설명			: 권한 그룹 정보의 상세보기 내용을 가져온다.
+	작성자		: 신호석
+	
+	수정일				수정자			수정내용
+	============		========		===================
+	2019. 06.27.			신호석			최초 생성
+	-->
+	<select id="selectRoleGroupDetail" parameterType="roleVO" resultMap="roleResultMap">
+		SELECT
+			RL_ID
+			, RL_CD
+			, RL_NAME
+			, RL_DES
+			, RL_CLS
+			, RG_ID
+			, RG_DT
+			, MOD_ID
+			, MOD_DT
+		FROM
+			RL_MNG
+		WHERE
+			RL_ID = #{rlId}
+	</select>
+	
+	<!--
+	쿼리명		: 권한 그룹 정보 삭제
+	설명			: 권한 그룹 정보의 상세보기 화면에서 해당 정보를 삭제 한다.
+	작성자		: 신호석
+	
+	수정일				수정자			수정내용
+	============		========		===================
+	2019. 06.27.		신호석			최초 생성
+	-->
+	<delete id="deleteRoleGroup" parameterType="roleVO">
+		DELETE FROM RL_MNG WHERE RL_ID = #{rlId}
+	</delete>
+
+	
+	<!--
+	쿼리명		: 권한 그룹 정보 수정
+	설명			: 권한 그룹 정보의 상세보기 화면에서 해당 정보를 수정 한다.
+	작성자		: 신호석
+	
+	수정일				수정자			수정내용
+	============		========		===================
+	2019. 06.28.		신호석			최초 생성
+	-->
+	<update id="updateRoleGroup" parameterType="roleVO">
+		UPDATE
+			RL_MNG
+		SET
+			RL_CD = #{rlCd}
+			, RL_NAME = #{rlName}
+			, RL_DES = #{rlDes}
+			, RL_CLS = #{rlCls}
+			, MOD_ID = #{modId}
+			, MOD_DT = SYSDATE
+		WHERE
+			RL_ID = #{rlId}
+	</update>
+
+	<!--
+	쿼리명		: 권한 그룹 정보 추가
+	설명			: 권한 그룹 정보의 상세보기 화면에서 해당 정보를 추가 한다.
+	작성자		: 신호석
+	
+	수정일				수정자			수정내용
+	============		========		===================
+	2019. 06.27.		신호석			최초 생성
+	-->
+	<insert id="insertRoleGroup" parameterType="roleVO">
+		INSERT INTO RL_MNG
+			(RL_ID, RL_CD, RL_NAME, RL_DES, RL_CLS, RG_ID, RG_DT)
+		VALUES
+			(#{rlId}, #{rlCd}, #{rlName}, #{rlDes}, #{rlCls}, #{rgId}, SYSDATE)
+	</insert>
+
+	<!--
+	쿼리명		: 권한별 사용자 관리의 권한 정보 목록
+	설명			: 권한별 사용자 관리의 권한 정보 목록을 불러온다.
+	작성자		: 신호석
+	
+	수정일				수정자			수정내용
+	============		========		===================
+	2019. 06.29.		신호석			최초 생성
+	-->
+	<select id="selectRoleNameOfRoleUser" resultMap="roleResultMap">
+		SELECT
+			RL_NAME
+			, RL_CD
+		FROM
+			RL_MNG
+	</select>
+	
+	<!--
+	쿼리명		: 권한별 사용자 관리의 권한별 사용자 목록
+	설명			: 권한별 사용자 관리의 권한별 사용자 목록을 불러온다.
+	작성자		: 신호석
+	
+	수정일				수정자			수정내용
+	============		========		===================
+	2019. 06.29.		신호석			최초 생성
+	-->
+	<select id="selectRoleUserList" parameterType="roleVO" resultType="roleVO">
+		SELECT
+			U.U_SQ AS usrId
+			, U.U_NM AS usrNm
+			, R.RL_CD AS rlCd
+			, R.RL_NAME AS rlName
+			, R.RL_ID AS rlId
+		FROM
+			USERS U
+			, RL_MNG R
+			, RL_USER_MPPG M
+		WHERE
+			U.U_SQ = M.U_SQ
+			AND M.RL_ID = R.RL_ID
+			AND R.RL_CD = #{rlCd}
+	</select>
+	
+	<!--
+	쿼리명		: 권한별 사용자 등록 대상자 목록
+	설명			: 권한별 사용자 등록 화면의 해당 권한이 없는 사용자 목록(권한 그룹에 추가 될 사용자 목록)
+	작성자		: 신호석
+	
+	수정일				수정자			수정내용
+	=============		========		===================
+	2019. 06.30.		신호석			최초 생성
+	-->
+	<select id="selectUserListForUpdateRole" parameterType="roleVO" resultType="roleVO">
+		SELECT
+			U.U_SQ AS usrId
+			, U.U_NM AS usrNm
+			, R.RL_CD AS rlCd
+			, R.RL_NAME AS rlName
+			, R.RL_ID AS rlId
+		FROM
+			USERS U
+			, RL_MNG R
+			, RL_USER_MPPG M
+		WHERE
+			U.U_SQ = M.U_SQ
+			AND M.RL_ID = R.RL_ID
+			AND R.RL_CD != #{rlCd}
+			<include refid="searchClauseForRoleUserList"/>
+	</select>
+
+	<!--
+	쿼리명		: 권한별 사용자 권한 변경
+	설명			: 권한별 사용자 해당 사용자가 있으면 update, 없으면 insert
+	작성자		: 신호석
+
+	수정일				수정자			수정내용
+	=============		========		===================
+	2019. 07.01.		신호석			최초 생성
+	-->
+	<update id="mergeIntoRoleUserMapping" parameterType="roleVO">
+		MERGE INTO
+			RL_USER_MPPG
+		USING DUAL ON
+			(U_SQ = #{usrId})
+		WHEN MATCHED THEN
+			UPDATE SET
+				RL_ID = #{rlId}
+				, RG_ID = #{rgId}
+				, RG_DT = SYSDATE
+		WHEN NOT MATCHED THEN
+			INSERT
+				(MPPG_ID, RL_ID, U_SQ, RG_ID, RG_DT)
+			VALUES
+				(#{mppgId}, #{rlId}, #{usrId}, #{rgId}, SYSDATE)
+	</update>
+	
+	<!--
+	쿼리명		: 사용자 권한 등록
+	설명			: 사용자 권한 등록
+	작성자		: 신호석
+	
+	수정일				수정자			수정내용
+	=============		========		===================
+	2019. 07.04.		신호석			최초 생성
+	-->
+	<insert id="insertRoleUserProc" parameterType="roleVO">
+		<![CDATA[
+		INSERT INTO RL_USER_MPPG 
+								(MPPG_ID, RL_ID, U_SQ, RG_ID, RG_DT)
+						VALUES
+								(#{mppgId}, #{rlId}, #{usrId}, #{rgId}, SYSDATE)
+		]]>
+	</insert>
+	
+	<!--
+	쿼리명		: 사용자 권한 삭제
+	설명			: 사용자 권한 삭제
+	작성자		: 신호석
+	
+	수정일				수정자			수정내용
+	=============		========		===================
+	2019. 07.04.		신호석			최초 생성
+	-->
+	<delete id="deleteRoleUser" parameterType="roleVO">
+		<![CDATA[
+		DELETE FROM RL_USER_MPPG WHERE U_SQ = #{usrId}
+		]]>
+	</delete>
+	
+	<!--
+	쿼리명		: 권한 수정
+	설명			: 권한별 사용자 관리에서 추가 버튼 클릭 > 권한 변경 처리
+	작성자		: 신호석
+	
+	수정일				수정자			수정내용
+	=============		========		===================
+	2019. 07.06.		신호석			최초 생성
+	-->
+	<update id="updateRoleUserMapping" parameterType="roleVO">
+		UPDATE
+			RL_USER_MPPG
+		SET
+			RL_ID = (SELECT RL_ID FROM RL_MNG WHERE RL_CD = #{rlCd})
+		WHERE
+			U_SQ = #{usrId}
+	</update>
+	
+	<!--
+	쿼리명		: 사용자별 권한 관리의 사용자 목록
+	설명			: 사용자별 권한 관리의 사용자 목록
+	작성자		: 신호석
+	
+	수정일				수정자			수정내용
+	=============		========		===================
+	2019. 07.06.		신호석			최초 생성
+	-->
+	<select id="selectUserRoleList" resultType="userVO" parameterType="userVO">
+	SELECT
+		A.*
+	FROM
+		(SELECT
+			ROW_NUMBER () OVER (<include refid="sortClauseForUserRoleList"/>) RNUM,
+			U.U_SQ AS usrId,
+			U.U_NM AS usrNm
+		FROM
+			USERS U) A
+	WHERE A.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
+	</select>
+
+	<!--
+	쿼리명		: 사용자별 권한 관리의 사용자 목록 갯수
+	설명			: 사용자별 권한 관리의 사용자 목록 갯수
+	작성자		: 신호석
+	
+	수정일				수정자			수정내용
+	=============		========		===================
+	2019. 07.06.		신호석			최초 생성
+	-->
+	<select id="selectUserRoleListCnt" parameterType="userVO" resultType="java.lang.Integer">
+		SELECT
+			COUNT(U_SQ)
+		FROM
+			USERS U
+		WHERE 1 = 1
+			<include refid="searchClauseForRoleUserList"/>
+	</select>
+	
+	<!--
+	쿼리명		: 사용자 별 권한 조회
+	설명			: 사용자가 가진 권한을 조회 한다.
+	작성자		: 신호석
+	
+	수정일				수정자			수정내용
+	=============		========		===================
+	2019. 07.06.		신호석			최초 생성
+	-->
+	<select id="selectUserRoleForPopup" parameterType="roleVO" resultType="roleVO">
+		SELECT
+			R.RL_CD AS rlCd
+			, R.RL_NAME AS rlName
+			, R.RL_ID AS rlId
+			, M.U_SQ AS usrId
+		FROM
+			RL_USER_MPPG M,
+			RL_MNG R
+		WHERE
+			R.RL_ID = M.RL_ID
+			AND M.U_SQ = #{usrId}
+	</select>
+
+	<!--
+	쿼리명		: 사용자가 현재 갖고 있지 않은 권한을 조회 한다.
+	설명			: 사용자가 현재 갖고 있지 않은 권한을 조회 한다(조회 된 권한으로 권한 변경 할 수 있으므로)
+	작성자		: 신호석
+	
+	수정일				수정자			수정내용
+	=============		========		===================
+	2019. 07.06.		신호석			최초 생성
+	-->
+	<select id="selectPossibleRoleForPopup" parameterType="roleVO" resultType="roleVO">
+		SELECT
+			DISTINCT
+			R.RL_CD AS rlCd
+			, R.RL_NAME AS rlName
+			, R.RL_ID AS rlId
+		FROM
+			RL_MNG R,
+			RL_USER_MPPG M
+		WHERE
+			R.RL_CD != (SELECT
+							T.RL_CD
+						FROM
+							RL_USER_MPPG T1,
+							RL_MNG T
+						WHERE
+							T.RL_ID = T1.RL_ID
+							AND T1.U_SQ = #{usrId})
+	</select>
+	
+	<!--
+	쿼리명		: 사용자가 현재 가지고 있는 권한 변경(관리자에 의해)
+	설명			: 관리자가 사용자 별 권한 관리에서 해당 사용자의 권한을 변경 처리 한다.
+	작성자		: 신호석
+	
+	수정일				수정자			수정내용
+	=============		========		===================
+	2019. 07.07.		신호석			최초 생성
+	-->
+	<update id="updateUserRoleMapping" parameterType="roleVO">
+		UPDATE
+			RL_USER_MPPG
+		SET
+			RL_ID = #{rlId}
+		WHERE
+			U_SQ = #{usrId}
+	</update>
+
+</mapper>

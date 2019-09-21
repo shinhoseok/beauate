@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<!-- egovMap -->
+		<typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	
+		<!-- 관리자 사용자관리 VO -->
+		<typeAlias alias="userVO" type="com.beauate.admin.user.service.UserVO"/>
+		<typeAlias alias="UserStatsVO" type="com.beauate.admin.user.service.UserStatsVO"/>
+		
+		<!-- 관리자 공통코드관리 VO -->
+		<typeAlias alias="codeVO" type="com.beauate.admin.code.service.CodeVO"/>
+		<!-- 관리자 권한관리 VO -->
+		<typeAlias alias="roleVO" type="com.beauate.admin.role.service.RoleVO" />
+		<!-- 관리자 프로그램관리 VO -->
+		<typeAlias alias="programVO" type="com.beauate.admin.program.service.ProgramVO" />
+		<!-- 메뉴로그 VO -->
+		<typeAlias alias="menuStatsVO" type="com.beauate.admin.menu.service.MenuStatsVO"/>
+		<!-- 관리자 메뉴관리 VO -->
+		<typeAlias alias="menuVO" type="com.beauate.admin.menu.service.MenuVO"/>
+		<!-- 로그인 VO -->
+		<typeAlias alias="loginVO" type="com.beauate.login.service.LoginVO"/>
+	</typeAliases>
+</configuration>
