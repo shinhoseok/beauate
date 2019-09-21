@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beauate.admin.classmng.service.ClassDao">
+	
+	<!-- 쿼리명 : 오프라인 클래스 등록
+	설명 : 오프라인 클래스 등록
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 9.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 9.17
+	-->
+	<insert id="insertOffClassProc" parameterType="userVO">
+		<![CDATA[
+		INSERT INTO OFF_CLASS (	c_sq, 
+								u_sq, 
+		   						img_sq, 
+		   						c_dt, 
+		   						c_st, 
+		   						c_gb,
+		   						c_category_st,
+								c_area_st, 
+		   						c_title, 
+		   						u_start_dt, 
+		   						c_end_dt, 
+		   						c_time,
+		   						c_small_no,
+								c_big_no, 
+		   						c_apply_no, 
+		   						c_adr, 
+		   						c_cost_no, 
+		   						c_web_adr ) 
+					VALUES (	#{classId},
+								#{usrId}, 
+								#{atchFileId}, 
+								sysdate, 
+								#{classSt}, 
+								#{classGb},
+								#{classCtSt},
+								#{classAreaSt}, 
+								#{classTitle},
+								TO_DATETIME(#{classStartDt}, 'YYYY-MM-DD'), 
+								TO_DATETIME(#{classEndDt}, 'YYYY-MM-DD'), 
+								#{classTime},
+								#{classSmallNo},
+								#{classBigNo}, 
+								#{classApplyNo},
+								#{classAdr},
+								#{classCost},
+								#{classWebAdr})
+		]]>		
+    </insert>
+	
+	
+</mapper>
