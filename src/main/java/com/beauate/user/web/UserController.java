@@ -1,6 +1,7 @@
 package com.beauate.user.web;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,8 @@ import com.beauate.admin.user.service.UserVO;
 import com.beauate.common.GlobalConstants;
 import com.beauate.login.service.LoginService;
 import com.beauate.login.service.LoginVO;
+import com.beauate.pay.service.PayService;
+import com.beauate.pay.service.PayVO;
 import com.beauate.user.service.UserService;
 
 @Controller
@@ -36,6 +39,9 @@ public class UserController {
 	
 	@Resource(name = "loginService")
 	private LoginService loginService;
+	
+	@Resource(name = "payService")
+	private PayService payService;
 	
 	@RequestMapping(value="/user/a/t/userInsert.do")
 	public String userInsert(@ModelAttribute("userVO") UserVO userVO, LoginVO sessionVO, ModelMap model ) throws Exception{
@@ -171,7 +177,12 @@ public class UserController {
 	public String userUpdate(@ModelAttribute("userVO") UserVO userVO, LoginVO sessionVO, ModelMap model)
 			throws Exception {			
 		userVO = userManageService.selectUser(sessionVO);
+		PayVO payVO = new PayVO();
+		payVO.setuSq(userVO.getUsrId());
+		List<PayVO> payList = payService.selectPayByUserSq(payVO);
 		model.addAttribute("userVO", userVO);
+		model.addAttribute("payList", payList);
+		
 		return "/user/userInfo";		
 	}
 }

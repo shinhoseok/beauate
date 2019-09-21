@@ -24,5 +24,7 @@
 		<typeAlias alias="loginVO" type="com.beauate.login.service.LoginVO"/>
 		<!-- 오프라인클래스 VO -->
 		<typeAlias alias="classVO" type="com.beauate.admin.classmng.service.ClassVO"/>
+		<!-- 관리자 공통코드관리 VO -->
+		<typeAlias alias="payVO" type="com.beauate.pay.service.PayVO"/>
 	</typeAliases>
 </configuration>
