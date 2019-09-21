@@ -99,6 +99,7 @@ public class EgovFileMngUtil {
     	List<FileVO> result  = new ArrayList<FileVO>();
     	FileVO fvo;
     
+    	int cnt = 0;
     	while (itr.hasNext()) {
     	    Entry<String, MultipartFile> entry = itr.next();
     
@@ -149,7 +150,8 @@ public class EgovFileMngUtil {
                     fvo.setAtchFileId(atchFileIdString);
                     fvo.setFileSn(String.valueOf(fileKey));
                     fvo.setMonthDir(monthDir);
-            
+                    //fileCn 에 구분값을 넣어야함. shin
+                    //cnt가 0인 경우 메인사진 3장 고정, 슬라이드 3~5, 마지막사진 1개 상세
                     //writeFile(file, newName, storePathString);
                     result.add(fvo);
             

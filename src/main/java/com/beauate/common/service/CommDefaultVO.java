@@ -76,6 +76,7 @@ public class CommDefaultVO implements Serializable {
 	/** 권한 매핑 아이디 */
 	private String mppgId;
 
+	/** 첨부파일 아이디 */
 	private String atchFileId;
 
 	public String getSearchCondition() {

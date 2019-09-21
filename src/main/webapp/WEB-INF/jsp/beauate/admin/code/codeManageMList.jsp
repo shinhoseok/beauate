@@ -130,11 +130,11 @@
 					<!-- //게시판리스트 -->
 					<!-- 버튼// -->
 					<div class="T_btnLayer fr">
-						<c:if test="${ sessionScope.loginVO.menuRlDiv == 'z'}">
+<%-- 						<c:if test="${ sessionScope.loginVO.menuRlDiv == 'z'}"> --%>
 							<a href="#"
 								onclick="javascript:fn_updateCode('${rsltMap.lclsId}');"><button
 									type="button" class="blueBtn L">수정</button></a>
-						</c:if>
+<%-- 						</c:if> --%>
 						<a href="#" onclick="javascript:fn_codeManageList();"><button
 								type="button" class="blueBtn L">목록</button></a>
 					</div>

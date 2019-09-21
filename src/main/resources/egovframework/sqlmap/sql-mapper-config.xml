@@ -22,5 +22,7 @@
 		<typeAlias alias="menuVO" type="com.beauate.admin.menu.service.MenuVO"/>
 		<!-- 로그인 VO -->
 		<typeAlias alias="loginVO" type="com.beauate.login.service.LoginVO"/>
+		<!-- 오프라인클래스 VO -->
+		<typeAlias alias="classVO" type="com.beauate.admin.classmng.service.ClassVO"/>
 	</typeAliases>
 </configuration>

@@ -359,4 +359,27 @@
 		ORDER BY AC_DATE ASC
 		]]>
 	</select>
+	
+	<!-- 쿼리명 : 사용자 상세정보 (이메일로 검색)
+	설명 : 사용자 상세정보 (이메일로 검색)
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 9.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 9.17
+	-->
+	<select id="selectUserDetail" parameterType="java.lang.String" resultType="userVO">
+		<![CDATA[
+		SELECT B.U_SQ usrId,
+		       B.U_PW usrPw,
+		       B.U_NM usrNm,
+		       B.PHONE_NO mblPno,
+		       B.U_EMAIL emailAddr,
+		       B.JOIN_DT joinDt,
+		       B.LOGIN_DT loginDt,
+			   B.U_OUT_DT userOutDt
+		  FROM USERS B
+		 WHERE B.U_EMAIL = #{emailAddr}
+		 ]]>
+	</select>
 </mapper>

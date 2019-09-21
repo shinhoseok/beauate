@@ -33,7 +33,6 @@ function MultiSelector( list_target, max, count){
 	 * Add a new file input element
 	 */
 	this.addElement = function( element, addCnt ){
-		alert(1);
 		// Make sure it's a file input element
 		if( element.tagName == 'INPUT' && element.type == 'file' ){
 
