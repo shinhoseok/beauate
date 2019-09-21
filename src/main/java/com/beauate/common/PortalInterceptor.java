@@ -124,6 +124,27 @@ public class PortalInterceptor extends HandlerInterceptorAdapter {
 				log.debug("urlPattern:" + urlPattern);
 
 				if (Pattern.matches(urlPattern, requestURI)) {// 정규표현식을 이용해서 요청 URI가 허용된 URL에 맞는지 점검함.
+
+					/*게스트유저 메뉴 표시 추가 시작*/
+					log.debug("게스트유저 메뉴 표시 추가 시작 >>>>>>>>>>>>>>>>>>>>> ");
+					log.debug("로그인 정보가 없어도 보여줄 수 있는 페이지라면, 비로그인 유저를 위한 메뉴권한을 가져 와야 한다. >>>>>>>>>>>>>>>>>>>>> ");
+					/*허용된 url이기 때문에 권한체크하여 roleBridge.do로 보낼 필요는 없다.*/
+					log.debug("urlPattern:" + urlPattern);
+
+
+					String menuRlDiv = null;
+					MenuVO menuSetVO = new MenuVO();
+					// TODO BASIC context root가 없으면 1번째 , 있으면 2번째로 변경해줘야함
+					menuSetVO.setPgmParam(replaceURI[1]);
+					menuSetVO.setUsrId(GlobalConstants.NON_MEMBER);
+
+					// 권한구분값과 사용자 아이디 , 사용자 포탈권한 정보 , 메뉴아이디 로 권한 조건 서비스 로직 구현
+					menuRlDiv = commonService.selectMenuRole(menuSetVO);
+					log.debug("menuRlDiv:" + menuRlDiv);
+					loginVO = new LoginVO();
+					loginVO.setMenuRlDiv(menuRlDiv);
+					/*게스트유저 메뉴 표시 추가 종료*/
+					
 					isPermittedURL = true;
 				}
 			}
@@ -171,7 +192,13 @@ public class PortalInterceptor extends HandlerInterceptorAdapter {
 				List<MenuVO> setSubTitleList = null;
 				List<MenuVO> setTopMenuList = null;
 				List<MenuVO> setLeftMenuList = null;
-				
+				log.debug("shin >>>>>>>>>>>>>>>>"+replaceURI[1]);
+				//메인메뉴, 로그인 처리과정 URI에서 로그인 상태정보가 없어 비회원 임시로그인처리
+				if(replaceURI[1].equals(GlobalConstants.FREE_URI_MAIN)) {
+					menuSetVO.setUsrId(GlobalConstants.NON_MEMBER);
+				} else {
+					menuSetVO.setUsrId(loginVO.getUsrId());
+				}
 				// TODO BASIC context root가 없으면 1번째 , 있으면 2번째로 변경해줘야함
 				menuSetVO.setPgmParam(replaceURI[1]);
 
