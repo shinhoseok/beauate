@@ -171,13 +171,7 @@ public class PortalInterceptor extends HandlerInterceptorAdapter {
 				List<MenuVO> setSubTitleList = null;
 				List<MenuVO> setTopMenuList = null;
 				List<MenuVO> setLeftMenuList = null;
-				log.debug("shin >>>>>>>>>>>>>>>>"+replaceURI[1]);
-				//메인메뉴, 로그인 처리과정 URI에서 로그인 상태정보가 없어 비회원 임시로그인처리
-				if(replaceURI[1].equals(GlobalConstants.FREE_URI_MAIN)) {
-					menuSetVO.setUsrId(GlobalConstants.NON_MEMBER);
-				} else {
-					menuSetVO.setUsrId(loginVO.getUsrId());
-				}
+				
 				// TODO BASIC context root가 없으면 1번째 , 있으면 2번째로 변경해줘야함
 				menuSetVO.setPgmParam(replaceURI[1]);
 
