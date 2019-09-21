@@ -61,10 +61,13 @@
 									</td>
 								</tr>
 								<tr>
-									<th scope="row"><span class="thstar"></span>이미지등록(메인,슬라이드,상세 순으로 등록)<br /><span class="thstar"></span></th>
+									<th>
+										상세이미지1, 슬라이드1~5, 메인3<br />
+										순으로 이미지 등록
+									</th>
 									<td colspan="3">
 										<input class="hideFile" name="file_1" id="egovComFileUploader" type="file" title="첨부파일입력" />
-										<img src="${imagePath}/btn_plus.png" alt="" class="FileBtn" /> <span id="atchFileNot" style="margin-left: 5px; display: none;">(* 첨부파일을 더 이상 등록 할 수 없습니다.)</span>
+										<span id="atchFileNot" style="margin-left: 5px; display: none;">(* 첨부파일을 더 이상 등록 할 수 없습니다.)</span>
 										<div class="download_list" id="egovComFileList"></div>
 									</td>
 								</tr>
@@ -246,13 +249,12 @@ var fn_insertClassProc = function() {
 			 return;
 		},
 		success: function(r) {
-			if( r == "" || r == null || r == undefined ) {
+			if( r.result == usrId ) {
 				alert("없는 아이디 입니다. 다른값으로 입력바랍니다.");
 				$("#usrId").focus();
 				return;
 			} else{
 				$("#usrId").val(r.result);
-				alert($("#usrId").val());
 				document.classVO.submit();
 			}
 		}

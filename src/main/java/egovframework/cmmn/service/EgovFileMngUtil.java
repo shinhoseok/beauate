@@ -150,8 +150,18 @@ public class EgovFileMngUtil {
                     fvo.setAtchFileId(atchFileIdString);
                     fvo.setFileSn(String.valueOf(fileKey));
                     fvo.setMonthDir(monthDir);
-                    //fileCn 에 구분값을 넣어야함. shin
-                    //cnt가 0인 경우 메인사진 3장 고정, 슬라이드 3~5, 마지막사진 1개 상세
+
+                    if(cnt >= 0 && cnt < 3) {
+                    	fvo.setFileCn("M"+String.valueOf(cnt));
+                    }
+                    if(cnt > 2) {
+                    	fvo.setFileCn("S"+String.valueOf(cnt));
+                    }
+                    //마지막 사진은 상세
+                    if (!itr.hasNext()) {
+                    	fvo.setFileCn("D");
+                    }
+                    cnt++;
                     //writeFile(file, newName, storePathString);
                     result.add(fvo);
             
