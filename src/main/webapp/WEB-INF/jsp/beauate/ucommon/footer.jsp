@@ -11,6 +11,7 @@
 				<li><a href="#">개인정보취급방침</a></li>
 				<li><a href="#">이용약관</a></li>
 				<li><a href="#">멘토문의</a></li>
+				<li><a href="${basePath}/common/a/n/portalAdminBridge.do">멘토&관리자</a></li>
 			</ul>
 			<ul class="foot-sns">
 				<li class="sns-inst"><a href="#">Instagram</a></li>
