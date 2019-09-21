@@ -10,9 +10,21 @@
 			<li><a href="#">뷰아떼 스토리</a></li>
 		</ul>
 		<ul class="header-util header-util-right">
+		<c:choose>
+		<c:when test="${sessionScope.loginVO != null && sessionScope.loginVO.emailAddr != null}">
+			<strong>${sessionScope.loginVO.usrNm}</strong> 님 환영합니다.
+			<li><a href="${basePath}/user/w/t/userInfo.do">내 정보 변경</a></li>
+			<li><a href="${basePath}/user/w/t/userPasswordChange.do">비밀번호 변경</a></li>
+			<li><a href="javascript:void(0);" onclick="fn_logout();">로그아웃</a></li>
+		</c:when>
+		<c:otherwise>
 			<li><a href="javascript:void(0);" onclick="fn_loginPopUpLayer();">로그인</a></li>
-			<li><a href="#">회원가입</a></li>
+			<li><a href="${basePath}/user/a/t/userInsert.do">회원가입</a></li>
 			<li><a href="#" class="line">멘토지원</a></li>
+		</c:otherwise>
+		</c:choose>
+		
+
 		</ul>
 	</div>
 </div>
@@ -38,5 +50,11 @@
 	var fn_loginPopClose = function () {
 		$.unblockUI();
 		$("#windowLoginPopup").empty();
+	};
+
+	var fn_logout = function() {
+		if(confirm("로그아웃 하시겠습니까?")){
+			document.location.href="${basePath}/user/a/n/logOut.do";
+		}
 	};
 </script>

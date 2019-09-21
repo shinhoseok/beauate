@@ -46,6 +46,7 @@ var cjom = function () {
 			common.themeCategory();
 			common.reviewAnchor.bind(); // 2019-07-09 상품평 앵커 추가
 			//common.mainModal.bind(); // 2019-07-11 메인 모달 기능 추가
+			common.layerPop(); // 2019-09-10 레이어팝업 추가
 			etc.pageCtr();
 		},
 		// 2019-07-11 메인 모달 기능 추가
@@ -2162,6 +2163,22 @@ var cjom = function () {
 			setTimeout(function () {
 				$alertWrap.remove();
 			}, speed + 300);
+		},
+		// 2019-09-10 레이어팝업 추가
+		layerPop : function(){
+			var speed = 200;
+			var $this = $('.btn-laypop');
+			var $layerWrap = $('.laypop-wrap');
+			var $close = $('.btn-close,.btn_wrap .btn-type01', $layerWrap);
+
+			$this.off('click.layerPop').on('click.layerPop',function(e){
+				e.preventDefault();
+				$this.next('.laypop-wrap').addClass('active').stop().fadeIn(speed);
+			});
+			$close.off('click.layerPop').on('click.layerPop',function(e){
+				e.preventDefault();
+				$this.parent().find('.laypop-wrap').removeClass('active').stop().fadeOut(speed);
+			});
 		},
 		filter: function (){
 			$('.btn-filter-open').off('click.filterOpen').on('click.filterOpen',function(){
