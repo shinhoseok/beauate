@@ -11,9 +11,10 @@
 		</ul>
 		<ul class="header-util header-util-right">
 		<c:choose>
-		<c:when test="${sessionScope.loginVO != null}">
+		<c:when test="${sessionScope.loginVO != null && sessionScope.loginVO.emailAddr != null}">
 			<strong>${sessionScope.loginVO.usrNm}</strong> 님 환영합니다.
-			<li><a href="javascript:void(0);" onclick="fn_loginPopUpLayer();">비밀번호 변경</a></li>
+			<li><a href="${basePath}/user/w/t/userPasswordChange.do">비밀번호 변경</a></li>
+			<li><a href="javascript:void(0);" onclick="fn_logout();">로그아웃</a></li>
 		</c:when>
 		<c:otherwise>
 			<li><a href="javascript:void(0);" onclick="fn_loginPopUpLayer();">로그인</a></li>
@@ -48,5 +49,11 @@
 	var fn_loginPopClose = function () {
 		$.unblockUI();
 		$("#windowLoginPopup").empty();
+	};
+
+	var fn_logout = function() {
+		if(confirm("로그아웃 하시겠습니까?")){
+			document.location.href="${basePath}/user/a/n/logOut.do";
+		}
 	};
 </script>

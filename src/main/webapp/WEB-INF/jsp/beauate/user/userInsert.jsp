@@ -104,7 +104,7 @@
 			type: 'POST',
 			dataType : "json",
 			data : $("#userVO").serialize(),
-			error: function(){
+			error: function(r){
 				$("#modal-joincomfirm p.txt").text(r.message);
 				$("#modal-joincomfirm a.modal-close").click(function(){document.location.href='#'});
 				$("#modal-joincomfirm").modal('show');
@@ -123,7 +123,7 @@
 						type: 'POST',
 						dataType : "json",
 						data : $("#userVO").serialize(),
-						error: function(){
+						error: function(r){
 							$("#modal-joincomfirm p.txt").text(r.message);
 							$("#modal-joincomfirm a.modal-close").click(function(){document.location.href='#'});
 							$("#modal-joincomfirm").modal('show');

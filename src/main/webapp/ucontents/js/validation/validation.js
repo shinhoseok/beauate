@@ -333,6 +333,9 @@ fn_checkPass = function(objId){
 	  		if($("#"+objId).next().is("span") && $("#"+objId).next().hasClass("emp") ){
 				$("#"+objId).next().text("비밀번호는 영문,숫자,특수문자 1자이상(%,$,#,@,!)\n모두 포함하여 조합해주세요").show();
 				$("#"+objId).focus();
+	  		}else if($("#"+objId).parent().next().is("span") && $("#"+objId).parent().next().hasClass("emp") ){
+				$("#"+objId).parent().next().text("비밀번호는 영문,숫자,특수문자 1자이상(%,$,#,@,!)\n모두 포함하여 조합해주세요").show();
+				$("#"+objId).focus();
 	  		}else{
 	  			alert("비밀번호는 영문,숫자,특수문자 1자이상(%,$,#,@,!)\n모두 포함하여 조합해주세요");
 		   		return;
@@ -345,7 +348,10 @@ fn_checkPass = function(objId){
 		if($("#"+objId).next().is("span") && $("#"+objId).next().hasClass("emp") ){
 			$("#"+objId).next().text("비밀번호는 9~20자로 조합해주세요").show();
 			$("#"+objId).focus();
-		}else{
+		}else if($("#"+objId).parent().next().is("span") && $("#"+objId).parent().next().hasClass("emp") ){
+			$("#"+objId).parent().next().text("비밀번호는 9~20자로 조합해주세요").show();
+			$("#"+objId).focus();
+  		}else{
 		  	alert("비밀번호는 9~20자로 조합해주세요");
 		  	return;
   		}
