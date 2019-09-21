@@ -11,7 +11,7 @@
 		</ul>
 		<ul class="header-util header-util-right">
 			<li><a href="javascript:void(0);" onclick="fn_loginPopUpLayer();">로그인</a></li>
-			<li><a href="#">회원가입</a></li>
+			<li><a href="${basePath}/user/a/t/userInsert.do">회원가입</a></li>
 			<li><a href="#" class="line">멘토지원</a></li>
 		</ul>
 	</div>

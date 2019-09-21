@@ -122,7 +122,7 @@
 		<![CDATA[
 		SELECT COUNT(*)
 		  FROM USERS B
-		 WHERE U_SQ = TRIM(#{usrId})
+		 WHERE U_EMAIL = TRIM(#{emailAddr})
 		 ]]>
 	</select>
 	

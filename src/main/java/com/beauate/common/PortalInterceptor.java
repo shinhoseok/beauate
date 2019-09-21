@@ -2,7 +2,6 @@ package com.beauate.common;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -17,7 +16,6 @@ import org.springframework.web.servlet.ModelAndViewDefiningException;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.beauate.admin.menu.service.MenuService;
-import com.beauate.admin.menu.service.MenuStatsVO;
 import com.beauate.admin.menu.service.MenuVO;
 import com.beauate.common.service.CommonService;
 import com.beauate.login.service.LoginService;
@@ -143,6 +141,7 @@ public class PortalInterceptor extends HandlerInterceptorAdapter {
 					log.debug("menuRlDiv:" + menuRlDiv);
 					loginVO = new LoginVO();
 					loginVO.setMenuRlDiv(menuRlDiv);
+					request.getSession().setAttribute(GlobalConstants.LOGIN_SESSION_KEY, loginVO);
 					/*게스트유저 메뉴 표시 추가 종료*/
 					
 					isPermittedURL = true;
