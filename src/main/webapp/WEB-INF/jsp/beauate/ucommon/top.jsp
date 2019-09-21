@@ -13,6 +13,7 @@
 		<c:choose>
 		<c:when test="${sessionScope.loginVO != null && sessionScope.loginVO.emailAddr != null}">
 			<strong>${sessionScope.loginVO.usrNm}</strong> 님 환영합니다.
+			<li><a href="${basePath}/user/w/t/userInfo.do">내 정보 변경</a></li>
 			<li><a href="${basePath}/user/w/t/userPasswordChange.do">비밀번호 변경</a></li>
 			<li><a href="javascript:void(0);" onclick="fn_logout();">로그아웃</a></li>
 		</c:when>

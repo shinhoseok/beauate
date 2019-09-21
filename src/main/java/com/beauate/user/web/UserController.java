@@ -165,4 +165,13 @@ public class UserController {
 		
 		return "redirect:/home/a/t/main.do";
 	}
+	
+
+	@RequestMapping(value = "/user/w/t/userInfo.do")
+	public String userUpdate(@ModelAttribute("userVO") UserVO userVO, LoginVO sessionVO, ModelMap model)
+			throws Exception {			
+		userVO = userManageService.selectUser(sessionVO);
+		model.addAttribute("userVO", userVO);
+		return "/user/userInfo";		
+	}
 }
