@@ -18,7 +18,7 @@
 	<c:forEach var="clsImg" items="${cls.classFileList}" begin="0" end="${fn:length(cls.classFileList)-1}">
 		<c:if test="${clsImg.fileCn=='M1' }">
 		<c:set var="path" value="${fn:split(fileStreCours, '/')}" />
-		<c:set var="img" value="${uploadPath}/${path[fn:length(path)-1]}/${clsImg.streFileNm}.${clsImg.fileExtsn}"/>
+		<c:set var="img" value="${uploadPath}/${path[fn:length(path)-1]}${clsImg.streFileNm}.${clsImg.fileExtsn}"/>
 		</c:if>
 	</c:forEach>
 </c:if>
@@ -27,15 +27,41 @@
 			<div class="thumb">
 				<img src="${img}" alt="" />
 				<c:choose>
-				<c:when test="${classDays-nowDays>0}">
-					<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
-				</c:when>
-				<c:when test="${classDays-nowDays<0}">
-					<div class="soldout"></div>
-					<div class="soldout-txt">신청마감</div>
-				</c:when>
-				<c:otherwise>
-				</c:otherwise>
+					<c:when test="${classStNm != null && classStNm !='' }">
+						<c:choose>
+							<c:when test="${classStNm  == '오픈전' || classStNm  == '오픈중'}">
+								<c:choose>
+								<c:when test="${classDays-nowDays==1}">
+									<div class="count"><span>1일 남았어요!</span></div>
+								</c:when>
+								<c:otherwise>
+								</c:otherwise>
+								</c:choose>
+							</c:when>
+							<c:when test="${classStNm  == '신청마감' || classStNm  == '종료'}">
+								<div class="soldout">${classStNm}</div>
+								<div class="soldout-txt">${classStNm}</div>
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
+					</c:when>
+					<c:otherwise>
+						<c:choose>
+						<c:when test="${classDays-nowDays>0}">
+							<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
+						</c:when>
+						<c:when test="${classDays-nowDays>0}">
+							<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
+						</c:when>
+						<c:when test="${classDays-nowDays<0}">
+							<div class="soldout"></div>
+							<div class="soldout-txt">신청마감</div>
+						</c:when>
+						<c:otherwise>
+						</c:otherwise>
+						</c:choose>
+					</c:otherwise>
 				</c:choose>
 			</div>
 			<div class="title">${cls.classAreaStNm}</div>

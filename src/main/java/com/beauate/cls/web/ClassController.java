@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -42,8 +43,13 @@ public class ClassController {
 		//페이징 
 		PaginationInfo paginationInfo = new PaginationInfo();
 
+		if(StringUtils.isEmpty(classVO.getClassCtSt())) {
+			model.addAttribute("classCtSt", classVO.getClassCtSt());
+		}
 		String url = request.getRequestURI();
 		if(url.indexOf("ListDtl.do")==-1){
+			List<CodeVO> classCategoryList = codeDao.selectScodeList(GlobalConstants.CLASS_CATEGORY_CODE);
+			model.addAttribute("classCategoryList", classCategoryList);
 			List<CodeVO> classAreaList = codeDao.selectScodeList(GlobalConstants.AREA_CODE);
 			model.addAttribute("classAreaList", classAreaList);
 			

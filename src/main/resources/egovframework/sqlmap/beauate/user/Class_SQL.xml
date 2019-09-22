@@ -20,6 +20,7 @@
         <result column="img_sq" property="classImgId"/>
         <result column="c_dt" property="classRegDt"/>
         <result column="c_st" property="classSt"/>
+        <result column="c_st_nm" property="classStNm"/>
         <result column="c_gb" property="classGb"/>
         <result column="c_category_st" property="classCtSt"/>
         <result column="c_area_st" property="classAreaSt"/>
@@ -121,6 +122,7 @@
 			c.img_sq,
 			c.c_dt,
 			c.c_st,
+			cd2.mcls_nm c_st_nm,
 			c.c_gb,
 			c.c_category_st,
 			c.c_area_st,
@@ -138,6 +140,7 @@
 		FROM
 			off_class c 
 			LEFT JOIN common_cd_scls cd ON (c.c_area_st = cd.mcls_cd AND cd.lcls_cd='ARA')
+			LEFT JOIN common_cd_scls cd2 ON (c.c_st = cd.mcls_cd AND cd.lcls_cd='CST')
 			WHERE 1=1 
 		]]>
 		<choose>
@@ -154,6 +157,9 @@
 		</choose>
 		<if test="classAreaSt != null and classAreaSt != ''">
 			AND c.c_area_st = #{classAreaSt}
+		</if>
+		<if test="classCtSt != null and classCtSt != ''">
+			AND c.c_category_st = #{classCtSt}
 		</if>
 		          ) A
 		<![CDATA[ 
