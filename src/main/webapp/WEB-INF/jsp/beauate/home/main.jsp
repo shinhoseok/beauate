@@ -27,7 +27,7 @@
 		<!-- content -->
 		<div class="content">
 			<div class="content-inner">			
-				<!-- 메인영역 -->
+				메인화면 준비중...
 			</div>
 		</div>
 		<!-- //content -->

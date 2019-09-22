@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/jsp/beauate/ucommon/include.jsp"%>
 <div class="header-wrap">
 	<div class="header-inner">
-		<h1 class="header-logo"><a href="#">BEAUATE</a></h1>			
+		<h1 class="header-logo"><a href="${basePath}/home/a/t/main.do">BEAUATE</a></h1>			
 		<ul class="header-util header-util-left">
 			<li><a href="${basePath}/class/a/t/classList.do">오프라인 클래스</a></li>
 			<li><a href="#">온라인 클래스</a></li>
