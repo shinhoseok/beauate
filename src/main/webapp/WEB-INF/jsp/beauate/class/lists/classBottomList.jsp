@@ -18,7 +18,7 @@
 	<c:forEach var="clsImg" items="${cls.classFileList}" begin="0" end="${fn:length(cls.classFileList)-1}">
 		<c:if test="${clsImg.fileCn=='M1' }">
 		<c:set var="path" value="${fn:split(fileStreCours, '/')}" />
-		<c:set var="img" value="${path[fn:length(path)-1]}/${clsImg.streFileNm}.${clsImg.fileExtsn}"/>
+		<c:set var="img" value="${uploadPath}/${path[fn:length(path)-1]}/${clsImg.streFileNm}.${clsImg.fileExtsn}"/>
 		</c:if>
 	</c:forEach>
 </c:if>
