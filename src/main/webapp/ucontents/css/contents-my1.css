@@ -129,14 +129,36 @@ font-size: 16px;line-height: 1.5; letter-spacing: -0.5px;}
 
 /*상단이미지*/
 .myclass-right .h3-head2-2{height: 50px; border-bottom: 4px solid #0a0a0a;background:url('../img/c-class.png') no-repeat 0 0; position: relative;margin-bottom: 30px;}
-/*작성중*/
-.my-r1 {width: 1023px; height: 108px; background-color: #f9f9f9; position: relative;}
+/*회색영역*/
+.my-r1 {width: 1023px; height: 108px; background-color: #f9f9f9; position: relative;margin-bottom: 15px; margin-top: 40px;}
 .r1-img {width: 67px; height: 68px; position: absolute; top:20px; left: 25px; }
 .r1-txt-all {position: absolute; top: 25px; left: 107px;}
 .r1-txt1 {opacity: 0.6;font-size: 14px; line-height: 1.5; letter-spacing: -0.5px;}
 .r1-txt2 {opacity: 0.6; font-size: 12px; line-height: 1.5; letter-spacing: -0.43px;}
-.r1-txt2 span {font-family: 'Roboto Mono'; font-size: 12px; line-height: 1.5; letter-spacing: -0.43px;}
-
+.r1-txt-all span { font-family: 'Roboto Mono'; font-size: 12px; line-height: 1.5; letter-spacing: -0.43px;}
+.r1-line {opacity: 0.2;}
+.my-r1-btn {width: 39px; height: 24px; border: 1px solid black; opacity: 0.4; border-radius: 2px; position: absolute; right: 84px; top:42px;}
+.my-r1-btn2 {width: 39px; height: 24px; border: 1px solid black; opacity: 0.4; border-radius: 2px;  position: absolute; right:40px; top:42px;}
+.my-r1-btn span {display:block; opacity: 0.6; font-size: 12px; line-height: 1.5; letter-spacing: -0.43px; margin-left:7.5px; margin-top:4px;}
+.my-r1-btn2 span {display:block; opacity: 0.6; font-size: 12px; line-height: 1.5; letter-spacing: -0.43px; margin-left:7.5px; margin-top:4px;}
+/*별표영역*/
+.my-r2 {height: 18px; margin-left: 25px; overflow: hidden;}
+.my-r2 li {float: left; opacity: 0.6; font-size: 12px; line-height: 1.5; letter-spacing: -0.43px;}
+.my-r2 li img {margin-left: 3px;}
+.my-r2 li span {margin-left: 5px;}
+/*후기 영역*/
+.my-r3 {width: 840px; margin-left: 25px; opacity: 0.6; font-size: 14px; line-height: 1.5; letter-spacing: -0.5px;margin-bottom: 25px;margin-top: 15px;}
+/*댓글영역*/
+.my-r4 {margin-left: 25px;margin-bottom: 18px;}
+.my-r4-no {margin-left:4px;padding:0 7px;border-radius: 10.5px;color:#fff;font-family: RobotoMono;font-size:12px;letter-spacing: -0.43px;line-height:12px;background-color:#6a2cfe;}
+.my-r4-i {margin-top:25px;padding-left:18px;font-size:12px;letter-spacing:-0.43px;line-height:14px;background:url('../img/i-reply.png') no-repeat 0 50%;}
+.my-r4-m {width:998px; height: 91px; margin-left: 25px;background-color: #fbfbfb;padding-top: 15px; padding-left:25px;margin-bottom:5px;}
+.my-r4-m .cmt-m { margin-left: 35px; width: 879px; height: 42px;opacity: 0.6; font-size: 14px; line-height: 1.5; letter-spacing: -0.5px;}
+.r4-m-nm { font-size: 14px; line-height: 1.5; letter-spacing: -0.5px;}
+.r4-m-nm img{margin-right: 3px;}
+.r4-m-nm span{margin-left: 10px; opacity: 0.4; font-family: 'Roboto Mono'; font-size: 12px; line-height: 1.5; letter-spacing: -0.43px; }
+/*마지막 선*/
+.my-last-line {width: 1023px; height: 1px; background-color:#f9f9f9;margin-top: 40px; }
 /*----------------------------------------------------------------------------------------------------------------------------*/
 /*사용가능한 쿠폰 3_1*/
 
@@ -237,3 +259,34 @@ font-size: 16px;line-height: 1.5; letter-spacing: -0.5px;}
 
 /*----------------------------------------------------------------------------------------------------------------------------*/
 /*내 정보 수정 5_1*/
+
+/*상단이미지*/
+.h5-head {height: 50px; border-bottom: 4px solid #0a0a0a;background:url('../img/myinfo.png') no-repeat 0 0;}
+/*회원탈퇴 버튼*/
+.myinfo_out_btn{float: right; font-size: 12px; background-color: #f9f9f9; border-radius: 2px; width: 72px; line-height: 30px; vertical-align: middle; text-align: center; margin-top: 5px;}
+.myinfo_out_btn a{opacity: 0.4;}
+/*myinfo 컨텐츠*/
+.myinfo_con {overflow: hidden; border-bottom: 4px solid #000000;}
+.myinfo_con div{float: left; font-size: 16px;}
+/*myinfo 목록*/
+.myinfo_left{background-color: #f9f9f9; padding: 35px 35px 0 20px;}
+.myinfo_pwd_left{background-color: #f9f9f9; padding: 35px 20px 0 20px; height: 353px;}
+.myinfo_left ul li, .myinfo_pwd_left ul li {font-weight: 300; color: #000000; opacity: 0.6; margin-bottom: 51px;} 
+/*myinfo 입력*/
+.myinfo_right{margin-left: 47px; padding-top: 30px;}
+.myinfo_right ul li{height: 30px; margin-bottom: 48px;}
+.myinfo_input{ height: 44px;}
+.myinfo_input li:nth-child(1), .myinfo_input li:nth-child(4){font-family: 'Roboto Mono', monospace;}
+.myinfo_input li:nth-child(2) {font-weight: 900; font-size: 30px;line-height: 10px; letter-spacing: 2px;}
+.myinfo_pwd_input li:nth-child(4) {text-align: center; padding-top: 46px;}
+.myinfo_dash{margin: 0 8px; opacity: 0.6;}
+.myinfo_input li input[type=text], input[type=password]{border: 1px solid #a7a7a7; border-radius: 4px; width: 380px; padding: 20px;}
+.myinfo_pwd_input li input[type=text], input[type=password]{border: 1px solid #a7a7a7; border-radius: 4px; width: 380px; padding: 20px;}
+.myinfo_input li .emp, .myinfo_pwd_input li .emp  {display:block;font-size:12px;line-height:2;letter-spacing:-0.43px;color:#ee3724;}
+/*myinfo 수정,삭제,취소 버튼*/
+.myinfo_fix_btn{font-size: 12px; padding: 6px 14px; border: 1px solid #000000; opacity: 0.4; border-radius: 2px; margin-left: 20px; font-weight: 400;}
+.myinfo_save_btn{font-size: 12px; padding: 6px 14px; border: 1px solid #6a2cfe;border-radius: 2px; margin-left: 20px; font-weight: 400; background-color: #6a2cfe; color: #ffffff;}
+.myinfo_cancle_btn{font-size: 12px; padding: 6px 14px; border: 1px solid #000000; border-radius: 2px; margin-left: 10px; font-weight: 400;}
+.myinfo_pwd_save_btn{font-size: 12px; padding: 9px 38px; border: 1px solid #000000; border-radius: 2px; margin-left: 10px; font-weight: 400;background-color: #000000; color: #ffffff;}
+.myinfo_pwd_cancle_btn{font-size: 12px; padding: 9px 38px; border: 1px solid #000000;border-radius: 2px; margin-left: 20px; font-weight: 400;opacity: 0.4;}
+

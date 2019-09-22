@@ -2,6 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.beauate.admin.classmng.service.ClassDao">
 	
+    <resultMap id="classMap" type="com.beauate.admin.classmng.service.ClassVO">
+        <id column="c_sq" property="classId"/>
+        <result column="u_sq" property="classUserId"/>
+        <result column="img_sq" property="classImgId"/>
+        <result column="c_dt" property="classRegDt"/>
+        <result column="c_st" property="classSt"/>
+        <result column="c_gb" property="classGb"/>
+        <result column="c_category_st" property="classAreaSt"/>
+        <result column="c_area_st" property="classAreaSt"/>
+        <result column="c_title" property="classTitle"/>
+        <result column="u_start_dt" property="classStartDt"/>
+        <result column="c_end_dt" property="classEndDt"/>
+        <result column="c_time" property="classTime"/>
+        <result column="c_small_no" property="classSmallNo"/>
+        <result column="c_big_no" property="classBigNo"/>
+        <result column="c_apply_no" property="classApplyNo"/>
+        <result column="c_adr" property="classAdr"/>
+        <result column="c_cost_no" property="classCost"/>
+        <result column="c_web_adr" property="classWebAdr"/>
+    </resultMap>
+    
 	<!-- 쿼리명 : 오프라인 클래스 등록
 	설명 : 오프라인 클래스 등록
 	수정일                     수정자           수정내용
@@ -51,5 +72,29 @@
 		]]>		
     </insert>
 	
+	
+	<select id="selectClassList" resultMap="classMap">
+		SELECT
+		c.c_sq,
+		c.u_sq,
+		c.img_sq,
+		c.c_dt,
+		c.c_st,
+		c.c_gb,
+		c.c_category_st,
+		c.c_area_st,
+		c.c_title,
+		c.u_start_dt,
+		c.c_end_dt,
+		c.c_time,
+		c.c_small_no,
+		c.c_big_no,
+		c.c_apply_no,
+		c.c_adr,
+		c.c_cost_no,
+		c.c_web_adr
+	FROM
+		off_class c
+	</select>
 	
 </mapper>
