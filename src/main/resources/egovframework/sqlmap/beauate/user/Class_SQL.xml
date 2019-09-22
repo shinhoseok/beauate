@@ -2,6 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.beauate.admin.classmng.service.ClassDao">
 	
+	<resultMap id="fileList" type="egovframework.cmmn.service.FileVO">
+		<id property="atchFileId" column="ATCH_FILE_ID"/>
+		<result property="fileSn" column="FILE_SN"/>
+		<result property="fileStreCours" column="FILE_STRE_COURS"/>
+		<result property="streFileNm" column="STRE_FILE_NM"/>
+		<result property="orignlFileNm" column="ORIGNL_FILE_NM"/>
+		<result property="fileExtsn" column="FILE_EXTSN"/>
+		<result property="fileCn" column="FILE_CN"/>
+		<result property="fileMg" column="FILE_SIZE"/>
+		<result property="creatDt" column="CREAT_DT"/>			
+	</resultMap>
+	
     <resultMap id="classMap" type="com.beauate.admin.classmng.service.ClassVO">
         <id column="c_sq" property="classId"/>
         <result column="u_sq" property="classUserId"/>
@@ -9,8 +21,9 @@
         <result column="c_dt" property="classRegDt"/>
         <result column="c_st" property="classSt"/>
         <result column="c_gb" property="classGb"/>
-        <result column="c_category_st" property="classAreaSt"/>
+        <result column="c_category_st" property="classCtSt"/>
         <result column="c_area_st" property="classAreaSt"/>
+        <result column="c_area_st_nm" property="classAreaStNm"/>
         <result column="c_title" property="classTitle"/>
         <result column="u_start_dt" property="classStartDt"/>
         <result column="c_end_dt" property="classEndDt"/>
@@ -21,6 +34,7 @@
         <result column="c_adr" property="classAdr"/>
         <result column="c_cost_no" property="classCost"/>
         <result column="c_web_adr" property="classWebAdr"/>
+        <collection column="{atchFileId=img_sq}" property="classFileList" javaType="java.util.ArrayList" ofType="fileVO" select="getFileListByImgSq"/>
     </resultMap>
     
 	<!-- 쿼리명 : 오프라인 클래스 등록
@@ -73,28 +87,115 @@
     </insert>
 	
 	
-	<select id="selectClassList" resultMap="classMap">
-		SELECT
-		c.c_sq,
-		c.u_sq,
-		c.img_sq,
-		c.c_dt,
-		c.c_st,
-		c.c_gb,
-		c.c_category_st,
-		c.c_area_st,
-		c.c_title,
-		c.u_start_dt,
-		c.c_end_dt,
-		c.c_time,
-		c.c_small_no,
-		c.c_big_no,
-		c.c_apply_no,
-		c.c_adr,
-		c.c_cost_no,
-		c.c_web_adr
-	FROM
-		off_class c
+	<select id="selectClassList" parameterType="classVO" resultMap="classMap">
+	<![CDATA[
+		SELECT A.*
+		  FROM (SELECT ROW_NUMBER () OVER (
+		]]>
+		<choose>
+			<when test="sortSubject == 'classListTop'">
+				ORDER BY c.c_dt
+			</when>
+			<when test="sortSubject == 'classListHurry'">
+				ORDER BY c.u_start_dt
+			</when>
+			<when test="sortSubject == 'classListBottom'">
+				ORDER BY c.c_dt, c_sq
+			</when>
+			<otherwise>
+				ORDER BY c.c_dt
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="sortDescend == 'asc'">
+				ASC
+			</when>
+			<otherwise>
+				DESC
+			</otherwise>
+		</choose>
+		<![CDATA[ 
+			) RNUM,
+			c.c_sq,
+			c.u_sq,
+			c.img_sq,
+			c.c_dt,
+			c.c_st,
+			c.c_gb,
+			c.c_category_st,
+			c.c_area_st,
+			cd.mcls_nm c_area_st_nm,
+			c.c_title,
+			c.u_start_dt,
+			c.c_end_dt,
+			c.c_time,
+			c.c_small_no,
+			c.c_big_no,
+			c.c_apply_no,
+			c.c_adr,
+			c.c_cost_no,
+			c.c_web_adr
+		FROM
+			off_class c 
+			LEFT JOIN common_cd_scls cd ON (c.c_area_st = cd.mcls_cd AND cd.lcls_cd='ARA')
+			WHERE 1=1 
+		]]>
+		<choose>
+			<when test="sortSubject == 'classListTop'">
+			</when>
+			<when test="sortSubject == 'classListHurry'">
+				AND c.u_start_dt > SYSDATE 
+			</when>
+			<when test="sortSubject == 'classListBottom'">
+			</when>
+			<otherwise>
+				ORDER BY c.c_dt
+			</otherwise>
+		</choose>
+		<if test="classAreaSt != null and classAreaSt != ''">
+			AND c.c_area_st = #{classAreaSt}
+		</if>
+		          ) A
+		<![CDATA[ 
+		 WHERE A.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
+		]]>
 	</select>
 	
+	<select id="getFileListByImgSq" resultMap="fileList">
+		SELECT
+			fl.atch_file_id,
+			fl.creat_dt,
+			fl.use_at,
+			fld.file_sn,
+			fld.file_stre_cours,
+			fld.stre_file_nm,
+			fld.orignl_file_nm,
+			fld.file_extsn,
+			fld.file_cn,
+			fld.file_size
+		FROM
+			comtnfile fl 
+			LEFT JOIN comtnfiledetail fld ON fl.atch_file_id = fld.atch_file_id
+			WHERE fl.atch_file_id=#{atchFileId}
+	</select>
+	
+	<select id="selectClassListCnt" parameterType="classVO" resultType="int">
+		<![CDATA[
+		SELECT COUNT (*) CNT FROM off_class c WHERE 1=1 
+		]]>
+		<if test="classAreaSt != null and classAreaSt != ''">
+			AND c.c_area_st = #{classAreaSt}
+		</if>
+		<choose>
+			<when test="sortSubject == 'classListTop'">
+			</when>
+			<when test="sortSubject == 'classListHurry'">
+				AND c.u_start_dt > SYSDATE 
+			</when>
+			<when test="sortSubject == 'classListBottom'">
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
 </mapper>

@@ -20,8 +20,13 @@ public class ClassServiceImpl implements ClassService {
 	private ClassDao classDao;
 	
 	@Override
-	public List<ClassVO> selectClassList() {
-		return classDao.selectClassList();
+	public List<ClassVO> selectClassList(ClassVO paramVO) {
+		return classDao.selectClassList(paramVO);
+	}
+
+	@Override
+	public int selectClassListCnt(ClassVO paramVO) {
+		return classDao.selectClassListCnt(paramVO);
 	}
 	
 }

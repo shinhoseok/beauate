@@ -6,5 +6,7 @@ import com.beauate.admin.classmng.service.ClassVO;
 
 public interface ClassService {
 
-	List<ClassVO> selectClassList();
+	List<ClassVO> selectClassList(ClassVO paramVO);
+	int selectClassListCnt(ClassVO paramVO);
+	
 }

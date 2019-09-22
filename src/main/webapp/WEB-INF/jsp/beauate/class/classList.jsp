@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/beauate/ucommon/include.jsp"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:useBean id="now" class="java.util.Date" />
+<jsp:useBean id="now" class="java.util.Date" scope="request"/>
+<fmt:parseNumber
+    value="${ now.time / (1000*60*60*24) }"
+    integerOnly="true" var="nowDays" scope="request"/>
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -107,77 +111,48 @@
 						</div>
 						<div class="cont-right">
 							<ul class="product-list-01" data-column="2">
-								<c:forEach var="cls" items="${classList}" begin="0" end="3">
-								<li>
-									<a href="#">
-										<div class="thumb">
-											<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-											<div class="count"><span>1일 남았어요!${cls.classStartDt}${now}</span></div>
-										</div>
-										<div class="title">${cls.classAdr}</div>
-										<div class="desc">${cls.classTitle}</div>
-										<div class="etc">
-											<span>개강일</span>
-											<span>${cls.classStartDt}7월 23일(화)</span>
-										</div>
-									</a>
-								</li>
-								</c:forEach>
-								<li>
-									<a href="#">
-										<div class="thumb">
-											<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-											<div class="count"><span>1일 남았어요!</span></div>
-										</div>
-										<div class="title">강남</div>
-										<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-										<div class="etc">
-											<span>개강일</span>
-											<span>7월 23일(화)</span>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<div class="thumb">
-											<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-										</div>
-										<div class="title">강남</div>
-										<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-										<div class="etc">
-											<span>개강일</span>
-											<span>7월 23일(화)</span>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<div class="thumb">
-											<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-											<div class="soldout"></div>
-											<div class="soldout-txt">신청마감</div>
-										</div>
-										<div class="title">강남</div>
-										<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-										<div class="etc">
-											<span>개강일</span>
-											<span>7월 23일(화)</span>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<div class="thumb">
-											<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-										</div>
-										<div class="title">강남</div>
-										<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-										<div class="etc">
-											<span>개강일</span>
-											<span>7월 23일(화)</span>
-										</div>
-									</a>
-								</li>
+								<c:if test="${fn:length(classListTop)>0}">
+									<c:forEach var="cls" items="${classListTop}" begin="0" end="${fn:length(classListTop)-1}">
+									<fmt:parseDate var="parsedClsSDt" value="${cls.classStartDt}" pattern="yyyy-MM-dd HH:mm:ss.SSS" />
+									<fmt:formatDate var="etcDtStr" value="${parsedClsSDt}" pattern="yyyy-MM-dd(E)" />
+								    <fmt:parseNumber
+								    value="${ parsedClsSDt.time / (1000*60*60*24) }"
+								    integerOnly="true" var="classDays" scope="request"/>
+									<c:set var="img" value=""/>
+								    <c:if test="${fn:length(cls.classFileList)>0}">
+										<c:forEach var="clsImg" items="${cls.classFileList}" begin="0" end="${fn:length(cls.classFileList)-1}">
+											<c:if test="${clsImg.fileCn=='M1'}">
+											<c:set var="path" value="${fn:split(fileStreCours, '/')}" />
+											<c:set var="img" value="${path[fn:length(path)-1]}/${clsImg.streFileNm}.${clsImg.fileExtsn}"/>
+											</c:if>
+										</c:forEach>
+									</c:if>
+									<li>
+										<a href="#">
+											<div class="thumb">
+												<img src="${img}" alt="" />
+												<c:choose>
+												<c:when test="${classDays-nowDays>0}">
+													<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
+												</c:when>
+												<c:when test="${classDays-nowDays<0}">
+													<div class="soldout"></div>
+													<div class="soldout-txt">신청마감</div>
+												</c:when>
+												<c:otherwise>
+												</c:otherwise>
+												</c:choose>
+											</div>
+											<div class="title">${cls.classAreaStNm}</div>
+											<div class="desc">${cls.classTitle}</div>
+											<div class="etc">
+												<span>개강일</span>
+												<span>${etcDtStr}</span>
+											</div>
+										</a>
+									</li>
+									</c:forEach>
+								</c:if>
 							</ul>
 						</div>
 					</div>
@@ -273,118 +248,48 @@
 				<div class="hurruyup">
 					<h3>hurruyup class 마감임박</h3>
 					<ul class="product-list-01" data-column="4">
-						<li>
-							<a href="#">
-								<div class="thumb">
-									<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-									<div class="count"><span>1일 남았어요!</span></div>
-								</div>
-								<div class="title">강남</div>
-								<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-								<div class="etc">
-									<span>개강일</span>
-									<span>7월 23일(화)</span>
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<div class="thumb">
-									<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-									<div class="count"><span>1일 남았어요!</span></div>
-								</div>
-								<div class="title">강남</div>
-								<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-								<div class="etc">
-									<span>개강일</span>
-									<span>7월 23일(화)</span>
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<div class="thumb">
-									<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-									<div class="count"><span>1일 남았어요!</span></div>
-								</div>
-								<div class="title">강남</div>
-								<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-								<div class="etc">
-									<span>개강일</span>
-									<span>7월 23일(화)</span>
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<div class="thumb">
-									<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-									<div class="count"><span>1일 남았어요!</span></div>
-								</div>
-								<div class="title">강남</div>
-								<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-								<div class="etc">
-									<span>개강일</span>
-									<span>7월 23일(화)</span>
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<div class="thumb">
-									<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-									<div class="count"><span>1일 남았어요!</span></div>
-								</div>
-								<div class="title">강남</div>
-								<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-								<div class="etc">
-									<span>개강일</span>
-									<span>7월 23일(화)</span>
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<div class="thumb">
-									<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-									<div class="count"><span>1일 남았어요!</span></div>
-								</div>
-								<div class="title">강남</div>
-								<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-								<div class="etc">
-									<span>개강일</span>
-									<span>7월 23일(화)</span>
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<div class="thumb">
-									<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-									<div class="count"><span>1일 남았어요!</span></div>
-								</div>
-								<div class="title">강남</div>
-								<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-								<div class="etc">
-									<span>개강일</span>
-									<span>7월 23일(화)</span>
-								</div>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<div class="thumb">
-									<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-									<div class="count"><span>1일 남았어요!</span></div>
-								</div>
-								<div class="title">강남</div>
-								<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-								<div class="etc">
-									<span>개강일</span>
-									<span>7월 23일(화)</span>
-								</div>
-							</a>
-						</li>
+						<c:if test="${fn:length(classListHurry)>0}">
+						<c:forEach var="cls" items="${classListHurry}" begin="0" end="${fn:length(classListHurry)-1}">
+						<fmt:parseDate var="parsedClsSDt" value="${cls.classStartDt}" pattern="yyyy-MM-dd HH:mm:ss.SSS" />
+						<fmt:formatDate var="etcDtStr" value="${parsedClsSDt}" pattern="yyyy-MM-dd(E)" />
+					    <fmt:parseNumber
+					    value="${ parsedClsSDt.time / (1000*60*60*24) }"
+					    integerOnly="true" var="classDays" scope="request"/>
+					    <c:set var="img" value=""/>
+					    <c:if test="${fn:length(cls.classFileList)>0}">
+							<c:forEach var="clsImg" items="${cls.classFileList}" begin="0" end="${fn:length(cls.classFileList)-1}">
+								<c:if test="${clsImg.fileCn=='M1' }">
+								<c:set var="path" value="${fn:split(fileStreCours, '/')}" />
+								<c:set var="img" value="${path[fn:length(path)-1]}/${clsImg.streFileNm}.${clsImg.fileExtsn}"/>
+								</c:if>
+							</c:forEach>
+						</c:if>
+							<li>
+								<a href="#">
+									<div class="thumb">
+										<img src="${img}" alt="" />
+										<c:choose>
+										<c:when test="${classDays-nowDays>0}">
+											<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
+										</c:when>
+										<c:when test="${classDays-nowDays<0}">
+											<div class="soldout"></div>
+											<div class="soldout-txt">신청마감</div>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+										</c:choose>
+									</div>
+									<div class="title">${cls.classAreaStNm}</div>
+									<div class="desc">${cls.classTitle}</div>
+									<div class="etc">
+										<span>개강일</span>
+										<span>${etcDtStr}</span>
+									</div>
+								</a>
+							</li>
+					    </c:forEach>
+					    </c:if>
 					</ul>
 				</div>
 			</div>
@@ -420,227 +325,21 @@
 			</div>
 			<!-- slider banner -->
 			<!-- 검색결과 -->
-			<div class="content-inner">
-				<div class="list-top">
+			<div id="classBottomList" class="content-inner">
+				<form:form commandName="classVO" name="classBottomList" method="post" action="${basePath}/class/a/t/classListDtl.do">
+		            <form:hidden path="pageIndex" id="pageIndex" />
+		            <form:hidden path="sortSubject"/>
+		            <form:hidden path="sortDescend"/>
 					<h3>전체</h3>
 					<div class="sort-list">
-						<select style="width:90px;">
-							<option selected>지역 1</option>
-							<option>지역 2</option>
-							<option>지역 3</option>
-						</select>
+						<form:select path="classAreaSt" style="width:90px;" id="classAreaSt">
+							<form:options items="${classAreaList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
+						</form:select>
 					</div>
-				</div>
-				<ul class="product-list-01" data-column="4">
-					<li>
-						<a href="#">
-							<div class="thumb"><img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" /></div>
-							<div class="title">강남</div>
-							<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-							<div class="etc">
-								<span>개강일</span>
-								<span>7월 23일(화)</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="thumb">
-								<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-								<div class="soldout"></div>
-								<div class="soldout-txt">종료</div>
-							</div>
-							<div class="title">강남</div>
-							<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-							<div class="etc">
-								<span>개강일</span>
-								<span>7월 23일(화)</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="thumb">
-								<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-								<div class="soldout"></div>
-								<div class="soldout-txt">신청마감</div>
-							</div>
-							<div class="title">강남</div>
-							<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-							<div class="etc">
-								<span>개강일</span>
-								<span>7월 23일(화)</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="thumb"><img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" /></div>
-							<div class="title">강남</div>
-							<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-							<div class="etc">
-								<span>개강일</span>
-								<span>7월 23일(화)</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="thumb">
-								<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-								<div class="count"><span>1일 남았어요!</span></div>
-							</div>
-							<div class="title">강남</div>
-							<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-							<div class="etc">
-								<span>개강일</span>
-								<span>7월 23일(화)</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="thumb"><img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" /></div>
-							<div class="title">강남</div>
-							<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-							<div class="etc">
-								<span>개강일</span>
-								<span>7월 23일(화)</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="thumb"><img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" /></div>
-							<div class="title">강남</div>
-							<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-							<div class="etc">
-								<span>개강일</span>
-								<span>7월 23일(화)</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="thumb"><img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" /></div>
-							<div class="title">강남</div>
-							<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-							<div class="etc">
-								<span>개강일</span>
-								<span>7월 23일(화)</span>
-							</div>
-						</a>
-					</li><li>
-						<a href="#">
-							<div class="thumb"><img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" /></div>
-							<div class="title">강남</div>
-							<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-							<div class="etc">
-								<span>개강일</span>
-								<span>7월 23일(화)</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="thumb">
-								<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-								<div class="soldout"></div>
-								<div class="soldout-txt">종료</div>
-							</div>
-							<div class="title">강남</div>
-							<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-							<div class="etc">
-								<span>개강일</span>
-								<span>7월 23일(화)</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="thumb">
-								<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-								<div class="soldout"></div>
-								<div class="soldout-txt">신청마감</div>
-							</div>
-							<div class="title">강남</div>
-							<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-							<div class="etc">
-								<span>개강일</span>
-								<span>7월 23일(화)</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="thumb"><img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" /></div>
-							<div class="title">강남</div>
-							<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-							<div class="etc">
-								<span>개강일</span>
-								<span>7월 23일(화)</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="thumb">
-								<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
-								<div class="count"><span>1일 남았어요!</span></div>
-							</div>
-							<div class="title">강남</div>
-							<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-							<div class="etc">
-								<span>개강일</span>
-								<span>7월 23일(화)</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="thumb"><img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" /></div>
-							<div class="title">강남</div>
-							<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-							<div class="etc">
-								<span>개강일</span>
-								<span>7월 23일(화)</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="thumb"><img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" /></div>
-							<div class="title">강남</div>
-							<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-							<div class="etc">
-								<span>개강일</span>
-								<span>7월 23일(화)</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="thumb"><img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" /></div>
-							<div class="title">강남</div>
-							<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-							<div class="etc">
-								<span>개강일</span>
-								<span>7월 23일(화)</span>
-							</div>
-						</a>
-					</li>
-				</ul>
-				<div class="paging">
-					<button type="button" class="btn-prev"><span>이전</span></button>
-					<ul>
-						<li class="active"><span>1</span></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-					</ul>
-					<button type="button" class="btn-next"><span>다음</span></button>
-				</div>
+				</form:form>
+				<dummy>
+				<jsp:include page="/WEB-INF/jsp/beauate/class/lists/classBottomList.jsp" flush="false" />
+				</dummy>
 			</div>
 			<!-- //검색결과 -->
 		</div>
@@ -649,6 +348,38 @@
 
 	</div>
 	<!-- //container -->
+	<script>
+	function fn_ajaxList(pageNo){
+		var forms = document.classBottomList;
+		var listUrl = forms.action;
+		forms.pageIndex.value = pageNo;
+		var inputs = $('input',forms);
+		var param = {};
+		inputs.each(function(){
+			param[this.name] = $(this).val();
+		});
+		var selects = $('select',forms);
+		selects.each(function(){
+			param[this.name] = $(this).val();
+		});
+		$.ajax({						
+			type: 'POST',						
+			url : listUrl,						
+			data: param,						
+			dataType: "html",						
+			success: function(data){
+				$("#classBottomList>dummy").empty();
+				$("#classBottomList>dummy").append(data);				
+			}					
+		});		
+	};
+	$(document).ready(function($){
+		$("#classBottomList select").on('change', function(e) {
+			var forms = document.classBottomList;
+			fn_ajaxList(forms.pageIndex.value);
+	    });
+	});
+	</script>
 	<!-- footer -->
 	<%@ include file="/WEB-INF/jsp/beauate/ucommon/footer.jsp"%>
 	<!-- //footer -->

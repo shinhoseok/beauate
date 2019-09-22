@@ -2,11 +2,17 @@ package com.beauate.admin.classmng.service;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.beauate.common.service.CommDefaultVO;
 
+import egovframework.cmmn.service.FileVO;
+
 @SuppressWarnings("serial")
 public class ClassVO extends CommDefaultVO implements Serializable {
+
+	/** 페이징넘버 */
+	private String RNUM;
 	/** 클래스번호 */
 	private String classId;
 	/** 클래스 개설자 번호 */
@@ -52,6 +58,26 @@ public class ClassVO extends CommDefaultVO implements Serializable {
 	/** 외부링크 */
 	private String classWebAdr;
 	
+	private List<FileVO> classFileList;
+	
+	public List<FileVO> getClassFileList() {
+		return classFileList;
+	}
+	public void setClassFileList(List<FileVO> classFileList) {
+		this.classFileList = classFileList;
+	}
+	public String getRNUM() {
+		return RNUM;
+	}
+	public void setRNUM(String rNUM) {
+		RNUM = rNUM;
+	}
+	public String getClassImgId() {
+		return classImgId;
+	}
+	public void setClassImgId(String classImgId) {
+		this.classImgId = classImgId;
+	}
 	public String getClassUserId() {
 		return classUserId;
 	}

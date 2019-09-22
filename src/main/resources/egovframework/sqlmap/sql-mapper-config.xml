@@ -9,6 +9,7 @@
 		<!-- 관리자 사용자관리 VO -->
 		<typeAlias alias="userVO" type="com.beauate.admin.user.service.UserVO"/>
 		<typeAlias alias="UserStatsVO" type="com.beauate.admin.user.service.UserStatsVO"/>
+		<typeAlias alias="fileVO" type="egovframework.cmmn.service.FileVO"/>
 		
 		<!-- 관리자 공통코드관리 VO -->
 		<typeAlias alias="codeVO" type="com.beauate.admin.code.service.CodeVO"/>

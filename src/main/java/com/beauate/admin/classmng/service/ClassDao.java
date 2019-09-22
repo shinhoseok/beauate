@@ -28,5 +28,6 @@ public interface ClassDao {
 	 */ 
 	void insertOffClassProc(ClassVO classVO) throws Exception;
 
-	List<ClassVO> selectClassList();
+	List<ClassVO> selectClassList(ClassVO classVO);
+	int selectClassListCnt(ClassVO classVO);
 }
