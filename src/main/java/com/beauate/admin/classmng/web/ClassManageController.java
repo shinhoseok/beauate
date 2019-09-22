@@ -161,7 +161,7 @@ public class ClassManageController {
 		final Map<String, MultipartFile> files = multiRequest.getFileMap();
 
 		if (!files.isEmpty()) {
-			_result = fileUtil.parseFileInf(files, "FAQ_", 0, "", "");
+			_result = fileUtil.parseFileInf(files, "CLASS_", 0, "", "");
 			_atchFileId = fileMngService.insertFileInfs(_result); //파일이 생성되고나면 생성된 첨부파일 ID를 리턴한다.
 		}
 
