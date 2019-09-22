@@ -10,10 +10,10 @@
 			<span style="display: none;" id="emailAddrChk" class="emp"> 이메일을 다시 확인해주세요</span>
 		</li>
 		<li>
-			<input type="password" id="usrPw" name="usrPw" placeholder="비밀번호" title="비밀번호를 입력해주세요." maxlength="21" />
+			<input type="password" id="usrPw" name="usrPw" onkeypress=" if(event.keyCode==13){fn_login();} " placeholder="비밀번호" title="비밀번호를 입력해주세요." maxlength="21" />
 		</li>
 	</ul>
-	<div class="btn-area"><button type="button" class="btn" id="loginBtn"><span>로그인</span></button></div>
+	<div class="btn-area"><button type="button" class="btn" id="loginBtn" onclick="fn_login();"><span>로그인</span></button></div>
 	<div class="login-link">
 		<a href="#">회원가입</a>
 		<a href="#">비밀번호찾기</a>
@@ -22,7 +22,8 @@
 </form:form>
 <script type="text/javascript">
 //login
-$("#loginBtn").click(function () {
+
+var fn_login = function() {
 	if(!$.trim($("#emailAddr").val())){
 		alert("아이디를 입력해 주십시오.");
 		return;
@@ -31,9 +32,9 @@ $("#loginBtn").click(function () {
 		alert("비밀번호를 입력해 주십시오.");
 		return;
 	}
-	$("#loginForm").submit();
+	
 	//아이디체크
-	/* $.ajax({ 	
+	$.ajax({ 	
 		url: "${basePath}/login/a/n/selectIdPwdcheck.do",
 		type: 'POST',
 		dataType : "json",
@@ -45,7 +46,7 @@ $("#loginBtn").click(function () {
 		success: function(r) { 
 			alert(r.message);
 			if(r.message == 'N') {
-				$("emailAddrChk").show();
+				$("#emailAddrChk").show();
 				$("#emailAddr").focus();
 				return;
 			} else{
@@ -53,8 +54,11 @@ $("#loginBtn").click(function () {
 				$("#loginForm").submit();
 			}
 		}
-	}); */
-});
+	});
+};
+// $("#loginBtn").click(function () {
+	
+// });
 </script>
 </body>
 </html>
