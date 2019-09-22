@@ -4,7 +4,7 @@
 	<div class="header-inner">
 		<h1 class="header-logo"><a href="#">BEAUATE</a></h1>			
 		<ul class="header-util header-util-left">
-			<li><a href="#">오프라인 클래스</a></li>
+			<li><a href="${basePath}/class/a/t/classList.do">오프라인 클래스</a></li>
 			<li><a href="#">온라인 클래스</a></li>
 			<li><a href="#">제품소개</a></li>
 			<li><a href="#">뷰아떼 스토리</a></li>

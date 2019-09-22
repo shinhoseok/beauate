@@ -49,6 +49,7 @@
 		<!-- 인증 체크가 필요 없는 URL 리스트 (회원가입, 로그인, 메인화면과 egov파일관련)  -->
 		<property name="permittedURL">
 			<set>
+				<value>/class/a/[a-zA-Z]+/[a-zA-Z]+\.do</value>
 				<value>/user/a/[a-zA-Z]+/[a-zA-Z]+\.do</value>
 				<value>/login/a/n/[a-zA-Z]+\.do</value>
 				<value>/home/a/[a-zA-Z]+/[a-zA-Z]+\.do</value>

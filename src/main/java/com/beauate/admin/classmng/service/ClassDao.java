@@ -1,5 +1,7 @@
 package com.beauate.admin.classmng.service;
 
+import java.util.List;
+
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("classDao")
@@ -25,4 +27,6 @@ public interface ClassDao {
 	 * @throws Exception
 	 */ 
 	void insertOffClassProc(ClassVO classVO) throws Exception;
+
+	List<ClassVO> selectClassList();
 }

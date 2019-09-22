@@ -9,6 +9,10 @@ import com.beauate.common.service.CommDefaultVO;
 public class ClassVO extends CommDefaultVO implements Serializable {
 	/** 클래스번호 */
 	private String classId;
+	/** 클래스 개설자 번호 */
+	private String classUserId;
+	/** 클래스 이미지 번호 */
+	private String classImgId;
 	/** 클래스등록일 */
 	private Date classRegDt;
 	/** 클래스상태코드 */
@@ -48,6 +52,12 @@ public class ClassVO extends CommDefaultVO implements Serializable {
 	/** 외부링크 */
 	private String classWebAdr;
 	
+	public String getClassUserId() {
+		return classUserId;
+	}
+	public void setClassUserId(String classUserId) {
+		this.classUserId = classUserId;
+	}
 	public String getClassAreaStNm() {
 		return classAreaStNm;
 	}
