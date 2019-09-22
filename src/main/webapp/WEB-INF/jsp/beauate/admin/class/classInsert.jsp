@@ -55,79 +55,16 @@
 									<td>
 										<div class="commonSearch_wrap">
 											<label class="blind" for=" ">d</label>
-											<form:input path="usrId" id="usrId" style="width: 240px;" type="text" onfocus="checker(this, 30 , 'nbytes_usrId');" onblur="stopchecker();"/>
-											&nbsp;[<span id="nbytes_usrId" class="color_red">0</span>/30]byte
+											<form:input path="usrId" id="usrId" style="width: 240px;" type="text" onfocus="checker(this, 50 , 'nbytes_usrId');" onblur="stopchecker();"/>
+											&nbsp;[<span id="nbytes_usrId" class="color_red">0</span>/50]byte
 										</div>
 									</td>
-								</tr>
-								<tr>
-									<th>
-										상세이미지1, 슬라이드1~5, 메인3<br />
-										순으로 이미지 등록
-									</th>
-									<td colspan="3">
-										<input class="hideFile" name="file_1" id="egovComFileUploader" type="file" title="첨부파일입력" />
-										<span id="atchFileNot" style="margin-left: 5px; display: none;">(* 첨부파일을 더 이상 등록 할 수 없습니다.)</span>
-										<div class="download_list" id="egovComFileList"></div>
-									</td>
-								</tr>
-								<tr>
-									<th class="bullet_orange">클래스상태</th>
-									<td colspan="3">
-									<form:select path="classStNm" id="classStNm">
-										<form:options items="${rslt.classStList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
-									</form:select>
-								</tr>
-								<tr>
-									<th class="bullet_orange">클래스구분</th>
-									<td colspan="3">
-									<form:select path="classGb" id="classGb">
-										<form:options items="${rslt.classGbList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
-									</form:select>
-								</tr>
-								<tr>
-									<th class="bullet_orange">클래스 카테고리</th>
-									<td colspan="3">
-									<form:select path="classCtSt" id="classCtSt">
-										<form:options items="${rslt.classCategoryList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
-									</form:select>
-								</tr>
-								<tr>
-									<th class="bullet_orange">지역</th>
-									<td colspan="3">
-									<form:select path="classAreaSt" id="classAreaSt">
-										<form:options items="${rslt.classAreaList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
-									</form:select>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<h4 class="contentTitle_h4">클래스 상세 정보</h4>
-					<div class="tableLayer">
-						<table class="table">
-							<caption></caption>
-							<colgroup>
-								<col width="150px">
-								<col width="340px">
-								<col width="150px">
-								<col width="340px">
-							</colgroup>
-							<tbody class="line">
-								<tr>
 									<th>클래스 제목</th>
 									<td>
 										<div class="commonSearch_wrap">
 											<label class="blind" for=" ">d</label>
-											<form:input path="classTitle" id="classTitle" style="width: 240px;" type="text" onfocus="checker(this, 30 , 'nbytes_classTitle');" onblur="stopchecker();"/>
-											&nbsp;[<span id="nbytes_classTitle" class="color_red">0</span>/30]byte
-										</div>
-									</td>
-									<th>외부링크주소</th>
-									<td>
-										<div class="commonSearch_wrap">
-											<label class="blind" for=" ">d</label>
-											<form:input path="classWebAdr" id="classWebAdr" style="width: 240px;" type="text" onfocus="checker(this, 30 , 'nbytes_classWebAdr');" onblur="stopchecker();"/>
-											&nbsp;[<span id="nbytes_classWebAdr" class="color_red">0</span>/30]byte
+											<form:input path="classTitle" id="classTitle" style="width: 240px;" type="text" onfocus="checker(this, 50 , 'nbytes_classTitle');" onblur="stopchecker();"/>
+											&nbsp;[<span id="nbytes_classTitle" class="color_red">0</span>/50]byte
 										</div>
 									</td>
 								</tr>
@@ -152,8 +89,8 @@
 									<td>
 										<div class="commonSearch_wrap">
 											<label class="blind" for=" ">d</label>
-											<form:input path="classTime" id="classTime" style="width: 240px;" type="text" onfocus="checker(this, 30 , 'nbytes_classTime');" onblur="stopchecker();"/>
-											&nbsp;[<span id="nbytes_classTime" class="color_red">0</span>/30]byte
+											<form:input path="classTime" id="classTime" style="width: 240px;" type="text" onfocus="checker(this, 50 , 'nbytes_classTime');" onblur="stopchecker();"/>
+											&nbsp;[<span id="nbytes_classTime" class="color_red">0</span>/50]byte
 										</div>
 									</td>
 									<th>최소인원</th>
@@ -184,14 +121,6 @@
 									</td>
 								</tr>
 								<tr>
-									<th>주소</th>
-									<td>
-										<div class="commonSearch_wrap">
-											<label class="blind" for=" ">d</label>
-											<form:input path="classAdr" id="classAdr" style="width: 240px;" type="text" onfocus="checker(this, 30 , 'nbytes_classAdr');" onblur="stopchecker();"/>
-											&nbsp;[<span id="nbytes_classAdr" class="color_red">0</span>/30]byte
-										</div>
-									</td>
 									<th>클래스비용</th>
 									<td>
 										<div class="commonSearch_wrap">
@@ -200,15 +129,69 @@
 											&nbsp;[<span id="nbytes_classCost" class="color_red">0</span>/30]byte
 										</div>
 									</td>
+									<th>외부링크주소</th>
+									<td>
+										<div class="commonSearch_wrap">
+											<label class="blind" for=" ">d</label>
+											<form:input path="classWebAdr" id="classWebAdr" style="width: 240px;" type="text" onfocus="checker(this, 50 , 'nbytes_classWebAdr');" onblur="stopchecker();"/>
+											&nbsp;[<span id="nbytes_classWebAdr" class="color_red">0</span>/50]byte
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th class="bullet_orange">클래스상태</th>
+									<td>
+									<form:select path="classSt" id="classSt">
+										<form:options items="${rslt.classStList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
+									</form:select>
+									<th class="bullet_orange">클래스구분</th>
+									<td>
+									<form:select path="classGb" id="classGb">
+										<form:options items="${rslt.classGbList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
+									</form:select>
+								</tr>
+								<tr>
+									<th class="bullet_orange">클래스 카테고리</th>
+									<td>
+									<form:select path="classCtSt" id="classCtSt">
+										<form:options items="${rslt.classCategoryList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
+									</form:select>
+									<th class="bullet_orange">지역</th>
+									<td>
+									<form:select path="classAreaSt" id="classAreaSt">
+										<form:options items="${rslt.classAreaList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
+									</form:select>
+								</tr>
+								<tr>
+									<th class="bullet_orange">주소</th>
+									<td colspan="4">
+										<div class="commonSearch_wrap">
+											<label class="blind" for=" ">d</label>
+											<form:input path="classAdr" id="classAdr" style="width: 680px;" onfocus="this.blur();"/>
+											<div class="T_btnLayer fr">
+												<a href="javascript:void(0);" onclick="fn_jusoPopup();"><button type="button" class="blueBtn L">주소찾기</button></a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th colspan="2"><span class="thstar"></span>
+										이미지 등록 (상세대표이미지1장, 상세슬라이드1~5장, 메인이미지 크기 큰 순서로 3장)
+									</th>
+									<td colspan="4">
+										<input class="hideFile" name="file_1" id="egovComFileUploader" type="file" title="첨부파일입력" />
+										<span id="atchFileNot" style="margin-left: 5px; display: none;">(* 첨부파일을 더 이상 등록 할 수 없습니다.)</span>
+										<div class="download_list" id="egovComFileList"></div>
+									</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 				</form:form>
 				<div class="T_btnLayer fr">
-						<a href="#" onclick="javascript:fn_insertClassProc();"><button type="button" class="blueBtn L">등록</button></a>
-						<a href="${basePath }/classmng/r/m/selectClassMngList.do" ><button type="button" class="blueBtn L">취소</button></a>
-					</div>
+					<a href="#" onclick="javascript:fn_insertClassProc();"><button type="button" class="blueBtn L">등록</button></a>
+					<a href="${basePath }/classmng/r/m/selectClassMngList.do" ><button type="button" class="blueBtn L">취소</button></a>
+				</div>
 			</div>
 		</div>
 		<!--container End-->
@@ -233,8 +216,8 @@ $(document).ready(function(){
 
 var fn_insertClassProc = function() {
 	var usrId = $("#usrId").val();
-	if(!$.trim(usrId)) {
-		alert("등록자 이메일을 입력해 주세요");	
+	if (!TypeChecker.email($("#usrId").val())) {
+		alert("이메일은 "+TypeChecker.emailText);
 		$("#usrId").focus();
 		return;
 	}
@@ -255,11 +238,27 @@ var fn_insertClassProc = function() {
 				return;
 			} else{
 				$("#usrId").val(r.result);
+				alert("상태값 >>>> "+$("#classSt").val());
 				document.classVO.submit();
 			}
 		}
 	}); 
 };
+
+//주소찾기 팝업 도로명API
+var fn_jusoPopup = function() {
+	var pop = window.open("/popup/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
+}
+function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn , detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
+	// 2017년 2월 제공항목이 추가되었습니다. 원하시는 항목을 추가하여 사용하시면 됩니다.
+// 	document.userVO.classAdr.value = roadFullAddr;
+// 	var fullAddr = roadAddrPart1 + " " + addrDetail
+// 	alert(roadFullAddr);
+	document.classVO.classAdr.value = roadFullAddr;
+//		document.form.roadAddrPart2.value = roadAddrPart2;
+	
+// 	document.userVO.zip_no.value = zipNo;
+}
 </script>
 </body>
 </html>

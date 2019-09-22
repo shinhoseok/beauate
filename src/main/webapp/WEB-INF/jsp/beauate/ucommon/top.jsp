@@ -46,6 +46,7 @@
 		});
 		$.blockUI({message:$("#modal-login"),css:{width:"0px",height:"0px",position:"absolute",left:"35%",top:"20%", textAlign:"left"}});
 	};
+	
 	//로그인 팝업 닫기
 	var fn_loginPopClose = function () {
 		$.unblockUI();

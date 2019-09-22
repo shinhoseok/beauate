@@ -62,14 +62,14 @@ public class LoginController {
 	 * @throws Exception
 	 */ 	
 	@RequestMapping(value = "/login/a/n/login.do")
-	public String login(HttpServletRequest request,
+	public String login(@ModelAttribute("loginVO") LoginVO loginVO, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model)
 			throws Exception {
 		return "/login/login";
 	}
 	
 	@RequestMapping(value = "/login/a/n/selectIdPwdcheck.do")
-	public String selectIdPwdcheck(LoginVO loginVO, ModelMap model) throws Exception {
+	public String selectIdPwdcheck(@ModelAttribute("loginVO") LoginVO loginVO, ModelMap model) throws Exception {
 		//비밀 번호 암호화
 		log.debug("Before usrPw:"+loginVO.getUsrPw());
 		String passwd = commonUtils.encryption(loginVO.getUsrPw());
