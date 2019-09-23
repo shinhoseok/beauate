@@ -386,6 +386,7 @@
 					<h3>전체</h3>
 					<div class="sort-list">
 						<form:select path="classAreaSt" style="width:90px;" id="classAreaSt">
+							<option value="0">전체</option>
 							<form:options items="${classAreaList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
 						</form:select>
 					</div>

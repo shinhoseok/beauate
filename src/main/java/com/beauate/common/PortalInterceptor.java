@@ -78,13 +78,13 @@ public class PortalInterceptor extends HandlerInterceptorAdapter {
 
 			// TODO BASIC context root가 없으면 2번째 , 있으면 3번째로 변경해줘야함
 			// URI 권한이 상관없는 코드 a 면 그냥 통과
-			if ("a".equals(replaceURI[3])) {
+			if ("a".equals(replaceURI[2])) {
 				roleChk = true;
 			} else {
 				String menuRlDiv = null;
 				MenuVO menuSetVO = new MenuVO();
 				// TODO BASIC context root가 없으면 1번째 , 있으면 2번째로 변경해줘야함
-				menuSetVO.setPgmParam(replaceURI[2]);
+				menuSetVO.setPgmParam(replaceURI[1]);
 				menuSetVO.setUsrId(loginVO.getUsrId());
 
 				// 권한구분값과 사용자 아이디 , 사용자 포탈권한 정보 , 메뉴아이디 로 권한 조건 서비스 로직 구현
@@ -133,7 +133,7 @@ public class PortalInterceptor extends HandlerInterceptorAdapter {
 					String menuRlDiv = null;
 					MenuVO menuSetVO = new MenuVO();
 					// TODO BASIC context root가 없으면 1번째 , 있으면 2번째로 변경해줘야함
-					menuSetVO.setPgmParam(replaceURI[2]);
+					menuSetVO.setPgmParam(replaceURI[1]);
 					menuSetVO.setUsrId(GlobalConstants.NON_MEMBER);
 
 					// 권한구분값과 사용자 아이디 , 사용자 포탈권한 정보 , 메뉴아이디 로 권한 조건 서비스 로직 구현
@@ -183,7 +183,7 @@ public class PortalInterceptor extends HandlerInterceptorAdapter {
 
 			// TODO BASIC context root가 없으면 3번째 , 있으면 4번째로 변경해줘야함
 			// 메뉴 탑 t, 레프트 m ,n 은 없음
-			if (!"n".equals(replaceURI[4])) {// n 이 아니라면 t or m , 그러므로 top 은 무조건 구해야함
+			if (!"n".equals(replaceURI[3])) {// n 이 아니라면 t or m , 그러므로 top 은 무조건 구해야함
 
 				LoginVO loginVO = (LoginVO) request.getSession().getAttribute(GlobalConstants.LOGIN_SESSION_KEY);
 
@@ -199,7 +199,7 @@ public class PortalInterceptor extends HandlerInterceptorAdapter {
 					menuSetVO.setUsrId(loginVO.getUsrId());
 				}
 				// TODO BASIC context root가 없으면 1번째 , 있으면 2번째로 변경해줘야함
-				menuSetVO.setPgmParam(replaceURI[2]);
+				menuSetVO.setPgmParam(replaceURI[1]);
 
 				// 메뉴를 구하기전 프로그램id 와 사용자 정보만으로 menuId1Lvl 값을 알아야함(포함해서
 				// menuId1Lv2, menuId1Lv3도 함께)
@@ -219,7 +219,7 @@ public class PortalInterceptor extends HandlerInterceptorAdapter {
 				}
 
 				// TODO BASIC context root가 없으면 3번째 , 있으면 4번째로 변경해줘야함
-				if ("m".equals(replaceURI[4])) {// m 이라면 레프트 까지 구해야함 레프트 메뉴일때만 컨텐츠의 서브타이틀 (예: 홈 > 포탈관리 > 메뉴관리)
+				if ("m".equals(replaceURI[3])) {// m 이라면 레프트 까지 구해야함 레프트 메뉴일때만 컨텐츠의 서브타이틀 (예: 홈 > 포탈관리 > 메뉴관리)
 					setSubTitleList = commonService.selectSubTitleList(menuSetVO);
 					setLeftMenuList = commonService.selectLeftMenuList(menuSetVO);
 				}

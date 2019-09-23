@@ -147,7 +147,7 @@
 			<when test="sortSubject == 'classListTop'">
 			</when>
 			<when test="sortSubject == 'classListHurry'">
-				AND c.u_start_dt > SYSDATE 
+				AND DATEDIFF(SYSDATETIME, c.u_start_dt) = 1 AND c.c_st IN ('1','2')
 			</when>
 			<when test="sortSubject == 'classListBottom'">
 			</when>
@@ -155,10 +155,10 @@
 				ORDER BY c.c_dt
 			</otherwise>
 		</choose>
-		<if test="classAreaSt != null and classAreaSt != ''">
+		<if test="classAreaSt!= null and !(classAreaSt=='') and !(classAreaSt=='0') and !(classAreaSt==0)" >
 			AND c.c_area_st = #{classAreaSt}
 		</if>
-		<if test="classCtSt != null and classCtSt != ''">
+		<if test="classCtSt!=null and !(classCtSt=='') and !(classCtSt=='0') and !(classCtSt==0)">
 			AND c.c_category_st = #{classCtSt}
 		</if>
 		          ) A
@@ -189,19 +189,23 @@
 		<![CDATA[
 		SELECT COUNT (*) CNT FROM off_class c WHERE 1=1 
 		]]>
-		<if test="classAreaSt != null and classAreaSt != ''">
-			AND c.c_area_st = #{classAreaSt}
-		</if>
 		<choose>
 			<when test="sortSubject == 'classListTop'">
 			</when>
 			<when test="sortSubject == 'classListHurry'">
-				AND c.u_start_dt > SYSDATE 
+				AND DATEDIFF(SYSDATETIME, c.u_start_dt) = 1 AND c.c_st IN ('1','2')
 			</when>
 			<when test="sortSubject == 'classListBottom'">
 			</when>
 			<otherwise>
+				ORDER BY c.c_dt
 			</otherwise>
 		</choose>
+		<if test="classAreaSt!= null and !(classAreaSt=='') and !(classAreaSt=='0') and !(classAreaSt==0)" >
+			AND c.c_area_st = #{classAreaSt}
+		</if>
+		<if test="classCtSt!=null and !(classCtSt=='') and !(classCtSt=='0') and !(classCtSt==0)">
+			AND c.c_category_st = #{classCtSt}
+		</if>
 	</select>
 </mapper>
