@@ -388,7 +388,14 @@
 		       B.LOGIN_DT loginDt,
 			   B.U_OUT_DT userOutDt
 		  FROM USERS B
-		 WHERE B.U_EMAIL = #{emailAddr}
 		 ]]>
+		 <where>
+			<if test="usrId != '' and usrId != null">
+				  AND B.U_SQ = #{usrId}
+			</if>
+			<if test="emailAddr != '' and emailAddr != null">
+				  AND B.U_EMAIL = #{emailAddr}
+			</if>
+		</where>
 	</select>
 </mapper>

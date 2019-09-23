@@ -21,139 +21,141 @@
 	<!-- header End -->
 	<div class="wrap">
 		<div class="container">
-			<div class="sub_leftMenu">
-				<h3>회원</h3>
-				<ul class="menuBox">
-					<li class="bigMenu"><a href="#">클래스 관리</a>
-						<div class="subMenu">
-							<ul>
-								<!--서브 메뉴 선택시 class="selectsubMenu"-->
-								<!--li class="selectsubMenu"><a href="#">권한그룹 관리</a></li-->
-								<li class="selectsubMenu"><a href="#">클래스 리스트</a></li>
-								<li class="smallMenu"><a href="#">클래스별 정산 </a></li>
-							</ul>
-						</div></li>
-					<li class="bigMenu"><a href="#">알람신청 관리</a>
-						<div class="subMenu">
-							<ul>
-								<!--서브 메뉴 선택시 class="selectsubMenu"-->
-								<!--li class="selectsubMenu"><a href="#">권한그룹 관리</a></li-->
-								<li class="smallMenu"><a href="#">알람신청자 리스트</a></li>
-							</ul>
-						</div></li>
-					<li class="bigMenu"><a href="#">후기 댓글 관리</a>
-						<div class="subMenu">
-							<ul>
-								<!--서브 메뉴 선택시 class="selectsubMenu"-->
-								<!--li class="selectsubMenu"><a href="#">권한그룹 관리</a></li-->
-								<li class="smallMenu"><a href="#">후기 리스트</a></li>
-								<li class="smallMenu"><a href="#">댓글 리스트</a></li>
-							</ul>
-						</div></li>
-				</ul>
-			</div>
+			<!-- left_menu Start -->
+			<%@ include file="/WEB-INF/jsp/beauate/common/leftMenu.jsp"%>
+			<!-- left_menu End -->
 			<div class="contents">
 				<p class="contentTitle">클래스 리스트</p>
 				<p class="sub_path">
-					<img src="images/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;클래스 관리&nbsp;〉&nbsp;클래스 리스트
+					<img src="${imagePath }/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;클래스 관리&nbsp;〉&nbsp;클래스 리스트
 				</p>
-				<div class="selectBox">
-					<select name="select" class="w13p">
-						<option>이름</option>
-						<option>이메일</option>
-						<option>회원번호</option>
-					</select>
-					<input class="searchName" name="" type="text" />
-					<button type="button" class="grayBtn ico">
-						<img src="images/ico_search.png"> 검색
-					</button>
-					<button type="button" class="grayBtn02 ico">초기화</button>
-				</div>
+				<form:form commandName="classVO" id="classVO" name="listForm" method="post" action="${basePath}/classmng/r/m/selectClassMngList.do">
+					<form:hidden path="classId"/>
+					<form:hidden path="pageIndex" id="pageIndex" />
+					<form:hidden path="sortSubject" />
+					<form:hidden path="sortDescend" />
+					<div class="selectBox">
+						<form:select path="searchCondition" class="w13p">
+							<form:option value="classUserId" label="회원번호"></form:option>
+							<form:option value="classTitle" label="클래스명"></form:option>
+						</form:select> 
+						<form:input path="searchKeyword" onkeydown="if(event.keyCode==13){javascript:fn_searchList(1);}" class="searchName" style="width: 737px;"></form:input>
+						<button type="button" class="grayBtn ico" onclick="javascript:fn_searchList(1);"><img src="${imagePath }/ico_search.png"> 검색</button>
+					</div>
+				</form:form>
 				<div class="tableLayer">
 					<table class="tableList">
 						<caption></caption>
 						<colgroup>
 							<col width="15%">
+							<col width="*">
 							<col width="10%">
 							<col width="10%">
-							<col width="20%">
-							<col width="15%">
+							<col width="10%">
 							<col width="10%">
 							<col width="10%">
 							<col width="10%">
 						</colgroup>
 						<thead>
-							<th class="noBg">회원번호 <span class="arrow_ascending"><a href="#"></a></span> <span class="arrow_descending"><a href="#"></a></span>
+							<th sortId="usrId" class="noBg">회원번호
+								<span class="arrow_descending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>
+								<span class="arrow_ascending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>									
 							</th>
-							<th>가입일 <span class="arrow_ascending"><a href="#"></a></span> <span class="arrow_descending"><a href="#"></a></span>
+							<th sortId="classTitle">클래스 제목
+								<span class="arrow_descending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>
+								<span class="arrow_ascending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>									
 							</th>
-							<th>이름</th>
-							<th>휴대전화</th>
-							<th>누적 결제금액 <span class="arrow_ascending"><a href="#"></a></span> <span class="arrow_descending"><a href="#"></a></span>
-							</th>
-							<th>누적 수강생 <span class="arrow_ascending"><a href="#"></a></span> <span class="arrow_descending"><a href="#"></a></span>
-							</th>
-							<th>후기평점 <span class="arrow_ascending"><a href="#"></a></span> <span class="arrow_descending"><a href="#"></a></span>
-							</th>
+							<th>클래스시작일</th>
+							<th>클래스종료일</th>
+							<th>클래스상태</th>
+							<th>클래스구분</th>
+							<th>클래스카테고리</th>
+							<th>지역</th>
 						</thead>
 						<tbody>
-							<tr class="row">
-								<td>U1005</td>
-								<td>2019.09.17</td>
-								<td>박소현</td>
-								<td>010-1234-5678</td>
-								<td>3,004,800</td>
-								<td>45명</td>
-								<td>4.5</td>
-							</tr>
-							<tr class="row">
-								<td>U1005</td>
-								<td>2019.09.17</td>
-								<td>박소현</td>
-								<td>010-1234-5678</td>
-								<td>3,004,800</td>
-								<td>45명</td>
-								<td>4.5</td>
-							</tr>
-							<tr class="row">
-								<td>U1005</td>
-								<td>2019.09.17</td>
-								<td>박소현</td>
-								<td>010-1234-5678</td>
-								<td>3,004,800</td>
-								<td>45명</td>
-								<td>4.5</td>
-							</tr>
-							<tr class="row">
-								<td>U1005</td>
-								<td>2019.09.17</td>
-								<td>박소현</td>
-								<td>010-1234-5678</td>
-								<td>3,004,800</td>
-								<td>45명</td>
-								<td>4.5</td>
-							</tr>
-							<tr class="row">
-								<td>U1005</td>
-								<td>2019.09.17</td>
-								<td>박소현</td>
-								<td>010-1234-5678</td>
-								<td>3,004,800</td>
-								<td>45명</td>
-								<td>4.5</td>
-							</tr>
+							<c:choose>
+								<c:when test="${fn:length(rslt.selectList) != 0}">
+									<c:forEach items="${rslt.selectList}" var="list" varStatus="i">
+										<tr class="row" style="cursor: pointer;" onclick="javascript:fn_offClassDetail('${list.classId}');">
+											<td><c:out value="${list.classUserId}"/></td>
+											<td style="text-align: left;"><c:out value="${list.classTitle}"/></td>
+											<td>
+												<fmt:parseDate value="${list.classStartDt}" var="classStartDt" pattern="yyyy-MM-dd"/> 
+												<fmt:formatDate value="${classStartDt}" pattern="yyyy-MM-dd"/>
+											</td>
+											<td>
+												<fmt:parseDate value="${list.classEndDt}" var="classEndDt" pattern="yyyy-MM-dd"/> 
+												<fmt:formatDate value="${classEndDt}" pattern="yyyy-MM-dd"/>
+											</td>
+											<td>
+												<c:choose>
+													<c:when test="${list.classGb eq '2'}">
+														외부
+													</c:when>
+													<c:otherwise>
+														내부
+													</c:otherwise>
+												</c:choose>
+											</td>
+											<td>
+												<c:choose>
+													<c:when test="${list.classSt eq '1'}">
+														오픈전
+													</c:when>
+													<c:when test="${list.classSt eq '2'}">
+														오픈후
+													</c:when>
+													<c:when test="${list.classSt eq '3'}">
+														신청마감
+													</c:when>
+													<c:otherwise>
+														클래스종료
+													</c:otherwise>
+												</c:choose>
+											</td>
+											<td>
+												<c:choose>
+													<c:when test="${list.classCtSt eq '1'}">
+														헤어
+													</c:when>
+													<c:when test="${list.classCtSt eq '2'}">
+														메이크업
+													</c:when>
+													<c:when test="${list.classCtSt eq '3'}">
+														속눈썹/반영구
+													</c:when>
+													<c:when test="${list.classCtSt eq '4'}">
+														피부/왁싱
+													</c:when>
+													<c:when test="${list.classCtSt eq '5'}">
+														네일
+													</c:when>
+													<c:otherwise>
+														기타
+													</c:otherwise>
+												</c:choose>
+											</td>
+											<td><c:out value="${list.classAreaStNm}"/></td>
+										</tr>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<td colspan="8">데이터가 없습니다.</td>
+								</c:otherwise>
+							</c:choose>
 						</tbody>
 					</table>
 					<div class="T_btnLayer fr">
 						<a href="${basePath}/classmng/w/m/insertOffClass.do"><button type="button" class="blueBtn L">등록</button></a>
 					</div>
 				</div>
-				<!--페이징-->
-<!-- 				<div class="paging_place"> -->
-<!-- 					<div class="paging_wrap"> -->
-<%-- 						<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_searchList" /> --%>
-<!-- 					</div> -->
-<!-- 				</div> -->
+				<!-- 페이징// -->
+				<div class="paging_place">
+					<div class="paging_wrap">
+						<ui:pagination paginationInfo="${rslt.paginationInfo}" type="image" jsFunction="fn_searchList" />
+					</div>
+				</div>
+				<!-- 페이징// -->
 			</div>
 		</div>
 		<!--container End-->
@@ -162,5 +164,30 @@
 	<!-- footer // -->
 	<%@ include file="/WEB-INF/jsp/beauate/common/footer.jsp"%>
 	<!-- // footer -->
+	
+<script type="text/javascript">
+//정렬
+var fn_sort = function(obj) {
+	var frm = document.listForm;
+	frm.sortDescend.value = obj.className == "arrow_ascending" ? "asc" : "desc";
+	frm.sortSubject.value = obj.parentNode.getAttributeNode("sortId").value;
+	frm.submit();
+};
+
+//검색, 페이지 이동
+var fn_searchList = function(pageNo){
+	var frm = document.listForm;
+	frm.pageIndex.value = pageNo;
+	frm.submit();
+};
+
+//오프라인클래스 상세정보
+var fn_offClassDetail = function(classId) {
+	var frm = document.listForm;
+	frm.classId.value = classId;
+	frm.action = "<c:url value='${basePath}/classmng/r/m/selectClassMngDetail.do'/>";
+	frm.submit();
+};
+</script>
 </body>
 </html>

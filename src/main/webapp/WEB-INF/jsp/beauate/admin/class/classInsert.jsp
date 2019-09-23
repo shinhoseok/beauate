@@ -238,7 +238,6 @@ var fn_insertClassProc = function() {
 				return;
 			} else{
 				$("#usrId").val(r.result);
-				alert("상태값 >>>> "+$("#classSt").val());
 				document.classVO.submit();
 			}
 		}

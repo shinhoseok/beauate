@@ -19,6 +19,7 @@ import com.beauate.admin.classmng.service.ClassManageService;
 import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.admin.user.service.UserDao;
 import com.beauate.admin.user.service.UserVO;
+import com.beauate.login.service.LoginVO;
 
 import egovframework.cmmn.service.EgovFileMngService;
 import egovframework.cmmn.service.EgovFileMngUtil;
@@ -62,8 +63,37 @@ public class ClassManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/classmng/r/m/selectClassMngList.do")
-	public String selectClassMngList(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws Exception {
+	public String selectClassMngList(@ModelAttribute("classVO") ClassVO classVO, ModelMap model) throws Exception {
+		Map<String, Object> rslt = classManageService.selectClassList(classVO);
+		model.addAttribute("rslt", rslt);
 		return "/admin/class/classList";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 클래스관리 상세
+	 * 2. 처리내용 : 클래스관리 상세
+	 * </pre>
+	 * @Method Name : selectClassMngDetail
+	 * @date : 2019. 9. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param classVO
+	 * @param model
+	 * @return String
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/classmng/r/m/selectClassMngDetail.do")
+	public String selectClassMngDetail(@ModelAttribute("classVO") ClassVO classVO, ModelMap model) throws Exception {
+		ClassVO resultVO = classManageService.selectClassMngDetail(classVO);
+		model.addAttribute("resultVO", resultVO);
+		return "/admin/class/classDetail";
 	}
 	
 	/**
@@ -119,9 +149,7 @@ public class ClassManageController {
 		//이메일로 받은 아이디를 실제 아이디값으로 셋팅
 		log.debug(">>> classVO before usrId : " + classVO.getUsrId());
 		UserVO userVO = userDao.selectUserDetail(classVO.getUsrId());
-		if(userVO != null) {
-			classVO.setUsrId(userVO.getUsrId());
-		}
+		classVO.setUsrId(userVO.getUsrId());
 		
 		log.debug(">>> classVO after usrId : " + classVO.getUsrId());
 		
@@ -173,6 +201,124 @@ public class ClassManageController {
 		
 		log.debug(">>> After insertProgramProc, programVO : " + classVO);	
 		
+		return "redirect:/classmng/r/m/selectClassMngList.do";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인 클래스 수정 화면
+	 * 2. 처리내용 : 오프라인 클래스 수정 화면
+	 * </pre>
+	 * @Method Name : updateClassMng
+	 * @date : 2019. 9. 18.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일					작성자				변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 18.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param programVO
+	 * @param model
+	 * @return String
+	 * @throws Exception
+	 */ 
+	@RequestMapping(value = "/classmng/w/m/updateClassMng.do")
+	public String updateClassMng(@ModelAttribute("classVO") ClassVO classVO, ModelMap model) throws Exception {
+		log.debug(">>> Before updateClassMng, model : " + model);
+		ClassVO resultVO = classManageService.selectClassMngDetail(classVO);
+		Map<String, Object> rslt = classManageService.selectClassCodeList();
+		model.addAttribute("rslt", rslt);
+		model.addAttribute("classVO", resultVO);
+		log.debug(">>> After updateClassMng, model : " + model);
+		return "/admin/class/classUpdate";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인 클래스 수정 처리
+	 * 2. 처리내용 : 오프라인 클래스 수정 처리
+	 * </pre>
+	 * @Method Name : updateClassMng
+	 * @date : 2019. 9. 18.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일					작성자				변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 18.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param programVO
+	 * @param model
+	 * @return String
+	 * @throws Exception
+	 */ 
+	@RequestMapping(value = "/classmng/w/m/updateClassMngProc.do")
+	public String updateClassMngProc(final MultipartHttpServletRequest multiRequest, @ModelAttribute("classVO") ClassVO classVO,
+			LoginVO sessionVO, SessionStatus status, ModelMap model) throws Exception {
+		log.debug(">>> Before updateClassMngProc, model : " + model);
+		log.debug(">>> Before updateClassMngProc, programVO : " + classVO);
+
+		// 첨부파일 관련 ID 생성 start....
+		String _atchFileId = classVO.getAtchFileId();
+
+		final Map<String, MultipartFile> files = multiRequest.getFileMap();
+
+		if (!files.isEmpty()) {
+			if ("".equals(_atchFileId)) {
+				List<FileVO> _result = fileUtil.parseFileInf(files, "CLASS_", 0, _atchFileId, "");
+				_atchFileId = fileMngService.insertFileInfs(_result);
+				classVO.setAtchFileId(_atchFileId);
+			} else {
+				FileVO fvo = new FileVO();
+				fvo.setAtchFileId(_atchFileId);
+				int cnt = fileMngService.getMaxFileSN(fvo);
+				List<FileVO> _result = fileUtil.parseFileInf(files, "CLASS_", cnt, _atchFileId, "");
+				fileMngService.updateFileInfs(_result);
+			}
+		}
+
+		classVO.setUsrId(sessionVO.getUsrId());
+		classVO.setMenuRlDiv(sessionVO.getMenuRlDiv());
+		int result = classManageService.updateClassMngProc(classVO);
+		status.setComplete();	//중복 submit 방지
+		
+		log.debug(">>> After updateClassMngProc, result : " + result);
+		log.debug(">>> After updateClassMngProc, model : " + model);
+		log.debug(">>> After updateClassMngProc, programVO : " + classVO);		
+		return "redirect:/classmng/r/m/selectClassMngDetail.do?classId=" + classVO.getClassId();
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인 클래스 삭제
+	 * 2. 처리내용 :  오프라인 클래스 삭제
+	 * </pre>
+	 * @Method Name : deleteClassMngProc
+	 * @date : 2019. 9. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param classVO
+	 * @return int
+	 * @throws Exception
+	 */ 
+	@RequestMapping(value = "/classmng/w/n/deleteClassMngProc.do")
+	public String deleteClassMngProc(@ModelAttribute("classVO") ClassVO classVO, LoginVO sessionVO, SessionStatus status, ModelMap model) throws Exception {
+		classVO.setUsrId(sessionVO.getUsrId());
+		classVO.setMenuRlDiv(sessionVO.getMenuRlDiv());
+		classManageService.deleteClassMngProc(classVO);
+		status.setComplete();	//중복 submit 방지
+		
+		log.debug(">>> After deleteClassMngProc, model : " + model);
+		log.debug(">>> After deleteClassMngProc, classVO : " + classVO);
 		return "redirect:/classmng/r/m/selectClassMngList.do";
 	}
 }

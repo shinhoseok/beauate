@@ -1,5 +1,6 @@
 package com.beauate.admin.classmng.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,9 +16,11 @@ import com.beauate.admin.classmng.service.ClassManageService;
 import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.admin.code.service.CodeDao;
 import com.beauate.admin.code.service.CodeVO;
+import com.beauate.common.DateUtil;
 import com.beauate.common.GlobalConstants;
 
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @Service("classManageService")
 public class ClassManageServiceImpl implements ClassManageService {
@@ -91,5 +94,134 @@ public class ClassManageServiceImpl implements ClassManageService {
 		classVO.setClassId(classIdGnrService.getNextStringId());
 		log.debug(">>> classVO in insertOffClassProc impl : " + classVO);
 		classDao.insertOffClassProc(classVO);
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인 클래스 리스트
+	 * 2. 처리내용 :  오프라인 클래스 클래스 리스트
+	 * </pre>
+	 * @Method Name : selectClassList
+	 * @date : 2019. 9. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param classVO
+	 * @return Map<String, Object>
+	 * @throws Exception
+	 */ 
+	@Override
+	public Map<String, Object> selectClassList(ClassVO classVO) throws Exception {
+		Map<String, Object> rsltMap = new HashMap<>();
+		//페이징 
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(classVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(classVO.getPageUnit());
+		paginationInfo.setPageSize(classVO.getPageSize());
+		
+		classVO.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
+		classVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		classVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		
+		List<ClassVO> selectList = null;
+		
+		//총 카운트 
+		int cnt = classDao.selectClassMngListCnt(classVO);
+		paginationInfo.setTotalRecordCount(cnt);
+		
+		if(cnt > 0){
+			//리스트
+			selectList = classDao.selectClassMngList(classVO);
+		}
+		rsltMap.put("paginationInfo", paginationInfo);
+		rsltMap.put("selectList", selectList);
+		rsltMap.put("selectListCnt", cnt);
+		
+		return rsltMap;
+	}
+
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인 클래스 상세
+	 * 2. 처리내용 :  오프라인 클래스 상세
+	 * </pre>
+	 * @Method Name : selectClassMngDetail
+	 * @date : 2019. 9. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param classVO
+	 * @return ClassVO
+	 * @throws Exception
+	 */ 
+	public ClassVO selectClassMngDetail(ClassVO classVO) throws Exception {
+		ClassVO resultVO = classDao.selectClassMngDetail(classVO);
+		String startDt = resultVO.getClassStartDt().substring(0, 9);
+		String endDt = resultVO.getClassEndDt().substring(0, 9);
+		log.debug(">>> selectClassMngDetail >>> "+startDt);
+		log.debug(">>> selectClassMngDetail >>> "+endDt);
+		classVO.setClassStartDt(startDt);
+		classVO.setClassEndDt(endDt);
+		return classDao.selectClassMngDetail(classVO);
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인 클래스 수정
+	 * 2. 처리내용 :  오프라인 클래스 수정
+	 * </pre>
+	 * @Method Name : updateClassMngProc
+	 * @date : 2019. 9. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param classVO
+	 * @return int
+	 * @throws Exception
+	 */ 
+	public int updateClassMngProc(ClassVO classVO) throws Exception {
+//		Date startDate = DateUtil.stringToDate(classVO.getClassStartDt());
+//		Date endDate = DateUtil.stringToDate(classVO.getClassEndDt());
+//		classVO.setClassStartDt(DateUtil.getDateFormat(startDate, "yyyy-MM-dd"));
+//		classVO.setClassEndDt(DateUtil.getDateFormat(endDate, "yyyy-MM-dd"));
+		return classDao.updateClassMngProc(classVO);
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인 클래스 삭제
+	 * 2. 처리내용 :  오프라인 클래스 삭제
+	 * </pre>
+	 * @Method Name : deleteClassMngProc
+	 * @date : 2019. 9. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param classVO
+	 * @return int
+	 * @throws Exception
+	 */ 
+	public int deleteClassMngProc(ClassVO classVO) throws Exception {
+		return classDao.deleteClassMngProc(classVO);
 	}
 }
