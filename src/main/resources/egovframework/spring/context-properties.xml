@@ -7,6 +7,9 @@
 	        <map>
 	        	<entry key="pageUnit" value="5"/>
 	        	<entry key="pageSize" value="5"/>
+	        	<entry key="mail.from.adress" value="${Mail.username}"/>
+	        	<entry key="mail.title" value="${Mail.title}"/>
+	        	<entry key="mail.text" value="${Mail.text}"/>
 	        </map>
 		</property>
 	</bean>

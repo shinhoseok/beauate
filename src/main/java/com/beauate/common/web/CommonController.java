@@ -64,7 +64,7 @@ public class CommonController {
 		log.debug("request:" + request.getRequestURI());
 
 		model.addAttribute("message", message);
-		model.addAttribute("redirectUrl", "/home/a/t/main.do");
+		model.addAttribute("redirectUrl", "/home/a/n/main.do");
 
 		return "/common/temp_action_message";
 	}

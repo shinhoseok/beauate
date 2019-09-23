@@ -1,6 +1,8 @@
 package com.beauate.login.web;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +20,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.beauate.admin.role.service.RoleVO;
 import com.beauate.admin.user.service.UserManageService;
 import com.beauate.admin.user.service.UserStatsVO;
+import com.beauate.admin.user.service.UserVO;
 import com.beauate.common.CommonUtils;
 import com.beauate.common.GlobalConstants;
+import com.beauate.common.StringUtil;
 import com.beauate.common.service.CommonService;
 import com.beauate.login.service.LoginService;
 import com.beauate.login.service.LoginVO;
@@ -97,7 +101,7 @@ public class LoginController {
 		LoginVO resultVO = (LoginVO)loginService.selectLoginUserInfo(loginVO);
 		if(resultVO == null){
 			model.addAttribute("message", "로그인정보가 잘못되었습니다. 확인해주십시오.");
-			model.addAttribute("redirectUrl", "/home/a/t/main.do");
+			model.addAttribute("redirectUrl", "/home/a/n/main.do");
 
 			return "/common/temp_action_message";
 		}
@@ -126,7 +130,7 @@ public class LoginController {
 		
 		//관리자페이지 브릿지 mong
 //		return "redirect:/common/a/n/portalAdminBridge.do";
-		return "redirect:/home/a/t/main.do";
+		return "redirect:/home/a/n/main.do";
 	}
 	
 	@RequestMapping(value="/login/a/n/logOut.do")
@@ -137,5 +141,76 @@ public class LoginController {
 		session.invalidate();
 		
 		return "redirect:/login/a/n/login.do";
+	}
+	
+	@RequestMapping(value="/login/a/n/selectPwdSearch.do")
+	public String selectPwdSearch(@ModelAttribute("loginVO") LoginVO loginVO) {
+		return "/login/pwdSearch";
+	}
+	
+	@RequestMapping(value="/login/a/n/pwdMailSearch.do")
+	public String pwdMailSearch(@ModelAttribute("loginVO") LoginVO loginVO, ModelMap model, HttpServletRequest request) throws Exception {
+		Map<String, Object> rslt = new HashMap<String, Object>();
+		String secureKey = loginService.selectPwdSearch(loginVO.getEmailAddr());
+		rslt.put("emailAddr", loginVO.getEmailAddr());
+		log.debug(">>> pwdMailSearch web >>> "+ loginVO.getEmailAddr());
+		if(!StringUtil.isEmpty(secureKey)) {
+			request.getSession().setAttribute(GlobalConstants.MAIL_SECURE_KEY, secureKey);
+			rslt.put("result", "Y");
+		} else {
+			rslt.put("result", "N");
+		}
+		model.addAttribute("rslt", rslt);
+		log.debug(">>>> pwdMailSearch : " + model);
+		return "jsonView";
+	}
+	
+	@RequestMapping(value="/login/a/n/pwdMailSearch2.do")
+	public String pwdMailSearch2(String emailAddr, ModelMap model) {
+		LoginVO loginVO = new LoginVO();
+		loginVO.setEmailAddr(emailAddr);
+		model.addAttribute("loginVO", loginVO);
+		log.debug(">> pwdMailSearch2 Controller : "+emailAddr);
+		return "/login/pwdSearch2";
+	}
+	
+	@RequestMapping(value="/login/a/n/pwdMailSearch3.do")
+	public String pwdMailSearch3(String mailSecureKey, String emailAddr, HttpServletRequest request, ModelMap model) {
+		log.debug(">>> pwdMailSearch3 Contoller : "+mailSecureKey+" ,"+emailAddr);
+		Map<String, Object> rsltMap = new HashMap<>();
+		if(!StringUtil.isEmpty(mailSecureKey)) {
+			String sessionMailKey = (String) request.getSession().getAttribute(GlobalConstants.MAIL_SECURE_KEY);
+			
+			if(sessionMailKey.equals(mailSecureKey)) {
+				rsltMap.put("result", "Y");
+				rsltMap.put("emailAddr", emailAddr);
+			} else {
+				rsltMap.put("result", "N");
+			}
+		} else {
+			rsltMap.put("result", "N");
+		}
+		model.addAttribute("rslt", rsltMap);
+		return "jsonView";
+	}
+	
+	@RequestMapping(value="/login/a/n/pwdChange.do")
+	public String pwdChange(UserVO userVO, ModelMap model) {
+		model.addAttribute("userVO", userVO);
+		return "/login/pwdChange";
+	}
+	
+	@RequestMapping(value = "/login/a/n/updatePwdChange.do")
+	public String updatePwdChange(String emailAddr, String usrPw, ModelMap model, SessionStatus status) throws Exception {
+		log.debug("updatePwdChange Web >>> "+emailAddr +" ,"+ usrPw);
+		UserVO userVO = new UserVO();
+		userVO.setEmailAddr(emailAddr);
+		userVO.setUsrPw(usrPw);
+		int cnt = loginService.userPwReset(userVO);
+		model.addAttribute("updateCnt", cnt);
+		log.debug("updatePwdChange Web >>> "+ cnt);
+		//중복 submit 방지
+		status.setComplete();
+		return "jsonView";
 	}
 }

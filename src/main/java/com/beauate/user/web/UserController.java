@@ -55,7 +55,7 @@ public class UserController {
 		
 		try {
 			userService.userInsertProc(userVO, sessionVO);
-			redirectUrl = "/home/a/t/main.do";
+			redirectUrl = "/home/a/n/main.do";
 			message = "회원가입이 완료되었습니다.";
 			//중복 submit 방지
 			status.setComplete();
@@ -118,7 +118,7 @@ public class UserController {
 			userVO.setPwChangeGubun("Y");
 			userVO.setUsrId(sessionVO.getUsrId());
 			userService.updateUser(userVO);
-			redirectUrl = "/home/a/t/main.do";
+			redirectUrl = "/home/a/n/main.do";
 			message = "비밀번호 변경이 완료되었습니다.";
 			//중복 submit 방지
 			status.setComplete();
@@ -169,7 +169,7 @@ public class UserController {
 		session.setAttribute(GlobalConstants.LOGIN_SESSION_KEY, null);
 		session.invalidate();
 		
-		return "redirect:/home/a/t/main.do";
+		return "redirect:/home/a/n/main.do";
 	}
 	
 

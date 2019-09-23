@@ -7,7 +7,7 @@
     <context:component-scan base-package="com.beauate, egovframework">
        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
     </context:component-scan>
-	
+
 	<!-- message properties -->
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
@@ -58,9 +58,17 @@
     <!-- alias name="local.MultiCommonsMultipartResolver" alias="multipartResolver" /-->
     <alias alias="multipartResolver" name="spring.RegularCommonsMultipartResolver"/>
  	
-    <!-- custom multi file resolver -->    
-<!--     <bean id="local.MultiCommonsMultipartResolver" class="egovframework.com.cmm.web.EgovMultipartResolver">
-        <property name="maxUploadSize" value="100000000" />
-        <property name="maxInMemorySize" value="100000000" />
-    </bean> -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${Mail.host}"/>
+		<property name="port" value="${Mail.port}"/>
+		<property name="username" value="${Mail.username}"/>
+		<property name="password" value="${Mail.password}"/>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.ssl.trust">${Mail.smtp.ssl.trust}</prop>
+				<prop key="mail.smtp.auth">${Mail.smtp.auth}</prop>
+				<prop key="mail.smtp.starttls.enable">${Mail.smtp.starttls.enable}</prop>
+			</props>
+		</property>
+	</bean>
 </beans>

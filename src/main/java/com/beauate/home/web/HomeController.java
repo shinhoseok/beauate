@@ -34,7 +34,7 @@ public class HomeController {
 	 * @throws Exception
 	 * @return String
 	*/
-	@RequestMapping(value="/home/a/t/main.do")
+	@RequestMapping(value="/home/a/n/main.do")
 	public String main(LoginVO sessionVO, ModelMap model ) throws Exception{
 		return "/home/main";
 	}

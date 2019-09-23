@@ -167,8 +167,17 @@
 		<![CDATA[
 		UPDATE USERS
 		SET    U_PW  = #{usrPw}
-	    WHERE  U_SQ  = #{usrId}
 	    ]]>
+	    <where>
+	    	<choose>
+	    		<when test="usrId != null and  usrId != ''">
+	    			AND U_SQ  = #{usrId}
+	    		</when>
+	    		<otherwise>
+	    			AND u_email  = #{emailAddr}
+	    		</otherwise>
+	    	</choose>
+	    </where>
 	</update>
 	
 	<!-- 쿼리명 : 사용자 수정

@@ -7,6 +7,8 @@ public class GlobalConstants {
 	
 	public static String RESULT_CODE_SUCCEED = "succeed";
 	public static String RESULT_CODE_FAILED = "failed";
+	//세션에 담을 메일 인증키값
+	public static String MAIL_SECURE_KEY = "mailSecureKey";
 	
 	//------------------------코드값------------------------------------------------------
 	//사용자권한 디폴트값(관리자,유저중 유저)

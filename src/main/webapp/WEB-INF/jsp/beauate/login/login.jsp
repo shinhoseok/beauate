@@ -10,13 +10,13 @@
 			<span style="display: none;" id="emailAddrChk" class="emp"> 이메일을 다시 확인해주세요</span>
 		</li>
 		<li>
-			<form:password id="usrPw" path="usrPw" onkeypress=" if(event.keyCode==13){fn_login();} " placeholder="비밀번호" title="비밀번호를 입력해주세요." maxlength="21" />
+			<form:password id="usrPw" path="usrPw" onkeypress="if(event.keyCode==13){fn_login();} " placeholder="비밀번호" title="비밀번호를 입력해주세요." maxlength="21" />
 		</li>
 	</ul>
 	<div class="btn-area"><button type="button" class="btn" id="loginBtn" onclick="fn_login();"><span>로그인</span></button></div>
 	<div class="login-link">
 		<a href="#">회원가입</a>
-		<a href="#">비밀번호찾기</a>
+		<a href="${basePath}/login/a/n/selectPwdSearch.do">비밀번호찾기</a>
 	</div>
 	<a href="javascript:void(0);" onclick="fn_loginPopClose();" rel="modal:close" class="modal-close">닫기</a>
 </form:form>
@@ -27,7 +27,7 @@
 
 var fn_login = function() {
 	var emailAddr = $("#emailAddr").val();
-	var usrPw = $("#usrPw").val()
+	var usrPw = $("#usrPw").val();
 	if(!$.trim(emailAddr)){
 		alert("아이디를 입력해 주십시오.");
 		return;

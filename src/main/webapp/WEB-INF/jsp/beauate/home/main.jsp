@@ -10,7 +10,6 @@
 <link rel="stylesheet" type="text/css" href="${cssPath}/contents.css"/>
 <script type="text/javascript" src="${scriptPath}/jquery.min.js"></script>
 <script type="text/javascript" src="${scriptPath}/jquery.modal.min.js"></script>
-<script type="text/javascript" src="${scriptPath}/jquery.blockUI.js"></script>
 </head>
 <body>
 <div id="wrap">
