@@ -65,8 +65,7 @@
 		   						c_apply_no, 
 		   						c_adr, 
 		   						c_cost_no, 
-		   						c_web_adr,
-		   						c_del_yn ) 
+		   						c_web_adr ) 
 					VALUES (	#{classId},
 								#{usrId}, 
 								#{atchFileId}, 
@@ -84,8 +83,7 @@
 								#{classApplyNo},
 								#{classAdr},
 								#{classCost},
-								#{classWebAdr},
-								'N')
+								#{classWebAdr})
 		]]>		
     </insert>
 	
@@ -149,7 +147,7 @@
 			<when test="sortSubject == 'classListTop'">
 			</when>
 			<when test="sortSubject == 'classListHurry'">
-				AND c.u_start_dt > SYSDATE 
+				AND DATEDIFF(SYSDATETIME, c.u_start_dt) = 1 AND c.c_st IN ('1','2')
 			</when>
 			<when test="sortSubject == 'classListBottom'">
 			</when>
@@ -157,13 +155,12 @@
 				ORDER BY c.c_dt
 			</otherwise>
 		</choose>
-		<if test="classAreaSt != null and classAreaSt != ''">
+		<if test="classAreaSt!= null and !(classAreaSt=='') and !(classAreaSt=='0') and !(classAreaSt==0)" >
 			AND c.c_area_st = #{classAreaSt}
 		</if>
-		<if test="classCtSt != null and classCtSt != ''">
+		<if test="classCtSt!=null and !(classCtSt=='') and !(classCtSt=='0') and !(classCtSt==0)">
 			AND c.c_category_st = #{classCtSt}
 		</if>
-			AND c.c_del_yn = 'N' OR c.c_del_yn IS NULL
 		          ) A
 		<![CDATA[ 
 		 WHERE A.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
@@ -192,241 +189,23 @@
 		<![CDATA[
 		SELECT COUNT (*) CNT FROM off_class c WHERE 1=1 
 		]]>
-		<if test="classAreaSt != null and classAreaSt != ''">
-			AND c.c_area_st = #{classAreaSt}
-		</if>
 		<choose>
 			<when test="sortSubject == 'classListTop'">
 			</when>
 			<when test="sortSubject == 'classListHurry'">
-				AND c.u_start_dt > SYSDATE 
+				AND DATEDIFF(SYSDATETIME, c.u_start_dt) = 1 AND c.c_st IN ('1','2')
 			</when>
 			<when test="sortSubject == 'classListBottom'">
-			</when>
-			<otherwise>
-			</otherwise>
-		</choose>
-		AND c.c_del_yn = 'N' OR c.c_del_yn IS NULL
-	</select>
-	
-	<sql id="offClassGubunSql">
-		<where>
-			<if test="searchKeyword != null and searchKeyword != ''">
-				<choose>
-					<when test="searchCondition == 'classUserId'">
-						AND c.u_sq LIKE '%'|| #{searchKeyword} ||'%'
-					</when>
-					<when test="searchCondition == 'classTitle'">
-						AND c.c_title LIKE '%'|| #{searchKeyword} ||'%'
-					</when>
-				</choose>
-			</if>
-			AND c.c_del_yn = 'N' OR c.c_del_yn IS NULL
-		</where>
-	</sql>
-	
-	<!-- 
-	쿼리명 : 오프라인클래스 관리 리스트
-	  설명 : 오프라인클래스 관리 리스트
-	수정일     		 수정자 	 수정내용
-	==========  ======  ===================
-	2019. 9.12	신호석		최초 생성
-	작성자 : 신호석
-	최초작성일 : 2019. 9.12
-	-->	
-	<select id="selectClassMngList" parameterType="classVO" resultMap="classMap">
-	<![CDATA[
-		SELECT A.*
-		  FROM (SELECT ROW_NUMBER () OVER (
-		]]>
-		<choose>
-			<when test="sortSubject == 'usrId'">
-				ORDER BY c.u_sq
-			</when>
-			<when test="sortSubject == 'classTitle'">
-				ORDER BY c.c_title
 			</when>
 			<otherwise>
 				ORDER BY c.c_dt
 			</otherwise>
 		</choose>
-		<choose>
-			<when test="sortDescend == 'asc'">
-				ASC
-			</when>
-			<otherwise>
-				DESC
-			</otherwise>
-		</choose>
-		<![CDATA[ 
-			) RNUM,
-			c.c_sq,
-			c.u_sq,
-			c.img_sq,
-			c.c_dt,
-			c.c_st,
-			cd2.mcls_nm c_st_nm,
-			c.c_gb,
-			c.c_category_st,
-			c.c_area_st,
-			cd.mcls_nm c_area_st_nm,
-			c.c_title,
-			c.u_start_dt,
-			c.c_end_dt,
-			c.c_time,
-			c.c_small_no,
-			c.c_big_no,
-			c.c_apply_no,
-			c.c_adr,
-			c.c_cost_no,
-			c.c_web_adr
-		FROM
-			off_class c 
-			LEFT JOIN common_cd_scls cd ON (c.c_area_st = cd.mcls_cd AND cd.lcls_cd='ARA')
-			LEFT JOIN common_cd_scls cd2 ON (c.c_st = cd.mcls_cd AND cd.lcls_cd='CST')
-		]]>
-		<include refid="offClassGubunSql"/>
-		          ) A
-		<![CDATA[ 
-		 WHERE A.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
-		]]>
+		<if test="classAreaSt!= null and !(classAreaSt=='') and !(classAreaSt=='0') and !(classAreaSt==0)" >
+			AND c.c_area_st = #{classAreaSt}
+		</if>
+		<if test="classCtSt!=null and !(classCtSt=='') and !(classCtSt=='0') and !(classCtSt==0)">
+			AND c.c_category_st = #{classCtSt}
+		</if>
 	</select>
-	
-	<!-- 
-	쿼리명 : 오프라인클래스 관리 카운트
-	  설명 : 오프라인클래스 관리 카운트
-	수정일     		 수정자 	 수정내용
-	==========  ======  ===================
-	2019. 9.12	신호석		최초 생성
-	작성자 : 신호석
-	최초작성일 : 2019. 9.12
-	-->	
-	<select id="selectClassMngListCnt" parameterType="classVO" resultType="int">
-		<![CDATA[
-		SELECT COUNT (*) CNT FROM off_class c 
-		]]>
-		<include refid="offClassGubunSql"/>
-	</select>
-	
-	<!-- 
-	쿼리명 : 오프라인클래스 관리 상세
-	  설명 : 오프라인클래스 관리 상세
-	수정일     		 수정자 	 수정내용
-	==========  ======  ===================
-	2019. 9.12	신호석		최초 생성
-	작성자 : 신호석
-	최초작성일 : 2019. 9.12
-	-->	
-	<select id="selectClassMngDetail" parameterType="classVO" resultMap="classMap">
-		<![CDATA[
-		SELECT 
-			c.c_sq,
-			c.u_sq,
-			c.img_sq,
-			c.c_dt,
-			c.c_st,
-			cd2.mcls_nm c_st_nm,
-			c.c_gb,
-			c.c_category_st,
-			c.c_area_st,
-			cd.mcls_nm c_area_st_nm,
-			c.c_title,
-			c.u_start_dt,
-			c.c_end_dt,
-			c.c_time,
-			c.c_small_no,
-			c.c_big_no,
-			c.c_apply_no,
-			c.c_adr,
-			c.c_cost_no,
-			c.c_web_adr
-		FROM
-			off_class c 
-			LEFT JOIN common_cd_scls cd ON (c.c_area_st = cd.mcls_cd AND cd.lcls_cd='ARA')
-			LEFT JOIN common_cd_scls cd2 ON (c.c_st = cd.mcls_cd AND cd.lcls_cd='CST')
-		WHERE 
-			c.c_sq = #{classId}
-		]]>
-	</select>
-	
-	<!-- 
-	쿼리명 : 오프라인 클래스 수정
-	  설명 : 프로그램 수정
-	수정일      		수정자  	수정내용
-	==========  ======  ===================
-	2019. 9.13	신호석		최초 생성
-	작성자 : 신호석
-	최초작성일 : 2019. 9.13
-	-->	
-	<update id="updateClassMngProc" parameterType="classVO">
-		UPDATE off_class
-		<trim prefix="SET" suffixOverrides=",">
-		    <if test="classUserId != null and  classUserId != ''">
-				u_sq      = #{classUserId},
-		    </if>
-		    <if test="classRegDt != null and  classRegDt != ''">
-				c_dt     = #{classRegDt},
-		    </if>
-		    <if test="classSt != null and  classSt != ''">
-				c_st      = #{classSt},
-		    </if>
-		    <if test="classGb != null and  classGb != ''">
-				c_gb     = #{classGb},
-		    </if>
-		    <if test="classCtSt != null and  classCtSt != ''">
-				c_category_st      = #{classCtSt},
-		    </if>
-		    <if test="classAreaSt != null and  classAreaSt != ''">
-				c_area_st     = #{classAreaSt},
-		    </if>
-		    <if test="classTitle != null and  classTitle != ''">
-				c_title      = #{classTitle},
-		    </if>
-		    <if test="classStartDt != null and  classStartDt != ''">
-				u_start_dt     = TO_DATETIME(#{classStartDt}, 'YYYY-MM-DD'), 
-		    </if>
-		    <if test="classEndDt != null and  classEndDt != ''">
-				c_end_dt      = TO_DATETIME(#{classEndDt}, 'YYYY-MM-DD'), 
-		    </if>
-		    <if test="classTime != null and  classTime != ''">
-				c_time     = #{classTime},
-		    </if>
-		    <if test="classSmallNo != null and  classSmallNo != ''">
-				c_small_no      = #{classSmallNo},
-		    </if>
-		    <if test="classBigNo != null and  classBigNo != ''">
-				c_big_no     = #{classBigNo},
-		    </if>
-		    <if test="classApplyNo != null and  classApplyNo != ''">
-				c_apply_no      = #{classApplyNo},
-		    </if>
-		    <if test="classAdr != null and  classAdr != ''">
-				c_adr     = #{classAdr},
-		    </if>
-		    <if test="classCost != null and  classCost != ''">
-				c_cost_no      = #{classCost},
-		    </if>
-		    <if test="classWebAdr != null and  classWebAdr != ''">
-				c_web_adr     = #{classWebAdr},
-		    </if>
-	    </trim>
-		 WHERE c_sq = #{classId}
-	</update>
-	
-	<!-- 
-	쿼리명 : 오프라인 클래스 수정
-	  설명 : 프로그램 수정
-	수정일      		수정자  	수정내용
-	==========  ======  ===================
-	2019. 9.13	신호석		최초 생성
-	작성자 : 신호석
-	최초작성일 : 2019. 9.13
-	-->	
-	<update id="deleteClassMngProc" parameterType="classVO">
-		<![CDATA[
-		UPDATE off_class
-		   SET c_del_yn = 'Y'
-		 WHERE c_sq = #{classId}
-		]]>
-	</update>
 </mapper>

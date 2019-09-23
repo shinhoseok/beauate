@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/beauate/ucommon/include.jsp"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<style>
+button.off {
+    pointer-events: none !important;
+    cursor: default !important;
+}
+</style>
 <jsp:useBean id="now" class="java.util.Date" scope="request"/>
 <fmt:parseNumber
     value="${ now.time / (1000*60*60*24) }"
@@ -81,7 +87,6 @@
 	<ui:pagination paginationInfo="${paginationInfo}" type="front" jsFunction="fn_ajaxList" />
 </div>
 <!-- 페이징// -->
-<div class="sr">페이징은 프레임워크를 써야하는데 프레임웤이 제공하는 UI에 퍼블리싱이 맞춰줘야 함.</div>
 <!-- 
 <div class="paging">
 	<button type="button" class="btn-prev"><span>이전</span></button>
