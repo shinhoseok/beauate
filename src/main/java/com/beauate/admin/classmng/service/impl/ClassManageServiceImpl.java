@@ -1,6 +1,5 @@
 package com.beauate.admin.classmng.service.impl;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +15,6 @@ import com.beauate.admin.classmng.service.ClassManageService;
 import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.admin.code.service.CodeDao;
 import com.beauate.admin.code.service.CodeVO;
-import com.beauate.common.DateUtil;
 import com.beauate.common.GlobalConstants;
 
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
@@ -165,13 +163,6 @@ public class ClassManageServiceImpl implements ClassManageService {
 	 * @throws Exception
 	 */ 
 	public ClassVO selectClassMngDetail(ClassVO classVO) throws Exception {
-		ClassVO resultVO = classDao.selectClassMngDetail(classVO);
-		String startDt = resultVO.getClassStartDt().substring(0, 9);
-		String endDt = resultVO.getClassEndDt().substring(0, 9);
-		log.debug(">>> selectClassMngDetail >>> "+startDt);
-		log.debug(">>> selectClassMngDetail >>> "+endDt);
-		classVO.setClassStartDt(startDt);
-		classVO.setClassEndDt(endDt);
 		return classDao.selectClassMngDetail(classVO);
 	}
 	
@@ -195,10 +186,6 @@ public class ClassManageServiceImpl implements ClassManageService {
 	 * @throws Exception
 	 */ 
 	public int updateClassMngProc(ClassVO classVO) throws Exception {
-//		Date startDate = DateUtil.stringToDate(classVO.getClassStartDt());
-//		Date endDate = DateUtil.stringToDate(classVO.getClassEndDt());
-//		classVO.setClassStartDt(DateUtil.getDateFormat(startDate, "yyyy-MM-dd"));
-//		classVO.setClassEndDt(DateUtil.getDateFormat(endDate, "yyyy-MM-dd"));
 		return classDao.updateClassMngProc(classVO);
 	}
 	

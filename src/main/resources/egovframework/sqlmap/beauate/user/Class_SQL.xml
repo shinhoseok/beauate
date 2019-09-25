@@ -212,7 +212,6 @@
 		</if>
                  AND c.c_del_yn = 'N' OR c.c_del_yn IS NULL
 	</select>
-</mapper>
 
 	<sql id="offClassGubunSql">
 		<where>
@@ -336,8 +335,8 @@
 			c.c_area_st,
 			cd.mcls_nm c_area_st_nm,
 			c.c_title,
-			c.u_start_dt,
-			c.c_end_dt,
+			TO_CHAR(c.u_start_dt, 'yyyy-MM-dd') AS u_start_dt,
+			TO_CHAR(c.c_end_dt, 'yyyy-MM-dd') AS c_end_dt,
 			c.c_time,
 			c.c_small_no,
 			c.c_big_no,
