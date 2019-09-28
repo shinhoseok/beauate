@@ -6,7 +6,7 @@
 .header-wrap .header-inner,
 .content-inner,
 .foot-inner,
-.contents {width:1280px; margin:0 auto;}
+.contents {position:relative;width:1280px; margin:0 auto;}
 
 /* header */
 #header {}

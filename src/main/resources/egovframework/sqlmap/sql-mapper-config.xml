@@ -29,5 +29,8 @@
 		<typeAlias alias="payVO" type="com.beauate.pay.service.PayVO"/>
 		<!-- 게시판 VO -->
 		<typeAlias alias="boardVO" type="com.beauate.admin.board.service.BoardVO"/>
+		<!-- 배너VO -->
+		<typeAlias alias="bannerVO" type="com.beauate.admin.banner.service.BannerVO"/>
+		
 	</typeAliases>
 </configuration>

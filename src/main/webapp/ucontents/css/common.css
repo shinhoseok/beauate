@@ -62,28 +62,16 @@
 .paging li span{position:relative; display:block; font-size:15px;color:#6a2cfe;border-radius:50%;border:1px solid #6a2cfe;}
 
 /* checkbox */
-.input-checkbox + label {margin-left:10px;}
-label .input-checkbox {margin-right:10px;}
+.input-checkbox + label {font-size:14px;margin-left:10px;}
+label .input-checkbox {margin-right:7px;}
 label .input-checkbox + em {margin-right:4px;color:#6a2cfe;}
-.input-checkbox{position:relative; display:inline-block; vertical-align:middle; width:22px; height:22px; margin-top:-0.25em;}
+.input-checkbox{position:relative; display:inline-block; vertical-align:middle; width:16px; height:16px; margin-top:-0.25em;}
 .input-checkbox input{position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; z-index:3;}
 .input-checkbox input:checked{background:blue;}
-.input-checkbox:after{content:''; display:block; width:22px; height:22px;box-sizing:border-box;border:1px solid #868686;border-radius:100%;background-color:#fff;}
+.input-checkbox:after{content:''; display:block; width:16px; height:16px;box-sizing:border-box;border:1px solid #959595;border-radius: 2px;margin-top:2px;background-color:#fff;}
 .active .input-checkbox:after,
 .input-checkbox.active:after{border:1px solid #6a2cfe;background:#6a2cfe url('../images/common/label_check.png') no-repeat 50%;}
 .input-checkbox.disabled:after{opacity:0.3;}
-
-
-
-
-.slider {position:relative;}
-		.slick-prev {z-index:1; position:absolute; left:0; top:0; padding:5px; background:Red;}
-		.slick-next {z-index:1; position:absolute; right:0; top:0; padding:5px; background:Red;}
-		.slider .slick-slide {text-align:center; box-sizing:border-box; font-size:40px; height:200px; border:10px solid #fee;}
-		.slider .slick-slide:before {content:''; display:inline-block; height:100%; vertical-align:middle;}
-		.slick-dots {margin-top:10px; text-align:center;}
-		.slick-dots li {display:inline-block;}
-		.slick-dots li button {padding:0 10px;}
 
 /* radio */
 .input-radio + label {margin-left:8px;}
@@ -96,14 +84,8 @@ label .input-radio {margin-right:8px;}
 .input-radio.disabled.on{opacity:0.3; background:#0e5232;}
 .input-radio.disabled{background:#f8f8f8; opacity:1;}
 .input-radio.focus{border-color:#000;}
-label {line-height:24px;}
+label {line-height:24px;font-size:14px;}
 
-/* accordion*/
-[data-accordion]{display:block;}
-[data-accordion].active + [data-adodion-contents]{display:block}
-[data-accordion-contents]{display:none;}
-
-/* tab */
 /* tab */
 [class^=tab-list]:after {content:""; display:block; clear:both;}
 [class^=tab-list] li {position:relative; float:left; width:50%; box-sizing:border-box; text-align:center;}

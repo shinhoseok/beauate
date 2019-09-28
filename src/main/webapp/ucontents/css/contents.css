@@ -138,6 +138,7 @@ select {height:40px;}
 .quick-class .btn-area .btn-wish:hover,
 .quick-class .btn-area .btn-wish:focus,
 .quick-class .btn-area .btn-wish.active {background:#6a2cfe url('../images/icon/icon_hear_on.png') no-repeat 50%;}
+
 #modal-alarm {width:550px !important;padding:45px 50px 34px;}
 #modal-alarm h2 { display:block;height:30px; text-indent:-999999px; width:168px;background:url('../images/txt/img-txt-alarm.png') no-repeat 0 0;}
 #modal-alarm h2 + .title-desc {margin-top:10px;line-height:1.5;letter-spacing:-0.5px;font-size:16px;}
@@ -202,6 +203,77 @@ select {height:40px;}
 .review .grade .grade-list li .tit {float:left;width:55px;font-size:12px;line-height:18px;letter-spacing:-0.43px;opacity: 0.6;}
 .review .grade .grade-list li .star {float:left;width:90px;height:20px;background:url('../images/icon/icon_grade.png') no-repeat 0 2px;}
 .review .grade .grade-list li .star span {display:block;height:20px;background:url('../images/icon/icon_grade.png') no-repeat 0 -17px;}
+
+/* 결제신청 */
+.classpay {width:850px;padding-top:67px;}
+.classpay h3 {height:40px;position:relative;margin-top:80px;font-weight:normal;font-size:20px;line-height:30px;letter-spacing: -0.63px;}
+.classpay h3:first-child {margin-top:0;}
+.classpay h3:after {position:absolute;left:0;bottom:0;display:inline-block;width:100%;height:4px;background-color:#0a0a0a;content:'';}
+.classpay .mento-info dl {display:table;width:100%;font-size:16px;height:60px;}
+.classpay .mento-info dl dt {display:table-cell;vertical-align:middle;text-align:center;width:125px; opacity: 0.6;background-color:#f9f9f9;}
+.classpay .mento-info dl dd {display:table-cell;vertical-align:middle;text-align:left;padding:0 35px;}
+.classpay .mento-info .etc {margin-top:10px;}
+.classpay .mento-info .etc span {opacity: 0.4;font-size:12px;line-height:32px;}
+.classpay .mento-info .etc a {margin-left:5px;padding:0 6px;display:inline-block;opacity: 0.4;font-size:12px;line-height:30px;border:1px solid #000;border-radius: 2px;}
+.classpay .class-info .class-info-item {overflow:hidden;width:100%;padding-top:30px;}
+.classpay .class-info .class-info-item .thumb {float:left;width:67px;}
+.classpay .class-info .class-info-item .thumb img {width:67px;height:68px;vertical-align:top;}
+.classpay .class-info .class-info-item .rcont {float:left;text-align:left;padding-left:15px;}
+.classpay .class-info .class-info-item .rcont .desc {font-size:14px;letter-spacing:-0.5px;color:#717171;line-height:21px;}
+.classpay .class-info .class-info-item .rcont .etc {margin-top:5px;font-size:12px;}
+.classpay .class-info .class-info-item .rcont .etc span:before {position:relative;top:1px;width:1px;height:12px;margin:0 4px 0 3px;display:inline-block;background-color:#ccc;content:'';}
+.classpay .class-info .class-info-item .rcont .etc span:first-child:before {width:0;margin:0;}
+.classpay .class-info .class-info-desc {margin-top:20px;padding:25px 20px;font-size:14px;line-height:21px;background-color:#f9f9f9;}
+.classpay .class-info .class-info-desc li {margin-bottom:10px;}
+.classpay .class-info .class-info-desc li:last-child {margin-bottom:0;}
+.classpay .class-info .class-info-desc .tit {margin-right:15px;opacity: 0.6;}
+.classpay .discount-apply dl {display:table;width:100%;padding-top:20px;}
+.classpay .discount-apply dl  dt {display:table-cell;width:90px;vertical-align:top;opacity: 0.6;font-size:14px;}
+.classpay .discount-apply dl  dd {display:table-cell;vertical-align:top;}
+.classpay .discount-apply dl .selectbox {position:relative; display:inline-block; min-width:80px; vertical-align:middle;}
+.classpay .discount-apply dl  .selectbox.disabled .value {cursor:default; color:#767676; border-color:#ccc; background:#f8f8f8;}
+.classpay .discount-apply dl  .selectbox.disabled .value:after {border-top-color:#767676}
+.classpay .discount-apply dl  .selectbox select {position:relative; margin:0 !important; opacity:0; visibility:hidden; outline:none; vertical-align:top;}
+.classpay .discount-apply dl  .selectbox .value {position:absolute; top:0; left:0; height:47px; width:100%; box-sizing:border-box; text-align:left; padding:0 55px 1px 25px; margin:0; outline:none; color:#676767; border:1px solid #e8e8e8; font-size:14px; border-radius:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; background:#fff;}
+.classpay .discount-apply dl  .selectbox .value:after {content:''; position:absolute; top:50%; right:20px; margin-top:-4px; border:solid transparent; border-width:8px 6px 0 6px; border-top-color:#ccc;}
+.classpay .discount-apply dl  .selectbox.focus .value {border-color:e8e8e8;}
+.classpay .discount-apply dl  .selectbox.active {z-index:1000;}
+.classpay .discount-apply dl .selectbox.active .value {border-color:#e8e8e8; border-bottom-color:#fff;}
+.classpay .discount-apply dl .selectbox.active .value:after {transform:rotate(180deg);}
+.classpay .discount-apply dl .selectbox > .selectbox-list {display:none; position:absolute !important; top:100% !important; left:0 !important; font-size:14px !important; width:100%; box-sizing:border-box; border:1px solid #e8e8e8; border-top:0; background:#fff;}
+.classpay .discount-apply dl .selectbox.active > .selectbox-list {display:block;}
+.classpay .discount-apply dl .selectbox-list {display:none; max-height:300px;}
+.classpay .discount-apply dl .selectbox-list .selectbox-list {display:block !important; z-index:0 !important;}
+.classpay .discount-apply dl .selectbox-list .selectbox-list ul {margin-top:0 !important;}
+.classpay .discount-apply dl .select-wrap > .selectbox-list {z-index:300000; margin:0 !important; display:none; position:absolute !important; width:100%; box-sizing:border-box; border:1px solid #e8e8e8; border-top:0; }
+.classpay .discount-apply dl .selectbox-list li {padding:0 16px 1px; line-height:47px; font-size:14px; cursor:pointer; color:#000; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.classpay .discount-apply dl .selectbox-list li.disabled {color:#ccc;}
+.classpay .discount-apply dl .selectbox-list li.selected {background:#fafafa;}
+
+.quick-payinfo {position:absolute;right:0;top:0;width:354px;z-index:2;background-color:#f9f9f9;}
+.quick-payinfo .quick-payinfo-inner {padding:25px 33px 0;}
+.quick-payinfo h3 {font-size:20px; letter-spacing: -0.63px;}
+.quick-payinfo .btn-area {margin-top:20px;}
+.quick-payinfo .btn-area button {height:72px;}
+.quick-payinfo .btn-area .btn_pay {width:100%;height:72px;line-height:72px;font-size:20px;text-align:center;color:#fff;background-color:#6a2cfe;}
+.quick-payinfo .class-info-item {overflow:hidden;width:100%;padding:25px 0;}
+.quick-payinfo .class-info-item .thumb {float:left;width:67px;}
+.quick-payinfo .class-info-item .thumb img {width:67px;height:68px;vertical-align:top;}
+.quick-payinfo .class-info-item .rcont {float:right;width:206px;text-align:left;padding-left:15px;}
+.quick-payinfo .class-info-item .rcont .desc {font-size:14px;letter-spacing:-0.5px;color:#717171;line-height:21px;}
+.quick-payinfo .class-info-item .rcont .etc {margin-top:5px;font-size:12px;}
+.quick-payinfo .class-info-item .rcont .etc span:before {position:relative;top:1px;width:1px;height:12px;margin:0 4px 0 3px;display:inline-block;background-color:#ccc;content:'';}
+.quick-payinfo .class-info-item .rcont .etc span:first-child:before {width:0;margin:0;}
+.quick-payinfo .pay-priceinfo {padding:24px 0 5px;border-top:1px solid #c7c7c7;border-bottom:1px solid #c7c7c7;}
+.quick-payinfo .pay-priceinfo li {margin-bottom:18px;display:table; width:100%;opacity: 0.6;}
+.quick-payinfo .pay-priceinfo .txt {display:table-cell;vertical-align:middle; text-align:left;font-size:14px;letter-spacing: -0.5px;}
+.quick-payinfo .pay-priceinfo .price {display:table-cell;vertical-align:middle; text-align:right; opacity: 0.6;font-size:14px;letter-spacing: -0.57px;}
+.quick-payinfo .pay-priceinfo .total-sum {color:#0a0a0a;opacity:1;}
+.quick-payinfo .pay-priceinfo .total-sum .price {color:#0a0a0a;font-size:30px;opacity:1;}
+.quick-payinfo .pay-priceinfo .total-sum .unit {vertical-align:middle;font-size:16px;}
+.quick-payinfo .check-area {padding:20px 0 5px;}
+.quick-payinfo .check-area li {margin-bottom:10px;}
+
 /* 로그인 */
 .input-area li {height:75px;}
 .input-area li:last-child {height:40px;}
