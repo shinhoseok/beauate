@@ -14,6 +14,7 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>BEAUATE</title>
 <link rel="stylesheet" type="text/css" href="${cssPath}/contents.css"/>
+<link rel="stylesheet" type="text/css" href="${cssPath}/contents-my1.css"/>
 <script type="text/javascript" src="${scriptPath}/jquery.min.js"></script>
 <script type="text/javascript" src="${scriptPath}/jquery.modal.min.js"></script>
 <script type="text/javascript" src="${scriptPath}/swiper.min.js"></script>
@@ -149,18 +150,18 @@
 											<div class="thumb">
 												<img src="${img}" alt="" />
 												<c:choose>
-													<c:when test="${classStNm != null && classStNm !='' }">
+													<c:when test="${cls.classStNm != null && cls.classStNm !='' }">
 														<c:choose>
-															<c:when test="${classStNm  == '오픈전' || classStNm  == '오픈중' || classStNm  == '신청마감'}">
+															<c:when test="${cls.classStNm  == '오픈전' || cls.classStNm  == '오픈중' || cls.classStNm  == '신청마감'}">
 																<c:choose>
-																<c:when test="${classDays-nowDays<=7}">
+																<c:when test="${classDays-nowDays<=7 and classDays-nowDays>0}">
 																	<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
 																</c:when>
 																<c:otherwise>
 																</c:otherwise>
 																</c:choose>
 															</c:when>
-															<c:when test="${classStNm  == '종료'}">
+															<c:when test="${cls.classStNm  == '종료'}">
 																<div class="soldout">${classStNm}</div>
 																<div class="soldout-txt">${classStNm}</div>
 															</c:when>
@@ -170,10 +171,7 @@
 													</c:when>
 													<c:otherwise>
 														<c:choose>
-														<c:when test="${classDays-nowDays<=7}">
-															<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
-														</c:when>
-														<c:when test="${classDays-nowDays>0}">
+														<c:when test="${classDays-nowDays<=7 and classDays-nowDays >0}">
 															<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
 														</c:when>
 														<c:when test="${classDays-nowDays<0}">
@@ -184,7 +182,7 @@
 														</c:otherwise>
 														</c:choose>
 													</c:otherwise>
-												</c:choose>
+											</c:choose>
 											</div>
 											<div class="title">${cls.classAreaStNm}</div>
 											<div class="desc">${cls.classTitle}</div>
@@ -316,42 +314,39 @@
 								<a href="#">
 									<div class="thumb">
 										<img src="${img}" alt="" />
-										<c:choose>
-											<c:when test="${classStNm != null && classStNm !='' }">
-												<c:choose>
-													<c:when test="${classStNm  == '신청마감' || classStNm  == '오픈전' || classStNm  == '오픈중'}">
-														<c:choose>
-														<c:when test="${classDays-nowDays<=7}">
-															<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
+											<c:choose>
+												<c:when test="${cls.classStNm != null && cls.classStNm !='' }">
+													<c:choose>
+														<c:when test="${cls.classStNm  == '오픈전' || cls.classStNm  == '오픈중' || cls.classStNm  == '신청마감'}">
+															<c:choose>
+															<c:when test="${classDays-nowDays<=7 and classDays-nowDays>0}">
+																<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
+															</c:when>
+															<c:otherwise>
+															</c:otherwise>
+															</c:choose>
+														</c:when>
+														<c:when test="${cls.classStNm  == '종료'}">
+															<div class="soldout">${classStNm}</div>
+															<div class="soldout-txt">${classStNm}</div>
 														</c:when>
 														<c:otherwise>
 														</c:otherwise>
-														</c:choose>
+													</c:choose>
+												</c:when>
+												<c:otherwise>
+													<c:choose>
+													<c:when test="${classDays-nowDays<=7 and classDays-nowDays >0}">
+														<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
 													</c:when>
-													<c:when test="${classStNm  == '종료'}">
-														<div class="soldout">${classStNm}</div>
-														<div class="soldout-txt">${classStNm}</div>
+													<c:when test="${classDays-nowDays<0}">
+														<div class="soldout"></div>
+														<div class="soldout-txt">신청마감</div>
 													</c:when>
 													<c:otherwise>
 													</c:otherwise>
-												</c:choose>
-											</c:when>
-											<c:otherwise>
-												<c:choose>
-												<c:when test="${classDays-nowDays>0}">
-													<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
-												</c:when>
-												<c:when test="${classDays-nowDays>0}">
-													<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
-												</c:when>
-												<c:when test="${classDays-nowDays<0}">
-													<div class="soldout"></div>
-													<div class="soldout-txt">신청마감</div>
-												</c:when>
-												<c:otherwise>
+													</c:choose>
 												</c:otherwise>
-												</c:choose>
-											</c:otherwise>
 										</c:choose>
 									</div>
 									<div class="title">${cls.classAreaStNm}</div>

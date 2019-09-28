@@ -38,7 +38,7 @@ public class ClassController {
 	private BannerDao bannerDao;
 	
 	@RequestMapping(value= {"/class/a/t/classList.do","/class/a/t/classListDtl.do","/class/a/t/classMainList.do"})
-	public String userInsert(HttpServletRequest request, @ModelAttribute("classVO") ClassVO classVO, LoginVO sessionVO, ModelMap model ) throws Exception{
+	public String classList(HttpServletRequest request, @ModelAttribute("classVO") ClassVO classVO, LoginVO sessionVO, ModelMap model ) throws Exception{
 
 		//클래스리스트의 상단 중단 하단을 각각 가져온다. 하단뷰에서만 페이징 필요함. 나머지는 그냥 쿼리용
 		//페이징 
@@ -187,5 +187,18 @@ public class ClassController {
     	}else{
     		return "/class/classList";
     	}		
+	}
+
+	@RequestMapping(value= {"/class/a/t/classDetail.do"})
+	public String classSelect(HttpServletRequest request, @ModelAttribute("classVO") ClassVO classVO, LoginVO sessionVO, ModelMap model ) throws Exception{
+		List<ClassVO> classList = classService.selectClassList(classVO);
+		if(classList.size()==0) {
+			model.addAttribute("cls", null);
+		}else {
+			classVO = classList.get(0);
+			model.addAttribute("cls", classVO);
+		}
+		return "/class/classDetail";
+    			
 	}
 }

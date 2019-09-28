@@ -152,6 +152,9 @@
 			AND c.c_category_st = #{classCtSt}
 		</if>
                         AND (c.c_del_yn = 'N' OR c.c_del_yn IS NULL)
+		<if test="classId!=null and !(classId=='')">
+			AND c.c_sq = #{classId}
+		</if>
 		<choose>
 			<when test="sortSubject == 'classListTop'">
 				AND c.c_st IN ('2')
