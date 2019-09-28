@@ -27,5 +27,8 @@
 		<typeAlias alias="classVO" type="com.beauate.admin.classmng.service.ClassVO"/>
 		<!-- 관리자 공통코드관리 VO -->
 		<typeAlias alias="payVO" type="com.beauate.pay.service.PayVO"/>
+		<!-- 배너VO -->
+		<typeAlias alias="bannerVO" type="com.beauate.admin.banner.service.BannerVO"/>
+		
 	</typeAliases>
 </configuration>
