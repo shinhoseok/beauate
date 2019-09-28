@@ -11,6 +11,7 @@
 		<result column="POST_SUB_TITLE" property="postSubTitle" />
 		<result column="POST_CTT" property="postCtt" />
 		<result column="POST_FL" property="delYn" />
+		<result column="imgSrc" property="imgSrc" />
 	</resultMap>
 	
 	<!-- 쿼리명 : 게시판 등록
@@ -45,6 +46,23 @@
 	<sql id="boardGubunSql">
 		<where>
 			POST_FL = 'N'
+<!-- 			<if test="adminYn != null and adminYn != '' and adminYn == 'N'"> -->
+			<if test="adminYn != null and adminYn != ''">
+				<choose>
+					<when test="postCategorySt == '1'">
+						AND B.post_category_st = #{postCategorySt}
+					</when>
+					<when test="postCategorySt == '2'">
+						AND B.post_category_st = #{postCategorySt}
+					</when>
+					<when test="postCategorySt == '3'">
+						AND B.post_category_st = #{postCategorySt}
+					</when>
+					<otherwise>
+						AND B.post_category_st = #{postCategorySt}
+					</otherwise>
+				</choose>
+			</if>
 			<if test="searchKeyword != null and searchKeyword != ''">
 				<choose>
 					<when test="searchCondition == 'post_title'">
@@ -94,18 +112,20 @@
 			DESC
 			</otherwise>
 		</choose>
-		<![CDATA[
-		  			 ) RNUM,
-		               B.post_sq,
-		               B.img_sq,
-		               B.post_dt,
-		               B.post_category_st,
-		               B.post_title,
-		               B.post_sub_title,
-		               B.post_ctt,
-		               B.post_fl
-		          FROM ADMIN_POST B
-		]]>		
+  			 ) RNUM,
+               B.post_sq,
+               B.img_sq,
+<!--                <if test="adminYn != null and adminYn != '' and adminYn == 'N'"> -->
+               <if test="adminYn != null and adminYn != ''">
+               (SELECT c.file_stre_cours || '/' || c.stre_file_nm FROM comtnfiledetail c WHERE atch_file_id = B.img_sq AND file_cn = 'M') AS imgSrc,
+               </if>
+               B.post_dt,
+               B.post_category_st,
+               B.post_title,
+               B.post_sub_title,
+               B.post_ctt,
+               B.post_fl
+          FROM ADMIN_POST B
 		<include refid="boardGubunSql"/>
 		<![CDATA[
 		       ) A

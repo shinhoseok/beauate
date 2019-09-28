@@ -19,7 +19,23 @@ public class BoardVO extends CommDefaultVO implements Serializable {
 	private String postSubTitle;
 	/** 내용 */
 	private String postCtt;
+	/** 이미지경로 */
+	private String imgSrc;
+	/** 사용자, 관리자구분 */
+	private String adminYn;
 	
+	public String getAdminYn() {
+		return adminYn;
+	}
+	public void setAdminYn(String adminYn) {
+		this.adminYn = adminYn;
+	}
+	public String getImgSrc() {
+		return imgSrc;
+	}
+	public void setImgSrc(String imgSrc) {
+		this.imgSrc = imgSrc;
+	}
 	public String getPostId() {
 		return postId;
 	}

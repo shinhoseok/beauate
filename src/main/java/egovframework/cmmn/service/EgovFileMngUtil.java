@@ -137,8 +137,9 @@ public class EgovFileMngUtil {
                         || "zip".equalsIgnoreCase(fileExt)
                         || "bmp".equalsIgnoreCase(fileExt)
                         || "pdf".equalsIgnoreCase(fileExt)) {	            
-    	       
+    	        	System.out.println("shin1 >>>>>>>>>>>>>>>>>> "+newName);
             		filePath = storePathString + File.separator + newName;
+            		System.out.println("shin2 >>>>>>>>>>>>>>>>>> "+filePath);
             		file.transferTo(new File(EgovWebUtil.filePathBlackList(filePath)));
             		
             		fvo = new FileVO();
@@ -147,6 +148,7 @@ public class EgovFileMngUtil {
                     fvo.setFileMg(Long.toString(_size));
                     fvo.setOrignlFileNm(orginFileName);
                     fvo.setStreFileNm(newName);
+                    System.out.println("shin3 >>>>>>>>>>>>>>>>>> "+fvo.getStreFileNm());
                     fvo.setAtchFileId(atchFileIdString);
                     fvo.setFileSn(String.valueOf(fileKey));
                     fvo.setMonthDir(monthDir);

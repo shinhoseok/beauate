@@ -233,8 +233,8 @@ public class BoardManageController {
 	
 	/**
 	 * <pre>
-	 * 1. 개요 : 게시판관리 수정
-	 * 2. 처리내용 : 게시판관리 수정
+	 * 1. 개요 : 게시판관리 삭제
+	 * 2. 처리내용 : 게시판관리 삭제
 	 * </pre>
 	 * @Method Name : updateBoardMngProc
 	 * @date : 2019. 5. 12.
