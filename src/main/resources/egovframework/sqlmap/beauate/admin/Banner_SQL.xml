@@ -2,7 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.beauate.admin.banner.service.BannerDao">
 
-	<select id="selectBannerList" parameterType="bannerVO" resultType="bannerVO">
+    <resultMap id="bannerMap" type="com.beauate.admin.banner.service.BannerVO">
+        <id column="banner_id" property="bannerId"/>
+        <result column="banner_loc" property="bannerLoc"/>
+        <result column="banner_order" property="bannerOrder"/>
+        <result column="banner_file_nm" property="bannerFileNm"/>
+        <result column="banner_class_id" property="bannerClassId"/>
+        <result column="banner_url" property="bannerUrl"/>
+        <result column="txt_name" property="txtName"/>
+        <result column="txt_msg1" property="txtMsg1"/>
+        <result column="txt_msg2" property="txtMsg2"/>
+    </resultMap>
+    
+
+	<select id="selectBannerList" parameterType="bannerVO" resultMap="bannerMap">
 		<![CDATA[
 		SELECT
 			banner_id,
@@ -10,7 +23,10 @@
 			banner_order,
 			banner_file_nm,
 			banner_class_id,
-			banner_url
+			banner_url,
+			txt_name,
+			txt_msg1,
+			txt_msg2
 		FROM
 			banner
 		WHERE 1=1 

@@ -48,7 +48,7 @@ public class ClassController {
 		//페이징 
 		PaginationInfo paginationInfo = new PaginationInfo();
 
-		if(StringUtils.isEmpty(classVO.getClassCtSt())) {
+		if(!StringUtils.isEmpty(classVO.getClassCtSt())) {
 			model.addAttribute("classCtSt", classVO.getClassCtSt());
 		}
 		String url = request.getRequestURI();
@@ -64,8 +64,8 @@ public class ClassController {
 			//메인, 카테고리 공통 - 스페셜 멘토 리스트
 			BannerVO bannerParam = new BannerVO();
 			bannerParam.setBannerLoc(GlobalConstants.BANNER_SPECIAL_LEFT);
-			List<BannerVO> specialMentoList = bannerDao.selectBannerList(bannerParam);
-			model.addAttribute("specialMentoList", specialMentoList);
+			List<BannerVO> specialMentorList = bannerDao.selectBannerList(bannerParam);
+			model.addAttribute("specialMentorList", specialMentorList);
 			
 			//메인 - 상단 헤어 리스트
 			paginationInfo.setCurrentPageNo(1);
@@ -94,8 +94,31 @@ public class ClassController {
 			List<BannerVO> longBannerList = bannerDao.selectBannerList(bannerParam);
 			model.addAttribute("longBannerList", longBannerList);
 			
-			//카테고리 상단
-			/*
+			//카테고리 - 상단 좌
+			switch(classVO.getClassCtSt()) {
+			case GlobalConstants.CLASS_CATEGORY_HAIR :
+				bannerParam.setBannerLoc(GlobalConstants.BANNER_CATEGORY_SPECIAL_MENTOR_HAIR);
+				break;
+			case GlobalConstants.CLASS_CATEGORY_MAKEUP :
+				bannerParam.setBannerLoc(GlobalConstants.BANNER_CATEGORY_SPECIAL_MENTOR_MAKEUP);
+				break;
+			case GlobalConstants.CLASS_CATEGORY_EYELASHES :
+				bannerParam.setBannerLoc(GlobalConstants.BANNER_CATEGORY_SPECIAL_MENTOR_EYELASHES);
+				break;
+			case GlobalConstants.CLASS_CATEGORY_WAXING :
+				bannerParam.setBannerLoc(GlobalConstants.BANNER_CATEGORY_SPECIAL_MENTOR_WAXING);
+				break;
+			case GlobalConstants.CLASS_CATEGORY_NAIL :
+				bannerParam.setBannerLoc(GlobalConstants.BANNER_CATEGORY_SPECIAL_MENTOR_NAIL);
+				break;
+			case GlobalConstants.CLASS_CATEGORY_ETC :
+				bannerParam.setBannerLoc(GlobalConstants.BANNER_CATEGORY_SPECIAL_MENTOR_ETC);
+				break;
+				default:
+			}
+			List<BannerVO> categorySpecialMentorList = bannerDao.selectBannerList(bannerParam);
+			model.addAttribute("categorySpecialMentorList", categorySpecialMentorList);
+			
 			paginationInfo.setCurrentPageNo(1);
 			paginationInfo.setRecordCountPerPage(4);
 			paginationInfo.setPageSize(1);
@@ -105,10 +128,33 @@ public class ClassController {
 			classVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 			List<ClassVO> classListTop = classService.selectClassList(classVO);
 			model.addAttribute("classListTop", classListTop);
-			*/
+
+			//카테고리 - 중단 베스트 클래스
+			switch(classVO.getClassCtSt()) {
+			case GlobalConstants.CLASS_CATEGORY_HAIR :
+				bannerParam.setBannerLoc(GlobalConstants.BANNER_BEST_CLASS_HAIR);
+				break;
+			case GlobalConstants.CLASS_CATEGORY_MAKEUP :
+				bannerParam.setBannerLoc(GlobalConstants.BANNER_BEST_CLASS_MAKEUP);
+				break;
+			case GlobalConstants.CLASS_CATEGORY_EYELASHES :
+				bannerParam.setBannerLoc(GlobalConstants.BANNER_BEST_CLASS_EYELASHES);
+				break;
+			case GlobalConstants.CLASS_CATEGORY_WAXING :
+				bannerParam.setBannerLoc(GlobalConstants.BANNER_BEST_CLASS_WAXING);
+				break;
+			case GlobalConstants.CLASS_CATEGORY_NAIL :
+				bannerParam.setBannerLoc(GlobalConstants.BANNER_BEST_CLASS_NAIL);
+				break;
+			case GlobalConstants.CLASS_CATEGORY_ETC :
+				bannerParam.setBannerLoc(GlobalConstants.BANNER_BEST_CLASS_ETC);
+				break;
+				default:
+			}
+			List<BannerVO> categoryBestClassList = bannerDao.selectBannerList(bannerParam);
+			model.addAttribute("categoryBestClassList", categoryBestClassList);
 			
-			//마감임박리스트
-			/*
+			//카테고리 - 중단, 마감임박리스트
 			paginationInfo.setCurrentPageNo(1);
 			paginationInfo.setRecordCountPerPage(8);
 			paginationInfo.setPageSize(1);
@@ -118,7 +164,6 @@ public class ClassController {
 			classVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 			List<ClassVO> classListHurry = classService.selectClassList(classVO);
 			model.addAttribute("classListHurry", classListHurry);
-			*/
 		}
 
 		paginationInfo.setCurrentPageNo(classVO.getPageIndex());

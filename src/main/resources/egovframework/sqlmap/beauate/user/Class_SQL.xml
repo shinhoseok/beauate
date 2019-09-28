@@ -151,17 +151,20 @@
 		<if test="classCtSt!=null and !(classCtSt=='') and !(classCtSt=='0') and !(classCtSt==0)">
 			AND c.c_category_st = #{classCtSt}
 		</if>
-                        AND c.c_del_yn = 'N' OR c.c_del_yn IS NULL
+                        AND (c.c_del_yn = 'N' OR c.c_del_yn IS NULL)
 		<choose>
 			<when test="sortSubject == 'classListTop'">
+				AND c.c_st IN ('2')
+				ORDER BY c.c_dt DESC
 			</when>
 			<when test="sortSubject == 'classListHurry'">
-				AND DATEDIFF(SYSDATETIME, c.u_start_dt) = 1 AND c.c_st IN ('1','2')
+				<![CDATA[ AND DATEDIFF(SYSDATETIME, c.u_start_dt) < 100 AND c.c_st IN ('2','3') ]]>
+				ORDER BY c.u_start_dt DESC
 			</when>
 			<when test="sortSubject == 'classListBottom'">
+				ORDER BY c.c_dt DESC
 			</when>
 			<otherwise>
-				ORDER BY c.c_dt
 			</otherwise>
 		</choose>
 		          ) A
@@ -194,14 +197,14 @@
 		]]>
 		<choose>
 			<when test="sortSubject == 'classListTop'">
+				AND c.c_st IN ('2')
 			</when>
 			<when test="sortSubject == 'classListHurry'">
-				AND DATEDIFF(SYSDATETIME, c.u_start_dt) = 1 AND c.c_st IN ('1','2')
+				<![CDATA[ AND DATEDIFF(SYSDATETIME, c.u_start_dt) < 100 AND c.c_st IN ('2','3') ]]>
 			</when>
 			<when test="sortSubject == 'classListBottom'">
 			</when>
 			<otherwise>
-				ORDER BY c.c_dt
 			</otherwise>
 		</choose>
 		<if test="classAreaSt!= null and !(classAreaSt=='') and !(classAreaSt=='0') and !(classAreaSt==0)" >
@@ -210,7 +213,7 @@
 		<if test="classCtSt!=null and !(classCtSt=='') and !(classCtSt=='0') and !(classCtSt==0)">
 			AND c.c_category_st = #{classCtSt}
 		</if>
-                 AND c.c_del_yn = 'N' OR c.c_del_yn IS NULL
+                 AND (c.c_del_yn = 'N' OR c.c_del_yn IS NULL)
 	</select>
 
 	<sql id="offClassGubunSql">
@@ -225,7 +228,7 @@
 					</when>
 				</choose>
 			</if>
-			AND c.c_del_yn = 'N' OR c.c_del_yn IS NULL
+			AND (c.c_del_yn = 'N' OR c.c_del_yn IS NULL)
 		</where>
 	</sql>
 	

@@ -36,7 +36,30 @@
 		<div class="content">
 			<div class="page-title">
 				<div class="content-inner">
-					<h2 class="title"><img src="${imagePath}/txt/tit_hairclass.png" alt="hair class"></h2>
+					<h2 class="title">
+						<c:choose>
+						<c:when test="${classCtSt==1}">
+						<img src="${imagePath}/txt/tit_hairclass.png" alt="hair class">
+						</c:when>
+						<c:when test="${classCtSt==2}">
+						<img src="${imagePath}/txt/tit_hairclass.png" alt="hair class">
+						</c:when>
+						<c:when test="${classCtSt==3}">
+						<img src="${imagePath}/txt/tit_hairclass.png" alt="hair class">
+						</c:when>
+						<c:when test="${classCtSt==4}">
+						<img src="${imagePath}/txt/tit_hairclass.png" alt="hair class">
+						</c:when>
+						<c:when test="${classCtSt==5}">
+						<img src="${imagePath}/txt/tit_hairclass.png" alt="hair class">
+						</c:when>
+						<c:when test="${classCtSt==6}">
+						<img src="${imagePath}/txt/tit_hairclass.png" alt="hair class">
+						</c:when>
+						<c:otherwise>
+						</c:otherwise>
+						</c:choose>
+					</h2>
 				</div>
 			</div>
 			<!-- 뷰티 type  -->
@@ -60,27 +83,21 @@
 					<div class="specialmentor-inner">
 						<div class="cont-left">
 							<div class="mentor-list">
+							<c:if test="${fn:length(categorySpecialMentoList)>0}">
 								<!-- Swiper -->
 							   <div class="swiper-container">
 							    <div class="swiper-wrapper">
+							<c:forEach var="categorySpecialMentor" items="${categorySpecialMentoList}" begin="0" end="${fn:length(categorySpecialMentoList)-1}" varStatus="status">
 							      <div class="swiper-slide">
 									<a href="#">
 										<div class="mentor-link">
-											<p class="txt-name">이산 원장님</p>
-											<p class="txt-msg01">컷트도 과학이다.</p>
-											<p class="txt-msg02">포토로 컷트를 분석하는 법을 배워보세요.</p>
+											<p class="txt-name">${categorySpecialMentor.txtName}</p>
+											<p class="txt-msg01">${categorySpecialMentor.txtMsg1}</p>
+											<p class="txt-msg02">${categorySpecialMentor.txtMsg22}</p>
 										</div>
 									</a>
 							      </div>
-							      <div class="swiper-slide">
-									<a href="#">
-										<div class="mentor-link">
-											<p class="txt-name">이산 원장님2222</p>
-											<p class="txt-msg01">컷트도 과학이다.22222</p>
-											<p class="txt-msg02">포토로 컷트를 분석하는 법을 배워보세요.</p>
-										</div>
-									</a>
-							      </div>
+						    </c:forEach>
 							    </div>
 							    <div class="swiper-info">
 									 <div class="swiper-button-prev"></div>
@@ -100,7 +117,8 @@
 							      },
 							    });
 							  </script>
-							</div>
+							</div><!-- mentor-list -->
+							</c:if>
 							<div class="link-mentor">
 								<a href="#">
 									<span class="txt01">멘토지원</span>
@@ -133,16 +151,16 @@
 												<c:choose>
 													<c:when test="${classStNm != null && classStNm !='' }">
 														<c:choose>
-															<c:when test="${classStNm  == '오픈전' || classStNm  == '오픈중'}">
+															<c:when test="${classStNm  == '오픈전' || classStNm  == '오픈중' || classStNm  == '신청마감'}">
 																<c:choose>
-																<c:when test="${classDays-nowDays==1}">
-																	<div class="count"><span>1일 남았어요!</span></div>
+																<c:when test="${classDays-nowDays<=7}">
+																	<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
 																</c:when>
 																<c:otherwise>
 																</c:otherwise>
 																</c:choose>
 															</c:when>
-															<c:when test="${classStNm  == '신청마감' || classStNm  == '종료'}">
+															<c:when test="${classStNm  == '종료'}">
 																<div class="soldout">${classStNm}</div>
 																<div class="soldout-txt">${classStNm}</div>
 															</c:when>
@@ -152,7 +170,7 @@
 													</c:when>
 													<c:otherwise>
 														<c:choose>
-														<c:when test="${classDays-nowDays>0}">
+														<c:when test="${classDays-nowDays<=7}">
 															<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
 														</c:when>
 														<c:when test="${classDays-nowDays>0}">
@@ -188,70 +206,75 @@
 			<div class="besthair">
 				<div class="content-inner">
 					<div class="besthair-title">
-						<h3>Hair Class </h3>
+						<h3>
+						<c:choose>
+						<c:when test="${classCtSt==1}">
+						Hair
+						</c:when>
+						<c:when test="${classCtSt==2}">
+						MakeUp
+						</c:when>
+						<c:when test="${classCtSt==3}">
+						Eyelashes
+						</c:when>
+						<c:when test="${classCtSt==4}">
+						Waxing
+						</c:when>
+						<c:when test="${classCtSt==5}">
+						Nail
+						</c:when>
+						<c:when test="${classCtSt==6}">
+						Etc
+						</c:when>
+						<c:otherwise>
+						</c:otherwise>
+						</c:choose>
+						Class </h3>
 						<span class="stxt">지금 뷰아떼에서 핫한 멘토 수업을 만나보세요</span>
-						<span class="stitle">BEST</span>
+						<span class="stitle-best">BEST</span>
 					</div>
 					<div class="besthair-list">
 					 <!-- swiper -->
 					  <div class="swiper-container">
 						<div class="swiper-wrapper">
-						  <div class="swiper-slide">
-								<ul class="product-list-02" data-column="4">
-									<li>
-										<a href="#">
-											<div class="thumb"><img src="${imagePath}/empty/img-tumb-300.png" alt="" /></div>
-											<div class="mento">유혜인</div>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<div class="thumb"><img src="${imagePath}/empty/img-tumb-300.png" alt="" /></div>
-											<div class="mento">유혜인</div>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<div class="thumb"><img src="${imagePath}/empty/img-tumb-300.png" alt="" /></div>
-											<div class="mento">유혜인</div>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<div class="thumb"><img src="${imagePath}/empty/img-tumb-300.png" alt="" /></div>
-											<div class="mento">유혜인</div>
-										</a>
-									</li>
-								</ul>
-						  </div>
-						  <div class="swiper-slide">
-								<ul class="product-list-02" data-column="4">
-									<li>
-										<a href="#">
-											<div class="thumb"><img src="${imagePath}/empty/img-tumb-300.png" alt="" /></div>
-											<div class="mento">유혜인</div>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<div class="thumb"><img src="${imagePath}/empty/img-tumb-300.png" alt="" /></div>
-											<div class="mento">유혜인</div>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<div class="thumb"><img src="${imagePath}/empty/img-tumb-300.png" alt="" /></div>
-											<div class="mento">유혜인</div>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<div class="thumb"><img src="${imagePath}/empty/img-tumb-300.png" alt="" /></div>
-											<div class="mento">유혜인</div>
-										</a>
-									</li>
-								</ul>
-						  </div>
+						<c:if test="${fn.length(categoryBestClassList)>0}">
+							<%-- <c:forEach var="cls" items="${categoryBestClassList}" begin="0" end="${fn:length(categoryBestClassList)-1}">
+							<c:if test="${status.count == 1}">
+							  <div class="swiper-slide">
+							    <ul class="product-list-02" data-column="4">
+							</c:if>
+							<li>
+								<a href="#">
+									<div class="thumb">
+									<c:choose>
+									<c:when test="${specialMento.bannerFileNm == null or specialMento.bannerFileNm == ''}">
+										<img src="${imagePath}${specialMento.bannerFileNm}" alt="" />
+									</c:when>
+									<c:otherwise>
+										<img src="${specialMento.bannerUrl}" alt="" />
+									</c:otherwise>
+									</c:choose>
+									</div>
+								</a>
+							</li>
+							<c:choose>
+							<c:when test="${status.count mod 4==0}">
+							    </ul>
+							  </div>
+							<c:if test="${status.count!=fn:length(categoryBestClassList)}">
+							  <div class="swiper-slide">
+							    <ul class="product-list-02" data-column="4">
+							</c:if>
+							</c:when>
+							<c:when test="${status.count mod 4!=0 and status.count==fn:length(categoryBestClassList)}">
+							    </ul>
+							  </div>
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+							</c:choose>
+						  </c:forEach> --%>
+						  </c:if>
 						</div>
 						<div class="swiper-button-next"></div>
 						<div class="swiper-button-prev"></div>
@@ -296,16 +319,16 @@
 										<c:choose>
 											<c:when test="${classStNm != null && classStNm !='' }">
 												<c:choose>
-													<c:when test="${classStNm  == '오픈전' || classStNm  == '오픈중'}">
+													<c:when test="${classStNm  == '신청마감' || classStNm  == '오픈전' || classStNm  == '오픈중'}">
 														<c:choose>
-														<c:when test="${classDays-nowDays==1}">
-															<div class="count"><span>1일 남았어요!</span></div>
+														<c:when test="${classDays-nowDays<=7}">
+															<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
 														</c:when>
 														<c:otherwise>
 														</c:otherwise>
 														</c:choose>
 													</c:when>
-													<c:when test="${classStNm  == '신청마감' || classStNm  == '종료'}">
+													<c:when test="${classStNm  == '종료'}">
 														<div class="soldout">${classStNm}</div>
 														<div class="soldout-txt">${classStNm}</div>
 													</c:when>
@@ -346,13 +369,24 @@
 			</div>
 			<!-- //hurruy up -->
 			<!-- slider banner -->
+			<c:if test="${fn:length(longBannerList)>0}">
 			<div class="slider-banner">
 				<div class="content-inner">
 				   <!-- Swiper -->
 				   <div class="swiper-container">
 				    <div class="swiper-wrapper">
-				      <div class="swiper-slide"><img src="${imagePath}/empty/img_banner-offline.png" alt="1" /></div>
-				      <div class="swiper-slide"><img src="${imagePath}/empty/img_banner-offline.png" alt="2" /></div>
+					<c:forEach var="banner" items="${longBannerList}" begin="0" end="${fn:length(longBannerList)-1}">
+				      <div class="swiper-slide">
+						<c:choose>
+						<c:when test="${specialMento.bannerFileNm == null or specialMento.bannerFileNm == ''}">
+						<img src="${imagePath}${specialMento.bannerFileNm}" alt="" />
+						</c:when>
+						<c:otherwise>
+						<img src="${specialMento.bannerUrl}" alt="" />
+						</c:otherwise>
+						</c:choose>
+				      </div>
+				      </c:forEach>
 				    </div>
 				    <div class="swiper-info">
 						 <div class="swiper-button-prev"></div>
@@ -374,6 +408,7 @@
 				  </script>
 				</div>
 			</div>
+			</c:if>
 			<!-- slider banner -->
 			<!-- 검색결과 -->
 			<div id="classBottomList" class="content-inner">

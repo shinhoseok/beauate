@@ -14,3 +14,4 @@
 <c:set var="scriptPath" value="${basePath}/ucontents/js"/>
 <c:set var="imagePath" value="${basePath}/ucontents/images"/>
 <c:set var="uploadPath" value="${basePath}/ucontents/upload"/>
+<c:set var="imgPath" value="${basePath}/ucontents/img"/>
