@@ -12,6 +12,7 @@ button.off {
     value="${ now.time }"
     integerOnly="true" var="nowDays" scope="request"/>
 <ul class="product-list-01" data-column="4">
+<c:if test="${classListBottom}"> 
 <c:forEach var="cls" items="${classListBottom}" begin="0" end="${fn:length(classListBottom)-1}">
 <fmt:parseDate var="parsedClsSDt" value="${cls.classStartDt}" pattern="yyyy-MM-dd HH:mm:ss.SSS" />
 <fmt:formatDate var="etcDtStr" value="${parsedClsSDt}" pattern="yyyy-MM-dd(E)" />
@@ -80,6 +81,7 @@ button.off {
 		</a>
 	</li>
    </c:forEach>
+   </c:if>
 </ul>
 
 <!-- 페이징// -->

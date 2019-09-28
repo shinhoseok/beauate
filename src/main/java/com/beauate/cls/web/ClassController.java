@@ -1,5 +1,6 @@
 package com.beauate.cls.web;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.beauate.admin.banner.service.BannerDao;
 import com.beauate.admin.banner.service.BannerVO;
@@ -22,7 +24,10 @@ import com.beauate.admin.code.service.CodeVO;
 import com.beauate.cls.service.ClassService;
 import com.beauate.common.GlobalConstants;
 import com.beauate.login.service.LoginVO;
+import com.beauate.pay.service.PayDao;
+import com.beauate.pay.service.PayVO;
 
+import egovframework.rte.fdl.idgnr.EgovIdGnrService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @Controller
@@ -37,6 +42,12 @@ public class ClassController {
 	
 	@Resource(name="bannerDao")
 	private BannerDao bannerDao;
+	
+	@Resource(name="payDao")
+	private PayDao payDao;
+
+	@Resource(name="payIdGnrService")
+	private EgovIdGnrService payIdGnrService;
 	
 	@SuppressWarnings("unused")
 	@RequestMapping(value= {"/class/a/t/classList.do","/class/a/t/classListDtl.do","/class/a/t/classMainList.do"})
@@ -244,8 +255,47 @@ public class ClassController {
 			model.addAttribute("sco3", Double.toString(Double.isNaN(sco3) ? 0 : sco3/5*100));
 			model.addAttribute("sco4", Double.toString(Double.isNaN(sco4) ? 0 : sco4/5*100));
 			model.addAttribute("cls", classVO);
+			int discountPercent = 20;
+			model.addAttribute("discountPercent", discountPercent);
 		}
 		return "/class/classDetail";
     			
+	}
+	
+	@RequestMapping(value= {"/class/r/t/classRegist.do"})
+	public String classRegist(HttpServletRequest request, @ModelAttribute("payVO")PayVO payVO, @ModelAttribute("classVO") ClassVO classVO, LoginVO sessionVO, ModelMap model ) throws Exception{
+		List<ClassVO> classList = classService.selectClassList(classVO);
+		if(classList.size()==0) {
+			model.addAttribute("cls", null);
+		}else {
+			classVO = classList.get(0);
+			model.addAttribute("cls", classVO);
+			int discountPercent = 20;
+			model.addAttribute("discountPercent", discountPercent);
+		}
+		return "/class/classRegist";
+	}
+
+	@RequestMapping(value= {"/class/r/t/classRegistProc.do"})
+	public String classRegistProc(SessionStatus status, HttpServletRequest request, @ModelAttribute("payVO") PayVO payVO, LoginVO sessionVO, ModelMap model ) throws Exception{
+		ClassVO classVO = new ClassVO();
+		classVO.setClassId(payVO.getcSq());
+		List<ClassVO> classList = classService.selectClassList(classVO);
+		if(classList.size()==0) {
+			model.addAttribute("cls", null);
+			return "/error";
+		}else {
+			classVO = classList.get(0);
+			model.addAttribute("cls", classVO);
+		}
+		payVO.setuSq(sessionVO.getUsrId());
+		payVO.setPayDt(new Date());
+		payVO.setPaySt("1");
+		payVO.setPayMethodSt("아직결제없음");
+		payVO.setPaySq(payIdGnrService.getNextStringId());
+		payVO.setPayCostNo(String.valueOf(classVO.getClassCost()));
+		payDao.insertPay(payVO);
+		status.setComplete();
+		return "/class/classRegistComplete";
 	}
 }

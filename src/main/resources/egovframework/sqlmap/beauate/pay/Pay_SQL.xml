@@ -80,7 +80,30 @@
 		WHERE u.u_sq = #{uSq}
 	</select>
 
-
-	
+	<insert id="insertPay" parameterType="payVO">
+		<![CDATA[
+			INSERT INTO
+				pay (
+					pay_sq,
+					c_sq,
+					u_sq,
+					cpn_sq,
+					pay_dt,
+					pay_st,
+					pay_method_st,
+					pay_cost_no
+				)
+			VALUES
+				(
+					#{paySq},
+					#{cSq},
+					#{uSq},
+					#{cpnSq},
+					#{payDt},
+					#{paySt},
+					#{payMethodSt},
+					#{payCostNo}
+				)]]>
+	</insert>
 </mapper>
 

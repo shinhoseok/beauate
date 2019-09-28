@@ -61,6 +61,8 @@ public class ClassVO extends CommDefaultVO implements Serializable {
 	private List<FileVO> classFileList;
 	
 	private List<ClassReviewVO> classReviewList;
+
+	private UserVO userVO;
 	
 	public List<FileVO> getClassFileList() {
 		return classFileList;
