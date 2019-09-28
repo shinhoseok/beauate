@@ -133,11 +133,14 @@
 				    value="${ parsedClsSDt.time / (1000*60*60*24) }"
 				    integerOnly="true" var="classDays" scope="request"/>
 				    <c:set var="img" value=""/>
+				    <c:set var="path" value="" />
 				    <c:if test="${fn:length(cls.classFileList)>0}">
 						<c:forEach var="clsImg" items="${cls.classFileList}" begin="0" end="${fn:length(cls.classFileList)-1}">
 							<c:if test="${clsImg.fileCn=='M1' }">
-							<c:set var="path" value="${fn:split(fileStreCours, '/')}" />
-							<c:set var="img" value="${uploadPath}/${path[fn:length(path)-1]}${clsImg.streFileNm}.${clsImg.fileExtsn}"/>
+							<c:set var="path" value="${fn:split(clsImg.fileStreCours, '/')}" />
+							<c:set var="path" value="${path[fn:length(path)-1]}" />
+							<c:set var="path" value="${fn:replace(path,'\\\\','/')}" />
+							<c:set var="img" value="${uploadPath}${path}/${clsImg.streFileNm}"/>
 							</c:if>
 						</c:forEach>
 					</c:if>
@@ -253,8 +256,10 @@
 				    <c:if test="${fn:length(cls.classFileList)>0}">
 						<c:forEach var="clsImg" items="${cls.classFileList}" begin="0" end="${fn:length(cls.classFileList)-1}">
 							<c:if test="${clsImg.fileCn=='M1' }">
-							<c:set var="path" value="${fn:split(fileStreCours, '/')}" />
-							<c:set var="img" value="${uploadPath}/${path[fn:length(path)-1]}${clsImg.streFileNm}.${clsImg.fileExtsn}"/>
+							<c:set var="path" value="${fn:split(clsImg.fileStreCours, '/')}" />
+							<c:set var="path" value="${path[fn:length(path)-1]}" />
+							<c:set var="path" value="${fn:replace(path,'\\\\','/')}" />
+							<c:set var="img" value="${uploadPath}${path}/${clsImg.streFileNm}"/>
 							</c:if>
 						</c:forEach>
 					</c:if>

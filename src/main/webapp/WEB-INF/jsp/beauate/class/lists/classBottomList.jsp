@@ -22,8 +22,10 @@ button.off {
    <c:if test="${fn:length(cls.classFileList)>0}">
 	<c:forEach var="clsImg" items="${cls.classFileList}" begin="0" end="${fn:length(cls.classFileList)-1}">
 		<c:if test="${clsImg.fileCn=='M1' }">
-		<c:set var="path" value="${fn:split(fileStreCours, '/')}" />
-		<c:set var="img" value="${uploadPath}/${path[fn:length(path)-1]}${clsImg.streFileNm}.${clsImg.fileExtsn}"/>
+			<c:set var="path" value="${fn:split(clsImg.fileStreCours, '/')}" />
+			<c:set var="path" value="${path[fn:length(path)-1]}" />
+			<c:set var="path" value="${fn:replace(path,'\\\\','/')}" />
+			<c:set var="img" value="${uploadPath}${path}/${clsImg.streFileNm}"/>
 		</c:if>
 	</c:forEach>
 </c:if>
@@ -32,20 +34,20 @@ button.off {
 			<div class="thumb">
 				<img src="${img}" alt="" />
 				<c:choose>
-					<c:when test="${classStNm != null && classStNm !='' }">
+					<c:when test="${cls.classStNm != null && cls.classStNm !='' }">
 						<c:choose>
-							<c:when test="${classStNm  == '오픈전' || classStNm  == '오픈중'}">
+							<c:when test="${cls.classStNm  == '신청마감' || cls.classStNm  == '오픈전' || cls.classStNm  == '오픈중'}">
 								<c:choose>
-								<c:when test="${classDays-nowDays==1}">
-									<div class="count"><span>1일 남았어요!</span></div>
+								<c:when test="${classDays-nowDays<=7 and classDays-nowDays>0}">
+									<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
 								</c:when>
 								<c:otherwise>
 								</c:otherwise>
 								</c:choose>
 							</c:when>
-							<c:when test="${classStNm  == '신청마감' || classStNm  == '종료'}">
-								<div class="soldout">${classStNm}</div>
-								<div class="soldout-txt">${classStNm}</div>
+							<c:when test="${cls.classStNm  == '종료'}">
+								<div class="soldout">${cls.classStNm}</div>
+								<div class="soldout-txt">${cls.classStNm}</div>
 							</c:when>
 							<c:otherwise>
 							</c:otherwise>
@@ -53,10 +55,7 @@ button.off {
 					</c:when>
 					<c:otherwise>
 						<c:choose>
-						<c:when test="${classDays-nowDays>0}">
-							<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
-						</c:when>
-						<c:when test="${classDays-nowDays>0}">
+						<c:when test="${classDays-nowDays<=7 and classDays-nowDays >0}">
 							<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
 						</c:when>
 						<c:when test="${classDays-nowDays<0}">
