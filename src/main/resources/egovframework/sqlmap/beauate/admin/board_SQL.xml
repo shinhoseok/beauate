@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beauate.admin.board.service.BoardDao">
+	
+	<resultMap type="boardVO" id="boardResultMap">
+		<result column="POST_SQ" property="postId" />
+		<result column="IMG_SQ" property="atchFileId" />
+		<result column="POST_DT" property="postDt" />
+		<result column="POST_CATEGORY_ST" property="postCategorySt" />
+		<result column="POST_TITLE" property="postTitle" />
+		<result column="POST_SUB_TITLE" property="postSubTitle" />
+		<result column="POST_CTT" property="postCtt" />
+		<result column="POST_FL" property="delYn" />
+	</resultMap>
+	
+	<!-- 쿼리명 : 게시판 등록
+	설명 : 게시판 등록
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 5.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.17
+	-->
+	<insert id="insertBoardMngProc" parameterType="boardVO">
+		<![CDATA[
+		INSERT INTO ADMIN_POST (	post_sq, 
+									img_sq, 
+			   						post_dt, 
+			   						post_category_st, 
+			   						post_title, 
+			   						post_sub_title,
+			   						post_ctt,
+			   						post_fl ) 
+						VALUES (	#{postId},
+									#{atchFileId}, 
+									sysdate, 
+									#{postCategorySt}, 
+									#{postTitle}, 
+									#{postSubTitle},
+									#{postCtt},
+									'N')
+		]]>		
+	</insert>
+
+	<sql id="boardGubunSql">
+		<where>
+			POST_FL = 'N'
+			<if test="searchKeyword != null and searchKeyword != ''">
+				<choose>
+					<when test="searchCondition == 'post_title'">
+						AND B.post_title LIKE '%'|| #{searchKeyword} ||'%'
+					</when>
+					<otherwise>
+						AND B.post_title LIKE '%'|| #{searchKeyword} ||'%'
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 
+	쿼리명 : 게시판 관리 리스트
+	  설명 : 게시판 관리 리스트
+	수정일      		수정자  	수정내용
+	==========  ======  ===================
+	2019. 5.12	신호석		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.12
+	-->		
+	<select id="selectBoardMngList" parameterType="boardVO" resultMap="boardResultMap">
+		<![CDATA[
+		SELECT A.*
+		  FROM (SELECT ROW_NUMBER () OVER (
+		]]>	
+		<choose>
+			<when test="sortSubject == 'postId'">
+			ORDER BY B.post_sq
+			</when>
+			<when test="sortSubject == 'postCategorySt'">
+			ORDER BY B.post_category_st
+			</when>
+			<when test="sortSubject == 'postTitle'">
+			ORDER BY B.post_title
+			</when>
+			<otherwise>
+			ORDER BY B.post_dt
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="sortDescend == 'asc'">
+			ASC
+			</when>
+			<otherwise>
+			DESC
+			</otherwise>
+		</choose>
+		<![CDATA[
+		  			 ) RNUM,
+		               B.post_sq,
+		               B.img_sq,
+		               B.post_dt,
+		               B.post_category_st,
+		               B.post_title,
+		               B.post_sub_title,
+		               B.post_ctt,
+		               B.post_fl
+		          FROM ADMIN_POST B
+		]]>		
+		<include refid="boardGubunSql"/>
+		<![CDATA[
+		       ) A
+		 WHERE A.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
+		]]>		
+	</select>
+	
+	<!-- 
+	쿼리명 : 게시판 관리 리스트 카운트
+	  설명 : 게시판 관리 리스트 카운트
+	수정일     		 수정자 	 수정내용
+	==========  ======  ===================
+	2019. 5.12	신호석		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.12
+	-->	
+	<select id="selectBoardMngListCnt" parameterType="boardVO" resultType="int">
+		<![CDATA[
+		SELECT COUNT (*) CNT FROM ADMIN_POST B
+		]]>
+		<include refid="boardGubunSql"/>	
+	</select>
+	
+	<!-- 
+	쿼리명 : 게시판 관리 상세 조회
+	  설명 : 게시판 관리 상세 조회
+	수정일      		수정자  	수정내용
+	==========  ======  ===================
+	2019. 5.16 	 신호석 	 최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.16
+	-->	
+	<select id="selectBoardMngDetail" parameterType="boardVO" resultMap="boardResultMap">
+		<![CDATA[
+		SELECT post_sq,
+			   img_sq,
+			   post_dt,
+			   post_category_st,
+			   post_title,
+			   post_sub_title,
+			   post_ctt,
+			   post_fl
+		  FROM ADMIN_POST
+		 WHERE post_sq = #{postId, jdbcType=VARCHAR}
+		]]>
+	</select>
+	
+	<!-- 
+	쿼리명 : 게시판 관리 수정
+	  설명 : 게시판 관리 수정
+	수정일      		수정자  	수정내용
+	==========  ======  ===================
+	2019. 5.13	신호석		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.13
+	-->	
+	<update id="updateBoardMngProc" parameterType="boardVO">
+		<![CDATA[
+		UPDATE ADMIN_POST
+		   SET post_category_st = #{postCategorySt},
+		       post_title = #{postTitle},
+		       post_sub_title = #{postSubTitle},
+		       post_ctt = #{postCtt}
+		 WHERE POST_SQ = #{postId}
+		]]>
+	</update>
+	
+	<!-- 
+	쿼리명 : 게시판 관리 삭제
+	  설명 : 게시판 관리 삭제
+	수정일      		수정자  	수정내용
+	==========  ======  ===================
+	2019. 5.13	신호석		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.13
+	-->	
+	<update id="deleteBoardMngProc" parameterType="boardVO">
+		<![CDATA[
+		UPDATE ADMIN_POST
+		   SET POST_FL = 'Y'
+		 WHERE POST_SQ = #{postId}
+		]]>
+	</update>
+</mapper>
