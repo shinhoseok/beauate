@@ -38,6 +38,7 @@ public class ClassController {
 	@Resource(name="bannerDao")
 	private BannerDao bannerDao;
 	
+	@SuppressWarnings("unused")
 	@RequestMapping(value= {"/class/a/t/classList.do","/class/a/t/classListDtl.do","/class/a/t/classMainList.do"})
 	public String classList(HttpServletRequest request, @ModelAttribute("classVO") ClassVO classVO, LoginVO sessionVO, ModelMap model ) throws Exception{
 
@@ -92,7 +93,13 @@ public class ClassController {
 			bannerParam.setBannerLoc(GlobalConstants.BANNER_LONG_BANNER);
 			List<BannerVO> longBannerList = bannerDao.selectBannerList(bannerParam);
 			model.addAttribute("longBannerList", longBannerList);
-			
+
+			if(classVO == null) {
+				classVO = new ClassVO();
+			}
+			if(classVO.getClassCtSt()==null) {
+				classVO.setClassCtSt("0");
+			}
 			//카테고리 - 상단 좌
 			switch(classVO.getClassCtSt()) {
 			case GlobalConstants.CLASS_CATEGORY_HAIR :

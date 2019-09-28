@@ -58,7 +58,8 @@
 							</c:forEach>
 						</c:if>
 						 <!-- / (1000*60*60*24)  -->
-						<c:set var="remainDays" value="${(classDays-nowDays)/ (1000*60*60*24)}"/>
+						<c:set var="remainDays" value="${(remainDays)/ (1000*60*60*24)}"/>
+						<fmt:formatNumber var="remainDays" value="${remainDays+(1-(remainDays%1))%1}" type="number"/>
 						<ul class="product-list-01" data-column="1">
 							<li>
 								<a href="#">
@@ -68,8 +69,8 @@
 										<c:choose>
 											<c:when test="${cls.classStNm  == '오픈전' || cls.classStNm  == '오픈중' || cls.classStNm  == '신청마감'}">
 												<c:choose>
-												<c:when test="${classDays-nowDays<=7}">
-													<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
+												<c:when test="${remainDays<=7}">
+													<div class="count"><span>${remainDays}일 남았어요!</span></div>
 												</c:when>
 												<c:otherwise>
 												</c:otherwise>
@@ -81,10 +82,10 @@
 											</c:when>
 											<c:otherwise>
 												<c:choose>
-												<c:when test="${classDays-nowDays<=7 and classDays-nowDays>0}">
-													<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
+												<c:when test="${remainDays<=7 and remainDays>0}">
+													<div class="count"><span>${remainDays}일 남았어요!</span></div>
 												</c:when>
-												<c:when test="${classDays-nowDays<0}">
+												<c:when test="${remainDays<0}">
 													<div class="soldout"></div>
 													<div class="soldout-txt">신청마감</div>
 												</c:when>
