@@ -21,7 +21,6 @@ import com.beauate.admin.code.service.CodeVO;
 import com.beauate.cls.service.ClassService;
 import com.beauate.common.GlobalConstants;
 import com.beauate.login.service.LoginVO;
-import com.beauate.pay.service.PayService;
 
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -32,9 +31,6 @@ public class ClassController {
 	@Resource(name = "classService")
 	private ClassService classService;
 	
-	@Resource(name = "payService")
-	private PayService payService;
-
 	@Resource(name="codeDao")
 	private CodeDao codeDao;
 	

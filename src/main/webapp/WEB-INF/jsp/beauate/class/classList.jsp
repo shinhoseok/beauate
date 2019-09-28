@@ -238,7 +238,7 @@
 					  <div class="swiper-container">
 						<div class="swiper-wrapper">
 						<c:if test="${fn.length(categoryBestClassList)>0}">
-							<%-- <c:forEach var="cls" items="${categoryBestClassList}" begin="0" end="${fn:length(categoryBestClassList)-1}">
+							<c:forEach var="cls" items="${categoryBestClassList}" begin="0" end="${fn:length(categoryBestClassList)-1}">
 							<c:if test="${status.count == 1}">
 							  <div class="swiper-slide">
 							    <ul class="product-list-02" data-column="4">
@@ -273,7 +273,7 @@
 							<c:otherwise>
 							</c:otherwise>
 							</c:choose>
-						  </c:forEach> --%>
+						  </c:forEach>
 						  </c:if>
 						</div>
 						<div class="swiper-button-next"></div>
