@@ -16,6 +16,7 @@ import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.admin.code.service.CodeDao;
 import com.beauate.admin.code.service.CodeVO;
 import com.beauate.common.GlobalConstants;
+import com.beauate.common.StringUtil;
 
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
@@ -91,6 +92,9 @@ public class ClassManageServiceImpl implements ClassManageService {
 	public void insertOffClassProc(ClassVO classVO) throws Exception {
 		classVO.setClassId(classIdGnrService.getNextStringId());
 		log.debug(">>> classVO in insertOffClassProc impl : " + classVO);
+		if(StringUtil.isEmpty(classVO.getClassApplyNo())) {
+			classVO.setClassApplyNo("0");
+		}
 		classDao.insertOffClassProc(classVO);
 	}
 	

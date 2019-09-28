@@ -241,6 +241,22 @@
 	}
 	
 	var fn_updateClassMngProc = function() {
+		var usrId = $("#classUserId").val();
+		var classStartDt = $("#classStartDt").val();
+		var classEndDt = $("#classEndDt").val();
+		if(usrId == null || usrId == "" || usrId == 'undefined') {
+			alert("클래스 신청자 아이디는 필수 입력입니다.");
+			$("#classUserId").focus();
+			return;
+		}
+
+		if(!isNull(classEndDt) && !isNull(classStartDt)) {
+			if(classStartDt > classEndDt) {
+				alert("시작일자는 종료일자보다 이전일자여야 합니다.");
+				$("#classStartDt").focus();
+				return;
+			}
+		}
 		document.classVO.submit();
 	};
 </script>
