@@ -148,8 +148,10 @@ public class ClassManageController {
 		
 		//이메일로 받은 아이디를 실제 아이디값으로 셋팅
 		log.debug(">>> classVO before usrId : " + classVO.getUsrId());
-		UserVO userVO = userDao.selectUserDetail(classVO.getUsrId());
-		classVO.setUsrId(userVO.getUsrId());
+		UserVO userVO = new UserVO();
+		userVO.setEmailAddr(classVO.getUsrId());
+		UserVO resultVO = userDao.selectUserDetail(userVO);
+		classVO.setUsrId(resultVO.getUsrId());
 		
 		log.debug(">>> classVO after usrId : " + classVO.getUsrId());
 		
@@ -178,7 +180,8 @@ public class ClassManageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/classmng/w/m/insertOffClassProc.do")
-	public String insertOffClassProc (MultipartHttpServletRequest multiRequest, @ModelAttribute("classVO") ClassVO classVO, SessionStatus status) throws Exception {
+	public String insertOffClassProc (MultipartHttpServletRequest multiRequest, 
+			@ModelAttribute("classVO") ClassVO classVO, SessionStatus status) throws Exception {
 		
 		log.debug(">>> classVO in insertOffClassProcfinal : " + classVO);
 		
@@ -199,7 +202,7 @@ public class ClassManageController {
 		classManageService.insertOffClassProc(classVO);
 		status.setComplete();	//중복 submit 방지
 		
-		log.debug(">>> After insertProgramProc, programVO : " + classVO);	
+		log.debug(">>> After insertProgramProc, classVO : " + classVO);	
 		
 		return "redirect:/classmng/r/m/selectClassMngList.do";
 	}

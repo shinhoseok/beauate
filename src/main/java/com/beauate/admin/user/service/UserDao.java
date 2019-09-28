@@ -279,5 +279,5 @@ public interface UserDao {
 	 * @return UserVO
 	 * @throws Exception
 	 */ 
-	public UserVO selectUserDetail(String usrId) throws Exception;
+	public UserVO selectUserDetail(UserVO userVO) throws Exception;
 }
