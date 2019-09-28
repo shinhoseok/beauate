@@ -27,6 +27,8 @@ public class GlobalConstants {
 	public static String CLASS_STATUS_CODE = "CST";
 	//정상,휴면,탈퇴회원중 정상회원 코드값
 	public static String NORMAL_MEMBER_CODE = "1";
+	//게시판 카테고리 대분류 코드(제품정보, 박람회, 자격증..)
+	public static String BOARD_CATEGORY_CODE = "BCT";
 	//------------------------코드값------------------------------------------------------
 	
 	//로그인이 실패된 상태에서 탑메뉴 이동

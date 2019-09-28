@@ -150,17 +150,27 @@ public class EgovFileMngUtil {
                     fvo.setAtchFileId(atchFileIdString);
                     fvo.setFileSn(String.valueOf(fileKey));
                     fvo.setMonthDir(monthDir);
-
-                    if(cnt >= 0 && cnt < 3) {
-                    	fvo.setFileCn("M"+String.valueOf(cnt));
+                    
+                    if(KeyStr.equals("CLASS_")) { //클래스 이미지등록. 상세1 > 슬라이드3~5 > 목록 3이므로 거꾸로 등록함. 
+                    	if(cnt >= 0 && cnt < 3) {
+                        	fvo.setFileCn("M"+String.valueOf(cnt));
+                        }
+                        if(cnt > 2) {
+                        	fvo.setFileCn("S"+String.valueOf(cnt));
+                        }
+                        //마지막 사진은 상세
+                        if (!itr.hasNext()) {
+                        	fvo.setFileCn("D");
+                        }
+                    } else if(KeyStr.equals("BOARD_")) { //게시판 이미지 등록 첫번째 사진은 목록이미지, 두번째 사진은 상세이미지
+                    	if(cnt == 0) {
+                    		fvo.setFileCn("D"); //상세
+                    	}
+                    	if (!itr.hasNext()) {
+                        	fvo.setFileCn("M"); //목록
+                        }
                     }
-                    if(cnt > 2) {
-                    	fvo.setFileCn("S"+String.valueOf(cnt));
-                    }
-                    //마지막 사진은 상세
-                    if (!itr.hasNext()) {
-                    	fvo.setFileCn("D");
-                    }
+                    
                     cnt++;
                     //writeFile(file, newName, storePathString);
                     result.add(fvo);

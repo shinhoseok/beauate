@@ -78,6 +78,28 @@ public class CommDefaultVO implements Serializable {
 
 	/** 첨부파일 아이디 */
 	private String atchFileId;
+	
+	/** 이메일 주소 */
+	private String emailAddr;
+	
+	/** 삭제여부 */
+	private String delYn;
+
+	public String getDelYn() {
+		return delYn;
+	}
+
+	public void setDelYn(String delYn) {
+		this.delYn = delYn;
+	}
+
+	public String getEmailAddr() {
+		return emailAddr;
+	}
+
+	public void setEmailAddr(String emailAddr) {
+		this.emailAddr = emailAddr;
+	}
 
 	public String getSearchCondition() {
 		return searchCondition;

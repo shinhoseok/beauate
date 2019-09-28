@@ -377,7 +377,7 @@
 	작성자 : 신호석
 	최초작성일 : 2019. 9.17
 	-->
-	<select id="selectUserDetail" parameterType="java.lang.String" resultType="userVO">
+	<select id="selectUserDetail" parameterType="userVO" resultType="userVO">
 		<![CDATA[
 		SELECT B.U_SQ usrId,
 		       B.U_PW usrPw,

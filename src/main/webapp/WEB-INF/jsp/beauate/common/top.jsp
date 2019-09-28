@@ -3,7 +3,7 @@
 
 <div class="header_centerBox">
 	<h1>
-		<img src="${imagePath }/logo.png" width="143" height="19" />
+		<img src="${imagePath }/logo.png" width="143" height="19" style="cursor: pointer;" onclick="javascript:fn_userMainBack();"/>
 	</h1>
 	<div class="lnb">
 		<dl>
@@ -110,4 +110,8 @@ fn_moveMenuClick = function(menuId, menuName, pgmUrl, otUrl, level, menuUrlGubun
 		$('#menuMoveForm').submit();
 	}
 };
+
+var fn_userMainBack = function() {
+	location.href="${basePath}/home/a/n/main.do";
+}
 </script>
