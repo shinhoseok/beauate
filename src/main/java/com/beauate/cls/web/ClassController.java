@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.beauate.admin.banner.service.BannerDao;
 import com.beauate.admin.banner.service.BannerVO;
+import com.beauate.admin.classmng.service.ClassReviewVO;
 import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.admin.code.service.CodeDao;
 import com.beauate.admin.code.service.CodeVO;
@@ -67,22 +68,24 @@ public class ClassController {
 			paginationInfo.setCurrentPageNo(1);
 			paginationInfo.setRecordCountPerPage(8);
 			paginationInfo.setPageSize(1);
-			classVO.setClassCtSt(String.valueOf(GlobalConstants.CLASS_CATEGORY_HAIR));
-			classVO.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
-			classVO.setLastIndex(paginationInfo.getLastRecordIndex());
-			classVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-			List<ClassVO> classHairList = classService.selectClassList(classVO);
+			ClassVO mainparam1 = new ClassVO();
+			mainparam1.setClassCtSt(String.valueOf(GlobalConstants.CLASS_CATEGORY_HAIR));
+			mainparam1.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
+			mainparam1.setLastIndex(paginationInfo.getLastRecordIndex());
+			mainparam1.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+			List<ClassVO> classHairList = classService.selectClassList(mainparam1);
 			model.addAttribute("classHairList", classHairList);
 			
 			//메인 - 상단 메이크업 리스트
 			paginationInfo.setCurrentPageNo(1);
 			paginationInfo.setRecordCountPerPage(8);
 			paginationInfo.setPageSize(1);
-			classVO.setClassCtSt(String.valueOf(GlobalConstants.CLASS_CATEGORY_MAKEUP));
-			classVO.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
-			classVO.setLastIndex(paginationInfo.getLastRecordIndex());
-			classVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-			List<ClassVO> classMakeuprList = classService.selectClassList(classVO);
+			ClassVO mainparam2 = new ClassVO();
+			mainparam2.setClassCtSt(String.valueOf(GlobalConstants.CLASS_CATEGORY_MAKEUP));
+			mainparam2.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
+			mainparam2.setLastIndex(paginationInfo.getLastRecordIndex());
+			mainparam2.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+			List<ClassVO> classMakeuprList = classService.selectClassList(mainparam2);
 			model.addAttribute("classMakeuprList", classMakeuprList);
 			
 			//메인, 카테고리 공통 - 브랜디픽(롱배너) 리스트
@@ -196,6 +199,43 @@ public class ClassController {
 			model.addAttribute("cls", null);
 		}else {
 			classVO = classList.get(0);
+			ClassReviewVO reviewForException = null;
+			String scoAvr = "";
+			double sco1 = 0.0d;
+			double sco2 = 0.0d;
+			double sco3 = 0.0d;
+			double sco4 = 0.0d;
+			try {
+				for(ClassReviewVO review : classVO.getClassReviewList()) {
+					reviewForException = review;
+					sco1 += Double.parseDouble(review.getSco1());
+					sco2 += Double.parseDouble(review.getSco2());
+					sco3 += Double.parseDouble(review.getSco3());
+					sco4 += Double.parseDouble(review.getSco4());
+				}
+				sco1 = sco1 / classVO.getClassReviewList().size();
+				sco2 = sco2 / classVO.getClassReviewList().size();
+				sco3 = sco3 / classVO.getClassReviewList().size();
+				sco4 = sco4 / classVO.getClassReviewList().size();
+			}catch(Exception e) {
+				log.error("=======ST "+e.getMessage()+" "+classVO.getClassId()+"클래스의 코멘트의 sco1~4중에 숫자가 아닌게 있음.");
+				log.error("=======ST "+e.getMessage()+" reviewForException!=null:"+reviewForException!=null);
+				if(reviewForException!=null) {
+					log.error("=======ST "+e.getMessage()+" reviewForException.getSco1():"+reviewForException.getSco1());
+					log.error("=======ST "+e.getMessage()+" reviewForException.getSco2():"+reviewForException.getSco2());
+					log.error("=======ST "+e.getMessage()+" reviewForException.getSco3():"+reviewForException.getSco3());
+					log.error("=======ST "+e.getMessage()+" reviewForException.getSco4():"+reviewForException.getSco4());
+				}
+				e.printStackTrace();
+				log.error("=======ED "+e.getMessage()+" ");
+			}
+			scoAvr = Double.toString(Double.isNaN((sco1+sco2+sco3+sco4)/4.0d) ? 0 : (sco1+sco2+sco3+sco4)/4.0d);
+			
+			model.addAttribute("scoAvr",scoAvr);
+			model.addAttribute("sco1", Double.toString(Double.isNaN(sco1) ? 0 : sco1/5*100));
+			model.addAttribute("sco2", Double.toString(Double.isNaN(sco2) ? 0 : sco2/5*100));
+			model.addAttribute("sco3", Double.toString(Double.isNaN(sco3) ? 0 : sco3/5*100));
+			model.addAttribute("sco4", Double.toString(Double.isNaN(sco4) ? 0 : sco4/5*100));
 			model.addAttribute("cls", classVO);
 		}
 		return "/class/classDetail";

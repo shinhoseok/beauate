@@ -3,7 +3,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="now" class="java.util.Date" scope="request"/>
 <fmt:parseNumber
-    value="${ now.time / (1000*60*60*24) }"
+    value="${ now.time }"
     integerOnly="true" var="nowDays" scope="request"/>
 <!DOCTYPE html>
 
@@ -44,23 +44,27 @@
 						<fmt:parseDate var="parsedClsSDt" value="${cls.classStartDt}" pattern="yyyy-MM-dd HH:mm:ss.SSS" />
 						<fmt:formatDate var="etcDtStr" value="${parsedClsSDt}" pattern="yyyy-MM-dd(E)" />
 					    <fmt:parseNumber
-					    value="${ parsedClsSDt.time / (1000*60*60*24) }"
+					    value="${ parsedClsSDt.time}"
 					    integerOnly="true" var="classDays" scope="request"/>
 						<c:set var="img" value=""/>
 					    <c:if test="${fn:length(cls.classFileList)>0}">
 							<c:forEach var="clsImg" items="${cls.classFileList}" begin="0" end="${fn:length(cls.classFileList)-1}">
 								<c:if test="${clsImg.fileCn=='M1'}">
-								<c:set var="path" value="${fn:split(fileStreCours, '/')}" />
-								<c:set var="img" value="${uploadPath}/${path[fn:length(path)-1]}${clsImg.streFileNm}.${clsImg.fileExtsn}"/>
+								<c:set var="path" value="${fn:split(clsImg.fileStreCours, '/')}" />
+								<c:set var="path" value="${path[fn:length(path)-1]}" />
+								<c:set var="path" value="${fn:replace(path,'\\\\','/')}" />
+								<c:set var="img" value="${uploadPath}${path}/${clsImg.streFileNm}"/>
 								</c:if>
 							</c:forEach>
 						</c:if>
+						 <!-- / (1000*60*60*24)  -->
+						<c:set var="remainDays" value="${(classDays-nowDays)/ (1000*60*60*24)}"/>
 						<ul class="product-list-01" data-column="1">
 							<li>
 								<a href="#">
 									<div class="thumb">
-									${classSt}//${cls.classSt}//
 										<img src="${img}" alt="" />
+										${remainDays}////${now}///${parsedClsSDt}///${nowDays}///${classDays}
 										<c:choose>
 											<c:when test="${cls.classStNm  == '오픈전' || cls.classStNm  == '오픈중' || cls.classStNm  == '신청마감'}">
 												<c:choose>
@@ -106,14 +110,18 @@
 							<dd><fmt:formatNumber value="${cls.classCost}" pattern="#,###" /><span class="unit">원</span><span class="discount">124,000??</span></dd>
 						</dl>
 					</div>
+					<c:if test="${cls.classSt==2}">
 					<div class="btn-area">
 						<button type="button" class="btn-util">클래스 신청</button>
 						<button type="button" class="btn-wish">찜하기</button>
 					</div>
+						<c:if test="${cls.classWebAdr!='' and cls.classWebAdr!=null}">
 					<div class="btn-area">
 						<button type="button" class="btn-util"><span>클래스 외부접수</span></button>
 						<button type="button" class="btn-wish">찜하기</button>
 					</div>
+						</c:if>
+					</c:if>
 					<div class="btn-area">
 						<a href="#modal-alarm" rel="modal:open" class="btn-util">알람신청</a>
 						<button type="button" class="btn-wish active">찜하기</button> <!-- 찜되었을때 class="active" 추가 -->
@@ -137,7 +145,7 @@
 						<dl class="alarm-phone">
 							<dt>휴대폰</dt>
 							<dd>
-								010 - 1234 - 5689
+								${sessionScope.loginVO.mblPno}
 							</dd>
 						</dl>
 						<div class="my-modify">
@@ -155,8 +163,19 @@
 					   <!-- Swiper -->
 					   <div class="swiper-container">
 						<div class="swiper-wrapper">
-						  <div class="swiper-slide"><img src="${imagePath}/empty/img-tumb-850.jpg" alt="1" /></div>
-						  <div class="swiper-slide"><img src="${imagePath}/empty/img-tumb-850.jpg" alt="2" /></div>
+						
+					    <c:if test="${fn:length(cls.classFileList)>0}">
+							<c:forEach var="clsImg" items="${cls.classFileList}" begin="0" end="${fn:length(cls.classFileList)-1}" varStatus="status">
+								<c:if test="${fn:indexOf(clsImg.fileCn,'S')>-1}">
+								<c:set var="path" value="${fn:split(clsImg.fileStreCours, '/')}" />
+								<c:set var="path" value="${path[fn:length(path)-1]}" />
+								<c:set var="path" value="${fn:replace(path,'\\\\','/')}" />
+								<c:set var="img" value="${uploadPath}${path}/${clsImg.streFileNm}"/>
+								<div class="swiper-slide"><img src="${img}" alt="${status.count}" /></div>
+								</c:if>
+								
+							</c:forEach>
+						</c:if>
 						</div>
 						<div class="swiper-info">
 							 <div class="swiper-button-prev"></div>
@@ -179,7 +198,7 @@
 					</div>
 					<!-- //view banner -->
 					<div class="offline-view-title">
-						<p class="title">아름다운 라인을 잡아주는 연예인 경락 마사지</p>
+						<p class="title">${cls.classTitle}</p>
 						<p class="desc">저는 혈액순환, 림프순환 그리고 근막 테라피를 접목한 저만의 경락 마사지법을 개발하고 선보이고 있습니다</p>
 					</div>
 					<div class="cont-nav">
@@ -196,23 +215,23 @@
 					<div class="review">
 						<h3>Review class 수강후기</h3>
 						<div class="grade">
-							<p class="grade-num">4.5</p>
+							<p class="grade-num">${scoAvr}</p>
 							<ul class="grade-list">
 								<li>
 									<span class="tit">커리큘럼</span>
-									<span class="star"><span style="width:80%;"></span></span>
+									<span class="star"><span style="width:${sco1}%;"></span></span>
 								</li>
 								<li>
 									<span class="tit">시간준수</span>
-									<span class="star"><span style="width:100%;"></span></span>
+									<span class="star"><span style="width:${sco2}%;"></span></span>
 								</li>
 								<li>
 									<span class="tit">전달력</span>
-									<span class="star"><span style="width:80%;"></span></span>
+									<span class="star"><span style="width:${sco3}%;"></span></span>
 								</li>
 								<li>
 									<span class="tit">친절도</span>
-									<span class="star"><span style="width:40%;"></span></span>
+									<span class="star"><span style="width:${sco4}%;"></span></span>
 								</li>
 							</ul>
 						</div>

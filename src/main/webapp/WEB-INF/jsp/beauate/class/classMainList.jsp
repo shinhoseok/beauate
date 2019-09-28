@@ -48,7 +48,7 @@
 					<ul>
 					<c:if test="${fn:length(classCategoryList)>0}">
 						<c:forEach var="classCategory" items="${classCategoryList}" begin="0" end="${fn:length(classCategoryList)-1}">
-							<li><a href="${basePath}/class/a/t/classList.do?classCtSt=${classCategory.mclsCd}"">${classCategory.mclsNm}</a></li>
+							<li><a href="${basePath}/class/a/t/classList.do?classCtSt=${classCategory.mclsCd}">${classCategory.mclsNm}</a></li>
 						</c:forEach>
 					</c:if>
 					</ul>
@@ -145,7 +145,7 @@
 						</c:forEach>
 					</c:if>
 						<li>
-							<a href="#">
+							<a href="${basePath}/class/a/t/classDetail.do?classId=${cls.classId}">
 								<div class="thumb">
 									<img src="${img}" alt="" />
 									<c:choose>
@@ -193,7 +193,7 @@
 						</li>
 				    </c:forEach>
 				</ul>
-                   <div class="off_more"><a href="#">헤어 클래스 더보기<img src="${imgPath}/btn_arrow.png"/></a></div>
+                   <div class="off_more"><a href="${basePath}/class/a/t/classList.do?classCtSt=1">헤어 클래스 더보기<img src="${imgPath}/btn_arrow.png"/></a></div>
 			</div>
 		</div>
 		</c:if>
@@ -264,7 +264,7 @@
 						</c:forEach>
 					</c:if>
 						<li>
-							<a href="#">
+							<a href="${basePath}/class/a/t/classDetail.do?classId=${cls.classId}">
 								<div class="thumb">
 									<img src="${img}" alt="" />
 									<c:choose>
@@ -312,7 +312,7 @@
 						</li>
 				    </c:forEach>
 				</ul>
-                   <div class="off_more"><a href="#">메이크업 클래스 더보기<img src="${imgPath}/btn_arrow.png"/></a></div>
+                   <div class="off_more"><a href="${basePath}/class/a/t/classList.do?classCtSt=2">메이크업 클래스 더보기<img src="${imgPath}/btn_arrow.png"/></a></div>
 			</div>
 		</div>
 		</c:if>

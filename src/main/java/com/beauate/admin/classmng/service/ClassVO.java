@@ -60,6 +60,8 @@ public class ClassVO extends CommDefaultVO implements Serializable {
 	
 	private List<FileVO> classFileList;
 	
+	private List<ClassReviewVO> classReviewList;
+	
 	public List<FileVO> getClassFileList() {
 		return classFileList;
 	}
@@ -203,5 +205,11 @@ public class ClassVO extends CommDefaultVO implements Serializable {
 	}
 	public void setClassWebAdr(String classWebAdr) {
 		this.classWebAdr = classWebAdr;
+	}
+	public List<ClassReviewVO> getClassReviewList() {
+		return classReviewList;
+	}
+	public void setClassReviewList(List<ClassReviewVO> classReviewList) {
+		this.classReviewList = classReviewList;
 	}
 }

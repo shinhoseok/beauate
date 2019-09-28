@@ -30,7 +30,7 @@ button.off {
 	</c:forEach>
 </c:if>
 	<li>
-		<a href="#">
+		<a href="${basePath}/class/a/t/classDetail.do?classId=${cls.classId}">
 			<div class="thumb">
 				<img src="${img}" alt="" />
 				<c:choose>

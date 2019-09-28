@@ -14,6 +14,19 @@
 		<result property="creatDt" column="CREAT_DT"/>			
 	</resultMap>
 	
+	<resultMap id="reviewList" type="com.beauate.admin.classmng.service.ClassReviewVO">
+		<id property="rSq" column="r_sq"/>
+		<result property="cSq" column="c_sq"/>
+		<result property="uSq" column="u_sq"/>
+		<result property="rDt" column="r_dt"/>
+		<result property="sco1" column="sco_1"/>
+		<result property="sco2" column="sco_2"/>
+		<result property="sco3" column="sco_3"/>
+		<result property="sco4" column="sco_4"/>
+		<result property="rCtt" column="r_ctt"/>			
+		<result property="rFl" column="r_fl"/>			
+	</resultMap>
+	
     <resultMap id="classMap" type="com.beauate.admin.classmng.service.ClassVO">
         <id column="c_sq" property="classId"/>
         <result column="u_sq" property="classUserId"/>
@@ -36,6 +49,7 @@
         <result column="c_cost_no" property="classCost"/>
         <result column="c_web_adr" property="classWebAdr"/>
         <collection column="{atchFileId=img_sq}" property="classFileList" javaType="java.util.ArrayList" ofType="fileVO" select="getFileListByImgSq"/>
+        <collection column="{cSq=c_sq}" property="classReviewList" javaType="java.util.ArrayList" ofType="classReviewVO" select="getReviewListByCSq"/>
     </resultMap>
     
 	<!-- 쿼리명 : 오프라인 클래스 등록
@@ -192,6 +206,22 @@
 			comtnfile fl 
 			LEFT JOIN comtnfiledetail fld ON fl.atch_file_id = fld.atch_file_id
 			WHERE fl.atch_file_id=#{atchFileId}
+	</select>
+	
+	<select id="getReviewListByCSq" resultMap="reviewList">
+		SELECT
+			r_sq,
+			c_sq,
+			u_sq,
+			r_dt,
+			sco_1,
+			sco_2,
+			sco_3,
+			sco_4,
+			r_ctt,
+			r_fl
+		FROM class_r
+		WHERE c_sq=#{cSq}
 	</select>
 	
 	<select id="selectClassListCnt" parameterType="classVO" resultType="int">
