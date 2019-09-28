@@ -38,4 +38,13 @@ public class GlobalConstants {
 	//비회원 전용 패스워드
 	public static String NON_MEMEBER_PWD = "06f1ac6173b0b9659e251e59a489078f4d60613f223410fb40c325716c9b9709";
 	
+	public static String BANNER_SPECIAL_LEFT = "SPECIAL_LEFT";
+	public static String BANNER_LONG_BANNER = "LONG_BANNER";
+
+	public static int CLASS_CATEGORY_HAIR = 1;
+	public static int CLASS_CATEGORY_MAKEUP = 2;
+	public static int CLASS_CATEGORY_EYELASHES = 3;
+	public static int CLASS_CATEGORY_WAXING = 4;
+	public static int CLASS_CATEGORY_NAIL = 5;
+	public static int CLASS_CATEGORY_ETC = 6;
 }

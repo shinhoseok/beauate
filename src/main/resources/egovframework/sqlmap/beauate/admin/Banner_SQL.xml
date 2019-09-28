@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.beauate.admin.code.service.BannerDao">
+<mapper namespace="com.beauate.admin.banner.service.BannerDao">
 
 	<select id="selectBannerList" parameterType="bannerVO" resultType="bannerVO">
 		<![CDATA[
@@ -15,8 +15,8 @@
 			banner
 		WHERE 1=1 
 		]]>
-		<if test="bannerLoc!= null and bannerLoc!=''">
-			AND bannerLoc = #{bannerLoc!=}
+		<if test="bannerLoc!=null and bannerLoc!=''">
+			AND banner_loc = #{bannerLoc}
 		</if>
 		ORDER BY banner_order
 	</select>

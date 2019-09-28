@@ -290,3 +290,153 @@ font-size: 16px;line-height: 1.5; letter-spacing: -0.5px;}
 .myinfo_pwd_save_btn{font-size: 12px; padding: 9px 38px; border: 1px solid #000000; border-radius: 2px; margin-left: 10px; font-weight: 400;background-color: #000000; color: #ffffff;}
 .myinfo_pwd_cancle_btn{font-size: 12px; padding: 9px 38px; border: 1px solid #000000;border-radius: 2px; margin-left: 20px; font-weight: 400;opacity: 0.4;}
 
+/*---------------------------------------------------------------------------------------------------------------*/
+/*신청한 클래스_지도보기팝업 */
+
+.mypageMap{width: 550px; border: 4px solid #000000; background: url("../img/img-txt-location.png") no-repeat; background-position: 50px 45px; margin: 200px auto; position: relative; box-shadow: 0 25px 50px 0 rgba(0, 0, 0, 0.1);}
+.close{position: absolute; top: 40px; right: 30px;}
+.mypageMap_inner{margin: 84px 0 0 50px;}
+.mypageMap p{font-size: 16px;}
+.mypageMap_list{font-size: 14px; margin-top: 20px; margin-bottom: 30px;}
+.mypageMap_list ul li:nth-child(1) {float: left; margin-right: 15px;}
+.mypageMap_list ul li:nth-child(2){opacity: 0.6; width: 320px;}
+.mypageMap_list ul li:nth-child(3){font-size: 12px; margin-top: 5px;}
+.mypageMap_list span{ margin: 5px;font-size: 10px; vertical-align: top;font-weight: 100; opacity: 0.6;}
+.mypageMap_detail{font-size: 14px; background-color: #f9f9f9 ;margin: 40px 0; overflow: hidden; width: 450px; padding-bottom: 40px;}
+.mypageMap_left,.mypageMap_right{float: left;}
+.mypageMap_left, .mypageMap_right div{color: #636363; font-weight: 400;}
+.mypageMap_font{color: #636363;}
+.mypageMap_left{ background-color: #f9f9f9; margin: 25px 0 0 20px;}
+.mypageMap_right{ width: 370px; margin: 25px 0 0 20px;}
+.mypageMap_right div{margin-left: -45px }
+.mypageMap_num {font-family: 'Roboto Mono'; margin-left: 16px;color: #000000;}
+.mypageMap_img{margin-top: 20px;}
+
+/*---------------------------------------------------------------------------------------------------------------*/
+/*작성가능한 후기_리뷰 작성팝업 */
+
+.mypageR{width: 550px; border: 4px solid #000000; background: url("../img/review.png") no-repeat; background-position: 50px 45px; margin: 200px auto; position: relative; box-shadow: 0 25px 50px 0 rgba(0, 0, 0, 0.1);}
+.close{position: absolute; top: 40px; right: 30px;}.mypageMap_inner{margin: 84px 0 0 50px;}
+.mypageR_inner{margin: 84px 0 0 50px;}
+.mypageR p{font-size: 16px;}
+.mypageR_list{font-size: 14px; margin-top: 20px; margin-bottom: 30px;}
+.mypageR_list ul li:nth-child(1) {float: left; margin-right: 15px;}
+.mypageR_list ul li:nth-child(2){opacity: 0.6; width: 320px;}
+.mypageR_list ul li:nth-child(3){font-size: 12px; margin-top: 5px;}
+.mypageR_list span{ margin: 5px;font-size: 10px; vertical-align: top;font-weight: 100; opacity: 0.6;}
+/*별점영역*/
+.mypageR_star {width: 300px;  margin-bottom: 10px; position: relative; margin-top: 5px;}
+.mypageR_star li { opacity: 0.6; font-size: 14px; line-height: 1.5; letter-spacing: -0.5px; margin-bottom: 10px;}
+.mypageR_star p { margin-right: 49px; }
+.star2 {position: absolute; left : 70px; top :0pc;}
+/*내용작성영역*/
+.mypageR_ctt {width: 410px; background-color: #f9f9f9;position: relative; padding: 20px;}
+.ctt-300 { opacity: 0.4; font-family: 'Roboto Mono'; font-size: 12px; line-height: 1; letter-spacing: -0.38px; position: absolute; bottom: -15px; right:1px;}
+.mypageR_ctt p { opacity: 0.6; font-size: 14px; line-height: 1.5; letter-spacing: -0.5px;}
+.ctt_blank{height: 70px;}
+/*후기등록 버튼*/
+.mypageR_btn {width: 450px; height: 72px;background-color: #0a0a0a;margin-bottom: 50px; margin-top: 47px;}
+.mypageR_btn p { font-size: 20px; font-weight: bold; line-height: 1.2; letter-spacing: -0.63px; text-align: center; color:white;padding-top: 24px; }
+
+/*---------------------------------------------------------------------------------------------------------------*/
+/*420 오프라인 클래스 결제완료 */
+
+/** 결제완료 전체**/
+.payEnd_inner{width: 1280px; margin: 0 auto; padding-bottom: 200px;}
+.payEnd_num{font-family: 'Roboto Mono'; color: #000000;}
+.payEnd_info_say {text-align: center; margin-top: 140px;}
+.payEnd_info_say p{ font-size: 30px; margin-bottom: 10px;}
+.payEnd_info_say div{width: 354px; height: 72px; background-color:#000000; color: #ffffff; margin: 55px auto; vertical-align: middle; line-height: 72px;}
+/** 결제완료_멘티,결제,클래스 정보 타이틀 **/
+.payEnd_info_tit{font-size: 20px; line-height: 40px; border-bottom: 4px solid #000000;}
+/** 결제완료_멘티,결제정보**/
+.payEnd_info_2 {overflow: hidden; margin: 165px 0 100px 0;}
+.payEnd_info_mentee,.payEnd_info_money {float: left; width: 620px;} 
+.payEnd_info_2 ul li{font-size: 16px; margin-bottom: 20px;}
+.payEnd_info_money{margin-left: 40px;}
+.payEnd_left,.payEnd_right{float: left;}
+.payEnd_left {opacity: 0.6; font-weight: 300;}
+.payEnd_left{ background-color: #f9f9f9;}
+.payEnd_left ul {padding: 25px 20px;}
+.payEnd_right ul {padding: 25px 44px;}
+.payEnd_info_money .payEnd_right {text-align: right;}
+.payEnd_info_mentee div:nth-child(2){width: 130px; height: 118px;} 
+.payEnd_info_money div:nth-child(2){width: 130px; height: 118px;}
+/** 결제완료_클래스 정보**/
+.payEnd_margin {margin-bottom: 30px;}
+.payEnd_list{font-size: 14px; float:left; width: 660px;}
+.payEnd_list ul li:nth-child(1) {float: left; margin-right: 15px;}
+.payEnd_list ul li:nth-child(2){opacity: 0.6;}
+.payEnd_list ul li:nth-child(3){font-size: 12px; margin-top: 5px;}
+.payEnd_list span{ margin: 5px;font-size: 10px; vertical-align: top;font-weight: 100; opacity: 0.6;}
+/** 결제완료_클래스 정보_다테일**/
+.payEnd_info_detail{font-size: 14px; background-color: #f9f9f9 ;margin-top: 30px; overflow: hidden;}
+.payEnd_info_detail ul li {margin-bottom: 10px;}
+.payEnd_info_detail ul li span {margin-right: 15px; opacity: 0.6;}
+.payEnd_money ul li:nth-child(1) {font-size:16px;}
+.payEnd_money ul li:nth-child(2) {font-size:30px; font-family: 'Roboto Mono'; margin-top: -5px;}
+.payEnd_money ul li:nth-child(2) span{font-size:16px; margin-left: 1px;}
+.payEnd_info_detail .payEnd_right{margin-left: -25px;}
+
+/*-----------------------------------------------------------------------------------------------------------*/
+
+/*헤어 목록 상세 */
+.offline .besthair h3{height: 200px;}
+.offline .besthair .stitle-best{ background: url('../img/txt_best.png') no-repeat; width: 100%; height: 100%; text-indent: -9999999em; position: absolute; top:115px; left: 18px;}
+
+.besthair-title{z-index: 10;}
+
+/*오프라인 목록  */
+.off_title{ height: 400px; background: url('../img/bg_off_tit.jpg') no-repeat; background-position: 50% 0; background-color: #000000;}
+.offline .off_list h3 {background: url('../img/txt_off_tit_list.png') no-repeat; text-indent: -999999em; background-position: 50% 16px; margin: 30px 0 10px 0; height: 50px;}
+.offline .off_list p{font-size: 14px; text-align: center;}
+.offline .off_list ul{overflow: hidden; margin-top: 20px;}
+.offline .off_list ul li a{ width: 410px; height: 120px;background: url('../img/off_sub_list.png') no-repeat; float: left; margin-right: 20px; margin-bottom: 20px; text-indent: -999999em;} 
+.offline .off_list ul li:nth-child(1) a{background-position: 0 0;}
+.offline .off_list ul li:nth-child(2) a{background-position: -430px 0;}
+.offline .off_list ul li:nth-child(3) a{background-position: -860px 0; margin-right: 0;}
+.offline .off_list ul li:nth-child(4) a{background-position: 0 -140px; }
+.offline .off_list ul li:nth-child(5) a{background-position: -430px -140px;}
+.offline .off_list ul li:nth-child(6) a{background-position: -860px -140px;margin-right: 0;}
+
+/*오프라인 클래스 베스트 타이틀*/
+.bestoff-title{ height: 15px; position: relative; padding: 60px 0 0 20px; z-index: 10;}
+.offline .bestoff-title h3 {display:inline-block;width:300px;height:105px;text-indent:-999999em;background:url('../img/txt_offline.png') no-repeat 0 0;}
+.offline .bestoff-title .stxt{margin-left: -200px;}
+.offline .bestoff-title .stitle-best{ background: url('../img/txt_best.png') no-repeat; width: 100%; height: 100%; text-indent: -9999999em; position: absolute; top:416px; left: 18px;}
+/*오프라인 클래스 타이틀*/
+.offline .off_tit h3 { margin-top: 130px; height:75px;border-bottom:4px solid #0a0a0a;text-indent:-999999em;}
+.off_hair{background:url('../img/txt_off_tit_hair.png') no-repeat 50% 0;}
+.off_makeup{background:url('../img/txt_off_tit_makeup.png') no-repeat 50% 0;}
+/*오프라인 클래스 더보기 버튼 */
+.off_more{ width: 420px; height: 72px; background-color: #000000; color: #ffffff; vertical-align: middle; line-height: 72px;text-align: center; margin: 0 auto; margin-bottom: 140px;}
+.off_more img{ vertical-align: middle; margin-left: 10px;}
+
+/*-----------------------------------------------------------------*/
+/*메인*/
+
+.cont-left2{ float: left; width: 620px;}
+.cont-right2{ float: right; width: 620px; margin-top: 50px;}
+.slider-banner2{height: 466px; background-color: #f9f9f9; overflow: hidden; margin-top:140px; margin-bottom: 150px; }
+.offline .slider-banner2 .swiper-info { position: absolute; width: 87px; height: 21px;bottom: 40px; left: 195px;}
+.offline .slider-banner2 .swiper-button-prev{ background:url('../images/common/btn_slider01.png') no-repeat 0 0; left:0px;top:2px; z-index: 100;}
+.offline .slider-banner2 .swiper-pagination{ font-size: 15px; font-family: 'Roboto Mono';}
+.offline .slider-banner2 .swiper-button-next{ background:url('../images/common/btn_slider01.png') no-repeat 0 -15px; left:72px; top:2px; z-index: 100;}
+.offline .slider-banner2 .swiper-pagination .swiper-pagination-current{color:#6a2cfe; }
+.main-title{height: 600px; background: url('../img/bg_main.jpg') no-repeat; background-position: 50% 0; background-color: #000000;}
+.new_class {margin-top: 30px;}
+.new_class div {font-size: 16px;}
+.new_class ul{ overflow: hidden; margin:30px 0;}
+.new_class ul li{float: left; margin-right: 20px; margin-bottom: 50px;}
+.new_class ul li:nth-child(3), .new_class ul li:nth-child(6){margin: 0;}
+.new_sub{font-weight: 300; opacity: 0.6; margin-top: -3px;}
+.new_class .new_mentor{background: url('../img/txt_mentor.png') no-repeat; font-size: 14px; padding-left: 54px; background-position: 0 6px; margin-top: 10px;}
+.marBig{margin-top: 150px}
+.offline .new_class h3{height: 121px; background: url('../img/txt_new_class.png') no-repeat; background-position: 50%; text-indent: -999999em;} 
+.offline .new_class p{font-size: 16px; position: absolute; top:80px; left: 508px;}
+.offline .new_class .label_new{font-size: 14px; position: absolute; display: inline-block; width: 20px; height: 20px; border-radius: 50%; background-color: #6a2cfe; color: #ffffff; line-height: 19px; text-align: center; top:3px; font-family: 'Roboto Mono'; font-weight: 800; left: 72px;}
+
+
+
+
+ 

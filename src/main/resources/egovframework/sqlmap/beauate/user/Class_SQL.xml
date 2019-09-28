@@ -145,6 +145,13 @@
 			LEFT JOIN common_cd_scls cd2 ON (c.c_st = cd.mcls_cd AND cd.lcls_cd='CST')
 			WHERE 1=1 
 		]]>
+		<if test="classAreaSt!= null and !(classAreaSt=='') and !(classAreaSt=='0') and !(classAreaSt==0)" >
+			AND c.c_area_st = #{classAreaSt}
+		</if>
+		<if test="classCtSt!=null and !(classCtSt=='') and !(classCtSt=='0') and !(classCtSt==0)">
+			AND c.c_category_st = #{classCtSt}
+		</if>
+                        AND c.c_del_yn = 'N' OR c.c_del_yn IS NULL
 		<choose>
 			<when test="sortSubject == 'classListTop'">
 			</when>
@@ -157,13 +164,6 @@
 				ORDER BY c.c_dt
 			</otherwise>
 		</choose>
-		<if test="classAreaSt!= null and !(classAreaSt=='') and !(classAreaSt=='0') and !(classAreaSt==0)" >
-			AND c.c_area_st = #{classAreaSt}
-		</if>
-		<if test="classCtSt!=null and !(classCtSt=='') and !(classCtSt=='0') and !(classCtSt==0)">
-			AND c.c_category_st = #{classCtSt}
-		</if>
-                        AND c.c_del_yn = 'N' OR c.c_del_yn IS NULL
 		          ) A
 		<![CDATA[ 
 		 WHERE A.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
