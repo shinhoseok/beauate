@@ -42,7 +42,7 @@
 									<fmt:parseDate var="parsedClsSDt" value="${cls.classStartDt}" pattern="yyyy-MM-dd HH:mm:ss.SSS" />
 									<fmt:formatDate var="etcDtStr" value="${parsedClsSDt}" pattern="yyyy-MM-dd(E)" />
 								    <fmt:parseNumber
-								    value="${ parsedClsSDt.time / (1000*60*60*24) }"
+								    value="${ parsedClsSDt.time }"
 								    integerOnly="true" var="classDays" scope="request"/>
 									<c:set var="img" value=""/>
 								    <c:if test="${fn:length(cls.classFileList)>0}">

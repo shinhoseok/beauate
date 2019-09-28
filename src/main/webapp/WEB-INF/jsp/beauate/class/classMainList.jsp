@@ -3,7 +3,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="now" class="java.util.Date" scope="request"/>
 <fmt:parseNumber
-    value="${ now.time / (1000*60*60*24) }"
+    value="${ now.time }"
     integerOnly="true" var="nowDays" scope="request"/>
 <!DOCTYPE html>
 
@@ -130,7 +130,7 @@
 					<fmt:parseDate var="parsedClsSDt" value="${cls.classStartDt}" pattern="yyyy-MM-dd HH:mm:ss.SSS" />
 					<fmt:formatDate var="etcDtStr" value="${parsedClsSDt}" pattern="yyyy-MM-dd(E)" />
 				    <fmt:parseNumber
-				    value="${ parsedClsSDt.time / (1000*60*60*24) }"
+				    value="${ parsedClsSDt.time }"
 				    integerOnly="true" var="classDays" scope="request"/>
 				    <c:set var="img" value=""/>
 				    <c:set var="path" value="" />
@@ -144,6 +144,9 @@
 							</c:if>
 						</c:forEach>
 					</c:if>
+					<c:set var="remainDays" value="${classDays-nowDays}"/>
+					<c:set var="remainDays" value="${(remainDays)/ (1000*60*60*24)}"/>
+					<fmt:formatNumber var="remainDays" value="${remainDays+(1-(remainDays%1))%1}" type="number"/>
 						<li>
 							<a href="${basePath}/class/a/t/classDetail.do?classId=${cls.classId}">
 								<div class="thumb">
@@ -153,8 +156,8 @@
 											<c:choose>
 												<c:when test="${cls.classStNm  == '오픈전' || cls.classStNm  == '오픈중' || cls.classStNm  == '신청마감'}">
 													<c:choose>
-													<c:when test="${classDays-nowDays<=7 and classDays-nowDays>0}">
-														<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
+													<c:when test="${remainDays<=7 and remainDays>=0}">
+														<div class="count"><span>${remainDays}일 남았어요!</span></div>
 													</c:when>
 													<c:otherwise>
 													</c:otherwise>
@@ -170,10 +173,10 @@
 										</c:when>
 										<c:otherwise>
 											<c:choose>
-											<c:when test="${classDays-nowDays<=7 and classDays-nowDays >0}">
-												<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
+											<c:when test="${remainDays<=7 and remainDays>=0}">
+												<div class="count"><span>${remainDays}일 남았어요!</span></div>
 											</c:when>
-											<c:when test="${classDays-nowDays<0}">
+											<c:when test="${remainDays<0}">
 												<div class="soldout"></div>
 												<div class="soldout-txt">신청마감</div>
 											</c:when>
@@ -250,7 +253,7 @@
 					<fmt:parseDate var="parsedClsSDt" value="${cls.classStartDt}" pattern="yyyy-MM-dd HH:mm:ss.SSS" />
 					<fmt:formatDate var="etcDtStr" value="${parsedClsSDt}" pattern="yyyy-MM-dd(E)" />
 				    <fmt:parseNumber
-				    value="${ parsedClsSDt.time / (1000*60*60*24) }"
+				    value="${ parsedClsSDt.time }"
 				    integerOnly="true" var="classDays" scope="request"/>
 				    <c:set var="img" value=""/>
 				    <c:if test="${fn:length(cls.classFileList)>0}">
@@ -263,6 +266,9 @@
 							</c:if>
 						</c:forEach>
 					</c:if>
+					<c:set var="remainDays" value="${classDays-nowDays}"/>
+					<c:set var="remainDays" value="${(remainDays)/ (1000*60*60*24)}"/>
+					<fmt:formatNumber var="remainDays" value="${remainDays+(1-(remainDays%1))%1}" type="number"/>
 						<li>
 							<a href="${basePath}/class/a/t/classDetail.do?classId=${cls.classId}">
 								<div class="thumb">
@@ -272,8 +278,8 @@
 											<c:choose>
 												<c:when test="${cls.classStNm  == '오픈전' || cls.classStNm  == '오픈중' || cls.classStNm  == '신청마감'}">
 													<c:choose>
-													<c:when test="${classDays-nowDays<=7 and classDays-nowDays>0}">
-														<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
+													<c:when test="${remainDays<=7 and remainDays>=0}">
+														<div class="count"><span>${remainDays}일 남았어요!</span></div>
 													</c:when>
 													<c:otherwise>
 													</c:otherwise>
@@ -289,10 +295,10 @@
 										</c:when>
 										<c:otherwise>
 											<c:choose>
-											<c:when test="${classDays-nowDays<=7 and classDays-nowDays >0}">
-												<div class="count"><span>${classDays-nowDays}일 남았어요!</span></div>
+											<c:when test="${remainDays<=7 and remainDays>=0}">
+												<div class="count"><span>${remainDays}일 남았어요!</span></div>
 											</c:when>
-											<c:when test="${classDays-nowDays<0}">
+											<c:when test="${remainDays<0}">
 												<div class="soldout"></div>
 												<div class="soldout-txt">신청마감</div>
 											</c:when>
