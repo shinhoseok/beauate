@@ -24,7 +24,7 @@
 	</context:component-scan>
 
 	<!-- 클라이언트로부터 http Request가 들어오면 핸들러맵핑은 요청 처리를 담당할 컨트롤러를 맵핑한다. -->
-	<!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="webBindingInitializer">
 			<bean class="egovframework.cmmn.web.EgovBindingInitializer" />
 		</property>
@@ -42,7 +42,7 @@
 				<ref bean="localeChangeInterceptor" />
 			</list>
 		</property>
-	</bean> -->
+	</bean>
 
 	<!-- 포탈 인터셉터 -->
 	<bean id="portalInterceptor" class="com.beauate.common.PortalInterceptor">
