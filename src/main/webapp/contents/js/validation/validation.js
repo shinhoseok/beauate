@@ -2,8 +2,10 @@
     validation 체크
     alt ==> title 로 바뀜 (alt 보다는 title 추천)
 **/
-
-//빈값 체크
+var isNull = function(v){
+	return (v == undefined || v == null || v == "") ? true : false;
+}
+// 빈값 체크
 $.fn.emptyCheck = function() {
 	var value = $.trim(this.val() + '');
 	

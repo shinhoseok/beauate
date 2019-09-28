@@ -73,19 +73,19 @@
 									<td>
 										<div class="commonSearch_wrap">
 											<label class="blind" for=" ">d</label>
-											<form:input path="classStartDt" type="text" id="classStartDt"/>
+											<form:input path="classStartDt" type="text" id="classStartDt" readonly="true"/>
 										</div>
 									</td>
 									<th>클래스 종료일</th>
 									<td>
 										<div class="commonSearch_wrap">
 											<label class="blind" for=" ">d</label>
-											<form:input path="classEndDt" type="text" id="classEndDt"/>
+											<form:input path="classEndDt" type="text" id="classEndDt" readonly="true"/>
 										</div>
 									</td>
 								</tr>
 								<tr>
-									<th>클래스 시간</th>
+									<th>클래스 시간(10:00 ~ 14:00)</th>
 									<td>
 										<div class="commonSearch_wrap">
 											<label class="blind" for=" ">d</label>
@@ -216,11 +216,27 @@ $(document).ready(function(){
 
 var fn_insertClassProc = function() {
 	var usrId = $("#usrId").val();
-	if (!TypeChecker.email($("#usrId").val())) {
+	var classStartDt = $("#classStartDt").val();
+	var classEndDt = $("#classEndDt").val();
+	if(usrId == null || usrId == "" || usrId == 'undefined') {
+		alert("클래스 신청자 이메일은 필수 입력입니다.");
+		$("#usrId").focus();
+		return;
+	}
+	if (!TypeChecker.email(usrId)) {
 		alert("이메일은 "+TypeChecker.emailText);
 		$("#usrId").focus();
 		return;
 	}
+
+	if(!isNull(classEndDt) && !isNull(classStartDt)) {
+		if(classStartDt > classEndDt) {
+			alert("시작일자는 종료일자보다 이전일자여야 합니다.");
+			$("#classStartDt").focus();
+			return;
+		}
+	}
+	
 	//등록된 아이디인지 여부체크
 	$.ajax({ 	
 		url: "${basePath}/classmng/r/n/selectUserIdChk.do",

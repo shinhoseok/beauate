@@ -35,10 +35,10 @@
 				</div>
 			</div>
 			<div class="cont-nav">
-				<ul>
+				<ul class="tabs">
 					<c:if test="${fn:length(boardCateGoryList)>0}">
-						<c:forEach var="list" items="${boardCateGoryList}" >
-							<li><a href="${basePath}/board/r/m/selectBoardList.do?postCategorySt=${list.mclsCd}"" class="active">${list.mclsNm}</a></li>
+						<c:forEach var="list" items="${boardCateGoryList}" varStatus="i">
+							<li id="tab_${i.count }"><a href="${basePath}/board/r/m/selectBoardList.do?postCategorySt=${list.mclsCd}"" class="active">${list.mclsNm}</a></li>
 						</c:forEach>
 					</c:if>
 				</ul>
@@ -112,5 +112,14 @@
 	<%@ include file="/WEB-INF/jsp/beauate/ucommon/footer.jsp"%>
 	<!-- //footer -->
 </div>
+
+<script type="text/javascript">
+$(function() {
+	$("ul.tabs li").click(function() {
+		$("ul.tabs li").removeClass("active");
+		$(this).addClass("active");
+	});
+});
+</script>
 </body>
 </html>
