@@ -69,7 +69,7 @@
 											<c:when test="${cls.classStNm  == '오픈전' || cls.classStNm  == '오픈중' || cls.classStNm  == '신청마감'}">
 												<c:choose>
 												<c:when test="${remainDays<=7}">
-													<div class="count"><span>${remainDays}일 남았어요!</span></div>
+													<div class="count"><span>${remainDays==-0?0:remainDays}일 남았어요!</span></div>
 												</c:when>
 												<c:otherwise>
 												</c:otherwise>
@@ -82,7 +82,7 @@
 											<c:otherwise>
 												<c:choose>
 												<c:when test="${remainDays<=7 and remainDays>=0}">
-													<div class="count"><span>${remainDays}일 남았어요!</span></div>
+													<div class="count"><span>${remainDays==-0?0:remainDays}일 남았어요!</span></div>
 												</c:when>
 												<c:when test="${remainDays<0}">
 													<div class="soldout"></div>
