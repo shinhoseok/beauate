@@ -41,6 +41,7 @@
 					<form:hidden path="searchCondition" />
 					<form:hidden path="searchKeyword" />
 					<form:hidden path="pageIndex" />
+					<form:hidden path="atchFileId" />
 					<!-- sub_path End -->
 					<h4 class="contentTitle_h4">게시판 정보</h4>
 					<div class="tableLayer">

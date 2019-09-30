@@ -66,6 +66,18 @@
 			  #orignlFileNm#, #fileExtsn#, #fileMg#, #fileCn# )			
 		]]>
 	</insert>	
+	<!-- 신호석 -->
+	<update id="FileManageDAO.updateFileDetail" parameterClass="FileVO">
+		UPDATE COMTNFILEDETAIL
+			SET FILE_STRE_COURS = #fileStreCours#,
+				STRE_FILE_NM = #streFileNm#,
+				ORIGNL_FILE_NM = #orignlFileNm#,
+				FILE_EXTSN = #fileExtsn#,
+				FILE_SIZE = #fileMg#,
+				FILE_CN = #fileCn#
+		WHERE	ATCH_FILE_ID = #atchFileId#
+			AND FILE_SN = #fileSn#
+	</update>
 	
 	<delete id="FileManageDAO.deleteFileDetail" parameterClass="FileVO" >
 		<![CDATA[

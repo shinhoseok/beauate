@@ -51,9 +51,9 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		
 		//페이징 
 		PaginationInfo paginationInfo = new PaginationInfo();
-		paginationInfo.setCurrentPageNo(boardVO.getPageIndex());
-		paginationInfo.setRecordCountPerPage(16); //제품정보 한페이지에 16개 게시물
-		paginationInfo.setPageSize(boardVO.getPageSize());
+		paginationInfo.setCurrentPageNo(1);
+		paginationInfo.setRecordCountPerPage(1); //16개보여줘야함
+		paginationInfo.setPageSize(5);
 		
 		boardVO.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
 		boardVO.setLastIndex(paginationInfo.getLastRecordIndex());
@@ -68,8 +68,7 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		boardVO.setAdminYn("N");
 		
 		int cnt = boardDao.selectBoardMngListCnt(boardVO);
-		paginationInfo.setTotalRecordCount(cnt);
-		
+		log.debug(">>>>> BoardServiceImpl CNT >>>>>>>"+cnt);
 		if(cnt > 0){
 			selectList = boardDao.selectBoardMngList(boardVO);
 			//이미지 경로수정 yyyyMM/파일명

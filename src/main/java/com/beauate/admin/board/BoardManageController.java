@@ -225,7 +225,24 @@ public class BoardManageController {
 	 * @throws Exception
 	 */ 	
 	@RequestMapping(value = "/boardm/w/n/updateBoardMngProc.do")
-	public String updateBoardMngProc(@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model, SessionStatus status) throws Exception {
+	public String updateBoardMngProc(final MultipartHttpServletRequest multiRequest, @ModelAttribute("boardVO") BoardVO boardVO, ModelMap model, SessionStatus status) throws Exception {
+		String _atchFileId = boardVO.getAtchFileId();
+		
+		final Map<String, MultipartFile> files = multiRequest.getFileMap();
+		
+		if (!files.isEmpty()) {
+			if ("".equals(_atchFileId)) {
+				List<FileVO> _result = fileUtil.parseFileInf(files, "BOARD_", 0, _atchFileId, "");
+				_atchFileId = fileMngService.insertFileInfs(_result);
+				boardVO.setAtchFileId(_atchFileId);
+			} else {
+				FileVO fvo = new FileVO();
+				fvo.setAtchFileId(_atchFileId);
+//				int cnt = fileMngService.getMaxFileSN(fvo);
+				List<FileVO> _result = fileUtil.parseFileInf(files, "BOARD_", 0, _atchFileId, "");
+				fileMngService.updateFileInfs(_result);
+			}
+		}
 		boardManageService.updateBoardMngProc(boardVO);
 		status.setComplete();	//중복 submit 방지
 		return "redirect:/boardm/r/m/selectBoardMngDetail.do?postId="+boardVO.getPostId();

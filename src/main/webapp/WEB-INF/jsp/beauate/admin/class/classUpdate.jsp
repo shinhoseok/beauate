@@ -41,6 +41,7 @@
 				<h4 class="contentTitle_h4">클래스 정보</h4>
 				<form:form commandName="classVO" name="classVO" id="classVO" method="post" enctype="multipart/form-data" action="${basePath}/classmng/w/m/updateClassMngProc.do" >
 					<form:hidden path="classId"/>
+					<form:hidden path="atchFileId" />
 					<div class="tableLayer">
 						<table class="table">
 							<caption></caption>

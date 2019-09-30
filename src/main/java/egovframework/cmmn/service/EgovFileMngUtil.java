@@ -174,7 +174,7 @@ public class EgovFileMngUtil {
                     }
                     
                     cnt++;
-                    //writeFile(file, newName, storePathString);
+//                    writeFile(file, newName, storePathString);
                     result.add(fvo);
             
                     fileKey++;

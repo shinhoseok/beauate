@@ -36,6 +36,7 @@
 				<!-- sub_path End -->
 				<form:form commandName="classVO" id="detailForm" name="detailForm" method="post" >
 					<form:hidden path="classId" />
+					<form:hidden path="atchFileId" />
 					<h4 class="contentTitle_h4">로그인 정보</h4>
 					<div class="tableLayer">
 						<table class="table">

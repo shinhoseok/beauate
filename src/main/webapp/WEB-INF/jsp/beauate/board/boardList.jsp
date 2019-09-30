@@ -38,7 +38,10 @@
 				<ul class="tabs">
 					<c:if test="${fn:length(boardCateGoryList)>0}">
 						<c:forEach var="list" items="${boardCateGoryList}" varStatus="i">
-							<li id="tab_${i.count }"><a href="${basePath}/board/r/m/selectBoardList.do?postCategorySt=${list.mclsCd}"" class="active">${list.mclsNm}</a></li>
+							<c:if test="${i.count == 1}">
+								<li id="tab${i.count }"><a href="javascript:void(0);" class="active">${list.mclsNm}</a></li>
+							</c:if>
+							<li id="tab${i.count }"><a href="javascript:void(0);">${list.mclsNm}</a></li>
 						</c:forEach>
 					</c:if>
 				</ul>
@@ -48,60 +51,32 @@
 				<div class="slider-banner-info">
 				   <!-- Swiper -->
 				   <div class="swiper-container">
-				    <div class="swiper-wrapper">
-				      <div class="swiper-slide"><img src="${imagePath}/empty/img-banner-info.png" alt="1" /></div>
-				      <div class="swiper-slide"><img src="${imagePath}/empty/img-banner-info.png" alt="2" /></div>
-				      <div class="swiper-slide"><img src="${imagePath}/empty/img-banner-info.png" alt="3" /></div>
-				    </div>
-				    <div class="swiper-info">
+					<div class="swiper-wrapper">
+					  <div class="swiper-slide"><img src="${imagePath}/empty/img-banner-info.png" alt="1" /></div>
+					  <div class="swiper-slide"><img src="${imagePath}/empty/img-banner-info.png" alt="2" /></div>
+					  <div class="swiper-slide"><img src="${imagePath}/empty/img-banner-info.png" alt="3" /></div>
+					</div>
+					<div class="swiper-info">
 						 <div class="swiper-button-prev"></div>
 						 <div class="swiper-pagination"></div>
 						 <div class="swiper-button-next"></div>
-				    </div>
+					</div>
 				  </div>
 				  <script tyle="text/javascript">
-				    var swiper = new Swiper('.swiper-container', {
-				      pagination: {
-				        el: '.swiper-pagination',
-				        type: 'fraction',
-				      },
-				      navigation: {
-				        nextEl: '.swiper-button-next',
-				        prevEl: '.swiper-button-prev',
-				      },
-				    });
+					var swiper = new Swiper('.swiper-container', {
+					  pagination: {
+						el: '.swiper-pagination',
+						type: 'fraction',
+					  },
+					  navigation: {
+						nextEl: '.swiper-button-next',
+						prevEl: '.swiper-button-prev',
+					  },
+					});
 				  </script>
 				</div>
-				<ul class="product-list-01" data-column="4">
-					<c:choose>
-						<c:when test="${rslt.selectListCnt != 0}">
-							<c:forEach items="${rslt.selectList}" var="list" varStatus="i">
-								<li>
-									<a href="#">
-										<div class="thumb"><img src="${uploadPath}/<c:out value="${list.imgSrc }"/>" alt="커버력 끝판왕 인생 파운데이션" /></div>
-										<div class="title"><c:out value="${list.postTitle}"/></div>
-										<div class="desc"><c:out value="${list.postSubTitle}"/></div>
-										<div class="date"><fmt:formatDate value="${list.postDt}" pattern="yy.MM.dd"/></div>
-									</a>
-								</li>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<li>데이터가 없습니다.</li>
-						</c:otherwise>
-					</c:choose>
-				</ul>
-				<div class="paging">
-					<button type="button" class="btn-prev"><span>이전</span></button>
-					<ul>
-						<li class="active"><span>1</span></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-					</ul>
-					<button type="button" class="btn-next"><span>다음</span></button>
-				</div>
+				<!-- 리스트 Ajax Target -->
+				<div id="div_tab1"></div>
 				<!-- //제품소개 info -->
 			</div>
 		</div>
@@ -114,12 +89,44 @@
 </div>
 
 <script type="text/javascript">
+var sel_tab = 1;
 $(function() {
+	$("#div_tab2").hide();
+	$("#div_tab1").show();
 	$("ul.tabs li").click(function() {
-		$("ul.tabs li").removeClass("active");
-		$(this).addClass("active");
+		$("ul.tabs li").children("a").removeClass("active");
+		$(this).children("a").addClass("active");
+		var activeTab = $(this).attr("id");
+		fn_searchList(1);
 	});
+	fn_searchList(1);
 });
+
+//param : 클릭페이지, 탭번호,
+function fn_searchList(page){
+	cuurPage= page;
+	var params = {};
+	params.pageIndex = cuurPage;
+	fn_boardCommonAjax(params);
+}
+
+//공통 첫번째, 두번째 탭 Ajax
+var fn_boardCommonAjax = function(params) {
+	$.ajax({	
+		url: "${basePath}/board/r/m/selectBoardAjaxList.do",
+		data: params,
+		type: 'POST',
+		dataType: 'html',
+		cache: false,
+		success: function(r) {
+			$('#div_tab1').children().remove();
+			$('#div_tab1').html(r);
+		},
+		error : function() {
+		  alert('오류가 발생했습니다.\n관리자에게 문의 바랍니다.');
+		}
+	});
+};
 </script>
 </body>
 </html>

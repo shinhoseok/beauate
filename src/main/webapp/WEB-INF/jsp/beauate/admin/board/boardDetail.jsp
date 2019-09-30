@@ -47,7 +47,8 @@
 					<form:hidden path="searchCondition"/>
 					<form:hidden path="searchKeyword"/>
 					<form:hidden path="pageIndex"/>
-					<h4 class="contentTitle_h4">로그인 정보</h4>
+					<form:hidden path="atchFileId" />
+					<h4 class="contentTitle_h4">게시판 정보</h4>
 					<div class="tableLayer">
 						<table class="table">
 							<caption></caption>
