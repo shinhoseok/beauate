@@ -96,7 +96,9 @@
 												</c:choose>
 											</c:otherwise>
 										</c:choose>
-										<span class="label">${discountPercent}%</span>
+										<c:if test="${discountPercent != null and discountPercent != 0}">
+											<span class="label">${discountPercent}%</span>
+										</c:if>
 									</div>
 									<div class="title">${cls.classAreaStNm}</div>
 									<div class="desc">${cls.classTitle}</div>
@@ -129,8 +131,15 @@
 						<dl class="totalprice">
 							<dt>총 결제금액</dt>
 							<dd>
-							<fmt:formatNumber value="${cls.classCost-(cls.classCost*discountPercent/100)}" pattern="#,###" /><span class="unit">원</span>
-							<span class="discount"><fmt:formatNumber value="${(cls.classCost*discountPercent/100)}" pattern="#,###" /></span>
+							<c:choose>
+							<c:when test="${discountPercent != null and discountPercent != 0}">
+								<fmt:formatNumber value="${cls.classCost-(cls.classCost*discountPercent/100)}" pattern="#,###" /><span class="unit">원</span>
+								<span class="discount"><fmt:formatNumber value="${(cls.classCost*discountPercent/100)}" pattern="#,###" /></span>
+							</c:when>
+							<c:otherwise>
+								<fmt:formatNumber value="${cls.classCost}" pattern="#,###" /><span class="unit">원</span>
+							</c:otherwise>
+							</c:choose>
 							</dd>
 						</dl>
 					</div>
@@ -169,7 +178,11 @@
 						<dl class="alarm-phone">
 							<dt>휴대폰</dt>
 							<dd>
-								${sessionScope.loginVO.mblPno}
+								<c:set value="${sessionScope.loginVO.mblPno}" var="uPhone"/>
+									<c:if test="${fn:length(uPhone)==11 and uPhone.indexOf('-')==-1}">
+									<c:set var="uPhone" value="${fn:substring(uPhone, 0, 3)} - ${fn:substring(uPhone, 3, 7)} - ${fn:substring(uPhone, 7, 11)}"/>
+								</c:if>
+								${uPhone}
 							</dd>
 						</dl>
 						<div class="my-modify">
@@ -223,7 +236,7 @@
 					<!-- //view banner -->
 					<div class="offline-view-title">
 						<p class="title">${cls.classTitle}</p>
-						<p class="desc">저는 혈액순환, 림프순환 그리고 근막 테라피를 접목한 저만의 경락 마사지법을 개발하고 선보이고 있습니다</p>
+						<!-- <p class="desc">저는 혈액순환, 림프순환 그리고 근막 테라피를 접목한 저만의 경락 마사지법을 개발하고 선보이고 있습니다</p> -->
 					</div>
 					<script>
 						$(document).ready(function() {
@@ -242,6 +255,7 @@
 
 						})
 					</script>
+					<!-- 
 					<style>
 						.tab-content{
 						  display: none;
@@ -251,17 +265,30 @@
 						  display: inherit;
 						}
 					</style>
+					 -->
 					<div class="cont-nav">
 						<ul>
-							<li><a href="#" class="active" data="tab1">클래스 소개</a></li>
-							<li><a href="#" data="tab2">오시는길</a></li>
-							<li><a href="#" data="tab3">문의하기</a></li>
+							<li><a href="#tab1" class="active" data="tab1">클래스 소개</a></li>
+							<li><a href="#tab2" data="tab2">오시는길</a></li>
+							<li><a href="#tab3" data="tab3">문의하기</a></li>
 							<li><a href="#review" data="review">클래스 후기</a></li>
-							<li><a href="#" data="tab4">취소/환불 정책</a></li>
+							<li><a href="#tab4" data="tab4">취소/환불 정책</a></li>
 						</ul>
 					</div>
 					<div class="offline-view-cont">
-					<div id="tab1" class="tab-content active"><img src="${imagePath}/sub/class_detail.jpg"></div>
+					<div id="tab1" class="tab-content active">
+				    <c:if test="${fn:length(cls.classFileList)>0}">
+						<c:forEach var="clsImg" items="${cls.classFileList}" begin="0" end="${fn:length(cls.classFileList)-1}">
+							<c:if test="${clsImg.fileCn=='D'}">
+							<c:set var="path" value="${fn:split(clsImg.fileStreCours, '/')}" />
+							<c:set var="path" value="${path[fn:length(path)-1]}" />
+							<c:set var="path" value="${fn:replace(path,'\\\\','/')}" />
+							<c:set var="img2" value="${uploadPath}${path}/${clsImg.streFileNm}"/>
+							</c:if>
+						</c:forEach>
+						<img src="${img2}">
+					</c:if>
+					</div>
 					<div id="tab2" class="class_map tab-content">
 							<div class="class_map_inner">
 								<div class="info_text_wrap">
@@ -295,15 +322,22 @@
 									</span>
 								<span>
 									<strong>문의</strong>
-									<span class="num">${cls.mentor.mblPno}</span>
+									<c:set value="${cls.mentor.mblPno}" var="mPhone"/>
+										<c:if test="${fn:length(mPhone)==11 and mPhone.indexOf('-')==-1}">
+										<c:set var="mPhone" value="${fn:substring(mPhone, 0, 3)}-${fn:substring(mPhone, 3, 7)}-${fn:substring(mPhone, 7, 11)}"/>
+									</c:if>
+									<span class="num">${mPhone}</span>
 								</span>
+								<!-- 
 								<span class="kakao_wrap">
 									<span class="icon_kakao">플러스친구?? 플러스친구 :</span>
 									<span>스튜디오 주소 필요 박승철헤어스투디오도곡동</span>
 								</span>
+								 -->
 							</span>
 						</div>
 					</div>
+					<div id="tab4"></div>
 					<!-- 리뷰 -->
 					<div class="review" id="review">
 						<h3>Review class 수강후기</h3>

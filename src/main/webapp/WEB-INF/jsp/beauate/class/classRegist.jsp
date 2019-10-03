@@ -76,18 +76,32 @@
 								<span class="txt">상품금액</span>
 								<span class="price"><fmt:formatNumber value="${cls.classCost}" pattern="#,###" />원</span>
 							</li>
-							<li>
-								<span class="txt">쿠폰사용</span>
-								<span class="price">-<fmt:formatNumber value="${discountAmount}" pattern="#,###" />원</span>
-							</li>
-							<li class="total-sum">
-								<span class="txt">총 결제금액</span>
-								<span class="price"><fmt:formatNumber value="${cls.classCost-discountAmount}" pattern="#,###" /><span class="unit">원</span></span>
-							</li>
+							<c:choose>
+							<c:when test="${discountPercent != null and discountPercent != 0}">
+								<li>
+									<span class="txt">쿠폰사용</span>
+									<span class="price">-<fmt:formatNumber value="${(cls.classCost*discountPercent/100)}" pattern="#,###" />원</span>
+								</li>
+								<li class="total-sum">
+									<span class="txt">총 결제금액</span>
+									<span class="price"><fmt:formatNumber value="${cls.classCost-(cls.classCost*discountPercent/100)}" pattern="#,###" /><span class="unit">원</span></span>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li>
+									<span class="txt">쿠폰사용</span>
+									<span class="price">-<fmt:formatNumber value="${discountAmount}" pattern="#,###" />원</span>
+								</li>
+								<li class="total-sum">
+									<span class="txt">총 결제금액</span>
+									<span class="price"><fmt:formatNumber value="${cls.classCost-discountAmount}" pattern="#,###" /><span class="unit">원</span></span>
+								</li>
+							</c:otherwise>
+							</c:choose>
 						</ul>
 						<ul class="check-area">
-							<li><label><input type="checkbox" data-child-check="all" /><em>필수</em>개인정보 제 3자 제공 동의</label></li>
-							<li><label><input type="checkbox" data-child-check="all" /><em>필수</em>취소/환불약관 동의</label></li>
+							<li><label><input id="term1"  type="checkbox" data-child-check="all" /><em>필수</em>개인정보 제 3자 제공 동의</label></li>
+							<li><label><input id="term2" type="checkbox" data-child-check="all" /><em>필수</em>취소/환불약관 동의</label></li>
 						</ul>
 					</div>
 					<div class="btn-area">
@@ -101,23 +115,37 @@
 					<div class="mento-info">
 						<dl>
 							<dt>이름</dt>
-							<dd>뷰아떼</dd>
+							<dd>${sessionScope.loginVO.usrNm}</dd>
 						</dl>
 						<dl>
 							<dt>휴대전화</dt>
-							<dd>010 - 1234 - 4566</dd>
+							<c:set value="${sessionScope.loginVO.mblPno}" var="uPhone"/>
+								<c:if test="${fn:length(uPhone)==11 and uPhone.indexOf('-')==-1}">
+								<c:set var="uPhone" value="${fn:substring(uPhone, 0, 3)} - ${fn:substring(uPhone, 3, 7)} - ${fn:substring(uPhone, 7, 11)}"/>
+							</c:if>
+							<dd>${uPhone}</dd>
 						</dl>
 						<div class="etc">
 							<span>내 정보 수정을 원하실 경우 마이페이지에 변경하실 수 있습니다.</span>
-							<a href="#">내 정보수정</a>
+							<a href="${basePath}/user/w/t/userInfo.do">내 정보수정</a>
 						</div>
 					</div>
 					<h3>클래스 정보</h3>
 					<div class="class-info">
 						<div class="class-info-item">
-							<div class="thumb">
-								<img src="libs/images/empty/img-tumb-290x295_2.png" alt="" />
-							</div>
+						    <c:if test="${fn:length(cls.classFileList)>0}">
+								<c:forEach var="clsImg" items="${cls.classFileList}" begin="0" end="${fn:length(cls.classFileList)-1}">
+									<c:if test="${clsImg.fileCn=='M1'}">
+									<c:set var="path" value="${fn:split(clsImg.fileStreCours, '/')}" />
+									<c:set var="path" value="${path[fn:length(path)-1]}" />
+									<c:set var="path" value="${fn:replace(path,'\\\\','/')}" />
+									<c:set var="img" value="${uploadPath}${path}/${clsImg.streFileNm}"/>
+									</c:if>
+								</c:forEach>
+								<div class="thumb">
+									<img src="${img}" alt="" />
+								</div>
+							</c:if>
 							<div class="rcont">
 								<div class="desc">${cls.classTitle}</div>
 								<div class="etc">
@@ -175,6 +203,17 @@
 			alert("로그인이 필요한 서비스입니다.");
 		</c:when>
 		<c:otherwise>
+		var isValid = true;
+		if($("#term1").is(":checked")==false){
+			isValid = false;
+		}
+		if($("#term2").is(":checked")==false){
+			isValid = false;
+		}
+		if(!isValid){
+			alert("필수 약관에 동의해 주세요.");
+			return false;
+		}
 		$("payVO").submit();
 		</c:otherwise>
 		</c:choose>

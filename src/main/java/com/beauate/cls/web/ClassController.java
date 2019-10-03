@@ -28,6 +28,7 @@ import com.beauate.pay.service.PayDao;
 import com.beauate.pay.service.PayVO;
 
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
+import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @Controller
@@ -48,6 +49,9 @@ public class ClassController {
 
 	@Resource(name="payIdGnrService")
 	private EgovIdGnrService payIdGnrService;
+
+	@Resource(name="propertiesService")
+	private EgovPropertyService propertiesService;
 	
 	@SuppressWarnings("unused")
 	@RequestMapping(value= {"/class/a/t/classList.do","/class/a/t/classListDtl.do","/class/a/t/classMainList.do"})
@@ -255,8 +259,7 @@ public class ClassController {
 			model.addAttribute("sco3", Double.toString(Double.isNaN(sco3) ? 0 : sco3/5*100));
 			model.addAttribute("sco4", Double.toString(Double.isNaN(sco4) ? 0 : sco4/5*100));
 			model.addAttribute("cls", classVO);
-			int discountPercent = 20;
-			model.addAttribute("discountPercent", discountPercent);
+			model.addAttribute("discountPercent", propertiesService.getString("discountPercent"));
 		}
 		return "/class/classDetail";
     			
@@ -270,8 +273,7 @@ public class ClassController {
 		}else {
 			classVO = classList.get(0);
 			model.addAttribute("cls", classVO);
-			int discountPercent = 20;
-			model.addAttribute("discountPercent", discountPercent);
+			model.addAttribute("discountPercent", propertiesService.getString("discountPercent"));
 		}
 		return "/class/classRegist";
 	}
