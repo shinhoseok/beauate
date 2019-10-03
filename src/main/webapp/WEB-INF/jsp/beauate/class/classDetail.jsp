@@ -204,18 +204,87 @@
 						<p class="title">${cls.classTitle}</p>
 						<p class="desc">저는 혈액순환, 림프순환 그리고 근막 테라피를 접목한 저만의 경락 마사지법을 개발하고 선보이고 있습니다</p>
 					</div>
+					<script>
+						$(document).ready(function() {
+
+							$('.cont-nav li a').click(function() {
+								var tab_id = $(this).attr('data');
+								if(tab_id.indexOf('tab')>-1){
+	
+									$('.cont-nav li a').removeClass('active');
+									$('.tab-content').removeClass('active');
+	
+									$(this).addClass('active');
+									$("#" + tab_id).addClass('active');
+								}
+							})
+
+						})
+					</script>
+					<style>
+						.tab-content{
+						  display: none;
+						  padding: 15px;
+						}
+						.tab-content.active{
+						  display: inherit;
+						}
+					</style>
 					<div class="cont-nav">
 						<ul>
-							<li><a href="#" class="active">클래스 소개</a></li>
-							<li><a href="#">오시는길</a></li>
-							<li><a href="#">문의하기</a></li>
-							<li><a href="#">클래스 후기</a></li>
-							<li><a href="#">취소/환불 정책</a></li>
+							<li><a href="#" class="active" data="tab1">클래스 소개</a></li>
+							<li><a href="#" data="tab2">오시는길</a></li>
+							<li><a href="#" data="tab3">문의하기</a></li>
+							<li><a href="#review" data="review">클래스 후기</a></li>
+							<li><a href="#" data="tab4">취소/환불 정책</a></li>
 						</ul>
 					</div>
-					<div class="offline-view-cont">컨텐츠영역</div>
+					<div class="offline-view-cont">
+					<div id="tab1" class="tab-content active"><img src="${imagePath}/sub/class_detail.jpg"></div>
+					<div id="tab2" class="class_map tab-content">
+							<div class="class_map_inner">
+								<div class="info_text_wrap">
+									<div class="text_left">
+										<ul>
+											<li>일시</li>
+											<li>시간</li>
+											<li>인원</li>
+											<li>장소</li>
+										</ul>
+									</div>
+									<div class="text_right">
+										<ul>
+											<li>${etcDtStr}</li>
+											<li>${cls.classTime}</li>
+											<li>최소 ${cls.classSmallNo}명  / 최대 ${cls.classBigNo}명</li>
+											<li>${cls.classAdr}</li>
+										</ul>
+									</div>
+								</div>
+								<div class="info_map">
+									<img src="${imagePath}/sub/class_map.jpg">
+								</div>
+							</div>
+						</div>
+						<div id="tab3" class="class_ask tab-content">
+							<span class="class_ask_inner">
+								<span>
+									<strong>멘토</strong>
+									<span>${cls.mentor.usrNm}님</span>
+									</span>
+								<span>
+									<strong>문의</strong>
+									<span class="num">${cls.mentor.mblPno}</span>
+								</span>
+								<span class="kakao_wrap">
+									<span class="icon_kakao">플러스친구?? 플러스친구 :</span>
+									<span>스튜디오 주소 필요 박승철헤어스투디오도곡동</span>
+								</span>
+							</span>
+						</div>
+					</div>
 					<!-- 리뷰 -->
-					<div class="review">
+					<div class="review" id="review">
 						<h3>Review class 수강후기</h3>
 						<div class="grade">
 							<p class="grade-num">${scoAvr}</p>

@@ -50,7 +50,9 @@
 
 /* paging */
 .paging{text-align:center; font-size:0;}
-.paging [class^=btn-]{width:32px; height:32px; border-radius:0; background:url('../images/common/btn_paging.png') no-repeat}
+.paging [class^=btn-]{width:32px; height:32px; border-radius:0; background:url('../images/common/btn_paging.png') no-repeat; background-size: 64px;}
+.paging .btn-prev-end{background-position:-23px 0;}
+.paging .btn-next-end{background-position:-40px -32px;}
 .paging .btn-last{background-position-x:-50px;}
 .paging .btn-prev{margin-left:8px; background-position-x:0;}
 .paging .btn-next{margin-right:8px; background-position-y:-32px;}

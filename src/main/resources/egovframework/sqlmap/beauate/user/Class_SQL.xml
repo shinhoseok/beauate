@@ -48,6 +48,17 @@
         <result column="c_adr" property="classAdr"/>
         <result column="c_cost_no" property="classCost"/>
         <result column="c_web_adr" property="classWebAdr"/>
+        <association  column="u_sq" property="mentor" javaType="userVO">
+	        <id column="u_sq2" property="usrId"/>
+	        <result column="u_email" property="emailAddr"/>
+	        <result column="join_dt" property="joinDt"/>
+	        <result column="u_nm" property="usrNm"/>
+	        <result column="phone_no" property="mblPno"/>
+	        <result column="u_pw" property="usrPw"/>
+	        <result column="login_dt" property="loginDt"/>
+	        <result column="u_st" property="userSt" />
+	        <result column="u_out_dt" property="userOutDt" />
+        </association>
         <collection column="{atchFileId=img_sq}" property="classFileList" javaType="java.util.ArrayList" ofType="fileVO" select="getFileListByImgSq"/>
         <collection column="{cSq=c_sq}" property="classReviewList" javaType="java.util.ArrayList" ofType="classReviewVO" select="getReviewListByCSq"/>
     </resultMap>
@@ -152,9 +163,19 @@
 			c.c_apply_no,
 			c.c_adr,
 			c.c_cost_no,
-			c.c_web_adr
+			c.c_web_adr,
+			u.u_sq AS u_sq2,
+			u.u_email,
+			u.join_dt,
+			u.u_nm,
+			u.phone_no,
+			u.u_pw,
+			u.login_dt,
+			u.u_st,
+			u.u_out_dt
 		FROM
 			off_class c 
+			LEFT OUTER JOIN users u ON (u.u_sq = c.u_sq)
 			LEFT JOIN common_cd_scls cd ON (c.c_area_st = cd.mcls_cd AND cd.lcls_cd='ARA')
 			LEFT JOIN common_cd_scls cd2 ON (c.c_st = cd.mcls_cd AND cd.lcls_cd='CST')
 			WHERE 1=1 
@@ -469,4 +490,5 @@
 		 WHERE c_sq = #{classId}
 		]]>
 	</update>
+	
 </mapper>

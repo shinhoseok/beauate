@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.beauate.admin.user.service.UserVO;
 import com.beauate.common.service.CommDefaultVO;
 
 import egovframework.cmmn.service.FileVO;
@@ -62,6 +63,14 @@ public class ClassVO extends CommDefaultVO implements Serializable {
 	
 	private List<ClassReviewVO> classReviewList;
 
+	private UserVO mentor;
+	
+	public UserVO getMentor() {
+		return mentor;
+	}
+	public void setMentor(UserVO mentor) {
+		this.mentor = mentor;
+	}
 	public List<FileVO> getClassFileList() {
 		return classFileList;
 	}

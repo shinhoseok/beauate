@@ -59,8 +59,9 @@
 
 .offline .besthair {margin-top:100px;height:530px;background-color: #fafafa;}
 .offline .besthair .besthair-title {height:15px;position:relative;padding:60px 0 0 20px;}
-.offline .besthair h3 {display:inline-block;width:300px;height:50px;text-indent:-999999em;background:url('../images/txt/tit_offline_hair.png') no-repeat 0 0;}
-.offline .besthair .stxt {display:inline-block;font-size:14px;line-height:21px;}
+.offline .besthair h3 {display:inline-block;}
+/*.offline .besthair h3 {display:inline-block;width:300px;height:50px;text-indent:-999999em;background:url('../images/txt/tit_offline_hair.png') no-repeat 0 0;}*/
+.offline .besthair .stxt {display:inline-block;font-size:14px;line-height:21px; margin-left:28px;}
 .offline .besthair .stitle {position:absolute;left:16px;top:95px;font-family: Futura;  font-size: 48px;z-index:50;}
 .offline .besthair img {vertical-align:top;}
 .offline .besthair .besthair-list {position:relative;}
