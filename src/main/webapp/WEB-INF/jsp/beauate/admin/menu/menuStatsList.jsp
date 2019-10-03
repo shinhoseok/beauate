@@ -96,7 +96,8 @@
 	</div>
 	<div class="paging_place mb20">
 		<div class="paging_wrap">
-			<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_loadContents" />
+<%-- 			<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_loadContents" /> --%>
+			<comTag:paging totalCount="${menuChartListCnt}" pageNo="${menuStatsVO.pageIndex}" pageSize="${menuStatsVO.pageSize}" clickPage="fn_searchList"/>
 		</div>
 	</div>
 </form:form>

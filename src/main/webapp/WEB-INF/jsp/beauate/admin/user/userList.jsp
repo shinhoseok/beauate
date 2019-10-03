@@ -101,7 +101,8 @@
 				<!-- 페이징// -->
 				<div class="paging_place">
 					<div class="paging_wrap">
-						<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_searchList" />
+<%-- 						<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_searchList" /> --%>
+						<comTag:paging totalCount="${userListCnt}" pageNo="${userVO.pageIndex}" pageSize="${userVO.pageSize}" clickPage="fn_searchList"/>
 					</div>
 				</div>
 				<!-- 페이징// -->

@@ -51,9 +51,10 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		
 		//페이징 
 		PaginationInfo paginationInfo = new PaginationInfo();
-		paginationInfo.setCurrentPageNo(1);
-		paginationInfo.setRecordCountPerPage(1); //16개보여줘야함
-		paginationInfo.setPageSize(5);
+		paginationInfo.setCurrentPageNo(boardVO.getPageIndex());
+		boardVO.setPageUnit(1);//페이징 게시물 수 16개로 가야함
+		paginationInfo.setRecordCountPerPage(boardVO.getPageUnit());
+		paginationInfo.setPageSize(boardVO.getPageSize());
 		
 		boardVO.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
 		boardVO.setLastIndex(paginationInfo.getLastRecordIndex());
@@ -68,6 +69,9 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		boardVO.setAdminYn("N");
 		
 		int cnt = boardDao.selectBoardMngListCnt(boardVO);
+		//**************************************
+		paginationInfo.setTotalRecordCount(cnt);
+		//**************************************
 		log.debug(">>>>> BoardServiceImpl CNT >>>>>>>"+cnt);
 		if(cnt > 0){
 			selectList = boardDao.selectBoardMngList(boardVO);

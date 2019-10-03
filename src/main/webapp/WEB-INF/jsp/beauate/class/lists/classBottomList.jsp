@@ -86,7 +86,7 @@ button.off {
 
 <!-- 페이징// -->
 <div class="paging">
-	<ui:pagination paginationInfo="${paginationInfo}" type="front" jsFunction="fn_ajaxList" />
+	<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_ajaxList" />
 </div>
 <!-- 페이징// -->
 <!-- 

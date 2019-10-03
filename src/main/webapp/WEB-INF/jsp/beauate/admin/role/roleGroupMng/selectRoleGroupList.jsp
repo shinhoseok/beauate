@@ -120,7 +120,8 @@
 				<!--페이징-->
 				<div class="paging_place">
 					<div class="paging_wrap">
-						<ui:pagination paginationInfo="${rslt.paginationInfo}" type="image" jsFunction="fn_search"/>
+<%-- 						<ui:pagination paginationInfo="${rslt.paginationInfo}" type="image" jsFunction="fn_search"/> --%>
+						<comTag:paging totalCount="${rslt.roleGroupListCnt}" pageNo="${roleVO.pageIndex}" pageSize="${roleVO.pageSize}" clickPage="fn_search"/>
 					</div>
 				</div>
 			</form:form>

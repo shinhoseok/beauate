@@ -91,7 +91,8 @@
 			</div>
 			<div class="paging_place">
 				<div class="paging_wrap">
-					<ui:pagination paginationInfo="${rslt.paginationInfo}" type="image" jsFunction="fn_search"/>
+<%-- 					<ui:pagination paginationInfo="${rslt.paginationInfo}" type="image" jsFunction="fn_search"/> --%>
+					<comTag:paging totalCount="${rslt.userRoleListCnt}" pageNo="${userVO.pageIndex}" pageSize="${userVO.pageSize}" clickPage="fn_search"/>
 				</div>
 			</div>
 </form:form>

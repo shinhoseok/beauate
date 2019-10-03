@@ -114,7 +114,8 @@
 				<!--paging Start -->
 				<div class="paging_place">
 					<div class="paging_wrap">
-						<ui:pagination paginationInfo="${rslt.paginationInfo}" type="image" jsFunction="fn_searchList" />
+<%-- 						<ui:pagination paginationInfo="${rslt.paginationInfo}" type="image" jsFunction="fn_searchList" /> --%>
+						<comTag:paging totalCount="${rslt.selectListCnt}" pageNo="${boardVO.pageIndex}" pageSize="${boardVO.pageSize}" clickPage="fn_searchList"/>
 					</div>
 				</div>
 				<!--paging End -->

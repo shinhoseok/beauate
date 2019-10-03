@@ -123,7 +123,8 @@
 					<!--paging Start -->
 					<div class="paging_place">
 						<div class="paging_wrap">
-							<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_searchList" />
+<%-- 							<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_searchList" /> --%>
+							<comTag:paging totalCount="${userStatsListCnt}" pageNo="${userStatsVO.pageIndex}" pageSize="${userStatsVO.pageSize}" clickPage="fn_searchList"/>
 						</div>
 					</div>
 					<!--paging End -->

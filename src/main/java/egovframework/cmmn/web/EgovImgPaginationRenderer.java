@@ -51,13 +51,26 @@ public class EgovImgPaginationRenderer extends AbstractPaginationRenderer implem
 	* @see 개발프레임웍크 실행환경 개발팀
 	*/
 	public void initVariables() {
-
-		firstPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class='pprev'></a>";
-		previousPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class='prev'></a>";
-		currentPageLabel = "<span class='mr4'><a href=\"#\" class=\"active\">{0}</a></span>";
-		otherPageLabel = "<span class='mr4'><a href=\"#\" onclick=\"{0}({1}); return false;\">{2}</a></span>";
-		nextPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class='next'></a>";
-		lastPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class='nnext'></a>";
+		
+//		firstPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class='pprev'></a>";
+//		previousPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class='prev'></a>";
+//		currentPageLabel = "<span class='mr4'><a href=\"#\" class=\"active\">{0}</a></span>";
+//		otherPageLabel = "<span class='mr4'><a href=\"#\" onclick=\"{0}({1}); return false;\">{2}</a></span>";
+//		nextPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class='next'></a>";
+//		lastPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class='nnext'></a>";
+		
+		//firstPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class='pprev'></a>";
+		firstPageLabel = "<button type=\"button\" onclick=\"{0}({1}); return false;\" class=\"btn-prev-end\"><span>이전</span></button>";
+		//previousPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class='prev'></a>";
+		previousPageLabel = "<button type=\"button\" onclick=\"{0}({1}); return false;\" class=\"btn-prev\"><span>이전</span></button>";
+		//currentPageLabel = "<span class='mr4'><a href=\"#\" class=\"active\">{0}</a></span>";
+		currentPageLabel = "<li class=\"active\"><span>{0}</span></li>";
+		//otherPageLabel = "<span class='mr4'><a href=\"#\" onclick=\"{0}({1}); return false;\">{2}</a></span>";
+		otherPageLabel = "<li><a href=\"#\" onclick=\"{0}({1}); return false;\">{2}</a></li>";
+		//nextPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class='next'></a>";
+		nextPageLabel = "<button type=\"button\" onclick=\"{0}({1}); return false;\" class=\"btn-next\"><span>다음</span></button>";
+		//lastPageLabel = "<a href=\"#\" onclick=\"{0}({1}); return false;\" class='nnext'></a>";
+		lastPageLabel = "<button type=\"button\" onclick=\"{0}({1}); return false;\" class=\"btn-next-end\"><span>다음</span></button>";
 	}
 
 	@Override
