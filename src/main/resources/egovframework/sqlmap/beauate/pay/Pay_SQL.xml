@@ -11,32 +11,51 @@
         <result column="pay_method_st" property="payMethodSt"/>
         <result column="pay_cost_no" property="payCostNo"/>
         <association property="cpn" javaType="com.beauate.cpn.service.AdminCpnVO">
-	        <id column="cpn_sq" property="cpnSq"/>
+	        <id column="cpn_sq2" property="cpnSq"/>
 	        <result column="cpn_start_dt" property="cpnStartDt"/>
 	        <result column="cpn_nm" property="cpnNm"/>
 	        <result column="cpn_rate" property="cpnRate"/>
 	        <result column="cpn_end_dt" property="cpnEndDt"/>
 	        <result column="cpn_st" property="cpnSt"/>
         </association>
-        <collection column="u_sq" property="userList" javaType="java.util.ArrayList" ofType="userVO"/>
-    </resultMap>
-    <resultMap id="userVO" type="com.beauate.admin.user.service.UserVO">
-        <id column="u_sq" property="usrId"/>
-        <result column="u_email" property="emailAddr"/>
-        <result column="join_dt" property="joinDt"/>
-        <result column="u_nm" property="usrNm"/>
-        <result column="phone_no" property="mblPno"/>
-        <result column="u_pw" property="usrPw"/>
-        <result column="login_dt" property="loginDt"/>
-        <result column="u_st" property="userSt" />
-    </resultMap>
-    <resultMap id="adminCpnVO" type="com.beauate.cpn.service.AdminCpnVO">
-        <id column="cpn_sq" property="cpnSq"/>
-        <result column="cpn_start_dt" property="cpnStartDt"/>
-        <result column="cpn_nm" property="cpnNm"/>
-        <result column="cpn_rate" property="cpnRate"/>
-        <result column="cpn_end_dt" property="cpnEndDt"/>
-        <result column="cpn_st" property="cpnSt"/>
+        <association column="u_sq" property="user" javaType="userVO">
+	        <id column="u_sq2" property="usrId"/>
+	        <result column="u_email" property="emailAddr"/>
+	        <result column="join_dt" property="joinDt"/>
+	        <result column="u_nm" property="usrNm"/>
+	        <result column="phone_no" property="mblPno"/>
+	        <result column="u_pw" property="usrPw"/>
+	        <result column="login_dt" property="loginDt"/>
+	        <result column="u_st" property="userSt" />
+        </association>
+        <association column="c_sq" property="cls" javaType="classVO">
+	        <id column="c_sq2" property="classId"/>
+	        <result column="u_sq" property="classUserId"/>
+	        <result column="img_sq" property="classImgId"/>
+	        <result column="c_dt" property="classRegDt"/>
+	        <result column="c_st" property="classSt"/>
+	        <result column="c_st_nm" property="classStNm"/>
+	        <result column="c_gb" property="classGb"/>
+	        <result column="c_category_st" property="classCtSt"/>
+	        <result column="c_area_st" property="classAreaSt"/>
+	        <result column="c_area_st_nm" property="classAreaStNm"/>
+	        <result column="c_title" property="classTitle"/>
+	        <result column="u_start_dt" property="classStartDt"/>
+	        <result column="c_end_dt" property="classEndDt"/>
+	        <result column="c_time" property="classTime"/>
+	        <result column="c_small_no" property="classSmallNo"/>
+	        <result column="c_big_no" property="classBigNo"/>
+	        <result column="c_apply_no" property="classApplyNo"/>
+	        <result column="c_adr" property="classAdr"/>
+	        <result column="c_cost_no" property="classCost"/>
+	        <result column="c_web_adr" property="classWebAdr"/>
+	        <association  column="u_sq" property="mentor" javaType="userVO">
+		        <id column="u_sq3" property="usrId"/>
+		        <result column="u_email3" property="emailAddr"/>
+		        <result column="u_nm3" property="usrNm"/>
+		        <result column="phone_no3" property="mblPno"/>
+	        </association>
+        </association>
     </resultMap>
 	<select id="selectPayByUserSq" parameterType="payVO" resultMap="payResultMap">
 		SELECT
@@ -105,5 +124,79 @@
 					#{payCostNo}
 				)]]>
 	</insert>
+	<select id="selectPayByUsrSqAndClsSq" parameterType="payVO" resultMap="payResultMap">
+	<![CDATA[
+		SELECT
+			pay_sq,
+			c_sq,
+			u_sq,
+			cpn_sq,
+			pay_dt,
+			pay_st,
+			pay_method_st,
+			pay_cost_no
+		FROM
+			pay
+		WHERE
+			u_sq = #{uSq} AND c_sq = #{cSq}
+	]]>
+	</select>
+	
+	<select id="selectPayByPaySq" parameterType="payVO" resultMap="payResultMap">
+	<![CDATA[
+		SELECT
+		c.c_sq AS c_sq2,
+		c.u_sq,
+		c.img_sq,
+		c.c_dt,
+		c.c_st,
+		c.c_gb,
+		c.c_category_st,
+		c.c_area_st,
+		c.c_title,
+		c.u_start_dt,
+		c.c_end_dt,
+		c.c_time,
+		c.c_small_no,
+		c.c_big_no,
+		c.c_apply_no,
+		c.c_adr,
+		c.c_cost_no,
+		c.c_web_adr,
+		p.u_sq,
+		p.c_sq,
+		p.pay_sq,
+		p.cpn_sq,
+		p.pay_dt,
+		p.pay_st,
+		p.pay_method_st,
+		p.pay_cost_no,
+		u.u_sq AS u_sq2,
+		u.u_email,
+		u.join_dt,
+		u.u_nm,
+		u.phone_no,
+		u.u_pw,
+		u.login_dt,
+		u.u_st,
+		u.u_out_dt,
+		cpn.u_cpn_sq AS u_cpn_sq,
+		cpn.u_cpn_dt,
+		cpn.cpn_sq AS cpn_sq2,
+		cpn.u_cpn_fl,
+		u.u_sq AS u_sq3 ,
+		u.u_email AS u_sq3 ,
+		u.u_nm AS u_nm3 ,
+		u.phone_no AS phone_no3,
+		cd.mcls_nm c_area_st_nm
+	FROM
+		pay p LEFT JOIN off_class c ON p.c_sq = c.c_sq
+		LEFT JOIN users u ON p.u_sq = u.u_sq
+		LEFT OUTER JOIN u_cpn cpn ON p.cpn_sq = cpn.cpn_sq
+		LEFT JOIN users u3 ON c.u_sq = u3.u_sq
+		LEFT OUTER JOIN common_cd_scls cd ON (c.c_area_st = cd.mcls_cd AND cd.lcls_cd='ARA')
+		WHERE p.pay_sq = #{paySq}
+	]]>
+	</select>
 </mapper>
 

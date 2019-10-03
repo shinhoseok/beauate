@@ -180,7 +180,7 @@
 								<select style="">
 									<option selected>사용가능한 쿠폰 1장</option>
 									<option>선택안함</option>
-									<option>첫구매 10% 할인쿠폰 / 최대 1만원 할인</option>
+									<!-- <option>첫구매 10% 할인쿠폰 / 최대 1만원 할인</option> -->
 								</select>
 							</dd>
 						</dl>
@@ -191,7 +191,18 @@
 		</div> <!-- content-inner -->
 		<!-- //content -->
 		<form:form commandName="payVO" name="payVO" id="payVO" method="post" action="${basePath}/class/r/t/classRegistProc.do" onsubmit="return false;">
-			<form:hidden path="cSq" id="cSq"/>
+			<form:hidden path="cSq" id="cSq" value="${cls.classId}"/>
+			<form:hidden path="uSq" id="uSq" value="${sessionScope.loginVO.usrId}"/>
+			<c:choose>
+			<c:when test="${discountPercent != null and discountPercent != 0}">
+				<form:hidden path="payCostNo" id="payCostNo" value="${cls.classCost-(cls.classCost*discountPercent/100)}"/>
+			</c:when>
+			<c:otherwise>
+				<form:hidden path="payCostNo" id="payCostNo" value="${cls.classCost}"/>
+			</c:otherwise>
+			</c:choose>
+			<form:hidden path="payMethodSt" id="payMethodSt" value="1"/>
+			<form:hidden path="paySt" id="paySt" value="1"/>
 		</form:form>
 
 	</div>
@@ -214,7 +225,22 @@
 			alert("필수 약관에 동의해 주세요.");
 			return false;
 		}
-		$("payVO").submit();
+		$.ajax({ 	
+			url: "${basePath}/class/w/n/classRegistProc.do",    
+			type: 'POST',
+			dataType : "json",
+			data : $("#payVO").serialize(),
+			error: function(r){
+				$("#modal-joincomfirm p.txt").text(r.message);
+				$("#modal-joincomfirm a.modal-close").click(function(){document.location.href='#'});
+				$("#modal-joincomfirm").modal('show');
+			},
+			success: function(r) {
+				$("#modal-joincomfirm p.txt").text(r.message);
+				$("#modal-joincomfirm a.modal-close").click(function(){document.location.href='${basePath}'+r.redirectUrl});
+				$("#modal-joincomfirm").modal('show'); 
+			}
+		}); 
 		</c:otherwise>
 		</c:choose>
 	}

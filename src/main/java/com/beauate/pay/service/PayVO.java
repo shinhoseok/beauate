@@ -2,8 +2,8 @@ package com.beauate.pay.service;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
+import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.admin.user.service.UserVO;
 import com.beauate.common.service.CommDefaultVO;
 import com.beauate.cpn.service.AdminCpnVO;
@@ -18,8 +18,17 @@ public class PayVO extends CommDefaultVO implements Serializable {
 	private String paySt;
 	private String payMethodSt;
 	private String payCostNo;
-	private List<UserVO> userList;
+	private UserVO user;
 	private AdminCpnVO cpn;
+	private ClassVO cls;
+	
+	
+	public ClassVO getCls() {
+		return cls;
+	}
+	public void setCls(ClassVO cls) {
+		this.cls = cls;
+	}
 	public String getPaySq() {
 		return paySq;
 	}
@@ -68,11 +77,11 @@ public class PayVO extends CommDefaultVO implements Serializable {
 	public void setPayCostNo(String payCostNo) {
 		this.payCostNo = payCostNo;
 	}
-	public List<UserVO> getUserList() {
-		return userList;
+	public UserVO getUser() {
+		return user;
 	}
-	public void setUserList(List<UserVO> userList) {
-		this.userList = userList;
+	public void setUser(UserVO user) {
+		this.user = user;
 	}
 	public AdminCpnVO getCpn() {
 		return cpn;

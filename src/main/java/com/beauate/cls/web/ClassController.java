@@ -21,11 +21,13 @@ import com.beauate.admin.classmng.service.ClassReviewVO;
 import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.admin.code.service.CodeDao;
 import com.beauate.admin.code.service.CodeVO;
+import com.beauate.admin.user.service.UserVO;
 import com.beauate.cls.service.ClassService;
 import com.beauate.common.GlobalConstants;
 import com.beauate.login.service.LoginVO;
 import com.beauate.pay.service.PayDao;
 import com.beauate.pay.service.PayVO;
+import com.beauate.user.service.UserService;
 
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
 import egovframework.rte.fdl.property.EgovPropertyService;
@@ -52,6 +54,9 @@ public class ClassController {
 
 	@Resource(name="propertiesService")
 	private EgovPropertyService propertiesService;
+
+	@Resource(name = "userService")
+	private UserService userService;
 	
 	@SuppressWarnings("unused")
 	@RequestMapping(value= {"/class/a/t/classList.do","/class/a/t/classListDtl.do","/class/a/t/classMainList.do"})
@@ -278,26 +283,59 @@ public class ClassController {
 		return "/class/classRegist";
 	}
 
-	@RequestMapping(value= {"/class/r/t/classRegistProc.do"})
+	@RequestMapping(value= {"/class/w/n/classRegistProc.do"})
 	public String classRegistProc(SessionStatus status, HttpServletRequest request, @ModelAttribute("payVO") PayVO payVO, LoginVO sessionVO, ModelMap model ) throws Exception{
-		ClassVO classVO = new ClassVO();
-		classVO.setClassId(payVO.getcSq());
-		List<ClassVO> classList = classService.selectClassList(classVO);
-		if(classList.size()==0) {
-			model.addAttribute("cls", null);
-			return "/error";
-		}else {
-			classVO = classList.get(0);
-			model.addAttribute("cls", classVO);
+
+		String redirectUrl = "/class/r/t/classRegistComplete.do";
+		String message = "결제가 완료되었습니다.";
+		try {
+			//TODO 결제 중복 체크를 해줘야함.
+			ClassVO classVO = new ClassVO();
+			classVO.setClassId(payVO.getcSq());
+			List<ClassVO> classList = classService.selectClassList(classVO);
+			if(classList.size()==0) {
+				redirectUrl = "";
+				message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.\n(클래스 정보가 없습니다.)"; //클래스가 없다.
+				return "jsonView";
+			}
+			UserVO userVO = new UserVO();
+			userVO.setUsrId(payVO.getUsrId());;
+			userVO = userService.selectUser(userVO);
+			if(userVO == null) {
+				redirectUrl = "";
+				message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.\\n(사용자 정보가 없습니다.)"; //유저가 없다.
+				return "jsonView";
+			}
+			PayVO chkDuplicatePay = payDao.selectPayByUsrSqAndClsSq(payVO);
+			if(chkDuplicatePay!=null) {
+				redirectUrl = "";
+				message = "이미 결제한 클래스입니다."; //중복결제 방지
+				return "jsonView";
+			}
+			payVO.setPayDt(new Date());
+			payVO.setPaySq(payIdGnrService.getNextStringId());
+			payDao.insertPay(payVO);
+			redirectUrl+="?paySq="+payVO.getPaySq();
+			status.setComplete();
+		}catch(Exception e) {
+			redirectUrl = "";
+			message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.";
+			e.printStackTrace();
 		}
-		payVO.setuSq(sessionVO.getUsrId());
-		payVO.setPayDt(new Date());
-		payVO.setPaySt("1");
-		payVO.setPayMethodSt("아직결제없음");
-		payVO.setPaySq(payIdGnrService.getNextStringId());
-		payVO.setPayCostNo(String.valueOf(classVO.getClassCost()));
-		payDao.insertPay(payVO);
-		status.setComplete();
+		model.addAttribute("message", message);
+		model.addAttribute("redirectUrl", redirectUrl);
+		
+		return "jsonView";
+	}
+
+	@RequestMapping(value= {"/class/r/t/classRegistComplete.do"})
+	public String classRegistComplete(HttpServletRequest request, @ModelAttribute("payVO")PayVO payVO, @ModelAttribute("classVO") ClassVO classVO, LoginVO sessionVO, ModelMap model ) throws Exception{
+
+		payVO = payDao.selectPayByPaySq(payVO);
+		model.addAttribute("pay", payVO);
+		model.addAttribute("discountPercent", propertiesService.getString("discountPercent"));
+		
 		return "/class/classRegistComplete";
 	}
+
 }
