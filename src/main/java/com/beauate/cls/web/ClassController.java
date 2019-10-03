@@ -287,43 +287,44 @@ public class ClassController {
 	public String classRegistProc(SessionStatus status, HttpServletRequest request, @ModelAttribute("payVO") PayVO payVO, LoginVO sessionVO, ModelMap model ) throws Exception{
 
 		String redirectUrl = "/class/r/t/classRegistComplete.do";
-		String message = "결제가 완료되었습니다.";
-		try {
-			//TODO 결제 중복 체크를 해줘야함.
-			ClassVO classVO = new ClassVO();
-			classVO.setClassId(payVO.getcSq());
-			List<ClassVO> classList = classService.selectClassList(classVO);
-			if(classList.size()==0) {
-				redirectUrl = "";
-				message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.\n(클래스 정보가 없습니다.)"; //클래스가 없다.
-				return "jsonView";
-			}
-			UserVO userVO = new UserVO();
-			userVO.setUsrId(payVO.getUsrId());;
-			userVO = userService.selectUser(userVO);
-			if(userVO == null) {
-				redirectUrl = "";
-				message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.\\n(사용자 정보가 없습니다.)"; //유저가 없다.
-				return "jsonView";
-			}
-			PayVO chkDuplicatePay = payDao.selectPayByUsrSqAndClsSq(payVO);
-			if(chkDuplicatePay!=null) {
-				redirectUrl = "";
-				message = "이미 결제한 클래스입니다."; //중복결제 방지
-				return "jsonView";
-			}
-			payVO.setPayDt(new Date());
-			payVO.setPaySq(payIdGnrService.getNextStringId());
-			payDao.insertPay(payVO);
-			redirectUrl+="?paySq="+payVO.getPaySq();
-			status.setComplete();
-		}catch(Exception e) {
+		String message = "";
+		boolean isValid = true;
+		//TODO 결제 중복 체크를 해줘야함.
+		ClassVO classVO = new ClassVO();
+		classVO.setClassId(payVO.getcSq());
+		List<ClassVO> classList = classService.selectClassList(classVO);
+		if(classList.size()==0) {
 			redirectUrl = "";
-			message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.";
-			e.printStackTrace();
+			message += "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.\n(클래스 정보가 없습니다.)\n"; //클래스가 없다.
+			isValid = false;
 		}
-		model.addAttribute("message", message);
+		UserVO userVO = new UserVO();
+		userVO.setUsrId(payVO.getuSq());;
+		userVO = userService.selectUser(userVO);
+		if(userVO == null) {
+			redirectUrl = "";
+			message += "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.\\n(사용자 정보가 없습니다.)\n"; //유저가 없다.
+			isValid = false;
+		}
+		List<PayVO> chkDuplicatePay = payDao.selectPayByUsrSqAndClsSq(payVO); //pay의 사용자id와 클래스id의 유일성이 보장안되기 때문에 List로 받아서 로직에서 검증해야함.
+		if(chkDuplicatePay!=null && chkDuplicatePay.size()>0) {
+			redirectUrl = "";
+			message += "이미 결제한 클래스입니다.\n"; //중복결제 방지
+			isValid = false;
+		}
+		if(!isValid) {
+			model.addAttribute("redirectUrl", redirectUrl);
+			model.addAttribute("message", message);
+			return "jsonView";
+		}
+		payVO.setPayDt(new Date());
+		payVO.setPaySq(payIdGnrService.getNextStringId());
+		payDao.insertPay(payVO);
+		redirectUrl+="?paySq="+payVO.getPaySq();
+		status.setComplete();
+		message = "결제가 완료되었습니다.";
 		model.addAttribute("redirectUrl", redirectUrl);
+		model.addAttribute("message", message);
 		
 		return "jsonView";
 	}

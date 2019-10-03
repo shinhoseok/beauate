@@ -59,7 +59,17 @@
 	        <result column="u_st" property="userSt" />
 	        <result column="u_out_dt" property="userOutDt" />
         </association>
-        <collection column="{atchFileId=img_sq}" property="classFileList" javaType="java.util.ArrayList" ofType="fileVO" select="getFileListByImgSq"/>
+        <collection property="classFileList" ofType="fileVO">
+			<id property="atchFileId" column="ATCH_FILE_ID"/>
+			<id property="fileSn" column="FILE_SN"/>
+			<result property="fileStreCours" column="FILE_STRE_COURS"/>
+			<result property="streFileNm" column="STRE_FILE_NM"/>
+			<result property="orignlFileNm" column="ORIGNL_FILE_NM"/>
+			<result property="fileExtsn" column="FILE_EXTSN"/>
+			<result property="fileCn" column="FILE_CN"/>
+			<result property="fileMg" column="FILE_SIZE"/>
+			<result property="creatDt" column="CREAT_DT"/>			
+        </collection>
         <collection column="{cSq=c_sq}" property="classReviewList" javaType="java.util.ArrayList" ofType="classReviewVO" select="getReviewListByCSq"/>
     </resultMap>
     
@@ -172,12 +182,24 @@
 			u.u_pw,
 			u.login_dt,
 			u.u_st,
-			u.u_out_dt
+			u.u_out_dt,
+			fl.atch_file_id,
+			fl.creat_dt,
+			fl.use_at,
+			fld.file_sn,
+			fld.file_stre_cours,
+			fld.stre_file_nm,
+			fld.orignl_file_nm,
+			fld.file_extsn,
+			fld.file_cn,
+			fld.file_size
 		FROM
 			off_class c 
 			LEFT OUTER JOIN users u ON (u.u_sq = c.u_sq)
 			LEFT JOIN common_cd_scls cd ON (c.c_area_st = cd.mcls_cd AND cd.lcls_cd='ARA')
 			LEFT JOIN common_cd_scls cd2 ON (c.c_st = cd.mcls_cd AND cd.lcls_cd='CST')
+			LEFT JOIN comtnfile fl ON (c.img_sq = fl.atch_file_id)
+			LEFT JOIN comtnfiledetail fld ON fl.atch_file_id = fld.atch_file_id
 			WHERE 1=1 
 		]]>
 		<if test="classAreaSt!= null and !(classAreaSt=='') and !(classAreaSt=='0') and !(classAreaSt==0)" >
@@ -206,9 +228,11 @@
 			</otherwise>
 		</choose>
 		          ) A
+		<if test="firstIndex != 1 and lastIndex != 1">
 		<![CDATA[ 
 		 WHERE A.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
 		]]>
+		</if>
 	</select>
 	
 	<select id="getFileListByImgSq" resultMap="fileList">

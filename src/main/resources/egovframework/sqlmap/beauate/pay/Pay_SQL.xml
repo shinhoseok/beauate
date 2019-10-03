@@ -55,6 +55,17 @@
 		        <result column="u_nm3" property="usrNm"/>
 		        <result column="phone_no3" property="mblPno"/>
 	        </association>
+	        <collection property="classFileList" ofType="fileVO">
+				<id property="atchFileId" column="ATCH_FILE_ID"/>
+				<id property="fileSn" column="FILE_SN"/>
+				<result property="fileStreCours" column="FILE_STRE_COURS"/>
+				<result property="streFileNm" column="STRE_FILE_NM"/>
+				<result property="orignlFileNm" column="ORIGNL_FILE_NM"/>
+				<result property="fileExtsn" column="FILE_EXTSN"/>
+				<result property="fileCn" column="FILE_CN"/>
+				<result property="fileMg" column="FILE_SIZE"/>
+				<result property="creatDt" column="CREAT_DT"/>			
+	        </collection>
         </association>
     </resultMap>
 	<select id="selectPayByUserSq" parameterType="payVO" resultMap="payResultMap">
@@ -188,13 +199,25 @@
 		u.u_email AS u_sq3 ,
 		u.u_nm AS u_nm3 ,
 		u.phone_no AS phone_no3,
-		cd.mcls_nm c_area_st_nm
+		cd.mcls_nm c_area_st_nm,
+		fl.atch_file_id,
+		fl.creat_dt,
+		fl.use_at,
+		fld.file_sn,
+		fld.file_stre_cours,
+		fld.stre_file_nm,
+		fld.orignl_file_nm,
+		fld.file_extsn,
+		fld.file_cn,
+		fld.file_size
 	FROM
 		pay p LEFT JOIN off_class c ON p.c_sq = c.c_sq
 		LEFT JOIN users u ON p.u_sq = u.u_sq
 		LEFT OUTER JOIN u_cpn cpn ON p.cpn_sq = cpn.cpn_sq
 		LEFT JOIN users u3 ON c.u_sq = u3.u_sq
 		LEFT OUTER JOIN common_cd_scls cd ON (c.c_area_st = cd.mcls_cd AND cd.lcls_cd='ARA')
+		LEFT JOIN comtnfile fl ON (c.img_sq = fl.atch_file_id)
+		LEFT JOIN comtnfiledetail fld ON fl.atch_file_id = fld.atch_file_id
 		WHERE p.pay_sq = #{paySq}
 	]]>
 	</select>

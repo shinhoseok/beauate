@@ -231,14 +231,14 @@
 			dataType : "json",
 			data : $("#payVO").serialize(),
 			error: function(r){
-				$("#modal-joincomfirm p.txt").text(r.message);
-				$("#modal-joincomfirm a.modal-close").click(function(){document.location.href='#'});
-				$("#modal-joincomfirm").modal('show');
+				console.log(r);
 			},
 			success: function(r) {
-				$("#modal-joincomfirm p.txt").text(r.message);
-				$("#modal-joincomfirm a.modal-close").click(function(){document.location.href='${basePath}'+r.redirectUrl});
-				$("#modal-joincomfirm").modal('show'); 
+				if(r.redirectUrl==''){
+					alert(r.message);
+				}else{
+					document.location.href='${basePath}'+r.redirectUrl;
+				}
 			}
 		}); 
 		</c:otherwise>

@@ -10,7 +10,7 @@ public interface PayDao {
 
 	void insertPay(PayVO payVO);
 
-	PayVO selectPayByUsrSqAndClsSq(PayVO payVO);
+	List<PayVO> selectPayByUsrSqAndClsSq(PayVO payVO);
 
 	PayVO selectPayByPaySq(PayVO payVO);
 }
