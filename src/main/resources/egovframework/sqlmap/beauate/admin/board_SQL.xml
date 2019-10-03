@@ -46,7 +46,6 @@
 	<sql id="boardGubunSql">
 		<where>
 			POST_FL = 'N'
-<!-- 			<if test="adminYn != null and adminYn != '' and adminYn == 'N'"> -->
 			<if test="adminYn != null and adminYn != ''">
 				<choose>
 					<when test="postCategorySt == '1'">
@@ -159,18 +158,19 @@
 	최초작성일 : 2019. 5.16
 	-->	
 	<select id="selectBoardMngDetail" parameterType="boardVO" resultMap="boardResultMap">
-		<![CDATA[
-		SELECT post_sq,
-			   img_sq,
+		SELECT a.post_sq,
+			   a.img_sq,
+			<if test="adminYn != null and adminYn != ''">
+			   (SELECT b.file_stre_cours || '/' || b.stre_file_nm FROM comtnfiledetail b WHERE b.atch_file_id = a.img_sq AND file_cn='D') AS imgSrc,
+			</if>
 			   post_dt,
 			   post_category_st,
 			   post_title,
 			   post_sub_title,
 			   post_ctt,
 			   post_fl
-		  FROM ADMIN_POST
+		  FROM ADMIN_POST a
 		 WHERE post_sq = #{postId, jdbcType=VARCHAR}
-		]]>
 	</select>
 	
 	<!-- 
@@ -209,4 +209,54 @@
 		 WHERE POST_SQ = #{postId}
 		]]>
 	</update>
+	
+	<!-- 
+	쿼리명 : 게시판 관리 상세 다음글, 이전글
+	  설명 : 게시판 관리 상세 다음글, 이전글
+	수정일      		수정자  	수정내용
+	==========  ======  ===================
+	2019. 10.16 	 신호석 	 최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<select id="selectBoardNextPrev" parameterType="boardVO" resultMap="boardResultMap">
+		SELECT a.post_sq,
+			   a.img_sq,
+			   (SELECT b.file_stre_cours || '/' || b.stre_file_nm FROM comtnfiledetail b WHERE b.atch_file_id = a.img_sq AND file_cn='D') AS imgSrc,
+			   a.post_dt,
+			   a.post_category_st,
+			   a.post_title,
+			   a.post_sub_title,
+			   a.post_ctt,
+			   a.post_fl
+		  FROM ADMIN_POST a
+		<where>
+			<if test="nextYn != null and nextYn != ''">
+				<choose>
+					<when test='nextYn == "Y"'>
+						SUBSTR(a.post_sq, 5) IN (
+							SELECT
+								MIN(SUBSTR(b.post_sq, 5))
+							FROM
+								ADMIN_POST b
+							WHERE
+								SUBSTR(b.post_sq, 5) <![CDATA[ > ]]> #{postId}
+								AND b.post_category_st = #{postCategorySt}
+						)
+					</when>
+					<otherwise>
+						SUBSTR(a.post_sq, 5) IN (
+							SELECT
+								MAX(SUBSTR(b.post_sq, 5))
+							FROM
+								ADMIN_POST b
+							WHERE
+								SUBSTR(b.post_sq, 5) <![CDATA[ < ]]> #{postId}
+								AND b.post_category_st = #{postCategorySt}
+						)
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</select>
 </mapper>

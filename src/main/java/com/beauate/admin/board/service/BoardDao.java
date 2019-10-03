@@ -132,4 +132,25 @@ public interface BoardDao {
 	 * @throws Exception
 	 */ 	
 	void deleteBoardMngProc(BoardVO boardVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 게시판 관리 상세 다음글, 이전글
+	 * 2. 처리내용 : 게시판 관리 상세 다음글, 이전글
+	 * </pre>
+	 * @Method Name : selectBoardNextPrev
+	 * @date : 2019. 10. 12.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일					작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 12  		신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param boardVO
+	 * @return BoardVO
+	 * @throws Exception
+	 */
+	BoardVO selectBoardNextPrev(BoardVO boardVO) throws Exception;
 }
