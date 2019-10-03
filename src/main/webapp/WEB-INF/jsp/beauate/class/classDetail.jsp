@@ -15,11 +15,14 @@
 <title>BEAUATE</title>
 <link rel="stylesheet" type="text/css" href="${cssPath}/contents.css"/>
 <link rel="stylesheet" type="text/css" href="${cssPath}/contents-my1.css"/>
+<link rel="stylesheet" type="text/css" href="${cssPath}/jquery-ui.css"/>
 <script type="text/javascript" src="${scriptPath}/jquery.min.js"></script>
 <script type="text/javascript" src="${scriptPath}/jquery.modal.min.js"></script>
 <script type="text/javascript" src="${scriptPath}/swiper.min.js"></script>
 <script type="text/javascript" src="${scriptPath}/ui.front.js"></script>
 <script type="text/javascript" src="${scriptPath}/library.js"></script>
+<script type="text/javascript" src="${scriptPath}/clipboard.min.js"></script>
+<script type="text/javascript" src="${scriptPath}/jquery-ui.min.js"></script>
 </head>
 <body>
 <div id="wrap" class="offline">
@@ -104,7 +107,25 @@
 								</a>
 							</li>
 						</ul>
-						<button type="button" class="btn-share"><span>공유하기</span></button>
+						<script>
+						$(document).ready(function () {
+							var clipboard = new ClipboardJS('.btn-share');
+
+							clipboard.on('success', function(e) {
+							    console.info('Action:', e.action);
+							    console.info('Text:', e.text);
+							    console.info('Trigger:', e.trigger);
+								$(".btn-share").tooltip();
+							    e.clearSelection();
+							});
+
+							clipboard.on('error', function(e) {
+							    console.error('Action:', e.action);
+							    console.error('Trigger:', e.trigger);
+							});
+						});
+						</script>
+						<button type="button" class="btn-share" data-clipboard-text="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}/class/a/t/classDetail.do?classId=${cls.classId}" title="링크가 복사되었습니다."><span>공유하기</span></button>
 						<dl class="totalprice">
 							<dt>총 결제금액</dt>
 							<dd>
