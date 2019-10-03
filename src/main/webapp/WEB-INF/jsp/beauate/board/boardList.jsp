@@ -38,10 +38,14 @@
 				<ul class="tabs">
 					<c:if test="${fn:length(boardCateGoryList)>0}">
 						<c:forEach var="list" items="${boardCateGoryList}" varStatus="i">
-							<c:if test="${i.count == 1}">
-								<li id="tab${i.count }"><a href="javascript:void(0);" class="active">${list.mclsNm}</a></li>
-							</c:if>
-							<li id="tab${i.count }"><a href="javascript:void(0);">${list.mclsNm}</a></li>
+							<c:choose>
+								<c:when test="${i.count == 1}">
+									<li id="tab${i.count }" tabId="${i.count }"><a href="javascript:void(0);" class="active">${list.mclsNm}</a></li>
+								</c:when>
+								<c:otherwise>
+									<li id="tab${i.count }" tabId="${i.count }"><a href="javascript:void(0);"">${list.mclsNm}</a></li>
+								</c:otherwise>
+							</c:choose>
 						</c:forEach>
 					</c:if>
 				</ul>
@@ -89,16 +93,20 @@
 </div>
 
 <script type="text/javascript">
-var sel_tab = 1;
+//탭번호 전역변수(첫페이지 1탭)
+var tabId = 1;
+
 $(function() {
 	$("#div_tab2").hide();
 	$("#div_tab1").show();
 	$("ul.tabs li").click(function() {
 		$("ul.tabs li").children("a").removeClass("active");
 		$(this).children("a").addClass("active");
-		var activeTab = $(this).attr("id");
+		//탭번호 셋팅(1~4번탭)
+		tabId = $(this).attr("tabId");
 		fn_searchList(1);
 	});
+	//처음은 1번탭 호출
 	fn_searchList(1);
 });
 
@@ -107,14 +115,33 @@ function fn_searchList(page){
 	cuurPage= page;
 	var params = {};
 	params.pageIndex = cuurPage;
+	params.postCategorySt = tabId; //카테고리(탭구분값 1,2,3,4탭)
 	fn_boardCommonAjax(params);
 }
 
-//공통 첫번째, 두번째 탭 Ajax
+//공통탭 Ajax
 var fn_boardCommonAjax = function(params) {
 	$.ajax({	
-		url: "${basePath}/board/r/m/selectBoardAjaxList.do",
+		url: "${basePath}/board/a/t/selectBoardAjaxList.do",
 		data: params,
+		type: 'POST',
+		dataType: 'html',
+		cache: false,
+		success: function(r) {
+			$('#div_tab1').children().remove();
+			$('#div_tab1').html(r);
+		},
+		error : function() {
+		  alert('오류가 발생했습니다.\n관리자에게 문의 바랍니다.');
+		}
+	});
+};
+
+//게시판 공통 상세보기
+var fn_boardCommonDetail = function(postId) {
+	$.ajax({	
+		url: "${basePath}/board/a/t/selectBoardDetail.do",
+		data: { 'postId' : postId },
 		type: 'POST',
 		dataType: 'html',
 		cache: false,

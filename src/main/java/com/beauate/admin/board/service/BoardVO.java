@@ -23,7 +23,15 @@ public class BoardVO extends CommDefaultVO implements Serializable {
 	private String imgSrc;
 	/** 사용자, 관리자구분 */
 	private String adminYn;
+	/** 이전글, 다음글 구분 */
+	private String nextYn;
 	
+	public String getNextYn() {
+		return nextYn;
+	}
+	public void setNextYn(String nextYn) {
+		this.nextYn = nextYn;
+	}
 	public String getAdminYn() {
 		return adminYn;
 	}

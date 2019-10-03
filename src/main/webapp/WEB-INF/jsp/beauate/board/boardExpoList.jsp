@@ -5,7 +5,7 @@
 		<c:when test="${rslt.selectListCnt != 0}">
 			<c:forEach items="${rslt.selectList}" var="list" varStatus="i">
 				<li>
-					<a href="#">
+					<a href="javascript:void(0);" onclick="javascript:fn_boardCommonDetail('${list.postId }');">
 						<div class="thumb"><img src="${uploadPath}/<c:out value="${list.imgSrc }"/>" alt="커버력 끝판왕 인생 파운데이션" /></div>
 						<div class="title"><c:out value="${list.postTitle}"/></div>
 						<div class="desc"><c:out value="${list.postSubTitle}"/></div>

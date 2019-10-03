@@ -24,25 +24,25 @@
 	</context:component-scan>
 
 	<!-- 클라이언트로부터 http Request가 들어오면 핸들러맵핑은 요청 처리를 담당할 컨트롤러를 맵핑한다. -->
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-		<property name="webBindingInitializer">
-			<bean class="egovframework.cmmn.web.EgovBindingInitializer" />
-		</property>
-		<property name="customArgumentResolvers">
-			<list>
-				<bean class="com.beauate.common.CommonArgumentResolver"/>
-			</list>
-		</property>
-	</bean>
+<!-- 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"> -->
+<!-- 		<property name="webBindingInitializer"> -->
+<!-- 			<bean class="egovframework.cmmn.web.EgovBindingInitializer" /> -->
+<!-- 		</property> -->
+<!-- 		<property name="customArgumentResolvers"> -->
+<!-- 			<list> -->
+<!-- 				<bean class="com.beauate.common.CommonArgumentResolver"/> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
 
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
-		<property name="interceptors">
-			<list>
-				<ref bean="portalInterceptor" />
-				<ref bean="localeChangeInterceptor" />
-			</list>
-		</property>
-	</bean>
+<!-- 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"> -->
+<!-- 		<property name="interceptors"> -->
+<!-- 			<list> -->
+<!-- 				<ref bean="portalInterceptor" /> -->
+<!-- 				<ref bean="localeChangeInterceptor" /> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
 
 	<!-- 포탈 인터셉터 -->
 	<bean id="portalInterceptor" class="com.beauate.common.PortalInterceptor">
