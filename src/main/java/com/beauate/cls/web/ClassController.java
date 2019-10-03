@@ -24,6 +24,8 @@ import com.beauate.admin.code.service.CodeVO;
 import com.beauate.admin.user.service.UserVO;
 import com.beauate.cls.service.ClassService;
 import com.beauate.common.GlobalConstants;
+import com.beauate.jjim.service.JjimDao;
+import com.beauate.jjim.service.JjimVO;
 import com.beauate.login.service.LoginVO;
 import com.beauate.pay.service.PayDao;
 import com.beauate.pay.service.PayVO;
@@ -49,8 +51,14 @@ public class ClassController {
 	@Resource(name="payDao")
 	private PayDao payDao;
 
+	@Resource(name="jjimDao")
+	private JjimDao jjimDao;
+	
 	@Resource(name="payIdGnrService")
 	private EgovIdGnrService payIdGnrService;
+	
+	@Resource(name="jjimIdGnrService")
+	private EgovIdGnrService jjimIdGnrService;
 
 	@Resource(name="propertiesService")
 	private EgovPropertyService propertiesService;
@@ -226,6 +234,19 @@ public class ClassController {
 			model.addAttribute("cls", null);
 		}else {
 			classVO = classList.get(0);
+			PayVO payVO = new PayVO(); //선결제 여부 체크
+			payVO.setcSq(classVO.getClassId());
+			payVO.setuSq(sessionVO.getUsrId());
+			List<PayVO> payRtn = payDao.selectPayByUsrSqAndClsSq(payVO); 
+			//pay 테이블의 키가 user와 class가 아니기 때문에 사용자가 결제한 클래스의 유일성을 보장할 수 없다. 
+			//현재 설계상 사용자 하나가 클래스를 여러번 결제가 가능한 구조이기 때문에 List로 받아서 첫번째 값을 반환하도록 함. 
+			model.addAttribute("pay", payRtn != null && payRtn.size()>0 ? payRtn.get(0) : null);
+			JjimVO jjimVO = new JjimVO();
+			jjimVO.setuSq(sessionVO.getUsrId());
+			jjimVO.setcSq(classVO.getClassId());
+			jjimVO = jjimDao.selectJjimByUSqAndCSq(jjimVO);
+			//jjimvo 같은 경우에는 찜클릭시 인서트와 업데이트가 번갈아 이뤄지도록 해야함으로 무조건 1개만 입력되어야 하는 비즈니스로직이 보장되어 있음.
+			model.addAttribute("jjim", jjimVO);
 			ClassReviewVO reviewForException = null;
 			String scoAvr = "";
 			double sco1 = 0.0d;
@@ -337,6 +358,20 @@ public class ClassController {
 		model.addAttribute("discountPercent", propertiesService.getString("discountPercent"));
 		
 		return "/class/classRegistComplete";
+	}
+
+	@RequestMapping(value= {"/class/w/n/classJjim.do"})
+	public String classRegistProc(SessionStatus status, HttpServletRequest request, @ModelAttribute("jjimVO") JjimVO jjimVO, LoginVO sessionVO, ModelMap model ) throws Exception{
+		jjimVO.setuSq(sessionVO.getUsrId());
+		jjimVO.setJjimSq(jjimIdGnrService.getNextStringId());
+		JjimVO rtnJjim =  jjimDao.selectJjimByUSqAndCSq(jjimVO);
+		if(rtnJjim != null) {
+			jjimDao.deleteJjimByUSqAndCSq(jjimVO);
+		}else {
+			jjimDao.insertJjimByUSqAndCSq(jjimVO);
+		}
+		model.addAttribute("jjim",jjimVO);
+		return "jsonView";
 	}
 
 }

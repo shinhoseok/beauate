@@ -114,9 +114,9 @@
 							var clipboard = new ClipboardJS('.btn-share');
 
 							clipboard.on('success', function(e) {
-							    console.info('Action:', e.action);
-							    console.info('Text:', e.text);
-							    console.info('Trigger:', e.trigger);
+							    //console.info('Action:', e.action);
+							    //console.info('Text:', e.text);
+							    //console.info('Trigger:', e.trigger);
 								$(".btn-share").tooltip();
 							    e.clearSelection();
 							});
@@ -143,21 +143,23 @@
 							</dd>
 						</dl>
 					</div>
-					<c:if test="${cls.classSt==2}">
+					
 					<div class="btn-area">
+					<c:choose>
+					 <c:when test="${cls.classSt==2 and (cls.classWebAdr=='' or cls.classWebAdr==null)}">
 						<button type="button" class="btn-util" onclick="javascript:fn_classRegist('${cls.classId}');">클래스 신청</button>
-						<button type="button" class="btn-wish">찜하기</button>
-					</div>
-						<c:if test="${cls.classWebAdr!='' and cls.classWebAdr!=null}">
-					<div class="btn-area">
+					</c:when>
+					<c:when test="${cls.classSt==2 and cls.classWebAdr!='' and cls.classWebAdr!=null}">
 						<button type="button" class="btn-util"><span>클래스 외부접수</span></button>
-						<button type="button" class="btn-wish">찜하기</button>
-					</div>
-						</c:if>
-					</c:if>
-					<div class="btn-area">
+					</c:when>
+					<c:when test="${cls.classSt==3 or cls.classSt==4}">
 						<a href="#modal-alarm" rel="modal:open" class="btn-util">알람신청</a>
-						<button type="button" class="btn-wish active">찜하기</button> <!-- 찜되었을때 class="active" 추가 -->
+					</c:when>
+					<c:otherwise>
+						<button type="button" class="btn-util"><span>오픈전(준비중)입니다.</span></button>
+					</c:otherwise>
+					</c:choose>
+						<button type="button" class="btn-wish <c:if test='${jjim!=null}'>active</c:if>" onclick="javascript:fn_classJjim('${cls.classId}');">찜하기</button>
 					</div>
 					<!-- 팝업 : 알람신청 -->
 					<div id="modal-alarm" class="modal">
@@ -462,8 +464,29 @@
 		<c:when test="${sessionScope.loginVO == null || sessionScope.loginVO.emailAddr == null}">
 			alert("로그인이 필요한 서비스입니다.");
 		</c:when>
+		<c:when test='${pay!=null}'>
+			alert("이미 결제하신 클래스입니다.");
+		</c:when>
 		<c:otherwise>
 			document.location.href='${basePath}/class/r/t/classRegist.do?classId='+cSq;
+		</c:otherwise>
+		</c:choose>
+	}
+	function fn_classJjim(cSq){
+		<c:choose>
+		<c:when test="${sessionScope.loginVO == null || sessionScope.loginVO.emailAddr == null}">
+			alert("로그인이 필요한 서비스입니다.");
+		</c:when>
+		<c:otherwise>
+			$.ajax({						
+				type: 'POST',						
+				url : "<c:url value='${basePath}/class/w/n/classJjim.do'/>?cSq="+cSq,						
+				dataType: "json",						
+				success: function(data){
+					console.log(data);
+					$('.btn-wish').toggleClass('active');
+				}					
+			});		
 		</c:otherwise>
 		</c:choose>
 	}

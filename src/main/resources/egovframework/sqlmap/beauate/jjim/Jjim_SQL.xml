@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beauate.jjim.service.JjimDao">
+    <resultMap id="jjimResultMap" type="com.beauate.jjim.service.JjimVO">
+        <id column="jjim_sq" property="jjimSq"/>
+        <result column="c_sq" property="cSq"/>
+        <result column="u_sq" property="uSq"/>
+    </resultMap>
+	<select id="selectJjimByUSqAndCSq" parameterType="jjimVO" resultMap="jjimResultMap">
+		<![CDATA[
+			SELECT
+				jjim_sq,
+				u_sq,
+				c_sq
+			FROM
+				jjim
+			WHERE
+			u_sq = #{uSq} AND c_sq = #{cSq}
+		]]>
+	</select>
+
+	<insert id="insertJjimByUSqAndCSq" parameterType="jjimVO">
+		<![CDATA[
+			INSERT INTO
+				jjim (
+					jjim_sq,
+					u_sq,
+					c_sq
+				)
+			VALUES
+				(
+					#{jjimSq},
+					#{uSq},
+					#{cSq}
+				)
+		]]>
+	</insert>
+
+	<delete id="deleteJjimByUSqAndCSq" parameterType="jjimVO">
+		<![CDATA[
+			DELETE FROM jjim WHERE u_sq = #{uSq} and c_sq = #{cSq}
+		]]>
+	</delete>
+</mapper>
+
