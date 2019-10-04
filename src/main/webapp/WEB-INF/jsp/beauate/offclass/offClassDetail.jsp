@@ -31,7 +31,7 @@
 			<div class="content">
 				<div class="content-inner">
 					<!-- 우측 퀵 영역 -->
-					<div class="quick-class">
+					<div class="quick-class" id="quick-class">
 						<div class="quick-class-inner">
 							<ul class="product-list-01" data-column="1">
 								<li><a href="#">
@@ -59,7 +59,7 @@
 										</div>
 								</a></li>
 							</ul>
-							<button type="button" class="btn-share">
+							<button type="button" class="btn-share" onclick="fn_shareOffClass('<c:out value="${rslt.resultVO.classId}"/>')">
 								<span>공유하기</span>
 							</button>
 							<dl class="totalprice">
@@ -114,19 +114,26 @@
 							<a href="#" rel="modal:close" class="modal-close">닫기</a>
 						</div>
 					</div>
-					<!-- //우측 퀵 영역 -->
+					<!-- //우측 퀵 영역 end -->
+					
 					<div class="offline-view">
 						<!-- view banner -->
 						<div class="view-banner">
 							<!-- Swiper -->
 							<div class="swiper-container">
 								<div class="swiper-wrapper">
-									<div class="swiper-slide">
-										<img src="${imagePath}/empty/img-tumb-850.jpg" alt="1" />
-									</div>
-									<div class="swiper-slide">
-										<img src="${imagePath}/empty/img-tumb-850.jpg" alt="2" />
-									</div>
+									<c:choose>
+										<c:when test="${fn:length(rslt.sideImgVO) != 0}">
+											<c:forEach items="${rslt.sideImgVO}" var="list" varStatus="i">
+												<div class="swiper-slide">
+													<img src="${uploadPath}/<c:out value="${list.imgSrc }"/>" alt="1" />
+												</div>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<div class="swiper-slide">데이터가 없습니다.</div>
+										</c:otherwise>
+									</c:choose>
 								</div>
 								<div class="swiper-info">
 									<div class="swiper-button-prev"></div>
@@ -151,24 +158,23 @@
 						<!-- //view banner -->
 						<div class="offline-view-title">
 							<p class="title"><c:out value="${rslt.resultVO.classTitle}"/></p>
-<!-- 							<p class="desc">저는 혈액순환, 림프순환 그리고 근막 테라피를 접목한 저만의 경락 마사지법을 개발하고 선보이고 있습니다</p> -->
 						</div>
 						<div class="cont-nav">
 							<ul>
-								<li><a href="#class_intro" class="active">클래스 소개</a></li>
-								<li><a href="class_map">오시는길</a></li>
-								<li><a href="#">문의하기</a></li>
-								<li><a href="#">클래스 후기</a></li>
-								<li><a href="#">취소/환불 정책</a></li>
+								<li><a href="#class_intro" class="active" onclick="fn_move('offline-view-cont');">클래스 소개</a></li>
+								<li><a href="javascript:void(0);" onclick="fn_move('class_map');">오시는길</a></li>
+								<li><a href="javascript:void(0);" onclick="fn_move('review');">문의하기</a></li>
+								<li><a href="javascript:void(0);">클래스 후기</a></li>
+								<li><a href="javascript:void(0);">취소/환불 정책</a></li>
 							</ul>
 						</div>
 						<!--클래스 상세-->
-						<div class="offline-view-cont">
+						<div class="offline-view-cont" id="offline-view-cont">
 							<div>
 								<img src="${uploadPath}/<c:out value="${rslt.resultVO.imgSrc2 }"/>" />
 							</div>
 							<!--오시는 길-->
-							<div class="class_map">
+							<div class="class_map" id="class_map">
 								<div class="class_map_inner">
 									<div class="info_text_wrap">
 										<div class="text_left">
@@ -209,7 +215,7 @@
 						</div>
 						<!--// 클래스 상세 -->
 						<!-- 리뷰 -->
-						<div class="review">
+						<div class="review" id="review">
 							<h3>Review class 수강후기</h3>
 							<div class="grade">
 								<p class="grade-num">4.5</p>
@@ -292,5 +298,35 @@
 		<%@ include file="/WEB-INF/jsp/beauate/ucommon/footer.jsp"%>
 		<!-- //footer -->
 	</div>
+
+<script type="text/javascript">
+$(function() {
+	//따라다니는 메뉴
+	var floatPosition = parseInt($("#quick-class").css('top'));
+	var footerTop = $("#footer").offset().top;
+	$(window).scroll(function() {
+		// 현재 스크롤 위치를 가져온다.
+		var scrollTop = $(window).scrollTop();
+		var newPosition = scrollTop + floatPosition + "px";
+		$("#quick-class").css("position", "absolue");
+		$("#quick-class").stop().animate({
+			"top" : newPosition
+		}, 500);
+	}).scroll();
+});
+
+//탭메뉴 이동(클래스소개, 오시는길, 문의하기)
+var fn_move = function(param) {
+	var offset = $("#"+param).offset();
+	$("html, body").animate({scrollTop : offset.top}, 400);
+};
+
+//공유하기
+var fn_shareOffClass = function(classId) {
+	var obShareUrl = window.document.location.href;
+	document.execCommand("copy");
+	alert("URL이 클립보드에 복사되었습니다"); 
+};
+</script>
 </body>
 </html>

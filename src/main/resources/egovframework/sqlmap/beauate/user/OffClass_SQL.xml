@@ -71,4 +71,23 @@
 			</if>
 		</where>
 	</select>
+	
+	<!-- 
+	쿼리명 : 오프라인클래스 상세(슬라이드사진)
+	  설명 : 오프라인클래스 상세(슬라이드사진)
+	수정일     		 수정자 	 수정내용
+	==========  ======  ===================
+	2019. 9.12	신호석		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 9.12
+	-->	
+	<select id="selectOffClassSideDetail" parameterType="classVO" resultMap="classMap">
+		SELECT 
+			file_stre_cours || '/' || stre_file_nm AS imgSrc
+		FROM 
+			comtnfiledetail
+		WHERE 
+			atch_file_id = #{classImgId}
+			AND file_cn LIKE 'S%'
+	</select>
 </mapper>

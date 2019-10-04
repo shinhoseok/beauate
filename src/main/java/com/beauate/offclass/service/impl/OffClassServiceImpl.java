@@ -233,6 +233,7 @@ public class OffClassServiceImpl implements OffClassService {
 		Map<String, Object> rsltMap = new HashMap<>();
 		String today = DateUtil.getCurrentYearMonthDay();
 		
+		//Detail List >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		classVO.setAdminYn("N");
 		ClassVO resultVO = classManageDao.selectClassMngDetail(classVO);
 		log.debug(">> origin Path >> "+resultVO.getImgSrc2());
@@ -250,8 +251,15 @@ public class OffClassServiceImpl implements OffClassService {
 			throw new NullPointerException("해당 클래스에 등록된 이미지 파일이 없습니다. classId >>> "+classVO.getClassId());
 		}
 		
+		//Side List >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		List<ClassVO> sideImgVO = offClassDao.selectOffClassSideDetail(resultVO);
+		if(sideImgVO != null) {
+			sideImgVO = fullImgPathChang(sideImgVO);
+		}
+		
 		rsltMap.put("resultVO", resultVO);
 		rsltMap.put("today", today);
+		rsltMap.put("sideImgVO", sideImgVO);
 		
 		return rsltMap;
 	}

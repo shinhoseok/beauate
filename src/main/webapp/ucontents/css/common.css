@@ -21,12 +21,13 @@
 [class*='product-list'] .nodata{position:relative;}
 [class*='product-list'] .nodata:after {content:""; position:absolute; left:0; bottom:-30px; display:block; width:100%; border-bottom:1px solid #ddd;}
 [class*='product-list']:after {content:''; display:block; clear:both;}
-[data-column="2"] li {float:left;width:calc((100% - 40px) / 2); margin-left:40px;}
-[data-column="4"] li {float:left;width:calc((100% - (38px * 3)) /4); margin-left:38px;}
+/* [data-column="2"] li {float:left;width:calc((100% - 40px) / 2); margin-left:40px;} */
+[data-column="2"] li {float:left;width:calc((100% - 40px) / 2); margin-left:15px;} 
+[data-column="4"] li {float:left;width:calc((100% - (38px * 3)) /4); margin-left:24px;}
 [data-column="2"] li:nth-child(2n+1),
-[data-column="4"] li:nth-child(4n+1) {clear:left;margin-left:0;}
-[data-column="2"] li:nth-child(-n+2) .inner:after{display:none;}
-[data-column="2"] li:nth-child(2n+1) .inner:after {width:200%;}
+/* [data-column="4"] li:nth-child(4n+1) {clear:left;margin-left:0;} */
+/* [data-column="2"] li:nth-child(-n+2) .inner:after{display:none;} */
+/* [data-column="2"] li:nth-child(2n+1) .inner:after {width:200%;} */
 [data-column="2"][class*="product-list-row"] li {width:50%; margin:0;}
 
 

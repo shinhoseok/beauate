@@ -43,14 +43,9 @@
 		</div>
 	</a>
 </li>
-<form:form commandName="classVO" method="post" id="detailForm" action="">
-	<form:hidden path="classId" id="classId"/>
-</form:form>
 <script>
 //상세화면 클릭시
 var fn_selectOffClassDetail = function(classId) {
-	$("#detailForm #classId").val(classId);
-	$("#detailForm").attr("action", "${basePath}/offclass/a/t/selectOffClassDetail.do");
-	$("#detailForm").submit();
+	location.href="${basePath}/offclass/a/t/selectOffClassDetail.do?classId="+classId;
 };
 </script>
