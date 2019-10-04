@@ -41,7 +41,6 @@
 				<h4 class="contentTitle_h4">클래스 정보</h4>
 				<form:form commandName="classVO" name="classVO" id="classVO" method="post" enctype="multipart/form-data" action="${basePath}/classmng/w/m/updateClassMngProc.do" >
 					<form:hidden path="classId"/>
-					<form:hidden path="atchFileId" />
 					<div class="tableLayer">
 						<table class="table">
 							<caption></caption>
@@ -178,12 +177,12 @@
 								</tr>
 								<tr>
 									<th colspan="2"><span class="thstar"></span>
-										이미지 등록 (상세대표이미지1장, 상세슬라이드1~5장, 메인이미지 크기 큰 순서로 3장)
+										이미지 등록 (상세대표이미지1장, 상세슬라이드1~5장, 메인이미지 크기 작은 순서로 4장)
 									</th>
 									<td colspan="4">
 										<input class="hideFile" name="file_1" id="egovComFileUploader" type="file" title="첨부파일입력" /> <img src="${imagePath}/btn_plus.png" alt="" class="FileBtn" /> <span id="atchFileNot" style="margin-left: 5px; display: none;">(* 첨부파일을 더 이상 등록 할 수 없습니다.)</span>
 										<c:import url="/cmm/fms/selectFileInfsForUpdate.do" charEncoding="utf-8">
-											<c:param name="param_atchFileId" value="${resultVO.atchFileId}" />
+											<c:param name="param_atchFileId" value="${classVO.classImgId}" />
 										</c:import>
 									</td>
 								</tr>
@@ -206,7 +205,7 @@
 <script type="text/javascript">
 	makeFileAttachment = function() {
 		var existFileNum = $("#fileListCnt").val();
-		var maxFileNum = 9;
+		var maxFileNum = 10;
 		var uploadableFileNum = maxFileNum - existFileNum;
 		if (uploadableFileNum < 0) {
 			uploadableFileNum = 0;
@@ -245,6 +244,7 @@
 		var usrId = $("#classUserId").val();
 		var classStartDt = $("#classStartDt").val();
 		var classEndDt = $("#classEndDt").val();
+		$("#atchFileId").val("${classVO.classImgId}");
 		if(usrId == null || usrId == "" || usrId == 'undefined') {
 			alert("클래스 신청자 아이디는 필수 입력입니다.");
 			$("#classUserId").focus();

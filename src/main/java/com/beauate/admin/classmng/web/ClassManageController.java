@@ -266,7 +266,7 @@ public class ClassManageController {
 
 		// 첨부파일 관련 ID 생성 start....
 		String _atchFileId = classVO.getAtchFileId();
-
+		log.debug("_atchFileId >>>>>>>>>>>>>>>>>>>>> "+_atchFileId);
 		final Map<String, MultipartFile> files = multiRequest.getFileMap();
 
 		if (!files.isEmpty()) {
@@ -279,6 +279,9 @@ public class ClassManageController {
 				fvo.setAtchFileId(_atchFileId);
 				int cnt = fileMngService.getMaxFileSN(fvo);
 				List<FileVO> _result = fileUtil.parseFileInf(files, "CLASS_", cnt, _atchFileId, "");
+				log.debug("첨부파일 아이디 >>>>>>>>>>>>>>>>>>>>> "+_atchFileId);
+				//첨부파일 아이디가 안나어옴
+//				fileMngService.insertFileInfs(_result);
 				fileMngService.updateFileInfs(_result);
 			}
 		}

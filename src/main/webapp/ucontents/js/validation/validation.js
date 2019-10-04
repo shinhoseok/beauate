@@ -2,8 +2,10 @@
     validation 체크
     alt ==> title 로 바뀜 (alt 보다는 title 추천)
 **/
-
-//빈값 체크
+var isNull = function(v){
+	return (v == undefined || v == null || v == "") ? true : false;
+}
+// 빈값 체크
 $.fn.emptyCheck = function() {
 	var value = $.trim(this.val() + '');
 	
@@ -330,31 +332,15 @@ fn_checkPass = function(objId){
 	  	if(sChar_Count < 1 || alphaCheck != true || numberCheck != true){
 	  		$("#"+objId).val("");
 	  		$("#"+objId).focus();
-	  		if($("#"+objId).next().is("span") && $("#"+objId).next().hasClass("emp") ){
-				$("#"+objId).next().text("비밀번호는 영문,숫자,특수문자 1자이상(%,$,#,@,!)\n모두 포함하여 조합해주세요").show();
-				$("#"+objId).focus();
-	  		}else if($("#"+objId).parent().next().is("span") && $("#"+objId).parent().next().hasClass("emp") ){
-				$("#"+objId).parent().next().text("비밀번호는 영문,숫자,특수문자 1자이상(%,$,#,@,!)\n모두 포함하여 조합해주세요").show();
-				$("#"+objId).focus();
-	  		}else{
-	  			alert("비밀번호는 영문,숫자,특수문자 1자이상(%,$,#,@,!)\n모두 포함하여 조합해주세요");
-		   		return;
-	  		}
+	   		alert("비밀번호는 영문,숫자,특수문자 1자이상(%,$,#,@,!)\n모두 포함하여 조합해주세요");
+	   		return;
 	  	}//if
 	  
 	 }else{
-		$("#"+objId).val("");
-		$("#"+objId).focus();
-		if($("#"+objId).next().is("span") && $("#"+objId).next().hasClass("emp") ){
-			$("#"+objId).next().text("비밀번호는 9~20자로 조합해주세요").show();
-			$("#"+objId).focus();
-		}else if($("#"+objId).parent().next().is("span") && $("#"+objId).parent().next().hasClass("emp") ){
-			$("#"+objId).parent().next().text("비밀번호는 9~20자로 조합해주세요").show();
-			$("#"+objId).focus();
-  		}else{
-		  	alert("비밀번호는 9~20자로 조합해주세요");
-		  	return;
-  		}
+		 $("#"+objId).val("");
+		 $("#"+objId).focus();
+	  	alert("비밀번호는 9~20자로 조합해주세요");
+	  	return;
 	 }//else
 	 return true;
 };

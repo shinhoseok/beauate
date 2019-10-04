@@ -7,10 +7,13 @@
 <meta name="viewport" content="width=1280"/>
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>BEAUATE</title>
-<link rel="stylesheet" type="text/css" href="${cssPath}/contents.css"/>
-<link rel="stylesheet" type="text/css" href="${cssPath}/contents-my1.css"/>
+<link rel="stylesheet" type="text/css" href="${cssPath}/contents.css" />
+<link rel="stylesheet" type="text/css" href="${cssPath}/contents-my1.css" />
 <script type="text/javascript" src="${scriptPath}/jquery.min.js"></script>
 <script type="text/javascript" src="${scriptPath}/jquery.modal.min.js"></script>
+<script type="text/javascript" src="${scriptPath}/swiper.min.js"></script>
+<script type="text/javascript" src="${scriptPath}/ui.front.js"></script>
+<script type="text/javascript" src="${scriptPath}/library.js"></script>
 </head>
 <body>
 <div id="wrap">
@@ -64,7 +67,7 @@
 									</c:forEach>
 							</c:if>
 							</ul>
-							<div class="off_more"><a href="${basePath}/class/a/t/classMainList.do">클래스 더보기<img src="libs/img/btn_arrow.png"></a></div>	
+							<div class="off_more"><a href="${basePath}/class/a/t/classMainList.do">클래스 더보기<img src="${imgPath}/btn_arrow.png"></a></div>	
 				</div>
 			<!--//new 클래스---->
 			<!-- slider banner2 -->

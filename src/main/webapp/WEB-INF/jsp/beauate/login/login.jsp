@@ -24,7 +24,6 @@
 <script type="text/javascript" src="${scriptPath}/common.js"></script>
 <script type="text/javascript">
 //login
-
 var fn_login = function() {
 	var emailAddr = $("#emailAddr").val();
 	var usrPw = $("#usrPw").val();

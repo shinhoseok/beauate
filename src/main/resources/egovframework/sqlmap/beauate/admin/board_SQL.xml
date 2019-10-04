@@ -115,7 +115,7 @@
                B.post_sq,
                B.img_sq,
 <!--                <if test="adminYn != null and adminYn != '' and adminYn == 'N'"> -->
-               <if test="adminYn != null and adminYn != ''">
+               <if test="adminYn != null or adminYn != '' or adminYn != Y">
                (SELECT c.file_stre_cours || '/' || c.stre_file_nm FROM comtnfiledetail c WHERE atch_file_id = B.img_sq AND file_cn = 'M') AS imgSrc,
                </if>
                B.post_dt,

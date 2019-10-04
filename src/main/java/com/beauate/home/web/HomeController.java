@@ -15,7 +15,6 @@ import com.beauate.admin.banner.service.BannerDao;
 import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.admin.code.service.CodeDao;
 import com.beauate.admin.code.service.CodeVO;
-import com.beauate.cls.service.ClassService;
 import com.beauate.common.GlobalConstants;
 import com.beauate.login.service.LoginVO;
 import com.beauate.pay.service.PayService;
@@ -39,8 +38,8 @@ import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 public class HomeController {
 	protected Log log = LogFactory.getLog(this.getClass());
 
-	@Resource(name = "classService")
-	private ClassService classService;
+//	@Resource(name = "classService")
+//	private ClassService classService;
 
 	@Resource(name = "payService")
 	private PayService payService;
@@ -74,8 +73,8 @@ public class HomeController {
 		classVO.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
 		classVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		classVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-		List<ClassVO> classListTop = classService.selectClassList(classVO);
-		model.addAttribute("classListTop", classListTop);
+//		List<ClassVO> classListTop = classService.selectClassList(classVO);
+//		model.addAttribute("classListTop", classListTop);
 		
 		return "/home/main";
 	}

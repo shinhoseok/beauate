@@ -67,7 +67,7 @@ public class EgovFileMngUtil {
      */
     public List<FileVO> parseFileInf(Map<String, MultipartFile> files, String KeyStr, int fileKeyParam, String atchFileId, String storePath) throws Exception {
     	int fileKey = fileKeyParam;
-    
+    	System.out.println("fileKey1 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+fileKey);
     	String storePathString = "";
     	String atchFileIdString = "";
     
@@ -137,9 +137,7 @@ public class EgovFileMngUtil {
                         || "zip".equalsIgnoreCase(fileExt)
                         || "bmp".equalsIgnoreCase(fileExt)
                         || "pdf".equalsIgnoreCase(fileExt)) {	            
-    	        	System.out.println("shin1 >>>>>>>>>>>>>>>>>> "+newName);
             		filePath = storePathString + File.separator + newName;
-            		System.out.println("shin2 >>>>>>>>>>>>>>>>>> "+filePath);
             		file.transferTo(new File(EgovWebUtil.filePathBlackList(filePath)));
             		
             		fvo = new FileVO();
@@ -148,16 +146,16 @@ public class EgovFileMngUtil {
                     fvo.setFileMg(Long.toString(_size));
                     fvo.setOrignlFileNm(orginFileName);
                     fvo.setStreFileNm(newName);
-                    System.out.println("shin3 >>>>>>>>>>>>>>>>>> "+fvo.getStreFileNm());
                     fvo.setAtchFileId(atchFileIdString);
                     fvo.setFileSn(String.valueOf(fileKey));
+                    System.out.println("fileKey2 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+fileKey);
                     fvo.setMonthDir(monthDir);
                     
-                    if(KeyStr.equals("CLASS_")) { //클래스 이미지등록. 상세1 > 슬라이드3~5 > 목록 3이므로 거꾸로 등록함. 
-                    	if(cnt >= 0 && cnt < 3) {
+                    if(KeyStr.equals("CLASS_")) { //클래스 이미지등록. 상세1 > 슬라이드3~5 > 목록 3이므로 거꾸로 등록함.(상세~ 큰목록이미지까지) 
+                    	if(cnt >= 0 && cnt < 4) {
                         	fvo.setFileCn("M"+String.valueOf(cnt));
                         }
-                        if(cnt > 2) {
+                        if(cnt > 3) {
                         	fvo.setFileCn("S"+String.valueOf(cnt));
                         }
                         //마지막 사진은 상세

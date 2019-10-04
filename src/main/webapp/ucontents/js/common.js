@@ -115,7 +115,6 @@ _fn_paging = function(frm, pageNo, actUrl){
  *              eDate: 검색종료일자
  * */
 _compareTwoDate = function(sDate, eDate){
-    
     var sDt, eDt;
     
     if( sDate || eDate ){

@@ -10,7 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
-import com.beauate.admin.classmng.service.ClassDao;
+import com.beauate.admin.classmng.service.ClassManageDao;
 import com.beauate.admin.classmng.service.ClassManageService;
 import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.admin.code.service.CodeDao;
@@ -28,8 +28,8 @@ public class ClassManageServiceImpl implements ClassManageService {
 	@Resource(name="codeDao")
 	private CodeDao codeDao;
 	
-	@Resource(name="classDao")
-	private ClassDao classDao;
+	@Resource(name="classManageDao")
+	private ClassManageDao classManageDao;
 	
 	@Resource(name="classIdGnrService")
 	private EgovIdGnrService classIdGnrService;
@@ -95,7 +95,7 @@ public class ClassManageServiceImpl implements ClassManageService {
 		if(StringUtil.isEmpty(classVO.getClassApplyNo())) {
 			classVO.setClassApplyNo("0");
 		}
-		classDao.insertOffClassProc(classVO);
+		classManageDao.insertOffClassProc(classVO);
 	}
 	
 	/**
@@ -133,12 +133,12 @@ public class ClassManageServiceImpl implements ClassManageService {
 		List<ClassVO> selectList = null;
 		
 		//총 카운트 
-		int cnt = classDao.selectClassMngListCnt(classVO);
+		int cnt = classManageDao.selectClassMngListCnt(classVO);
 		paginationInfo.setTotalRecordCount(cnt);
 		
 		if(cnt > 0){
 			//리스트
-			selectList = classDao.selectClassMngList(classVO);
+			selectList = classManageDao.selectClassMngList(classVO);
 		}
 		rsltMap.put("paginationInfo", paginationInfo);
 		rsltMap.put("selectList", selectList);
@@ -167,7 +167,7 @@ public class ClassManageServiceImpl implements ClassManageService {
 	 * @throws Exception
 	 */ 
 	public ClassVO selectClassMngDetail(ClassVO classVO) throws Exception {
-		return classDao.selectClassMngDetail(classVO);
+		return classManageDao.selectClassMngDetail(classVO);
 	}
 	
 	/**
@@ -190,7 +190,7 @@ public class ClassManageServiceImpl implements ClassManageService {
 	 * @throws Exception
 	 */ 
 	public int updateClassMngProc(ClassVO classVO) throws Exception {
-		return classDao.updateClassMngProc(classVO);
+		return classManageDao.updateClassMngProc(classVO);
 	}
 	
 	/**
@@ -213,6 +213,6 @@ public class ClassManageServiceImpl implements ClassManageService {
 	 * @throws Exception
 	 */ 
 	public int deleteClassMngProc(ClassVO classVO) throws Exception {
-		return classDao.deleteClassMngProc(classVO);
+		return classManageDao.deleteClassMngProc(classVO);
 	}
 }

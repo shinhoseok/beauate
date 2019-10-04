@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beauate.offclass.service.OffClassDao">
+	
+    <resultMap id="classMap" type="com.beauate.admin.classmng.service.ClassVO">
+        <id column="c_sq" property="classId"/>
+        <result column="u_sq" property="classUserId"/>
+        <result column="img_sq" property="classImgId"/>
+        <result column="c_dt" property="classRegDt"/>
+        <result column="c_st" property="classSt"/>
+        <result column="c_st_nm" property="classStNm"/>
+        <result column="c_gb" property="classGb"/>
+        <result column="c_category_st" property="classCtSt"/>
+        <result column="c_area_st" property="classAreaSt"/>
+        <result column="c_area_st_nm" property="classAreaStNm"/>
+        <result column="c_title" property="classTitle"/>
+        <result column="u_start_dt" property="classStartDt"/>
+        <result column="c_end_dt" property="classEndDt"/>
+        <result column="c_time" property="classTime"/>
+        <result column="c_small_no" property="classSmallNo"/>
+        <result column="c_big_no" property="classBigNo"/>
+        <result column="c_apply_no" property="classApplyNo"/>
+        <result column="c_adr" property="classAdr"/>
+        <result column="c_cost_no" property="classCost"/>
+        <result column="c_web_adr" property="classWebAdr"/>
+    </resultMap>
+	
+	<!-- 
+	쿼리명 : 오프라인클래스 리스트(첫화면 페이징없이 8개 헤어,메이크업)
+	  설명 : 오프라인클래스 리스트(첫화면 페이징없이 8개 헤어,메이크업)
+	수정일     		 수정자 	 수정내용
+	==========  ======  ===================
+	2019. 9.12	신호석		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 9.12
+	-->	
+	<select id="selectOffClassList" parameterType="classVO" resultMap="classMap">
+		SELECT 
+			c.c_sq,
+			c.u_sq,
+			c.img_sq,
+			(SELECT b.file_stre_cours || '/' || b.stre_file_nm FROM comtnfiledetail b WHERE b.atch_file_id = c.img_sq AND file_cn='M0') AS imgSrc,
+			c.c_dt,
+			c.c_st,
+			cd2.mcls_nm c_st_nm,
+			c.c_gb,
+			c.c_category_st,
+			c.c_area_st,
+			cd.mcls_nm c_area_st_nm,
+			c.c_title,
+			TO_CHAR(c.u_start_dt, 'yyyy-MM-dd') AS u_start_dt,
+			TO_CHAR(c.c_end_dt, 'yyyy-MM-dd') AS c_end_dt,
+			c.c_time,
+			c.c_small_no,
+			c.c_big_no,
+			c.c_apply_no,
+			c.c_adr,
+			c.c_cost_no,
+			c.c_web_adr
+		FROM
+			off_class c 
+			LEFT JOIN common_cd_scls cd ON (c.c_area_st = cd.mcls_cd AND cd.lcls_cd='ARA')
+			LEFT JOIN common_cd_scls cd2 ON (c.c_st = cd2.mcls_cd AND cd.lcls_cd='CST')
+		<where>
+			<if test="classCtSt != null and classCtSt != '' and imgCnt != null and imgCnt != ''">
+				c.c_category_st = #{classCtSt}
+				AND ROWNUM <![CDATA[ <= ]]> #{imgCnt}
+			</if>
+			<if test="orderByYn">
+				ORDER BY c.u_start_dt ASC;
+			</if>
+		</where>
+	</select>
+</mapper>

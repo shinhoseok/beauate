@@ -2,12 +2,7 @@ package com.beauate.admin.classmng.service;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-
-import com.beauate.admin.user.service.UserVO;
 import com.beauate.common.service.CommDefaultVO;
-
-import egovframework.cmmn.service.FileVO;
 
 @SuppressWarnings("serial")
 public class ClassVO extends CommDefaultVO implements Serializable {
@@ -58,24 +53,46 @@ public class ClassVO extends CommDefaultVO implements Serializable {
 	private int classCost;
 	/** 외부링크 */
 	private String classWebAdr;
+	/** 이미지주소 목록 */
+	private String imgSrc;
+	/** 이미지주소 상세디테일 */
+	private String imgSrc2;
+	/** 이미지주소관리자는 필요없으므로 구분자 유저는 N */
+	private String adminYn;
+	/** 게시판에 이미지가 몇장 들어가는지 */
+	private String imgCnt;
+	/** 오더바이 필요여부 */
+	private boolean orderByYn = false;
 	
-	private List<FileVO> classFileList;
-	
-	private List<ClassReviewVO> classReviewList;
-
-	private UserVO mentor;
-	
-	public UserVO getMentor() {
-		return mentor;
+	public String getImgSrc2() {
+		return imgSrc2;
 	}
-	public void setMentor(UserVO mentor) {
-		this.mentor = mentor;
+	public void setImgSrc2(String imgSrc2) {
+		this.imgSrc2 = imgSrc2;
 	}
-	public List<FileVO> getClassFileList() {
-		return classFileList;
+	public boolean isOrderByYn() {
+		return orderByYn;
 	}
-	public void setClassFileList(List<FileVO> classFileList) {
-		this.classFileList = classFileList;
+	public void setOrderByYn(boolean orderByYn) {
+		this.orderByYn = orderByYn;
+	}
+	public String getImgCnt() {
+		return imgCnt;
+	}
+	public void setImgCnt(String imgCnt) {
+		this.imgCnt = imgCnt;
+	}
+	public String getAdminYn() {
+		return adminYn;
+	}
+	public void setAdminYn(String adminYn) {
+		this.adminYn = adminYn;
+	}
+	public String getImgSrc() {
+		return imgSrc;
+	}
+	public void setImgSrc(String imgSrc) {
+		this.imgSrc = imgSrc;
 	}
 	public String getRNUM() {
 		return RNUM;
@@ -214,11 +231,5 @@ public class ClassVO extends CommDefaultVO implements Serializable {
 	}
 	public void setClassWebAdr(String classWebAdr) {
 		this.classWebAdr = classWebAdr;
-	}
-	public List<ClassReviewVO> getClassReviewList() {
-		return classReviewList;
-	}
-	public void setClassReviewList(List<ClassReviewVO> classReviewList) {
-		this.classReviewList = classReviewList;
 	}
 }

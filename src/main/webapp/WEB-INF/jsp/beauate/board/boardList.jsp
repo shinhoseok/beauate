@@ -110,6 +110,8 @@ $(function() {
 	fn_searchList(1);
 });
 
+//현재페이지 전역변수
+var cuurPage = 1;
 //param : 클릭페이지, 탭번호,
 function fn_searchList(page){
 	cuurPage= page;

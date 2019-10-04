@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beauate.admin.classmng.service.ClassManageDao">
+	
+    <resultMap id="classMap" type="com.beauate.admin.classmng.service.ClassVO">
+        <id column="c_sq" property="classId"/>
+        <result column="u_sq" property="classUserId"/>
+        <result column="img_sq" property="classImgId"/>
+        <result column="c_dt" property="classRegDt"/>
+        <result column="c_st" property="classSt"/>
+        <result column="c_st_nm" property="classStNm"/>
+        <result column="c_gb" property="classGb"/>
+        <result column="c_category_st" property="classCtSt"/>
+        <result column="c_area_st" property="classAreaSt"/>
+        <result column="c_area_st_nm" property="classAreaStNm"/>
+        <result column="c_title" property="classTitle"/>
+        <result column="u_start_dt" property="classStartDt"/>
+        <result column="c_end_dt" property="classEndDt"/>
+        <result column="c_time" property="classTime"/>
+        <result column="c_small_no" property="classSmallNo"/>
+        <result column="c_big_no" property="classBigNo"/>
+        <result column="c_apply_no" property="classApplyNo"/>
+        <result column="c_adr" property="classAdr"/>
+        <result column="c_cost_no" property="classCost"/>
+        <result column="c_web_adr" property="classWebAdr"/>
+    </resultMap>
+    
+	<!-- 쿼리명 : 오프라인 클래스 등록
+	설명 : 오프라인 클래스 등록
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 9.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 9.17
+	-->
+	<insert id="insertOffClassProc" parameterType="userVO">
+		<![CDATA[
+		INSERT INTO OFF_CLASS (	c_sq, 
+								u_sq, 
+		   						img_sq, 
+		   						c_dt, 
+		   						c_st, 
+		   						c_gb,
+		   						c_category_st,
+								c_area_st, 
+		   						c_title, 
+		   						u_start_dt, 
+		   						c_end_dt, 
+		   						c_time,
+		   						c_small_no,
+								c_big_no, 
+		   						c_apply_no, 
+		   						c_adr, 
+		   						c_cost_no, 
+		   						c_web_adr,
+		   						c_del_yn ) 
+					VALUES (	#{classId},
+								#{usrId}, 
+								#{atchFileId}, 
+								sysdate, 
+								#{classSt}, 
+								#{classGb},
+								#{classCtSt},
+								#{classAreaSt}, 
+								#{classTitle},
+								TO_DATETIME(#{classStartDt}, 'YYYY-MM-DD'), 
+								TO_DATETIME(#{classEndDt}, 'YYYY-MM-DD'), 
+								#{classTime},
+								#{classSmallNo},
+								#{classBigNo}, 
+								#{classApplyNo},
+								#{classAdr},
+								#{classCost},
+								#{classWebAdr},
+								'N')
+		]]>
+	</insert>
+
+	<sql id="offClassGubunSql">
+		<where>
+			<if test="searchKeyword != null and searchKeyword != ''">
+				<choose>
+					<when test="searchCondition == 'classUserId'">
+						AND c.u_sq LIKE '%'|| #{searchKeyword} ||'%'
+					</when>
+					<when test="searchCondition == 'classTitle'">
+						AND c.c_title LIKE '%'|| #{searchKeyword} ||'%'
+					</when>
+				</choose>
+			</if>
+			<if test="classAreaSt != null and classAreaSt != ''">
+				AND c.c_area_st = #{classAreaSt}
+			</if>
+			AND (c.c_del_yn = 'N' OR c.c_del_yn IS NULL)
+		</where>
+	</sql>
+	
+	<!-- 
+	쿼리명 : 오프라인클래스 관리 리스트
+	  설명 : 오프라인클래스 관리 리스트
+	수정일     		 수정자 	 수정내용
+	==========  ======  ===================
+	2019. 9.12	신호석		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 9.12
+	-->	
+	<select id="selectClassMngList" parameterType="classVO" resultMap="classMap">
+	<![CDATA[
+		SELECT A.*
+		  FROM (SELECT ROW_NUMBER () OVER (
+		]]>
+		<choose>
+			<when test="sortSubject == 'usrId'">
+				ORDER BY c.u_sq
+			</when>
+			<when test="sortSubject == 'classTitle'">
+				ORDER BY c.c_title
+			</when>
+			<otherwise>
+				ORDER BY c.c_dt
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="sortDescend == 'asc'">
+				ASC
+			</when>
+			<otherwise>
+				DESC
+			</otherwise>
+		</choose>
+			) RNUM,
+			c.c_sq,
+			c.u_sq,
+		<if test="adminYn != null or adminYn != '' or adminYn != Y">
+			(SELECT b.file_stre_cours || '/' || b.stre_file_nm FROM comtnfiledetail b WHERE b.atch_file_id = c.img_sq AND file_cn='M0') AS imgSrc,
+		</if>
+			c.img_sq,
+			c.c_dt,
+			c.c_st,
+			cd2.mcls_nm c_st_nm,
+			c.c_gb,
+			c.c_category_st,
+			c.c_area_st,
+			cd.mcls_nm c_area_st_nm,
+			c.c_title,
+			c.u_start_dt,
+			c.c_end_dt,
+			c.c_time,
+			c.c_small_no,
+			c.c_big_no,
+			c.c_apply_no,
+			c.c_adr,
+			c.c_cost_no,
+			c.c_web_adr
+		FROM
+			off_class c 
+			LEFT JOIN common_cd_scls cd ON (c.c_area_st = cd.mcls_cd AND cd.lcls_cd='ARA')
+			LEFT JOIN common_cd_scls cd2 ON (c.c_st = cd.mcls_cd AND cd.lcls_cd='CST')
+		<include refid="offClassGubunSql"/>
+			) A
+		WHERE A.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
+	</select>
+	
+	<!-- 
+	쿼리명 : 오프라인클래스 관리 카운트
+	  설명 : 오프라인클래스 관리 카운트
+	수정일     		 수정자 	 수정내용
+	==========  ======  ===================
+	2019. 9.12	신호석		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 9.12
+	-->	
+	<select id="selectClassMngListCnt" parameterType="classVO" resultType="int">
+		<![CDATA[
+		SELECT COUNT (*) CNT FROM off_class c 
+		]]>
+		<include refid="offClassGubunSql"/>
+	</select>
+	
+	<!-- 
+	쿼리명 : 오프라인클래스 관리 상세
+	  설명 : 오프라인클래스 관리 상세
+	수정일     		 수정자 	 수정내용
+	==========  ======  ===================
+	2019. 9.12	신호석		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 9.12
+	-->	
+	<select id="selectClassMngDetail" parameterType="classVO" resultMap="classMap">
+		SELECT 
+			c.c_sq,
+			c.u_sq,
+			c.img_sq,
+		<if test="adminYn != null or adminYn != '' or adminYn != Y">
+			(SELECT b.file_stre_cours || '/' || b.stre_file_nm FROM comtnfiledetail b WHERE b.atch_file_id = c.img_sq AND file_cn='M0') AS imgSrc,
+			(SELECT b.file_stre_cours || '/' || b.stre_file_nm FROM comtnfiledetail b WHERE b.atch_file_id = c.img_sq AND file_cn='D') AS imgSrc2,
+		</if>
+			c.c_dt,
+			c.c_st,
+			cd2.mcls_nm c_st_nm,
+			c.c_gb,
+			c.c_category_st,
+			c.c_area_st,
+			cd.mcls_nm c_area_st_nm,
+			c.c_title,
+			TO_CHAR(c.u_start_dt, 'yyyy-MM-dd') AS u_start_dt,
+			TO_CHAR(c.c_end_dt, 'yyyy-MM-dd') AS c_end_dt,
+			c.c_time,
+			c.c_small_no,
+			c.c_big_no,
+			c.c_apply_no,
+			c.c_adr,
+			c.c_cost_no,
+			c.c_web_adr
+		FROM
+			off_class c 
+			LEFT JOIN common_cd_scls cd ON (c.c_area_st = cd.mcls_cd AND cd.lcls_cd='ARA')
+			LEFT JOIN common_cd_scls cd2 ON (c.c_st = cd.mcls_cd AND cd.lcls_cd='CST')
+		WHERE 
+			c.c_sq = #{classId}
+	</select>
+	
+	<!-- 
+	쿼리명 : 오프라인 클래스 수정
+	  설명 : 프로그램 수정
+	수정일      		수정자  	수정내용
+	==========  ======  ===================
+	2019. 9.13	신호석		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 9.13
+	-->	
+	<update id="updateClassMngProc" parameterType="classVO">
+		UPDATE off_class
+		<trim prefix="SET" suffixOverrides=",">
+		    <if test="classUserId != null and  classUserId != ''">
+				u_sq      = #{classUserId},
+		    </if>
+		    <if test="classRegDt != null and  classRegDt != ''">
+				c_dt     = #{classRegDt},
+		    </if>
+		    <if test="classSt != null and  classSt != ''">
+				c_st      = #{classSt},
+		    </if>
+		    <if test="classGb != null and  classGb != ''">
+				c_gb     = #{classGb},
+		    </if>
+		    <if test="classCtSt != null and  classCtSt != ''">
+				c_category_st      = #{classCtSt},
+		    </if>
+		    <if test="classAreaSt != null and  classAreaSt != ''">
+				c_area_st     = #{classAreaSt},
+		    </if>
+		    <if test="classTitle != null and  classTitle != ''">
+				c_title      = #{classTitle},
+		    </if>
+		    <if test="classStartDt != null and  classStartDt != ''">
+				u_start_dt     = TO_DATETIME(#{classStartDt}, 'YYYY-MM-DD'), 
+		    </if>
+		    <if test="classEndDt != null and  classEndDt != ''">
+				c_end_dt      = TO_DATETIME(#{classEndDt}, 'YYYY-MM-DD'), 
+		    </if>
+		    <if test="classTime != null and  classTime != ''">
+				c_time     = #{classTime},
+		    </if>
+		    <if test="classSmallNo != null and  classSmallNo != ''">
+				c_small_no      = #{classSmallNo},
+		    </if>
+		    <if test="classBigNo != null and  classBigNo != ''">
+				c_big_no     = #{classBigNo},
+		    </if>
+		    <if test="classApplyNo != null and  classApplyNo != ''">
+				c_apply_no      = #{classApplyNo},
+		    </if>
+		    <if test="classAdr != null and  classAdr != ''">
+				c_adr     = #{classAdr},
+		    </if>
+		    <if test="classCost != null and  classCost != ''">
+				c_cost_no      = #{classCost},
+		    </if>
+		    <if test="classWebAdr != null and  classWebAdr != ''">
+				c_web_adr     = #{classWebAdr},
+		    </if>
+	    </trim>
+		 WHERE c_sq = #{classId}
+	</update>
+	
+	<!-- 
+	쿼리명 : 오프라인 클래스 수정
+	  설명 : 프로그램 수정
+	수정일      		수정자  	수정내용
+	==========  ======  ===================
+	2019. 9.13	신호석		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 9.13
+	-->	
+	<update id="deleteClassMngProc" parameterType="classVO">
+		<![CDATA[
+		UPDATE off_class
+		   SET c_del_yn = 'Y'
+		 WHERE c_sq = #{classId}
+		]]>
+	</update>
+</mapper>

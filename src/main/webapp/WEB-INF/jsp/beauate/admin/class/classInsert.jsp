@@ -176,7 +176,7 @@
 								</tr>
 								<tr>
 									<th colspan="2"><span class="thstar"></span>
-										이미지 등록 (상세대표이미지1장, 상세슬라이드1~5장, 메인이미지 크기 큰 순서로 3장)
+										이미지 등록 (상세대표이미지1장, 상세슬라이드1~5장, 메인이미지 크기 작은 순서로 4장)
 									</th>
 									<td colspan="4">
 										<input class="hideFile" name="file_1" id="egovComFileUploader" type="file" title="첨부파일입력" />
@@ -201,7 +201,7 @@
 	<!-- footer End -->
 	
 <script type="text/javascript">
-var maxFileNum = 9;
+var maxFileNum = 10;
 makeFileAttachment = function(){
 	multi_selector = new MultiSelector( document.getElementById( 'egovComFileList' ), maxFileNum, 0);
 	multi_selector.addElement( document.getElementById( 'egovComFileUploader' ) );
