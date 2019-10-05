@@ -103,7 +103,7 @@
 														오픈전
 													</c:when>
 													<c:when test="${list.classSt eq '2'}">
-														오픈후
+														오픈중
 													</c:when>
 													<c:when test="${list.classSt eq '3'}">
 														신청마감

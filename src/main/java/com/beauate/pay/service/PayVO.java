@@ -6,7 +6,6 @@ import java.util.Date;
 import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.admin.user.service.UserVO;
 import com.beauate.common.service.CommDefaultVO;
-import com.beauate.cpn.service.AdminCpnVO;
 
 @SuppressWarnings("serial")
 public class PayVO extends CommDefaultVO implements Serializable {
@@ -19,7 +18,6 @@ public class PayVO extends CommDefaultVO implements Serializable {
 	private String payMethodSt;
 	private String payCostNo;
 	private UserVO user;
-	private AdminCpnVO cpn;
 	private ClassVO cls;
 	
 	
@@ -82,12 +80,6 @@ public class PayVO extends CommDefaultVO implements Serializable {
 	}
 	public void setUser(UserVO user) {
 		this.user = user;
-	}
-	public AdminCpnVO getCpn() {
-		return cpn;
-	}
-	public void setCpn(AdminCpnVO cpn) {
-		this.cpn = cpn;
 	}
 	
 }

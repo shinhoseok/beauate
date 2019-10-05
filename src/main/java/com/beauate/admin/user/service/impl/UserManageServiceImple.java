@@ -26,11 +26,12 @@ import com.beauate.common.StringUtil;
 import com.beauate.login.service.LoginVO;
 import com.google.gson.Gson;
 
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @Service("userManageService")
-public class UserManageServiceImple implements UserManageService {
+public class UserManageServiceImple extends EgovAbstractServiceImpl implements UserManageService {
 	protected Log log = LogFactory.getLog(this.getClass());
 	
 	@Resource(name="commonUtils")

@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.beauate.jjim.service.JjimDao">
-    <resultMap id="jjimResultMap" type="com.beauate.jjim.service.JjimVO">
-        <id column="jjim_sq" property="jjimSq"/>
-        <result column="c_sq" property="cSq"/>
-        <result column="u_sq" property="uSq"/>
-    </resultMap>
-	<select id="selectJjimByUSqAndCSq" parameterType="jjimVO" resultMap="jjimResultMap">
+
+	<resultMap id="jjimResultMap" type="com.beauate.jjim.service.JjimVO">
+		<id column="jjim_sq" property="jjimId" />
+		<result column="c_sq" property="classId" />
+		<result column="u_sq" property="usrId" />
+	</resultMap>
+	
+	<!-- 쿼리명 : 찜 조회
+	설명 : 찜 조회
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.16     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<select id="selectJjim" parameterType="jjimVO" resultMap="jjimResultMap">
 		<![CDATA[
 			SELECT
 				jjim_sq,
@@ -15,11 +25,19 @@
 			FROM
 				jjim
 			WHERE
-			u_sq = #{uSq} AND c_sq = #{cSq}
+			u_sq = #{usrId} AND c_sq = #{classId}
 		]]>
 	</select>
-
-	<insert id="insertJjimByUSqAndCSq" parameterType="jjimVO">
+	
+	<!-- 쿼리명 : 찜 등록처리
+	설명 : 찜 등록처리
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.16     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<insert id="insertJjimProc" parameterType="jjimVO">
 		<![CDATA[
 			INSERT INTO
 				jjim (
@@ -29,16 +47,24 @@
 				)
 			VALUES
 				(
-					#{jjimSq},
-					#{uSq},
-					#{cSq}
+					#{jjimId},
+					#{usrId},
+					#{classId}
 				)
 		]]>
 	</insert>
-
-	<delete id="deleteJjimByUSqAndCSq" parameterType="jjimVO">
+	
+	<!-- 쿼리명 : 찜 삭제처리
+	설명 : 찜 삭제처리
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.16     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<delete id="deleteJjimProc" parameterType="jjimVO">
 		<![CDATA[
-			DELETE FROM jjim WHERE u_sq = #{uSq} and c_sq = #{cSq}
+			DELETE FROM jjim WHERE u_sq = #{usrId} and c_sq = #{classId}
 		]]>
 	</delete>
 </mapper>

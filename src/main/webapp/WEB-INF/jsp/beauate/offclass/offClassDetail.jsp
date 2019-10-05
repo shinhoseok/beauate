@@ -49,7 +49,7 @@
 											<c:if test="${(todayNum - classStartDtNum) <= 0 and classEndDtNum - todayNum > 0 and classStartDtNum - todayNum >= 0}">
 												<div class="count"><span>${((todayNum - classStartDtNum)*-1) +1 }일 남았어요!</span></div>
 											</c:if>
-											<span class="label">20%</span>
+<!-- 											<span class="label">20%</span> -->
 										</div>
 										<div class="title"><c:out value="${rslt.resultVO.classAreaStNm}"/></div>
 										<div class="desc"><c:out value="${rslt.resultVO.classTitle}"/></div>
@@ -65,25 +65,38 @@
 							<dl class="totalprice">
 								<dt>총 결제금액</dt>
 								<dd>
-									234,500<span class="unit">원</span><span class="discount">124,000</span>
+									<fmt:formatNumber value="${rslt.resultVO.classCost }" pattern="#,###" /><span class="unit">원</span>
+<!-- 									<span class="discount">124,000</span> -->
 								</dd>
 							</dl>
 						</div>
-						<div class="btn-area">
-							<button type="button" class="btn-util">클래스 신청</button>
-							<button type="button" class="btn-wish">찜하기</button>
-						</div>
-						<div class="btn-area">
-							<button type="button" class="btn-util">
-								<span>클래스 외부접수</span>
-							</button>
-							<button type="button" class="btn-wish">찜하기</button>
-						</div>
-						<div class="btn-area">
-							<a href="#modal-alarm" rel="modal:open" class="btn-util">알람신청</a>
-							<button type="button" class="btn-wish active">찜하기</button>
-							<!-- 찜되었을때 class="active" 추가 -->
-						</div>
+						<c:choose>
+							<c:when test="${rslt.resultVO.classSt eq '3' or rslt.resultVO.classSt eq '4'}"> <!-- 마감되었거나, 사람꽉찻을때 -->
+								<div class="btn-area">
+									<a href="#modal-alarm" rel="modal:open" class="btn-util">알람신청</a>
+									<button type="button" class="btn-wish" id="jjimBtn" onclick="javascript:fn_selectJjimProc('<c:out value="${rslt.resultVO.classId}"/>');">찜하기</button>
+									<!-- 찜되었을때 class="active" 추가 -->
+								</div>
+							</c:when>
+							<c:otherwise>
+								<c:if test="${rslt.resultVO.classGb eq '1'}"><!-- 내부일때 -->
+									<div class="btn-area">
+										<button type="button" class="btn-util">클래스 신청</button>
+										<button type="button" class="btn-wish" id="jjimBtn" onclick="javascript:fn_selectJjimProc('<c:out value="${rslt.resultVO.classId}"/>');">찜하기</button>
+										<!-- 찜되었을때 class="active" 추가 -->
+									</div>
+								</c:if>
+								<c:if test="${rslt.resultVO.classGb eq '2'}"><!-- 외부일때 -->
+									<div class="btn-area">
+										<button type="button" class="btn-util">
+											<span>클래스 외부접수</span>
+										</button>
+										<button type="button" class="btn-wish" id="jjimBtn" onclick="javascript:fn_selectJjimProc('<c:out value="${rslt.resultVO.classId}"/>');">찜하기</button>
+										<!-- 찜되었을때 class="active" 추가 -->
+									</div>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
 						<!-- 팝업 : 알람신청 -->
 						<div id="modal-alarm" class="modal">
 							<h2>sign in</h2>
@@ -326,6 +339,44 @@ var fn_shareOffClass = function(classId) {
 	var obShareUrl = window.document.location.href;
 	document.execCommand("copy");
 	alert("URL이 클립보드에 복사되었습니다"); 
+};
+
+//찜하기
+var fn_selectJjimProc = function(classId) {
+	var usrId = "${sessionScope.loginVO.usrId}";
+	if(usrId == null || usrId == "") {
+		alert("로그인 후 사용이 가능합니다.");
+		return;
+	}
+	var params = {};
+	params.usrId = usrId;
+	params.classId = classId;
+	
+	$.ajax({ 	
+		url: "${basePath}/jjim/w/n/selectJjimProc.do",
+		type: 'POST',
+		dataType : "json",
+		data : params,
+		error: function(){
+			 alert("현재 찜 서비스가 원할하지 않습니다.\n잠시후 다시 이용해 주십시요.");
+			 return;
+		},
+		success: function(r) { 
+			if(r.resultYn == 'Y') { //찜함
+// 				$("#jjimBtn").removeClass("btn-wish");
+// 				$("#jjimBtn").removeClass("btn-wish active");
+// 				$("#jjimBtn").addClass("btn-wish active");
+				$(".btn-wish").css("background-color", "#6a2cfe");
+				$(".btn-wish active").css("background-color", "#6a2cfe");
+			} else{ //찜취소
+// 				$("#jjimBtn").removeClass("btn-wish active");
+// 				$("#jjimBtn").removeClass("btn-wish active");
+// 				$("#jjimBtn").addClass("btn-wish");
+				$(".btn-wish").css("background-color", "#000");
+				$(".btn-wish active").css("background-color", "#000");
+			}
+		}
+	}); 
 };
 </script>
 </body>

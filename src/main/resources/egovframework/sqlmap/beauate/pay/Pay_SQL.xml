@@ -10,14 +10,6 @@
         <result column="pay_st" property="paySt"/>
         <result column="pay_method_st" property="payMethodSt"/>
         <result column="pay_cost_no" property="payCostNo"/>
-        <association property="cpn" javaType="com.beauate.cpn.service.AdminCpnVO">
-	        <id column="cpn_sq2" property="cpnSq"/>
-	        <result column="cpn_start_dt" property="cpnStartDt"/>
-	        <result column="cpn_nm" property="cpnNm"/>
-	        <result column="cpn_rate" property="cpnRate"/>
-	        <result column="cpn_end_dt" property="cpnEndDt"/>
-	        <result column="cpn_st" property="cpnSt"/>
-        </association>
         <association column="u_sq" property="user" javaType="userVO">
 	        <id column="u_sq2" property="usrId"/>
 	        <result column="u_email" property="emailAddr"/>

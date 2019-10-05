@@ -131,7 +131,7 @@ public class ClassManageServiceImpl implements ClassManageService {
 		classVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 		
 		List<ClassVO> selectList = null;
-		
+		classVO.setAdminYn("Y");
 		//총 카운트 
 		int cnt = classManageDao.selectClassMngListCnt(classVO);
 		paginationInfo.setTotalRecordCount(cnt);

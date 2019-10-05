@@ -1,26 +1,30 @@
 package com.beauate.jjim.service;
 
-public class JjimVO {
-	String jjimSq;
-	String uSq;
-	String cSq;
-	public String getJjimSq() {
-		return jjimSq;
+import java.io.Serializable;
+
+import com.beauate.common.service.CommDefaultVO;
+
+@SuppressWarnings("serial")
+public class JjimVO extends CommDefaultVO implements Serializable {
+	/** 찜 아이디 */
+	private String jjimId;
+	/** 클래스 아이디 */
+	private String classId;
+	
+	public String getClassId() {
+		return classId;
 	}
-	public void setJjimSq(String jjimSq) {
-		this.jjimSq = jjimSq;
+
+	public void setClassId(String classId) {
+		this.classId = classId;
 	}
-	public String getuSq() {
-		return uSq;
+
+	public String getJjimId() {
+		return jjimId;
 	}
-	public void setuSq(String uSq) {
-		this.uSq = uSq;
-	}
-	public String getcSq() {
-		return cSq;
-	}
-	public void setcSq(String cSq) {
-		this.cSq = cSq;
+
+	public void setJjimId(String jjimId) {
+		this.jjimId = jjimId;
 	}
 	
 }

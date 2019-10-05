@@ -157,7 +157,7 @@
 							</c:choose>
 						</ul>
 						<div class="off_more">
-							<a href="#">헤어 클래스 더보기<img src="${imgPath}/btn_arrow.png" /></a>
+							<a href="${basePath }/offclass/a/t/selectOffClassTabList.do?classCtSt=1">헤어 클래스 더보기<img src="${imgPath}/btn_arrow.png" /></a>
 						</div>
 					</div>
 				</div>
@@ -214,7 +214,7 @@
 							</c:choose>
 						</ul>
 						<div class="off_more">
-							<a href="#">메이크업 클래스 더보기<img src="${imgPath}/btn_arrow.png" /></a>
+							<a href="${basePath }/offclass/a/t/selectOffClassTabList.do?classCtSt=2">메이크업 클래스 더보기<img src="${imgPath}/btn_arrow.png" /></a>
 						</div>
 					</div>
 				</div>
