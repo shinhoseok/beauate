@@ -87,7 +87,7 @@
 							<c:otherwise>
 								<c:if test="${rslt.resultVO.classGb eq '1'}"><!-- 내부일때 -->
 									<div class="btn-area">
-										<button type="button" class="btn-util">클래스 신청</button>
+										<button type="button" class="btn-util" onclick="javascript:fn_selectOffClassApply('<c:out value="${rslt.resultVO.classId}"/>');">클래스 신청</button>
 										<c:choose>
 											<c:when test="${not empty rslt.jjimVO}">
 												<button type="button" class="btn-wish active" id="jjimBtn" onclick="javascript:fn_selectJjimProc('<c:out value="${rslt.resultVO.classId}"/>');">찜하기</button>
@@ -328,11 +328,16 @@
 			</div>
 			<!-- //content -->
 		</div>
+		<form name="detailForm" id="detailForm" method="post" action="/offclass/a/t/selectOffClassApplyDetail.do">
+			<input type="hidden" id="classId" name="classId">
+		</form>
+		<input type="hidden" id="shareUrlAddress">
 		<!-- //container -->
 		<!-- footer -->
 		<%@ include file="/WEB-INF/jsp/beauate/ucommon/footer.jsp"%>
 		<!-- //footer -->
 	</div>
+	
 
 <script type="text/javascript">
 $(function() {
@@ -358,9 +363,10 @@ var fn_move = function(param) {
 
 //공유하기
 var fn_shareOffClass = function(classId) {
-	var obShareUrl = window.document.location.href;
-	document.execCommand("copy");
-	alert("URL이 클립보드에 복사되었습니다"); 
+	var obShareUrl = document.getElementById("shareUrlAddress");
+	var f = document.getElementById("shareUrlAddress");
+	f.value = document.location.href;
+	alert("URL을 복사하세요.\n"+$("#shareUrlAddress").val());
 };
 
 //찜하기
@@ -368,6 +374,7 @@ var fn_selectJjimProc = function(classId) {
 	var usrId = "${sessionScope.loginVO.usrId}";
 	if(usrId == null || usrId == "") {
 		alert("로그인 후 사용이 가능합니다.");
+		fn_loginPopUpLayer();
 		return;
 	}
 	var params = {};
@@ -385,15 +392,9 @@ var fn_selectJjimProc = function(classId) {
 		},
 		success: function(r) { 
 			if(r.resultYn == 'Y') { //찜함
-// 				$("#jjimBtn").removeClass("btn-wish");
-// 				$("#jjimBtn").removeClass("btn-wish active");
-// 				$("#jjimBtn").addClass("btn-wish active");
 				$(".btn-wish").css("background-color", "#6a2cfe");
 				$(".btn-wish active").css("background-color", "#6a2cfe");
 			} else{ //찜취소
-// 				$("#jjimBtn").removeClass("btn-wish active");
-// 				$("#jjimBtn").removeClass("btn-wish active");
-// 				$("#jjimBtn").addClass("btn-wish");
 				$(".btn-wish").css("background-color", "#000");
 				$(".btn-wish active").css("background-color", "#000");
 			}
@@ -416,6 +417,7 @@ var fn_selectAlarmPop = function() {
 	var usrId = "${sessionScope.loginVO.usrId}";
 	if(usrId == null || usrId == "") {
 		alert("로그인 후 사용이 가능합니다.");
+		fn_loginPopUpLayer();
 		return;
 	}
 	$("#alarmBtn").attr("rel", "modal:open");
@@ -470,6 +472,19 @@ var fn_selectAlarmProc = function(classId) {
 			}
 		}
 	});
+};
+
+//끝판왕 클래스 신청 안녕~~
+var fn_selectOffClassApply = function(classId) {
+	var usrId = "${sessionScope.loginVO.usrId}";
+	if(usrId == null || usrId == "") {
+		alert("로그인 후 사용이 가능합니다.");
+		fn_loginPopUpLayer();
+		return;
+	}
+	var frm = document.detailForm;
+	frm.classId.value=classId;
+	frm.submit();
 };
 </script>
 </body>

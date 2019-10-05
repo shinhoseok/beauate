@@ -88,4 +88,26 @@ public interface OffClassService {
 	 * @throws Exception
 	 */ 
 	public Map<String, Object> selectOffClassDetail(ClassVO classVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인클래스 결제화면
+	 * 2. 처리내용 : 오프라인클래스 결제화면
+	 * </pre>
+	 * @Method Name : selectOffClassApplyDetail
+	 * @date : 2019. 10. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param classVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	public Map<String, Object> selectOffClassApplyDetail(ClassVO classVO) throws Exception;
 }

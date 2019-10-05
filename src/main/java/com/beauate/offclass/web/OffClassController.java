@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.beauate.admin.classmng.service.ClassVO;
+import com.beauate.common.StringUtil;
 import com.beauate.login.service.LoginVO;
 import com.beauate.offclass.service.OffClassService;
 
@@ -133,5 +134,34 @@ public class OffClassController {
 		model.addAttribute("rslt", rsltMap);
 		
 		return "/offclass/offClassDetail";
+	}
+		
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인클래스 결제화면
+	 * 2. 처리내용 : 오프라인클래스 결제화면
+	 * </pre>
+	 * @Method Name : selectOffClassApplyDetail
+	 * @date : 2019. 10. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param classVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/offclass/a/t/selectOffClassApplyDetail.do")
+	public String selectOffClassApplyDetail(@ModelAttribute("classVO") ClassVO classVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		Map<String, Object> rsltMap = offClassService.selectOffClassApplyDetail(classVO);
+		model.addAttribute("rslt", rsltMap);
+		model.addAttribute("menTiMblPno", StringUtil.phone(sessionVO.getMblPno()));
+
+		return "/offclass/offClassPay";
 	}
 }

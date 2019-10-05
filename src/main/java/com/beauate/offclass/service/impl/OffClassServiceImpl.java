@@ -14,6 +14,8 @@ import com.beauate.admin.classmng.service.ClassManageDao;
 import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.admin.code.service.CodeDao;
 import com.beauate.admin.code.service.CodeVO;
+import com.beauate.admin.user.service.UserDao;
+import com.beauate.admin.user.service.UserVO;
 import com.beauate.common.DateUtil;
 import com.beauate.common.GlobalConstants;
 import com.beauate.common.StringUtil;
@@ -40,6 +42,9 @@ public class OffClassServiceImpl implements OffClassService {
 	
 	@Resource(name="jjimDao")
 	private JjimDao jjimDao;
+	
+	@Resource(name="userDao")
+	private UserDao userDao;
 	
 	/**
 	 * <pre>
@@ -279,6 +284,56 @@ public class OffClassServiceImpl implements OffClassService {
 		rsltMap.put("sideImgVO", sideImgVO);
 		rsltMap.put("jjimVO", jjimVO);
 		
+		
+		return rsltMap;
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인클래스 결제화면
+	 * 2. 처리내용 : 오프라인클래스 결제화면
+	 * </pre>
+	 * @Method Name : selectOffClassApplyDetail
+	 * @date : 2019. 10. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param classVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	public Map<String, Object> selectOffClassApplyDetail(ClassVO classVO) throws Exception {
+		Map<String, Object> rsltMap = new HashMap<>();
+		ClassVO resultVO = classManageDao.selectClassMngDetail(classVO);
+		//이미지 WAS경로 변환
+		String tempSrc3 = resultVO.getImgSrc3();
+		if(!StringUtil.isEmpty(tempSrc3)) {
+			String resultSrc3 = tempSrc3.substring(tempSrc3.indexOf("\\")+1);
+			log.debug(">> result Path >> "+tempSrc3);
+			resultVO.setImgSrc3(resultSrc3);
+			log.debug(">> vo Path >> "+resultVO.getImgSrc3());
+		} else {
+			throw new NullPointerException("해당 클래스에 등록된 이미지 파일이 없습니다. classId >>> "+classVO.getClassId());
+		}
+		
+		//멘토 전화번호
+		UserVO userVO = new UserVO();
+		userVO.setUsrId(resultVO.getClassUserId());
+		userVO = userDao.selectUserDetail(userVO);
+		if(!StringUtil.isEmpty(userVO.getMblPno())) {
+			userVO.setMblPno(StringUtil.phone(userVO.getMblPno()));
+		} else {
+			userVO.setMblPno("등록된 번호가 없습니다.");
+		}
+		
+		rsltMap.put("resultVO", resultVO);
+		rsltMap.put("userVO", userVO);
 		
 		return rsltMap;
 	}
