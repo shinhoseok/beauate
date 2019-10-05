@@ -47,8 +47,8 @@ public class HomeController {
 	@Resource(name="codeDao")
 	private CodeDao codeDao;
 	
-	@Resource(name="bannerDao")
-	private BannerDao bannerDao;
+//	@Resource(name="bannerDao")
+//	private BannerDao bannerDao;
 	/** 
 	 * 설명 :  홈 메인 페이지 화면
 	 * @param homeVO

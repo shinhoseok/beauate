@@ -16,13 +16,13 @@ import com.beauate.admin.banner.service.BannerVO;
 public class BannerServiceImpl implements BannerService {
 	protected Log log = LogFactory.getLog(this.getClass());
 	
-	@Resource(name="bannerDao")
-	private BannerDao bannerDao;
+//	@Resource(name="bannerDao")
+//	private BannerDao bannerDao;
 
-	@Override
-	public List<BannerVO> selectBannerList(BannerVO bannerVO) throws Exception {
-		return bannerDao.selectBannerList(bannerVO);
-	}
+//	@Override
+//	public List<BannerVO> selectBannerList(BannerVO bannerVO) throws Exception {
+//		return bannerDao.selectBannerList(bannerVO);
+//	}
 
 	
 }

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beauate.admin.coupon.service.CouponManageDao">
+
+	<resultMap id="couponMap" type="com.beauate.admin.coupon.service.CouponVO">
+		<id column="cpn_sq" property="couponId" />
+		<result column="cpn_start_dt" property="couponStartDt" />
+		<result column="cpn_nm" property="couponNm" />
+		<result column="cpn_rate" property="couponRate" />
+		<result column="cpn_end_dt" property="couponEndDt" />
+		<result column="cpn_st" property="couponSt" />
+	</resultMap>
+	
+	<sql id="cpnGubunSql">
+		<where>
+			b.cpn_st = 'Y'
+		</where>
+	</sql>
+	
+	<!-- 쿼리명 : 사용자 목록 카운트
+	설명 : 사용자 목록 카운트
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.16     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<select id="selectCouponMngListCnt" parameterType="couponVO" resultType="int">
+		<![CDATA[
+		SELECT COUNT (*) CNT FROM ADMIN_CPN b
+		]]>
+		<include refid="cpnGubunSql"/>
+	</select>
+	
+	<!-- 쿼리명 : 쿠폰 목록 리스트
+	설명 : 쿠폰 목록 조회
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.17
+	-->
+	<select id="selectCouponMngList" parameterType="couponVO" resultMap="couponMap">
+		SELECT
+			A.*
+		FROM
+			(
+				SELECT
+					ROW_NUMBER() OVER(ORDER BY b.cpn_sq DESC) RNUM,
+					b.cpn_sq,
+					b.cpn_start_dt,
+					b.cpn_nm,
+					b.cpn_rate,
+					b.cpn_end_dt,
+					b.cpn_st
+				FROM
+					ADMIN_CPN b
+				<include refid="cpnGubunSql"/>
+			) A
+		WHERE
+			A.RNUM BETWEEN 1 AND 5
+	</select>
+	
+	<!-- 
+	쿼리명 : 쿠폰 등록
+	  설명 : 쿠폰 등록
+	수정일      		수정자  	수정내용
+	==========  ======  ===================
+	2019. 10.13 	신호석 		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.13
+	-->	
+	<insert id="insertCpnMngProc" parameterType="couponVO">
+		<![CDATA[
+	    INSERT INTO ADMIN_CPN 
+	    		(cpn_sq,
+                 cpn_start_dt,
+                 cpn_nm,
+                 cpn_rate,
+                 cpn_end_dt,
+                 cpn_st)
+	    VALUES	(#{couponId}, 
+	             sysdate, 
+	             #{couponNm}, 
+	             #{couponRate}, 
+	             TO_DATETIME(#{couponEndDt}, 'YYYY-MM-DD'),
+	             #{couponSt}) 
+		]]>
+	</insert>
+	
+	<!-- 쿼리명 : 쿠폰 상세
+	설명 : 쿠폰 상세
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.17
+	-->
+	<select id="selectCpnMngDetail" parameterType="couponVO" resultMap="couponMap">
+		SELECT 
+			cpn_sq,
+			cpn_start_dt,
+			cpn_nm,
+			cpn_rate,
+			cpn_end_dt,
+			cpn_st
+		FROM 
+			ADMIN_CPN
+		WHERE 
+			cpn_sq = #{couponId}
+	</select>
+	
+	<!-- 쿼리명 : 쿠폰 삭제처리
+	설명 : 쿠폰 삭제처리
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.17
+	-->
+	<update id="deleteCpnMngProc" parameterType="couponVO">
+		<![CDATA[
+		UPDATE ADMIN_CPN
+		SET    cpn_st  = #{couponSt}
+		WHERE cpn_sq = #{couponId}
+	    ]]>
+	</update>
+	
+	<!-- 쿼리명 : 쿠폰 수정처리
+	설명 : 쿠폰 삭제처리
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.17
+	-->
+	<update id="updateCpnMngProc" parameterType="couponVO">
+		<![CDATA[
+		UPDATE ADMIN_CPN
+		]]>  
+		<trim prefix="SET" suffixOverrides=",">
+		    <if test="couponStartDt != null and  couponStartDt != ''">
+				cpn_start_dt      = TO_DATETIME(#{couponStartDt}, 'YYYY-MM-DD'),
+		    </if>
+		    <if test="couponNm != null and  couponNm != ''">
+				cpn_nm      = #{couponNm},
+		    </if>
+		    <if test="couponRate != null and  couponRate != ''">
+				cpn_rate     = #{couponRate},
+		    </if>
+		    <if test="couponEndDt != null and  couponEndDt != ''">
+				cpn_end_dt      = TO_DATETIME(#{couponEndDt}, 'YYYY-MM-DD'),
+		    </if>
+		    <if test="couponSt != null and  couponSt != ''">
+				cpn_st      = #{couponSt},
+		    </if>
+	    </trim>
+		<![CDATA[    
+		WHERE  cpn_sq   = #{couponId}
+		]]>
+    </update>
+</mapper>

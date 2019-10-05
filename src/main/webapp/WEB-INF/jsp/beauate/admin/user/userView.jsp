@@ -27,7 +27,10 @@
 			<div class="contents">
 				<p class="contentTitle">사용자 목록</p>
 				<p class="sub_path">
-					<img src="${imagePath }/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;사용자관리&nbsp;〉&nbsp;사용자관리
+					<img src="${imagePath }/ico_home.png" width="10" height="9" />
+					<c:forEach items="${setSubTitleList}" var="list" >
+						>&nbsp;<c:out value="${list.menuName }"></c:out>
+					</c:forEach>
 				</p>
 				<h4 class="contentTitle_h4">로그인 정보</h4>
 				<div class="tableLayer">

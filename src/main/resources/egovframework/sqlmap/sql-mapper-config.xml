@@ -33,6 +33,8 @@
 		<typeAlias alias="boardVO" type="com.beauate.admin.board.service.BoardVO"/>
 		<!-- 배너VO -->
 		<typeAlias alias="bannerVO" type="com.beauate.admin.banner.service.BannerVO"/>
+		<!-- 쿠폰VO -->
+		<typeAlias alias="couponVO" type="com.beauate.admin.coupon.service.CouponVO"/>
 		
 	</typeAliases>
 </configuration>
