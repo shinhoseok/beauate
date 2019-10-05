@@ -72,7 +72,7 @@
 								<tr>
 									<th sortId="brdId" class="noBg">프로그램_ID
 										<span class="arrow_descending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>
-										<span class="arrow_ascending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>									
+										<span class="arrow_ascending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>
 									</th>
 									<th sortId="pgmName">프로그램명
 										<span class="arrow_descending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>

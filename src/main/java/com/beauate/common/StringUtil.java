@@ -574,4 +574,35 @@ public class StringUtil extends StringUtils{
 
         return value;
     }
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 전화번호 00011112222 에 하이픈 추가
+	 * 2. 처리내용 : 전화번호 00011112222 에 하이픈 추가
+	 * </pre>
+	 * @Method Name : selectUserPhon
+	 * @date : 2019. 10. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param String
+	 * @return String
+	 * @throws 
+	 */
+	public static String phone(String src) {
+		if (src == null) {
+			return "";
+		}
+		if (src.length() == 8) {
+			return src.replaceFirst("^([0-9]{4})([0-9]{4})$", "$1-$2");
+		} else if (src.length() == 12) {
+			return src.replaceFirst("(^[0-9]{4})([0-9]{4})([0-9]{4})$", "$1-$2-$3");
+		}
+		return src.replaceFirst("(^02|[0-9]{3})([0-9]{3,4})([0-9]{4})$", "$1-$2-$3");
+	}
 }

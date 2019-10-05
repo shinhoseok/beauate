@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.beauate.admin.classmng.service.ClassVO;
+import com.beauate.login.service.LoginVO;
 import com.beauate.offclass.service.OffClassService;
 
 @Controller
@@ -126,8 +127,8 @@ public class OffClassController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/offclass/a/t/selectOffClassDetail.do")
-	public String selectOffClassDetail(@ModelAttribute("classVO") ClassVO classVO, ModelMap model) throws Exception {
-		
+	public String selectOffClassDetail(@ModelAttribute("classVO") ClassVO classVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		classVO.setUsrId(sessionVO.getUsrId());
 		Map<String, Object> rsltMap = offClassService.selectOffClassDetail(classVO);
 		model.addAttribute("rslt", rsltMap);
 		

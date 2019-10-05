@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beauate.alarm.service.AlarmDao">
+
+	<resultMap id="alarmResultMap" type="com.beauate.alarm.service.AlarmVO">
+		<id column="alarm_sq" property="alarmId" />
+		<result column="alarm_dt" property="alarmDt" />
+		<result column="u_sq" property="usrId" />
+		<result column="c_sq" property="classId" />
+		<result column="alarm_fl" property="alarmFl" />
+		<result column="alarm_send_dt" property="alarmSendDt" />
+		<result column="phone_no" property="mblPno" />
+		<result column="u_nm" property="usrNm" />
+	</resultMap>
+	
+	<sql id="alarmGubunSql">
+		<where>
+			<if test="searchKeyword != null and searchKeyword != ''">
+				<choose>
+					<when test="searchCondition == 'usrNm'">
+						AND c.u_nm LIKE '%'|| #{searchKeyword} ||'%'
+					</when>
+					<when test="searchCondition == 'mblPno'">
+						AND c.phone_no LIKE '%'|| #{searchKeyword} ||'%'
+					</when>
+				</choose>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 쿼리명 : 알람목록 카운트
+	설명 : 알람목록 카운트
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.16     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<select id="selectAlarmMngListCnt" parameterType="alarmVO" resultType="int">
+		<![CDATA[
+		SELECT COUNT (*) CNT FROM ALARM b LEFT JOIN users c ON b.u_sq = c.u_sq
+		]]>
+		<include refid="alarmGubunSql"/>
+	</select>
+	
+	<!-- 쿼리명 : 알람목록 리스트
+	설명 : 알람목록 조회
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.17
+	-->
+	<select id="selectAlarmMngList" parameterType="alarmVO" resultMap="alarmResultMap">
+		SELECT
+			A.*
+		FROM
+			(
+				SELECT
+					ROW_NUMBER() OVER(
+					<choose>
+						<when test="sortSubject == 'alarmDt'">
+						ORDER BY b.alarm_dt
+						</when>
+						<when test="sortSubject == 'alarmFl'">
+						ORDER BY b.alarm_fl
+						</when>
+						<when test="sortSubject == 'alarmSendDt'">
+						ORDER BY b.alarm_dt
+						</when>
+						<when test="sortSubject == 'alarmDt'">
+						ORDER BY b.alarm_send_dt
+						</when>
+						<when test="sortSubject == 'usrNm'">
+						ORDER BY c.u_nm
+						</when>
+						<otherwise>
+						ORDER BY b.alarm_sq
+						</otherwise>
+					</choose>
+						DESC
+					
+					) RNUM,
+					b.alarm_sq,
+					TO_CHAR(b.alarm_dt, 'yyyy-MM-dd') AS alarm_dt,
+					b.u_sq,
+					b.c_sq,
+					b.alarm_fl,
+					TO_CHAR(b.alarm_send_dt, 'yyyy-MM-dd') AS alarm_send_dt,
+					c.phone_no,
+					c.u_nm
+				FROM
+					ALARM b
+				LEFT JOIN users c
+				ON b.u_sq = c.u_sq
+				<include refid="alarmGubunSql"/>
+			) A
+		WHERE
+			A.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
+	</select>
+	
+	<!-- 쿼리명 : 알람 조회
+	설명 : 알람 조회
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.16     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<select id="selectAlarmDetail" parameterType="alarmVO" resultMap="alarmResultMap">
+		<![CDATA[
+			SELECT 
+				alarm_sq,
+				alarm_dt,
+				u_sq,
+				c_sq,
+				alarm_fl,
+				alarm_send_dt
+			FROM 
+				ALARM
+			WHERE
+			u_sq = #{usrId} AND c_sq = #{classId}
+		]]>
+	</select>
+	
+	<!-- 쿼리명 : 알람 등록처리
+	설명 : 알람 등록처리
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.16     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<insert id="insertAlarmProc" parameterType="alarmVO">
+		<![CDATA[
+			INSERT INTO
+				ALARM (
+					alarm_sq,
+					alarm_dt,
+					u_sq,
+					c_sq,
+					alarm_fl,
+					alarm_send_dt
+				)
+			VALUES
+				(
+					#{alarmId},
+					sysdate,
+					#{usrId},
+					#{classId},
+					#{alarmFl},
+					'N'
+				)
+		]]>
+	</insert>
+	
+	<!-- 쿼리명 : 알람 삭제처리
+	설명 : 알람 삭제처리
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.16     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<delete id="deleteAlarmProc" parameterType="alarmVO">
+		<![CDATA[
+			DELETE FROM ALARM WHERE u_sq = #{usrId} and c_sq = #{classId}
+		]]>
+	</delete>
+	
+	<!-- 쿼리명 : 알람 수정
+	설명 : 알람 수정
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.17
+	-->
+	<update id="updateAlarmProc" parameterType="alarmVO">
+		<![CDATA[
+		UPDATE ALARM
+		]]>  
+		<trim prefix="SET" suffixOverrides=",">
+		    <if test="alarmFl != null and  alarmFl != ''">
+				alarm_fl      = #{alarmFl},
+				alarm_send_dt      = sysdate
+		    </if>
+	    </trim>
+		<![CDATA[    
+		WHERE  alarm_sq   = #{alarmId}
+		]]>
+    </update>
+</mapper>
+

@@ -74,7 +74,7 @@ public class UserManageServiceImple extends EgovAbstractServiceImpl implements U
 	 * @param model
 	 * @return
 	 * @throws Exception
-	 */ 	
+	 */ 
 	public void selectUserList(UserVO userVO, ModelMap model) throws Exception {
 		
 		//페이징 

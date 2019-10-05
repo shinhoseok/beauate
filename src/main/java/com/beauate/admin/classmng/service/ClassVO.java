@@ -57,6 +57,8 @@ public class ClassVO extends CommDefaultVO implements Serializable {
 	private String imgSrc;
 	/** 이미지주소 상세디테일 */
 	private String imgSrc2;
+	/** 이미지주소 알람신청 작은사진 */
+	private String imgSrc3;
 	/** 이미지주소관리자는 필요없으므로 구분자 유저는 N */
 	private String adminYn;
 	/** 게시판에 이미지가 몇장 들어가는지 */
@@ -64,6 +66,12 @@ public class ClassVO extends CommDefaultVO implements Serializable {
 	/** 오더바이 필요여부 */
 	private boolean orderByYn = false;
 	
+	public String getImgSrc3() {
+		return imgSrc3;
+	}
+	public void setImgSrc3(String imgSrc3) {
+		this.imgSrc3 = imgSrc3;
+	}
 	public String getImgSrc2() {
 		return imgSrc2;
 	}

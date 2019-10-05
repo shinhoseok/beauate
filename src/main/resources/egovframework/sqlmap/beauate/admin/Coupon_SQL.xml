@@ -48,10 +48,10 @@
 				SELECT
 					ROW_NUMBER() OVER(ORDER BY b.cpn_sq DESC) RNUM,
 					b.cpn_sq,
-					b.cpn_start_dt,
+					TO_CHAR(b.cpn_start_dt, 'yyyy-MM-dd') AS cpn_start_dt,
 					b.cpn_nm,
 					b.cpn_rate,
-					b.cpn_end_dt,
+					TO_CHAR(b.cpn_end_dt, 'yyyy-MM-dd') AS cpn_end_dt,
 					b.cpn_st
 				FROM
 					ADMIN_CPN b
@@ -99,10 +99,10 @@
 	<select id="selectCpnMngDetail" parameterType="couponVO" resultMap="couponMap">
 		SELECT 
 			cpn_sq,
-			cpn_start_dt,
+			TO_CHAR(cpn_start_dt, 'yyyy-MM-dd') AS cpn_start_dt,
 			cpn_nm,
 			cpn_rate,
-			cpn_end_dt,
+			TO_CHAR(cpn_end_dt, 'yyyy-MM-dd') AS cpn_end_dt,
 			cpn_st
 		FROM 
 			ADMIN_CPN

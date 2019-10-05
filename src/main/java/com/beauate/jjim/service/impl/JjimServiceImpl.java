@@ -40,7 +40,7 @@ public class JjimServiceImpl extends EgovAbstractServiceImpl implements JjimServ
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param jjimVO
-	 * @return void
+	 * @return String
 	 * @throws Exception
 	 */ 
 	public String selectJjimProc(JjimVO jjimVO) throws Exception {

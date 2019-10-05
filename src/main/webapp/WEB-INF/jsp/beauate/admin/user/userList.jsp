@@ -26,13 +26,18 @@
 			<!-- left_menu End -->
 			<div class="contents">
 				<p class="contentTitle">회원 리스트</p>
+				<!-- sub_path Start -->
 				<p class="sub_path">
-					<img src="${imagePath }/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;회원관리&nbsp;〉&nbsp;회원 리스트
+					<img src="${imagePath }/ico_home.png" width="10" height="9" />
+					<c:forEach items="${setSubTitleList}" var="list" >
+						>&nbsp;<c:out value="${list.menuName }"></c:out>
+					</c:forEach>
 				</p>
+				<!-- sub_path End -->
 				<form:form commandName="userVO" id="userVO" name="listForm" method="post" action="${basePath}/usermgr/r/m/userList.do">
-                    <form:hidden path="pageIndex" id="pageIndex" />
-                    <form:hidden path="sortSubject"/>
-                    <form:hidden path="sortDescend"/>
+					<form:hidden path="pageIndex" id="pageIndex" />
+					<form:hidden path="sortSubject" />
+					<form:hidden path="sortDescend" />
 					<div class="selectBox">
 						<select name="select" class="w13p">
 							<option>이름</option>

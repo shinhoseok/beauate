@@ -17,6 +17,8 @@ import com.beauate.admin.code.service.CodeVO;
 import com.beauate.common.DateUtil;
 import com.beauate.common.GlobalConstants;
 import com.beauate.common.StringUtil;
+import com.beauate.jjim.service.JjimDao;
+import com.beauate.jjim.service.JjimVO;
 import com.beauate.offclass.service.OffClassDao;
 import com.beauate.offclass.service.OffClassService;
 
@@ -35,6 +37,9 @@ public class OffClassServiceImpl implements OffClassService {
 	
 	@Resource(name="codeDao")
 	private CodeDao codeDao;
+	
+	@Resource(name="jjimDao")
+	private JjimDao jjimDao;
 	
 	/**
 	 * <pre>
@@ -240,12 +245,15 @@ public class OffClassServiceImpl implements OffClassService {
 		//이미지 WAS경로 변환
 		String tempSrc = resultVO.getImgSrc();
 		String tempSrc2 = resultVO.getImgSrc2();
+		String tempSrc3 = resultVO.getImgSrc3();
 		if(!StringUtil.isEmpty(tempSrc) && !StringUtil.isEmpty(tempSrc2)) {
 			String resultSrc = tempSrc.substring(tempSrc.indexOf("\\")+1);
-			String resultSrc2 = tempSrc2.substring(tempSrc.indexOf("\\")+1);
+			String resultSrc2 = tempSrc2.substring(tempSrc2.indexOf("\\")+1);
+			String resultSrc3 = tempSrc3.substring(tempSrc3.indexOf("\\")+1);
 			log.debug(">> result Path >> "+resultSrc2);
 			resultVO.setImgSrc(resultSrc);
 			resultVO.setImgSrc2(resultSrc2);
+			resultVO.setImgSrc3(resultSrc3);
 			log.debug(">> vo Path >> "+resultVO.getImgSrc2());
 		} else {
 			throw new NullPointerException("해당 클래스에 등록된 이미지 파일이 없습니다. classId >>> "+classVO.getClassId());
@@ -257,9 +265,20 @@ public class OffClassServiceImpl implements OffClassService {
 			sideImgVO = fullImgPathChang(sideImgVO);
 		}
 		
+		//찜내역 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		JjimVO jjimVO = null;
+		if(!StringUtil.isEmpty(classVO.getUsrId())) {
+			JjimVO paramVO = new JjimVO();
+			paramVO.setUsrId(classVO.getUsrId());
+			paramVO.setClassId(resultVO.getClassId());
+			jjimVO = jjimDao.selectJjim(paramVO);
+		}
+				
 		rsltMap.put("resultVO", resultVO);
 		rsltMap.put("today", today);
 		rsltMap.put("sideImgVO", sideImgVO);
+		rsltMap.put("jjimVO", jjimVO);
+		
 		
 		return rsltMap;
 	}

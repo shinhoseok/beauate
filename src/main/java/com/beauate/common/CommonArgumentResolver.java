@@ -22,7 +22,7 @@ import com.beauate.login.service.LoginVO;
  * @ -------------		---------	-------------------------------
  * @  2019. 7. 17.		신호석		최초생성
  * </PRE>
- * Copyright (C) by ENKISOFT All right reserved.
+ * Copyright (C) by BEAUATE All right reserved.
  ********************************************************************************/
 
 public class CommonArgumentResolver implements HandlerMethodArgumentResolver{

@@ -67,7 +67,7 @@
 									</c:forEach>
 							</c:if>
 							</ul>
-							<div class="off_more"><a href="${basePath}/class/a/t/classMainList.do">클래스 더보기<img src="${imgPath}/btn_arrow.png"></a></div>	
+							<div class="off_more"><a href="${basePath}/offclass/a/t/selectOffClassList.do">클래스 더보기<img src="${imgPath}/btn_arrow.png"></a></div>	
 				</div>
 			<!--//new 클래스---->
 			<!-- slider banner2 -->

@@ -1,13 +1,13 @@
-package com.beauate.jjim.service;
+package com.beauate.alarm.service;
 
-public interface JjimService {
+public interface AlarmService {
 	
 	/**
 	 * <pre>
-	 * 1. 개요 : 찜 조회 후 삭제 혹은 등록처리
-	 * 2. 처리내용 :  찜 조회 후 삭제 혹은 등록처리
+	 * 1. 개요 : 알람 조회 후 등록처리
+	 * 2. 처리내용 :  알람 조회 후 등록처리
 	 * </pre>
-	 * @Method Name : selectJjimProc
+	 * @Method Name : selectAlarmDetail
 	 * @date : 2019. 10. 16.
 	 * @author : 신호석
 	 * @history : 
@@ -17,9 +17,9 @@ public interface JjimService {
 	 *	2019. 10. 16  신호석			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
-	 * @param jjimVO
+	 * @param alarmVO
 	 * @return String
 	 * @throws Exception
 	 */ 
-	public String selectJjimProc(JjimVO jjimVO) throws Exception;
+	public String selectAlarmDetail(AlarmVO alarmVO) throws Exception;
 }

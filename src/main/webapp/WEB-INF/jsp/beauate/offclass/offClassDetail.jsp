@@ -73,26 +73,44 @@
 						<c:choose>
 							<c:when test="${rslt.resultVO.classSt eq '3' or rslt.resultVO.classSt eq '4'}"> <!-- 마감되었거나, 사람꽉찻을때 -->
 								<div class="btn-area">
-									<a href="#modal-alarm" rel="modal:open" class="btn-util">알람신청</a>
-									<button type="button" class="btn-wish" id="jjimBtn" onclick="javascript:fn_selectJjimProc('<c:out value="${rslt.resultVO.classId}"/>');">찜하기</button>
-									<!-- 찜되었을때 class="active" 추가 -->
+									<a href="#modal-alarm" class="btn-util" id="alarmBtn" onclick="javascript:fn_selectAlarmPop();">알람신청</a>
+									<c:choose>
+										<c:when test="${not empty rslt.jjimVO}">
+											<button type="button" class="btn-wish active" id="jjimBtn" onclick="javascript:fn_selectJjimProc('<c:out value="${rslt.resultVO.classId}"/>');">찜하기</button>
+										</c:when>
+										<c:otherwise>
+											<button type="button" class="btn-wish" id="jjimBtn" onclick="javascript:fn_selectJjimProc('<c:out value="${rslt.resultVO.classId}"/>');">찜하기</button>
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</c:when>
 							<c:otherwise>
 								<c:if test="${rslt.resultVO.classGb eq '1'}"><!-- 내부일때 -->
 									<div class="btn-area">
 										<button type="button" class="btn-util">클래스 신청</button>
-										<button type="button" class="btn-wish" id="jjimBtn" onclick="javascript:fn_selectJjimProc('<c:out value="${rslt.resultVO.classId}"/>');">찜하기</button>
-										<!-- 찜되었을때 class="active" 추가 -->
+										<c:choose>
+											<c:when test="${not empty rslt.jjimVO}">
+												<button type="button" class="btn-wish active" id="jjimBtn" onclick="javascript:fn_selectJjimProc('<c:out value="${rslt.resultVO.classId}"/>');">찜하기</button>
+											</c:when>
+											<c:otherwise>
+												<button type="button" class="btn-wish" id="jjimBtn" onclick="javascript:fn_selectJjimProc('<c:out value="${rslt.resultVO.classId}"/>');">찜하기</button>
+											</c:otherwise>
+										</c:choose>
 									</div>
 								</c:if>
 								<c:if test="${rslt.resultVO.classGb eq '2'}"><!-- 외부일때 -->
 									<div class="btn-area">
-										<button type="button" class="btn-util">
+										<button type="button" class="btn-util" onclick="javascript:fn_outWebAdrOffClass('<c:out value="${rslt.resultVO.classWebAdr}"/>');">
 											<span>클래스 외부접수</span>
 										</button>
-										<button type="button" class="btn-wish" id="jjimBtn" onclick="javascript:fn_selectJjimProc('<c:out value="${rslt.resultVO.classId}"/>');">찜하기</button>
-										<!-- 찜되었을때 class="active" 추가 -->
+										<c:choose>
+											<c:when test="${not empty rslt.jjimVO}">
+												<button type="button" class="btn-wish active" id="jjimBtn" onclick="javascript:fn_selectJjimProc('<c:out value="${rslt.resultVO.classId}"/>');">찜하기</button>
+											</c:when>
+											<c:otherwise>
+												<button type="button" class="btn-wish" id="jjimBtn" onclick="javascript:fn_selectJjimProc('<c:out value="${rslt.resultVO.classId}"/>');">찜하기</button>
+											</c:otherwise>
+										</c:choose>
 									</div>
 								</c:if>
 							</c:otherwise>
@@ -103,28 +121,32 @@
 							<p class="title-desc">알람신청</p>
 							<div class="item">
 								<div class="thumb">
-									<img src="${imagePath}/empty/img-tumb-290x295_2.png" alt="" />
+									<img src="${uploadPath}/<c:out value="${rslt.resultVO.imgSrc3 }"/>" alt="" />
 								</div>
 								<div class="rcont">
-									<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
+									<div class="desc"><c:out value="${rslt.resultVO.classTitle}"/></div>
 									<div class="etc">
-										<span>개강일</span> <span>7월 23일(화)</span>
+										<span>개강일</span>
+										<span>
+											<fmt:parseDate value="${rslt.resultVO.classStartDt}" var="classStartDt" pattern="yyyy-MM-dd"/> 
+											<fmt:formatDate value="${classStartDt}" pattern="yyyy-MM-dd"/>
+										</span>
 									</div>
 								</div>
 							</div>
-							<dl class="alarm-phone">
+							<dl class="alarm-phone" id="alarm-phone">
 								<dt>휴대폰</dt>
-								<dd>010 - 1234 - 5689</dd>
+								<dd></dd>
 							</dl>
 							<div class="my-modify">
 								<span>번호변경을 원하실 경우 마이페이지에 변경하실 수 있습니다.</span> <a href="#">내 정보수정</a>
 							</div>
 							<div class="btn-area">
-								<button class="btn">
+								<button class="btn" type="button" onclick="javascript:fn_selectAlarmProc('<c:out value="${rslt.resultVO.classId}"/>');">
 									<span>알람신청</span>
 								</button>
 							</div>
-							<a href="#" rel="modal:close" class="modal-close">닫기</a>
+							<a href="#" rel="modal:close" class="modal-close" id="alarm_modal_close">닫기</a>
 						</div>
 					</div>
 					<!-- //우측 퀵 영역 end -->
@@ -377,6 +399,77 @@ var fn_selectJjimProc = function(classId) {
 			}
 		}
 	}); 
+};
+
+//외부주소링크
+var fn_outWebAdrOffClass = function(classWebAdr) {
+	if(classWebAdr == null || classWebAdr == "") {
+		alert("외부링크 주소가 잘못되었습니다.\n관리자에게 문의하세요.");
+		return;
+	}
+	window.open(classWebAdr, "_blank");
+	return;
+};
+
+//알람신청 팝업
+var fn_selectAlarmPop = function() {
+	var usrId = "${sessionScope.loginVO.usrId}";
+	if(usrId == null || usrId == "") {
+		alert("로그인 후 사용이 가능합니다.");
+		return;
+	}
+	$("#alarmBtn").attr("rel", "modal:open");
+	
+	$.ajax({ 	
+		url: "${basePath}/alarm/r/n/selectUserPhon.do",
+		type: 'POST',
+		dataType : "json",
+		data : { "usrId" : usrId},
+		error: function(){
+			 alert("현재 알람신청 서비스가 원할하지 않습니다.\n잠시후 다시 이용해 주십시요.");
+			 return;
+		},
+		success: function(r) { 
+			if(r.mblPno != "N") {
+				$("#alarm-phone").children("dd").remove();
+				$("#alarm-phone").append("<dd>"+r.mblPno+"</dd>");
+			} else {
+				$("#alarm-phone").children("dd").remove();
+				$("#alarm-phone").append("<dd>등록하신 연락처가 없습니다.</dd>");
+			}
+			
+		}
+	}); 
+};
+
+//알람신청을 하면 알람신청이 되었는지 확인하고 되었으면 리턴 안되었으면 인서트
+var fn_selectAlarmProc = function(classId) {
+	var usrId = "${sessionScope.loginVO.usrId}";
+	var params = {};
+	params.usrId = usrId;
+	params.classId = classId;
+	
+	$.ajax({ 	
+		url: "${basePath}/alarm/w/n/selectAlarmProc.do",
+		type: 'POST',
+		dataType : "json",
+		data : params,
+		error: function(){
+			 alert("현재 알람신청 서비스가 원할하지 않습니다.\n잠시후 다시 이용해 주십시요.");
+			 return;
+		},
+		success: function(r) { 
+			if(r.resultYn == 'Y') {
+				alert("알람신청이 완료되었습니다.\n클래스가 새로 오픈되는대로 문자로 발송드리겠습니다.");
+				$("#alarm_modal_close").get(0).click();
+				return;
+			} else{
+				alert("이미 알람신청이 되어있습니다.\n클래스가 새로 오픈되는대로 문자로 발송드리겠습니다.");
+				$("#alarm_modal_close").get(0).click();
+				return;
+			}
+		}
+	});
 };
 </script>
 </body>

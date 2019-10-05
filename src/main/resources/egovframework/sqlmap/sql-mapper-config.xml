@@ -25,16 +25,20 @@
 		<typeAlias alias="loginVO" type="com.beauate.login.service.LoginVO"/>
 		<!-- 오프라인클래스 VO -->
 		<typeAlias alias="classVO" type="com.beauate.admin.classmng.service.ClassVO"/>
-		<typeAlias alias="classReviewVO" type="com.beauate.admin.classmng.service.ClassReviewVO"/>
-		<!-- 관리자 공통코드관리 VO -->
-		<typeAlias alias="payVO" type="com.beauate.pay.service.PayVO"/>
+		<!-- 찜 VO -->
 		<typeAlias alias="jjimVO" type="com.beauate.jjim.service.JjimVO"/>
 		<!-- 게시판 VO -->
 		<typeAlias alias="boardVO" type="com.beauate.admin.board.service.BoardVO"/>
-		<!-- 배너VO -->
-		<typeAlias alias="bannerVO" type="com.beauate.admin.banner.service.BannerVO"/>
 		<!-- 쿠폰VO -->
 		<typeAlias alias="couponVO" type="com.beauate.admin.coupon.service.CouponVO"/>
+		<!-- 배너VO -->
+		<typeAlias alias="bannerVO" type="com.beauate.admin.banner.service.BannerVO"/>
+		<!-- 알람VO -->
+		<typeAlias alias="alarmVO" type="com.beauate.alarm.service.AlarmVO"/>
+		
+		<typeAlias alias="payVO" type="com.beauate.pay.service.PayVO"/>
+		
+		<typeAlias alias="classReviewVO" type="com.beauate.admin.classmng.service.ClassReviewVO"/>
 		
 	</typeAliases>
 </configuration>
