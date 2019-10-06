@@ -2,8 +2,12 @@ package beauate;
 
 public class Test {
 	public static void main(String[] args) {
-		String temp = "D:/project/beauate/eGovFrameDev-3.8.0-64bit/workspace/beauate/src/main/webapp/ucontents/upload/\\201909/filename";
+		String temp = "/opt/tomcat/webapps/ROOT/ucontents/upload//201910/CLASS_201910060156196800";
 		int cnt = temp.indexOf("\\");
+		System.out.println("sin>> "+cnt);
+		if(cnt == -1) {
+			cnt = temp.indexOf("//");
+		}
 		String result = temp.substring(cnt+1);
 		System.out.println(result);
 //		String result = temp.substring(temp.length()-);

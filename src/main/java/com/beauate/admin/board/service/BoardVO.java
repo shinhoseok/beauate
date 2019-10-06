@@ -25,7 +25,15 @@ public class BoardVO extends CommDefaultVO implements Serializable {
 	private String adminYn;
 	/** 이전글, 다음글 구분 */
 	private String nextYn;
+	/** 공지사항 이벤트 쿠폰아이디 */
+	private String couponId;
 	
+	public String getCouponId() {
+		return couponId;
+	}
+	public void setCouponId(String couponId) {
+		this.couponId = couponId;
+	}
 	public String getNextYn() {
 		return nextYn;
 	}

@@ -104,13 +104,19 @@
 								</td>
 								<!-- 공지사항은 이미지 없음 -->
 								<tr id="imgUploadTr">
-									<th colspan="2"><span class="thstar"></span>
-										이미지(목록1, 상세1 순으로 등록)
+									<th colspan="1"><span class="thstar"></span>
+										이미지(목록1, 상세1 <br/>순서로 등록)
 									</th>
+<!-- 									<td colspan="4"> -->
+<!-- 										<input class="hideFile" name="file_1" id="egovComFileUploader" type="file" title="첨부파일입력" /> -->
+<!-- 										<span id="atchFileNot" style="margin-left: 5px; display: none;">(* 첨부파일을 더 이상 등록 할 수 없습니다.)</span> -->
+<!-- 										<div class="download_list" id="egovComFileList"></div> -->
+<!-- 									</td> -->
 									<td colspan="4">
-										<input class="hideFile" name="file_1" id="egovComFileUploader" type="file" title="첨부파일입력" />
-										<span id="atchFileNot" style="margin-left: 5px; display: none;">(* 첨부파일을 더 이상 등록 할 수 없습니다.)</span>
-										<div class="download_list" id="egovComFileList"></div>
+										<input class="hideFile" name="file_1" id="egovComFileUploader" type="file" title="첨부파일입력" /><span id="atchFileNot" style="margin-left: 5px; display: none;">(* 첨부파일을 더 이상 등록 할 수 없습니다.)</span>
+										<c:import url="/cmm/fms/selectFileInfsForUpdate.do" charEncoding="utf-8">
+											<c:param name="param_atchFileId" value="${boardVO.atchFileId}" />
+										</c:import>
 									</td>
 								</tr>
 							</tbody>

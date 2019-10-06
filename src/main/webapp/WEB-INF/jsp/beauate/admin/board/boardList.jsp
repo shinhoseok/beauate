@@ -34,29 +34,30 @@
 					</c:forEach>
 				</p>
 				<!-- sub_path End -->
-				<form:form commandName="boardVO" id="listForm" name="listForm" method="post" action="${basePath}/boardm/r/m/selectBoardMngList.do">
-					<form:hidden path="postId"/>
+				<form:form commandName="boardVO" id="listForm" name="listForm" method="post">
+					<form:hidden path="postId" id="postId"/>
 					<form:hidden path="sortSubject"/>
 					<form:hidden path="sortDescend"/>
 					<form:hidden path="pageIndex"/>
-					<div class="selectBox">
-						<form:select path="searchCondition" class="w13p">
-							<form:option value="post_title" label="제목"></form:option>
-						</form:select> 
-						<form:input path="searchKeyword" onkeydown="if(event.keyCode==13){javascript:fn_searchList(1);}" class="searchName" style="width: 737px;"></form:input>
-						<button type="button" class="grayBtn ico" onclick="javascript:fn_searchList(1);"><img src="${imagePath }/ico_search.png"> 검색</button>
+					<div class="selectBox" id="selectBox">
+						<select name="searchCondition" class="w13p" onchange="javascript:fn_titleOrCategory();" id="searchCondition">
+							<option value="post_title">제목</option>
+							<option value="postCategorySt">카테고리</option>
+						</select>
+						<input name="searchKeyword" id="searchKeyword" onkeydown="if(event.keyCode==13){javascript:fn_searchList(1);}" class="searchName" style="width: 737px;" type="text">
+						<button type="button" id="seachBtn" class="grayBtn ico" onclick="javascript:fn_searchList(1);"><img src="${imagePath }/ico_search.png"> 검색</button>
 					</div>
 					<div class="tableLayer">
 						<table class="tableList">
 							<caption></caption>
 							<colgroup>
-								<col width="5%">
+								<col width="10%">
 								<col width="20%">
 								<col width="*">
 								<col width="20%">
 							</colgroup>
 							<thead>
-								<th sortId="postId" class="noBg">게시글_ID
+								<th sortId="postId" class="noBg">게시글ID
 									<span class="arrow_descending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>
 									<span class="arrow_ascending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>									
 								</th>
@@ -73,7 +74,7 @@
 									<span class="arrow_ascending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>
 								</th>
 							</thead>
-							<tbody>
+							<tbody id="boardListTbody">
 								<c:choose>
 									<c:when test="${rslt.selectListCnt != 0}">
 										<c:forEach items="${rslt.selectList}" var="list" varStatus="i">
@@ -114,7 +115,6 @@
 				<!--paging Start -->
 				<div class="paging_place">
 					<div class="paging_wrap">
-<%-- 						<ui:pagination paginationInfo="${rslt.paginationInfo}" type="image" jsFunction="fn_searchList" /> --%>
 						<comTag:paging totalCount="${rslt.selectListCnt}" pageNo="${boardVO.pageIndex}" pageSize="${boardVO.pageSize}" clickPage="fn_searchList"/>
 					</div>
 				</div>
@@ -147,10 +147,45 @@ fn_boardDetail = function(postId) {
 };
 
 //검색, 페이지 이동
+//현재페이지 전역변수
+var cuurPage = 1;
 fn_searchList = function(pageNo){
 	var frm = document.listForm;
 	frm.pageIndex.value = pageNo;
 	frm.submit();
+};
+
+//검색 셀렉트박스 onchange
+var fn_titleOrCategory = function() {
+	var searchCondition = $("#searchCondition option:selected").val();
+	var option = '<select name="searchKeyword" id="searchKeyword" class="w13p">';
+	if(searchCondition == "postCategorySt") { //카테고리일 경우
+		//등록된 아이디인지 여부체크
+		$.ajax({ 	
+			url: "${basePath}/boardm/r/n/selectCommonCodeList.do",
+			type: 'POST',
+			dataType : "json",
+			error: function(){
+				 alert("현재 조회 서비스가 원할하지 않습니다.\n잠시후 다시 이용해 주십시요.");
+				 return;
+			},
+			success: function(r) {
+				$("#selectBox").children("input").remove();
+				for(var i=0; i < r.codeList.length; i++) {
+					option += "<option value='"+r.codeList[i].mclsCd+"'>"+
+					r.codeList[i].mclsNm +"</option>";
+				}
+				option += "</select>";
+				$("#seachBtn").before(option);
+			}
+		});
+	} else { //제목일 경우
+		$("#selectBox").children("#searchKeyword").remove();
+		$("#selectBox").children("#seachBtn").remove();
+		var seachText = '<input name="searchKeyword" id="searchKeyword" onkeydown="if(event.keyCode==13){javascript:fn_searchList(1);}" class="searchName" style="width: 737px;" type="text">';
+		seachText += '<button type="button" id="seachBtn" class="grayBtn ico" onclick="javascript:fn_searchList(1);"><img src="${imagePath }/ico_search.png"> 검색</button>';
+		$("#selectBox").append(seachText);
+	}
 };
 </script>
 </html>

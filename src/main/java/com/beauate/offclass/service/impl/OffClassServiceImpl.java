@@ -103,7 +103,11 @@ public class OffClassServiceImpl implements OffClassService {
 			String tempSrc = sqlList.get(i).getImgSrc();
 			log.debug(">> origin Path >> "+tempSrc);
 			if(!StringUtil.isEmpty(tempSrc)) {
-				String resultSrc = tempSrc.substring(tempSrc.indexOf("\\")+1);
+				int cnt = tempSrc.indexOf("\\");
+				if(cnt == -1) {
+					cnt = tempSrc.indexOf("//");
+				}
+				String resultSrc = tempSrc.substring(cnt+1);
 				log.debug(">> result Path >> "+resultSrc);
 				sqlList.get(i).setImgSrc(resultSrc);
 				log.debug(">> vo Path >> "+sqlList.get(i).getImgSrc());
@@ -252,9 +256,21 @@ public class OffClassServiceImpl implements OffClassService {
 		String tempSrc2 = resultVO.getImgSrc2();
 		String tempSrc3 = resultVO.getImgSrc3();
 		if(!StringUtil.isEmpty(tempSrc) && !StringUtil.isEmpty(tempSrc2)) {
-			String resultSrc = tempSrc.substring(tempSrc.indexOf("\\")+1);
-			String resultSrc2 = tempSrc2.substring(tempSrc2.indexOf("\\")+1);
-			String resultSrc3 = tempSrc3.substring(tempSrc3.indexOf("\\")+1);
+			int cnt1 = tempSrc.indexOf("\\");
+			if(cnt1 == -1) {
+				cnt1 = tempSrc.indexOf("//");
+			}
+			int cnt2 = tempSrc2.indexOf("\\");
+			if(cnt2 == -1) {
+				cnt2 = tempSrc2.indexOf("//");
+			}
+			int cnt3 = tempSrc3.indexOf("\\");
+			if(cnt3 == -1) {
+				cnt3 = tempSrc3.indexOf("//");
+			}
+			String resultSrc = tempSrc.substring(cnt1+1);
+			String resultSrc2 = tempSrc2.substring(cnt2+1);
+			String resultSrc3 = tempSrc3.substring(cnt3+1);
 			log.debug(">> result Path >> "+resultSrc2);
 			resultVO.setImgSrc(resultSrc);
 			resultVO.setImgSrc2(resultSrc2);
@@ -314,7 +330,11 @@ public class OffClassServiceImpl implements OffClassService {
 		//이미지 WAS경로 변환
 		String tempSrc3 = resultVO.getImgSrc3();
 		if(!StringUtil.isEmpty(tempSrc3)) {
-			String resultSrc3 = tempSrc3.substring(tempSrc3.indexOf("\\")+1);
+			int cnt = tempSrc3.indexOf("\\");
+			if(cnt == -1) {
+				cnt = tempSrc3.indexOf("//");
+			}
+			String resultSrc3 = tempSrc3.substring(cnt+1);
 			log.debug(">> result Path >> "+tempSrc3);
 			resultVO.setImgSrc3(resultSrc3);
 			log.debug(">> vo Path >> "+resultVO.getImgSrc3());

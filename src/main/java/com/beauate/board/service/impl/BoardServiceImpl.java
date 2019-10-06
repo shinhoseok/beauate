@@ -84,7 +84,11 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 				String tempSrc = selectList.get(i).getImgSrc();
 				log.debug(">> origin Path >> "+tempSrc);
 				if(!StringUtil.isEmpty(tempSrc)) {
-					String resultSrc = tempSrc.substring(tempSrc.indexOf("\\")+1);
+					int cnt1 = tempSrc.indexOf("\\");
+					if(cnt1 == -1) {
+						cnt1 = tempSrc.indexOf("//");
+					}
+					String resultSrc = tempSrc.substring(cnt1+1);
 					log.debug(">> result Path >> "+resultSrc);
 					selectList.get(i).setImgSrc(resultSrc);
 					log.debug(">> vo Path >> "+selectList.get(i).getImgSrc());
@@ -124,7 +128,11 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		String tempSrc = resultVO.getImgSrc();
 		log.debug(">> origin Path >> "+tempSrc);
 		if(!StringUtil.isEmpty(tempSrc)) {
-			String resultSrc = tempSrc.substring(tempSrc.indexOf("\\")+1);
+			int cnt = tempSrc.indexOf("\\");
+			if(cnt == -1) {
+				cnt = tempSrc.indexOf("//");
+			}
+			String resultSrc = tempSrc.substring(cnt+1);
 			log.debug(">> result Path >> "+resultSrc);
 			resultVO.setImgSrc(resultSrc);
 			log.debug(">> vo Path >> "+resultVO.getImgSrc());
@@ -167,7 +175,11 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 			String tempSrc = resultVO.getImgSrc();
 			log.debug(">> origin Path >> "+tempSrc);
 			if(!StringUtil.isEmpty(tempSrc)) {
-				String resultSrc = tempSrc.substring(tempSrc.indexOf("\\")+1);
+				int cnt = tempSrc.indexOf("\\");
+				if(cnt == -1) {
+					cnt = tempSrc.indexOf("//");
+				}
+				String resultSrc = tempSrc.substring(cnt+1);
 				log.debug(">> result Path >> "+resultSrc);
 				resultVO.setImgSrc(resultSrc);
 				log.debug(">> vo Path >> "+resultVO.getImgSrc());

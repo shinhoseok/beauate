@@ -41,7 +41,7 @@
 						<h3>결제정보</h3>
 						<div class="class-info-item">
 							<div class="thumb">
-								<img src="${uploadPath}/<c:out value="${list.imgSrc3 }"/>" alt="" />
+								<img src="${uploadPath}/<c:out value="${rslt.resultVO.imgSrc3 }"/>" alt="" />
 							</div>
 							<div class="rcont">
 								<div class="desc"><c:out value="${rslt.resultVO.classTitle}"/></div>
@@ -99,7 +99,7 @@
 					<div class="class-info">
 						<div class="class-info-item">
 							<div class="thumb">
-								<img src="${uploadPath}/<c:out value="${list.imgSrc3 }"/>" alt="" />
+								<img src="${uploadPath}/<c:out value="${rslt.resultVO.imgSrc3 }"/>" alt="" />
 							</div>
 							<div class="rcont">
 								<div class="desc"><c:out value="${rslt.resultVO.classTitle}"/></div>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beauate.coupon.service.CouponHistoryDao">
+
+	<resultMap id="couponHistoryMap" type="com.beauate.coupon.service.CouponHistoryVO">
+		<id column="u_cpn_sq" property="cpnHistoryId" />
+		<result column="u_cpn_dt" property="cpnDt" />
+		<result column="cpn_sq" property="couponId" />
+		<result column="u_sq" property="usrId" />
+		<result column="u_cpn_fl" property="cpnFl" />
+	</resultMap>
+	
+	<!-- 쿼리명 : 쿠폰내역 상세조회
+	설명 : 쿠폰내역 상세조회
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.16     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<select id="selectCouponHistoryDetail" parameterType="couponHistoryVO" resultMap="couponHistoryMap">
+		<![CDATA[
+		SELECT 
+			u_cpn_sq,
+			TO_CHAR(u_cpn_dt, 'yyyy-MM-dd') AS u_cpn_dt,
+			cpn_sq,
+			u_sq,
+			u_cpn_fl
+		FROM 
+			U_CPN
+		WHERE 
+			u_sq = #{usrId}
+			AND cpn_sq = #{couponId}
+		]]>
+	</select>
+	
+	<!-- 쿼리명 : 쿠폰내역 등록처리
+	설명 : 쿠폰내역 등록처리
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.16     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<insert id="insertCouponHistoryProc" parameterType="couponHistoryVO">
+		<![CDATA[
+			INSERT INTO
+				U_CPN (
+					u_cpn_sq,
+					u_cpn_dt,
+					cpn_sq,
+					u_sq,
+					u_cpn_fl
+				)
+			VALUES
+				(
+					#{cpnHistoryId},
+					sysdate,
+					#{couponId},
+					#{usrId},
+					'Y'
+				)
+		]]>
+	</insert>
+	
+	<!-- 쿼리명 : 쿠폰내역 삭제처리
+	설명 : 쿠폰내역 삭제처리
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.16     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<delete id="deleteCouponHistoryProc" parameterType="couponHistoryVO">
+		<![CDATA[
+			DELETE FROM U_CPN WHERE u_sq = #{usrId} and cpn_sq = #{couponId}
+		]]>
+	</delete>
+</mapper>
+

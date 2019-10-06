@@ -145,7 +145,7 @@ public class BoardManageController {
 	 * @return String
 	 * @throws Exception
 	 */ 	
-	@RequestMapping(value = "/board/w/m/insertBoardMngProc.do")
+	@RequestMapping(value = "/boardm/w/m/insertBoardMngProc.do")
 	public String insertBoardMngProc(MultipartHttpServletRequest multiRequest, 
 			SessionStatus status, @ModelAttribute("boardVO") BoardVO boardVO) throws Exception {
 		
@@ -274,4 +274,33 @@ public class BoardManageController {
 		status.setComplete();	//중복 submit 방지
 		return "redirect:/boardm/r/m/selectBoardMngList.do";
 	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 게시판관리 코드리스트 ajax
+	 * 2. 처리내용 : 게시판관리 코드리스트 ajax
+	 * </pre>
+	 * @Method Name : selectCommonCodeList
+	 * @date : 2019. 5. 12.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일					작성자				변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 12.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param boardVO
+	 * @param model
+	 * @return String
+	 * @throws Exception
+	 */ 	
+	@RequestMapping(value = "/boardm/r/n/selectCommonCodeList.do")
+	public String selectCommonCodeList(BoardVO boardVO, ModelMap model) throws Exception {
+		List<CodeVO> codeList = boardManageService.selectScodeList();
+		model.addAttribute("codeList", codeList);
+		return "jsonView";
+	}
+	
+	
 }

@@ -31,6 +31,8 @@
 		<typeAlias alias="boardVO" type="com.beauate.admin.board.service.BoardVO"/>
 		<!-- 쿠폰VO -->
 		<typeAlias alias="couponVO" type="com.beauate.admin.coupon.service.CouponVO"/>
+		<!-- 쿠폰내역VO -->
+		<typeAlias alias="couponHistoryVO" type="com.beauate.coupon.service.CouponHistoryVO"/>
 		<!-- 배너VO -->
 		<typeAlias alias="bannerVO" type="com.beauate.admin.banner.service.BannerVO"/>
 		<!-- 알람VO -->

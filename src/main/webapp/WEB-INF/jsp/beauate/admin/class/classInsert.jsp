@@ -262,6 +262,8 @@ var fn_insertClassProc = function() {
 
 //주소찾기 팝업 도로명API
 var fn_jusoPopup = function() {
+	//운영
+	//var pop = window.open("/beauate/popup/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
 	var pop = window.open("/popup/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
 }
 function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn , detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){

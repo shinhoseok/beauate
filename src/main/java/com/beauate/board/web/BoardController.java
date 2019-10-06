@@ -16,6 +16,9 @@ import com.beauate.admin.board.service.BoardManageService;
 import com.beauate.admin.board.service.BoardVO;
 import com.beauate.admin.code.service.CodeVO;
 import com.beauate.board.service.BoardService;
+import com.beauate.common.StringUtil;
+import com.beauate.coupon.service.CouponHistoryService;
+import com.beauate.coupon.service.CouponHistoryVO;
 
 @Controller
 public class BoardController {
@@ -26,6 +29,9 @@ public class BoardController {
 	
 	@Resource(name = "boardManageService")
 	private BoardManageService boardManageService;
+	
+	@Resource(name = "couponHistoryService")
+	private CouponHistoryService couponHistoryService;
 	
 	/**
 	 * <pre>
@@ -117,7 +123,12 @@ public class BoardController {
 		
 		BoardVO resultVO = boardService.selectBoardDetail(boardVO);
 		model.addAttribute("boardVO", resultVO);
-		
+		//공지사항 category4 중 이벤트 postsubtitle A 는 다른 JSP로
+		if(!StringUtil.isEmpty(resultVO.getPostSubTitle())) {
+			if(resultVO.getPostCategorySt().equals("4") && resultVO.getPostSubTitle().equals("A")) {
+				return "/board/boardEventDetail";
+			}
+		}
 		return "/board/boardDetail";
 	}
 	
@@ -146,7 +157,45 @@ public class BoardController {
 		
 		BoardVO resultVO = boardService.selectBoardNextPrev(boardVO);
 		model.addAttribute("boardVO", resultVO);
+		//공지사항 category4 중 이벤트 postsubtitle A 는 다른 JSP로
+		if(!StringUtil.isEmpty(resultVO.getPostSubTitle())) {
+			if(resultVO.getPostCategorySt().equals("4") && resultVO.getPostSubTitle().equals("A")) {
+				return "/board/boardEventDetail";
+			}
+		}
 		
 		return "/board/boardDetail";
+	}
+		
+	/**
+	 * <pre>
+	 * 1. 개요 : 할인쿠폰 이벤트 공지사항 이벤트
+	 * 2. 처리내용 : 할인쿠폰 이벤트 공지사항 이벤트
+	 * </pre>
+	 * @Method Name : insertCouponHistoryProc
+	 * @date : 2019. 10. 12.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일					작성자				변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 12.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param boardVO
+	 * @param model
+	 * @return String
+	 * @throws Exception
+	 */ 	
+	@RequestMapping(value = "/board/w/t/insertCouponHistoryProc.do")
+	public String insertCouponHistoryProc(@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
+		
+		CouponHistoryVO couponHistoryVO = new CouponHistoryVO();
+		couponHistoryVO.setCouponId(boardVO.getCouponId());
+		couponHistoryVO.setUsrId(boardVO.getUsrId());
+		boolean result = couponHistoryService.insertCouponHistoryProc(couponHistoryVO);
+		model.addAttribute("result", result);
+		
+		return "jsonView";
 	}
 }

@@ -68,7 +68,7 @@
 						AND B.post_title LIKE '%'|| #{searchKeyword} ||'%'
 					</when>
 					<otherwise>
-						AND B.post_title LIKE '%'|| #{searchKeyword} ||'%'
+						AND B.post_category_st LIKE '%'|| #{searchKeyword} ||'%'
 					</otherwise>
 				</choose>
 			</if>
@@ -99,12 +99,18 @@
 			<when test="sortSubject == 'postTitle'">
 			ORDER BY B.post_title
 			</when>
+			<when test="postCategorySt == '4'.toString">
+			ORDER BY B.post_sub_title
+			</when>
 			<otherwise>
 			ORDER BY B.post_dt
 			</otherwise>
 		</choose>
 		<choose>
 			<when test="sortDescend == 'asc'">
+			ASC
+			</when>
+			<when test="postCategorySt == '4'.toString">
 			ASC
 			</when>
 			<otherwise>
@@ -114,7 +120,6 @@
   			 ) RNUM,
                B.post_sq,
                B.img_sq,
-<!--                <if test="adminYn != null and adminYn != '' and adminYn == 'N'"> -->
                <if test="adminYn != null or adminYn != '' or adminYn != Y">
                (SELECT c.file_stre_cours || '/' || c.stre_file_nm FROM comtnfiledetail c WHERE atch_file_id = B.img_sq AND file_cn = 'M') AS imgSrc,
                </if>

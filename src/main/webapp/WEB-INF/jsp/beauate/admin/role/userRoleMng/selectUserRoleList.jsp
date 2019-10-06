@@ -28,7 +28,7 @@
 		<!-- 좌측메뉴리스트 left_menu -->
 		<%@ include file="/WEB-INF/jsp/beauate/common/leftMenu.jsp" %>
 		<div class="contents">
-			<p class="contentTitle">사용자별 권한관리</p>
+			<p class="contentTitle">회원별 권한관리</p>
 			<p class="sub_path">
 				<img src="${imagePath}/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;포탈관리〉&nbsp;권한관리&nbsp;〉&nbsp;사용자별 권한 관리
 			</p>

@@ -93,6 +93,9 @@ public class UserController {
 			userStatsVO.setAccessIp(request.getRemoteAddr());
 			userManageService.insertUserStatisticsProc(userStatsVO);
 			status.setComplete();
+			
+			//쿠폰등록 임시적용
+			
 		} catch (Exception e) {
 			redirectUrl = "/user/w/n/userInsertProc.do";
 			message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.";

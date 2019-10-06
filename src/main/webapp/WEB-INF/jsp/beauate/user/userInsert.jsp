@@ -132,6 +132,7 @@
 							$("#modal-joincomfirm p.txt").text(r.message);
 							$("#modal-joincomfirm a.modal-close").click(function(){document.location.href='${basePath}'+r.redirectUrl});
 							$("#modal-joincomfirm").modal('show'); 
+							//임시쿠폰적용 로직
 						}
 					}); 
 				}

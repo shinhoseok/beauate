@@ -36,7 +36,7 @@
 					</c:forEach>
 				</p>
 				<h4 class="contentTitle_h4">로그인 정보</h4>
-				<form:form commandName="boardVO" name="boardVO" id="boardVO" method="post" enctype="multipart/form-data" action="${basePath}/board/w/m/insertBoardMngProc.do" >
+				<form:form commandName="boardVO" name="boardVO" id="boardVO" method="post" enctype="multipart/form-data" action="${basePath}/boardm/w/m/insertBoardMngProc.do" >
 					<div class="tableLayer">
 						<table class="table">
 							<caption></caption>
@@ -76,11 +76,12 @@
 									</td>
 								</tr>
 								<tr style="display: none;" id="importYnTr">
-									<th class="bullet_orange">중요여부</th>
+									<th class="bullet_orange">공지종류(이벤트A, 중요B, 일반C)</th>
 									<td colspan="4">
 										<form:select path="postSubTitle" id="postSubTitle_2" style="width: 90%" disabled="true">
-											<option>N</option>
-											<option>Y</option>
+											<option>A</option>
+											<option>B</option>
+											<option>C</option>
 										</form:select>
 									</td>
 								</tr>

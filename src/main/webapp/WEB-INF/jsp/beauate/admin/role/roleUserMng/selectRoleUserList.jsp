@@ -30,7 +30,7 @@
 
 		<div class="contents">
 		
-			<p class="contentTitle">권한별 사용자 관리</p>
+			<p class="contentTitle">권한별 회원 관리</p>
 			<p class="sub_path">
 				<img src="${imagePath}/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;포탈관리〉&nbsp;권한관리&nbsp;〉&nbsp;권한별 사용자 관리
 			</p>
