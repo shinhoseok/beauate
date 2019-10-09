@@ -11,7 +11,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.beauate.admin.banner.service.BannerDao;
 import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.admin.code.service.CodeDao;
 import com.beauate.admin.code.service.CodeVO;

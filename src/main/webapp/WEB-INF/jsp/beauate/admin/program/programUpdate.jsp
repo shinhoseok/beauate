@@ -156,12 +156,6 @@
 				return;
 			}
 			
-			if (!TypeChecker.alphanum($("#pgmName").val())) {
-				alert("'프로그램명'은  "+ TypeChecker.alphanumText);
-				$("#pgmName").focus();
-				return;
-			}
-			
 			if (!TypeChecker.required($("#pgmParam").val())) {
 				alert("'프로그램 변수명'은  "+ TypeChecker.requiredText);
 				$("#pgmParam").focus();

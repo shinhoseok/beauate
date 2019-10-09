@@ -276,7 +276,7 @@ public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffC
 		String tempSrc2 = resultVO.getImgSrc2();
 		String tempSrc3 = resultVO.getImgSrc3();
 		if(!StringUtil.isEmpty(tempSrc) && !StringUtil.isEmpty(tempSrc2)) {
-			int cnt1 = tempSrc.indexOf("\\");
+			/*int cnt1 = tempSrc.indexOf("\\");
 			if(cnt1 == -1) {
 				cnt1 = tempSrc.indexOf("//");
 			}
@@ -290,7 +290,11 @@ public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffC
 			}
 			String resultSrc = tempSrc.substring(cnt1+1);
 			String resultSrc2 = tempSrc2.substring(cnt2+1);
-			String resultSrc3 = tempSrc3.substring(cnt3+1);
+			String resultSrc3 = tempSrc3.substring(cnt3+1);*/
+			String resultSrc = StringUtil.getWasfilePath(tempSrc);
+			String resultSrc2 = StringUtil.getWasfilePath(tempSrc2);
+			String resultSrc3 = StringUtil.getWasfilePath(tempSrc3);
+			
 			log.debug(">> result Path >> "+resultSrc2);
 			resultVO.setImgSrc(resultSrc);
 			resultVO.setImgSrc2(resultSrc2);
@@ -350,11 +354,12 @@ public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffC
 		//이미지 WAS경로 변환
 		String tempSrc3 = resultVO.getImgSrc3();
 		if(!StringUtil.isEmpty(tempSrc3)) {
-			int cnt = tempSrc3.indexOf("\\");
+			/*int cnt = tempSrc3.indexOf("\\");
 			if(cnt == -1) {
 				cnt = tempSrc3.indexOf("//");
 			}
-			String resultSrc3 = tempSrc3.substring(cnt+1);
+			String resultSrc3 = tempSrc3.substring(cnt+1);*/
+			String resultSrc3 = StringUtil.getWasfilePath(tempSrc3);
 			log.debug(">> result Path >> "+tempSrc3);
 			resultVO.setImgSrc3(resultSrc3);
 			log.debug(">> vo Path >> "+resultVO.getImgSrc3());
@@ -478,11 +483,12 @@ public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffC
 		//이미지 WAS경로 변환
 		String tempSrc3 = resultVO.getImgSrc3();
 		if(!StringUtil.isEmpty(tempSrc3)) {
-			int cnt = tempSrc3.indexOf("\\");
+			/*int cnt = tempSrc3.indexOf("\\");
 			if(cnt == -1) {
 				cnt = tempSrc3.indexOf("//");
 			}
-			String resultSrc3 = tempSrc3.substring(cnt+1);
+			String resultSrc3 = tempSrc3.substring(cnt+1);*/
+			String resultSrc3 = StringUtil.getWasfilePath(tempSrc3);
 			log.debug(">> result Path >> "+tempSrc3);
 			resultVO.setImgSrc3(resultSrc3);
 			log.debug(">> vo Path >> "+resultVO.getImgSrc3());

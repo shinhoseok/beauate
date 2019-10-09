@@ -29,7 +29,63 @@ public class PayVO extends CommDefaultVO implements Serializable {
 	private String classApplyNo;
 	/** 클래스허용인원 */
 	private String classBigNo;
+	/** 클래스금액 */
+	private String classCostNo;
+	/** 클래스제목 */
+	private String classTitle;
+	/** 클래스주소 */
+	private String classAdr;
+	/** 클래스시작일 */
+	private String classStartDt;
+	/** 마이페이지이미지경로 */
+	private String imgSrc3;
+	/** 쿠폰할인율 */
+	private String cpnRate;
+	/** 마이페이지 탭번호 */
+	private String mypageTab;
 	
+	public String getMypageTab() {
+		return mypageTab;
+	}
+	public void setMypageTab(String mypageTab) {
+		this.mypageTab = mypageTab;
+	}
+	public String getClassCostNo() {
+		return classCostNo;
+	}
+	public void setClassCostNo(String classCostNo) {
+		this.classCostNo = classCostNo;
+	}
+	public String getClassTitle() {
+		return classTitle;
+	}
+	public void setClassTitle(String classTitle) {
+		this.classTitle = classTitle;
+	}
+	public String getClassAdr() {
+		return classAdr;
+	}
+	public void setClassAdr(String classAdr) {
+		this.classAdr = classAdr;
+	}
+	public String getClassStartDt() {
+		return classStartDt;
+	}
+	public void setClassStartDt(String classStartDt) {
+		this.classStartDt = classStartDt;
+	}
+	public String getImgSrc3() {
+		return imgSrc3;
+	}
+	public void setImgSrc3(String imgSrc3) {
+		this.imgSrc3 = imgSrc3;
+	}
+	public String getCpnRate() {
+		return cpnRate;
+	}
+	public void setCpnRate(String cpnRate) {
+		this.cpnRate = cpnRate;
+	}
 	public String getClassBigNo() {
 		return classBigNo;
 	}

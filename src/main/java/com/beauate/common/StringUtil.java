@@ -605,4 +605,14 @@ public class StringUtil extends StringUtils{
 		}
 		return src.replaceFirst("(^02|[0-9]{3})([0-9]{3,4})([0-9]{4})$", "$1-$2-$3");
 	}
+	
+	//풀경로의 파일명을 와스의 폴더경로로 변경한다.
+	public static String getWasfilePath(String filePath) {
+		int cnt = filePath.indexOf("\\");
+		if(cnt == -1) {
+			cnt = filePath.indexOf("//");
+		}
+		String result = filePath.substring(cnt+1);
+		return result;
+	}
 }

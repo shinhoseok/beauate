@@ -16,4 +16,6 @@ public class PayServiceImpl implements PayService {
 	@Resource(name="payDao")
 	private PayDao payDao;
 	
+	
+	
 }

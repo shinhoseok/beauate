@@ -9,9 +9,78 @@
 		<result column="pay_dt" property="payDt" />
 		<result column="pay_st" property="paySt" />
 		<result column="pay_method_st" property="payMethodSt" />
-		<result column="pay_cost_no" property="payCostNo" />
+		<result column="c_cost_no" property="classCostNo" />
+		<result column="c_title" property="classTitle" />
+		<result column="c_adr" property="classAdr" />
+		<result column="u_start_dt" property="classStartDt" />
+		<result column="img_sq" property="atchFileId" />
+		<result column="cpn_rate" property="cpnRate" />
 	</resultMap>
 
+	<sql id="payGubunSql">
+		<where>
+			a.u_sq = #{usrId}
+		</where>
+	</sql>
+	
+	<!-- 쿼리명 : 마이페이지 클래스 결제 리스트 카운트
+	설명 : 마이페이지 클래스 결제리스트 카운트
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 9.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 9.17
+	-->
+	<select id="selectPayListCnt">
+	SELECT 
+		COUNT (*) CNT
+	FROM 
+		pay a
+		LEFT JOIN off_class b ON  a.c_sq = b.c_sq
+		LEFT JOIN admin_cpn d ON a.cpn_sq = d.cpn_sq
+		<include refid="payGubunSql"/>
+	</select>
+	
+	<!-- 쿼리명 : 마이페이지 클래스 결제 리스트
+	설명 : 마이페이지 클래스 결제리스트
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 9.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 9.17
+	-->
+	<select id="selectPayList">
+	SELECT
+		e.*
+	FROM
+		(
+		SELECT 
+			ROW_NUMBER() OVER(ORDER BY a.pay_dt DESC) RNUM,
+			a.pay_sq,
+			a.c_sq,
+			a.u_sq,
+			a.cpn_sq,
+			a.pay_dt,
+			a.pay_st,
+			a.pay_method_st,
+			a.pay_cost_no,
+			b.c_cost_no,
+			b.c_title,
+			b.c_adr,
+			b.u_start_dt,
+			(SELECT c.file_stre_cours || '/' || c.stre_file_nm FROM comtnfiledetail c WHERE c.atch_file_id = b.img_sq AND file_cn='M3') AS imgSrc3,
+			b.img_sq,
+			d.cpn_rate
+		FROM 
+			pay a
+			LEFT JOIN off_class b ON  a.c_sq = b.c_sq
+			LEFT JOIN admin_cpn d ON a.cpn_sq = d.cpn_sq
+		<include refid="payGubunSql"/>
+		) e
+	WHERE
+		e.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
+	</select>
+	
 	<!-- 쿼리명 : 결제 등록
 	설명 : 결제 등록
 	수정일                     수정자           수정내용
@@ -45,5 +114,6 @@
 					#{payCostNo}
 				)]]>
 	</insert>
+	
 </mapper>
 

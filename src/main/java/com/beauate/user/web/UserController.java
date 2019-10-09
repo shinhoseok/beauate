@@ -41,7 +41,27 @@ public class UserController {
 	public String userInsert(@ModelAttribute("userVO") UserVO userVO, LoginVO sessionVO, ModelMap model ) throws Exception{
 		return "/user/userInsert";
 	}
-
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 회원가입
+	 * 2. 처리내용 : 회원가입
+	 * </pre>
+	 * @Method Name : userInsertProc
+	 * @date : 2019. 9. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param userVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/user/w/n/userInsertProc.do")
 	public String userInsertProc(HttpServletRequest request, @ModelAttribute("userVO") UserVO userVO, LoginVO sessionVO, SessionStatus status, ModelMap model) throws Exception {
 		String message;
@@ -101,11 +121,51 @@ public class UserController {
 		return "jsonView";
 	}
 
+	/**
+	 * <pre>
+	 * 1. 개요 : 비밀번호변경 팝업
+	 * 2. 처리내용 : 비밀번호변경 팝업
+	 * </pre>
+	 * @Method Name : userPasswordChange
+	 * @date : 2019. 9. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param userVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/user/w/t/userPasswordChange.do")
 	public String userPasswordChange(@ModelAttribute("userVO") UserVO userVO, LoginVO sessionVO, ModelMap model ) throws Exception{
 		return "/user/userPasswordChange";
 	}
 	
+	/**
+	 * <pre>
+	 * 1. 개요 : 비밀번호변경 처리
+	 * 2. 처리내용 : 비밀번호변경 처리
+	 * </pre>
+	 * @Method Name : userPasswordChangeProc
+	 * @date : 2019. 9. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param userVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/user/w/n/userPasswordChangeProc.do")
 	public String userPasswordChangeProc(HttpServletRequest request, @ModelAttribute("userVO") UserVO userVO, LoginVO sessionVO, SessionStatus status, ModelMap model) throws Exception {
 		String message;
@@ -159,6 +219,26 @@ public class UserController {
 		return "jsonView";
 	}
 
+	/**
+	 * <pre>
+	 * 1. 개요 : 로그아웃
+	 * 2. 처리내용 : 로그아웃
+	 * </pre>
+	 * @Method Name : userLogout
+	 * @date : 2019. 9. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param userVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/user/a/n/logOut.do")
 	public String userLogout(HttpServletRequest request, HttpServletResponse response, LoginVO sessionVO, ModelMap model ) throws Exception{
 		
