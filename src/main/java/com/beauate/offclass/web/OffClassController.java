@@ -10,11 +10,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.beauate.admin.classmng.service.ClassVO;
+import com.beauate.admin.coupon.service.CouponManageService;
+import com.beauate.admin.coupon.service.CouponVO;
 import com.beauate.common.StringUtil;
 import com.beauate.login.service.LoginVO;
 import com.beauate.offclass.service.OffClassService;
+import com.beauate.pay.service.PayVO;
 
 @Controller
 public class OffClassController {
@@ -23,6 +27,9 @@ public class OffClassController {
 	
 	@Resource(name = "offClassService")
 	private OffClassService offClassService;
+	
+	@Resource(name = "couponManageService")
+	private CouponManageService couponManageService;
 	
 	/**
 	 * <pre>
@@ -156,12 +163,111 @@ public class OffClassController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/offclass/a/t/selectOffClassApplyDetail.do")
+	@RequestMapping(value = "/offclass/r/t/selectOffClassApplyDetail.do")
 	public String selectOffClassApplyDetail(@ModelAttribute("classVO") ClassVO classVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		classVO.setUsrId(sessionVO.getUsrId());
 		Map<String, Object> rsltMap = offClassService.selectOffClassApplyDetail(classVO);
 		model.addAttribute("rslt", rsltMap);
 		model.addAttribute("menTiMblPno", StringUtil.phone(sessionVO.getMblPno()));
 
 		return "/offclass/offClassPay";
+	}
+		
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인클래스 결제화면 할인쿠폰적용 ajax
+	 * 2. 처리내용 : 오프라인클래스 결제화면 할인쿠폰적용 ajax
+	 * </pre>
+	 * @Method Name : selectClassCoupon
+	 * @date : 2019. 10. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param couponId
+	 * @param classCost
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/offclass/r/n/selectClassCoupon.do")
+	public String selectClassCoupon(String couponId, String classCost, ModelMap model) throws Exception {
+		CouponVO paramVO = new CouponVO();
+		paramVO.setCouponId(couponId);
+		CouponVO couponVO = couponManageService.selectCpnMngDetail(paramVO);
+		
+		model.addAttribute("couponVO", couponVO);
+		model.addAttribute("classCost", classCost);
+		
+		return "/offclass/offClassPayAjax";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인클래스 결제시 수강인원체크
+	 * 2. 처리내용 : 오프라인클래스 결제시 수강인원체크
+	 * </pre>
+	 * @Method Name : selectClassMemChk
+	 * @date : 2019. 10. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param classVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/offclass/r/n/selectClassMemChk.do")
+	public String selectClassMemChk(ClassVO classVO, ModelMap model) throws Exception {
+		Map<String, Object> rsltMap = offClassService.selectClassMemChk(classVO);
+		model.addAttribute("rslt", rsltMap);
+		return "jsonView";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인클래스 결제처리
+	 * 2. 처리내용 : 오프라인클래스 결제처리
+	 * </pre>
+	 * @Method Name : selectClassCoupon
+	 * @date : 2019. 10. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param payVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/offclass/w/t/insertPayProc.do")
+	public String insertPayProc(PayVO payVO, SessionStatus status, ModelMap model, LoginVO sessionVO) throws Exception {
+		payVO.setUsrId(sessionVO.getUsrId());
+		ClassVO resultVO = offClassService.insertPayProc(payVO);
+		status.setComplete();	//중복 submit 방지
+		String userMblPno = StringUtil.phone(sessionVO.getMblPno());
+		String mentoMblPno = StringUtil.phone(payVO.getMentoMblPno());
+		
+		model.addAttribute("resultVO", resultVO);
+		model.addAttribute("payVO", payVO);
+		model.addAttribute("sessionVO", sessionVO);
+		model.addAttribute("userMblPno", userMblPno);
+		model.addAttribute("mentoMblPno", mentoMblPno);
+		
+		
+		return "/offclass/offClassPayComplete";
 	}
 }

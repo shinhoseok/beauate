@@ -14,20 +14,28 @@ import com.beauate.admin.classmng.service.ClassManageDao;
 import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.admin.code.service.CodeDao;
 import com.beauate.admin.code.service.CodeVO;
+import com.beauate.admin.coupon.service.CouponManageDao;
+import com.beauate.admin.coupon.service.CouponVO;
 import com.beauate.admin.user.service.UserDao;
 import com.beauate.admin.user.service.UserVO;
 import com.beauate.common.DateUtil;
 import com.beauate.common.GlobalConstants;
 import com.beauate.common.StringUtil;
+import com.beauate.coupon.service.CouponHistoryDao;
+import com.beauate.coupon.service.CouponHistoryVO;
 import com.beauate.jjim.service.JjimDao;
 import com.beauate.jjim.service.JjimVO;
 import com.beauate.offclass.service.OffClassDao;
 import com.beauate.offclass.service.OffClassService;
+import com.beauate.pay.service.PayDao;
+import com.beauate.pay.service.PayVO;
 
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import egovframework.rte.fdl.idgnr.EgovIdGnrService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @Service("offClassService")
-public class OffClassServiceImpl implements OffClassService {
+public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffClassService {
 	
 	protected Log log = LogFactory.getLog(this.getClass());
 	
@@ -45,6 +53,18 @@ public class OffClassServiceImpl implements OffClassService {
 	
 	@Resource(name="userDao")
 	private UserDao userDao;
+	
+	@Resource(name="payDao")
+	private PayDao payDao;
+	
+	@Resource(name="couponManageDao")
+	private CouponManageDao couponManageDao;
+	
+	@Resource(name="payIdGnrService")
+	private EgovIdGnrService payIdGnrService;
+	
+	@Resource(name="couponHistoryDao")
+	private CouponHistoryDao couponHistoryDao;
 	
 	/**
 	 * <pre>
@@ -352,9 +372,124 @@ public class OffClassServiceImpl implements OffClassService {
 			userVO.setMblPno("등록된 번호가 없습니다.");
 		}
 		
+		//사용자가 사용 가능한 쿠폰 내역을 가져온다.
+		CouponVO couponVO = new CouponVO();
+		couponVO.setUsrId(classVO.getUsrId());
+		List<CouponVO> couponList = couponManageDao.selectUserHavingCoupon(couponVO);
+		
 		rsltMap.put("resultVO", resultVO);
 		rsltMap.put("userVO", userVO);
+		rsltMap.put("couponList", couponList);
 		
 		return rsltMap;
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인클래스 결제시 수강인원체크
+	 * 2. 처리내용 : 오프라인클래스 결제시 수강인원체크
+	 * </pre>
+	 * @Method Name : selectClassMemChk
+	 * @date : 2019. 10. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param payVO
+	 * @return
+	 * @throws Exception
+	 */
+	public Map<String, Object> selectClassMemChk(ClassVO classVO) throws Exception {
+		Map<String, Object> rsltMap = new HashMap<>();
+		boolean result = false;
+		ClassVO resultVO = classManageDao.selectClassMngDetail(classVO);
+		int classBigNo = Integer.parseInt(resultVO.getClassBigNo());
+		int classApplyNo = Integer.parseInt(resultVO.getClassApplyNo());
+		if(classApplyNo >= classBigNo) {
+			result = false;
+		} else {
+			result = true;
+		}
+		
+		rsltMap.put("resultYn", result);
+		rsltMap.put("resultVO", resultVO);
+		
+		return rsltMap;
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인클래스 결제완료처리
+	 * 2. 처리내용 : 오프라인클래스 결제완료처리
+	 * </pre>
+	 * @Method Name : insertPayProc
+	 * @date : 2019. 10. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param payVO
+	 * @return
+	 * @throws Exception
+	 */
+	public ClassVO insertPayProc(PayVO payVO) throws Exception {
+		//결제상태 결제모듈 달기전 하드코딩(결제완료 코드값)
+		payVO.setPaySt("1");
+		//결제방법 결제모듈 달기전 하드코딩(계좌이체 코드값)
+		payVO.setPayMethodSt("2");
+		
+		//결제하기전 수강하는 클래스의 applyno +1업데이트, 클래스 상태값 변경 
+		ClassVO classParamVO = new ClassVO();
+		classParamVO.setClassId(payVO.getClassId());
+		log.debug(">>>> class Apply no >>>>"+payVO.getClassApplyNo());
+		int classApplyNoTmp = Integer.parseInt(payVO.getClassApplyNo());
+		int classBigNo = Integer.parseInt(payVO.getClassBigNo());
+		int classApplyNo = classApplyNoTmp +1;
+		if(classBigNo == classApplyNo) {
+			classParamVO.setClassSt("3"); //클래스상태 신청마감
+		}
+		classParamVO.setClassApplyNo(String.valueOf(classApplyNo));
+		classManageDao.updateClassMngProc(classParamVO);
+		
+		//쿠폰사용했다면 쿠폰상태 N
+		CouponHistoryVO couponHistoryVO = new CouponHistoryVO();
+		couponHistoryVO.setUsrId(payVO.getUsrId());
+		couponHistoryVO.setCpnFl("N");
+		couponHistoryVO.setCouponId(payVO.getCouponId());
+		couponHistoryDao.updateCouponHistoryProc(couponHistoryVO);
+		
+		//결제
+		payVO.setPayId(payIdGnrService.getNextStringId());
+		payDao.insertPayProc(payVO);
+		
+		//완료화면 리스트
+		ClassVO paramClassVO = new ClassVO();
+		paramClassVO.setClassId(payVO.getClassId());
+		paramClassVO.setAdminYn("N");
+		ClassVO resultVO = classManageDao.selectClassMngDetail(paramClassVO);
+		//이미지 WAS경로 변환
+		String tempSrc3 = resultVO.getImgSrc3();
+		if(!StringUtil.isEmpty(tempSrc3)) {
+			int cnt = tempSrc3.indexOf("\\");
+			if(cnt == -1) {
+				cnt = tempSrc3.indexOf("//");
+			}
+			String resultSrc3 = tempSrc3.substring(cnt+1);
+			log.debug(">> result Path >> "+tempSrc3);
+			resultVO.setImgSrc3(resultSrc3);
+			log.debug(">> vo Path >> "+resultVO.getImgSrc3());
+		} else {
+			throw new NullPointerException("해당 클래스에 등록된 이미지 파일이 없습니다. classId >>> "+paramClassVO.getClassId());
+		}
+		
+		return resultVO;
 	}
 }

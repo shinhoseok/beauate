@@ -328,7 +328,7 @@
 			</div>
 			<!-- //content -->
 		</div>
-		<form name="detailForm" id="detailForm" method="post" action="/offclass/a/t/selectOffClassApplyDetail.do">
+		<form name="detailForm" id="detailForm" method="post" action="/offclass/r/t/selectOffClassApplyDetail.do">
 			<input type="hidden" id="classId" name="classId">
 		</form>
 		<input type="hidden" id="shareUrlAddress">

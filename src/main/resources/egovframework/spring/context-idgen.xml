@@ -220,7 +220,21 @@
 		<property name="prefix" value="arm-" />
 		<property name="cipers" value="6" />
 		<property name="fillChar" value="0" />
-	</bean>	
+	</bean>
+	
+	<!-- 결제내역 저장 -->
+	<bean name="payIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+		<property name="dataSource" ref="dataSource" />
+		<property name="strategy" ref="PayPrefix" />
+		<property name="blockSize" 	value="1"/>
+		<property name="table"	   	value="SQ_MNG"/>
+		<property name="tableName"	value="PAY"/>
+	</bean>
+	<bean name="PayPrefix" class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
+		<property name="prefix" value="PAY-" />
+		<property name="cipers" value="6" />
+		<property name="fillChar" value="0" />
+	</bean>
 	
 	<bean name="egovFileIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
 		<property name="dataSource" ref="dataSource" />
@@ -233,19 +247,6 @@
 	<bean name="fileStrategy" class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
 		<property name="prefix" value="FILE_" />
 		<property name="cipers" value="15" />
-		<property name="fillChar" value="0" />
-	</bean>
-	
-	<bean name="payIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
-		<property name="dataSource" ref="dataSource" />
-		<property name="strategy" ref="PayPrefix" />
-		<property name="blockSize" 	value="1"/>
-		<property name="table"	   	value="SQ_MNG"/>
-		<property name="tableName"	value="PAY"/>
-	</bean>
-	<bean name="PayPrefix" class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
-		<property name="prefix" value="PAY-" />
-		<property name="cipers" value="6" />
 		<property name="fillChar" value="0" />
 	</bean>
 	

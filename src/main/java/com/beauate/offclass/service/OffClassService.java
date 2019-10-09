@@ -3,6 +3,7 @@ package com.beauate.offclass.service;
 import java.util.Map;
 
 import com.beauate.admin.classmng.service.ClassVO;
+import com.beauate.pay.service.PayVO;
 
 public interface OffClassService {
 	/**
@@ -110,4 +111,47 @@ public interface OffClassService {
 	 * @throws Exception
 	 */
 	public Map<String, Object> selectOffClassApplyDetail(ClassVO classVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인클래스 결제시 수강인원체크
+	 * 2. 처리내용 : 오프라인클래스 결제시 수강인원체크
+	 * </pre>
+	 * @Method Name : selectClassMemChk
+	 * @date : 2019. 10. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param payVO
+	 * @return
+	 * @throws Exception
+	 */
+	public Map<String, Object> selectClassMemChk(ClassVO classVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인클래스 결제완료처리
+	 * 2. 처리내용 : 오프라인클래스 결제완료처리
+	 * </pre>
+	 * @Method Name : selectOffClassApplyDetail
+	 * @date : 2019. 10. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param classVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	public ClassVO insertPayProc(PayVO payVO) throws Exception;
 }

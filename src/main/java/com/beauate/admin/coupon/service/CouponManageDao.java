@@ -132,4 +132,25 @@ public interface CouponManageDao {
 	 * @throws Exception
 	 */ 
 	void updateCpnMngProc(CouponVO couponVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 사용자가 사용 가능한 쿠폰조회
+	 * 2. 처리내용 : 사용자가 사용 가능한 쿠폰조회
+	 * </pre>
+	 * @Method Name : selectUserHavingCoupon
+	 * @date : 2019. 10. 12.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일					작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 12  		신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param couponVO
+	 * @return CouponVO
+	 * @throws Exception
+	 */ 
+	public List<CouponVO> selectUserHavingCoupon(CouponVO couponVO) throws Exception;
 }

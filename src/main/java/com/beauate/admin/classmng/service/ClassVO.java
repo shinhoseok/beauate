@@ -65,7 +65,15 @@ public class ClassVO extends CommDefaultVO implements Serializable {
 	private String imgCnt;
 	/** 오더바이 필요여부 */
 	private boolean orderByYn = false;
+	/** 클래스인원체크 */
+	private boolean personnelChk = false;
 	
+	public boolean isPersonnelChk() {
+		return personnelChk;
+	}
+	public void setPersonnelChk(boolean personnelChk) {
+		this.personnelChk = personnelChk;
+	}
 	public String getImgSrc3() {
 		return imgSrc3;
 	}

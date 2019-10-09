@@ -48,10 +48,10 @@ public interface CouponHistoryDao {
 	
 	/**
 	 * <pre>
-	 * 1. 개요 : 쿠폰내역 삭제처리
-	 * 2. 처리내용 :  쿠폰내역 삭제처리
+	 * 1. 개요 : 쿠폰 사용시 업데이트
+	 * 2. 처리내용 :  쿠폰 사용시 업데이트
 	 * </pre>
-	 * @Method Name : deleteCouponHistoryProc
+	 * @Method Name : updateCouponHistoryProc
 	 * @date : 2019. 10. 16.
 	 * @author : 신호석
 	 * @history : 
@@ -65,5 +65,5 @@ public interface CouponHistoryDao {
 	 * @return void
 	 * @throws Exception
 	 */ 
-	void deleteCouponHistoryProc(CouponHistoryVO couponHistoryVO);
+	void updateCouponHistoryProc(CouponHistoryVO couponHistoryVO);
 }

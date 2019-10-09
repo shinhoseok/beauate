@@ -13,7 +13,7 @@ public class CouponVO extends CommDefaultVO implements Serializable {
 	/** 쿠폰 명 */
 	private String couponNm;
 	/** 쿠폰 할인율 */
-	private String couponRate;
+	private int couponRate;
 	/** 쿠폰 만료기간 */
 	private String couponEndDt;
 	/** 쿠폰 상태 */
@@ -43,10 +43,10 @@ public class CouponVO extends CommDefaultVO implements Serializable {
 	public void setCouponNm(String couponNm) {
 		this.couponNm = couponNm;
 	}
-	public String getCouponRate() {
+	public int getCouponRate() {
 		return couponRate;
 	}
-	public void setCouponRate(String couponRate) {
+	public void setCouponRate(int couponRate) {
 		this.couponRate = couponRate;
 	}
 	public String getCouponSt() {

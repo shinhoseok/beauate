@@ -63,7 +63,7 @@
 		]]>
 	</insert>
 	
-	<!-- 쿼리명 : 쿠폰내역 삭제처리
+	<!-- 쿼리명 : 쿠폰 사용시 업데이트 처리
 	설명 : 쿠폰내역 삭제처리
 	수정일                     수정자           수정내용
 	==========  ======  ===================
@@ -71,10 +71,10 @@
 	작성자 : 신호석
 	최초작성일 : 2019. 10.16
 	-->	
-	<delete id="deleteCouponHistoryProc" parameterType="couponHistoryVO">
+	<update id="updateCouponHistoryProc" parameterType="couponHistoryVO">
 		<![CDATA[
-			DELETE FROM U_CPN WHERE u_sq = #{usrId} and cpn_sq = #{couponId}
+			UPDATE U_CPN SET u_cpn_fl = #{cpnFl} WHERE u_sq = #{usrId} and cpn_sq = #{couponId}
 		]]>
-	</delete>
+	</update>
 </mapper>
 

@@ -3,53 +3,74 @@ package com.beauate.pay.service;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.beauate.admin.classmng.service.ClassVO;
-import com.beauate.admin.user.service.UserVO;
 import com.beauate.common.service.CommDefaultVO;
 
 @SuppressWarnings("serial")
 public class PayVO extends CommDefaultVO implements Serializable {
-	private String paySq;
-	private String cSq;
-	private String uSq;
-	private String cpnSq;
+	/** 결제 아이디 */
+	private String payId;
+	/** 클래스 아이디 */
+	private String classId;
+	/** 쿠폰 아이디 */
+	private String couponId;
+	/** 결제일 */
 	private Date payDt;
+	/** 결제상태 */
 	private String paySt;
+	/** 결제방법 */
 	private String payMethodSt;
+	/** 최종결제금액 */
 	private String payCostNo;
-	private UserVO user;
-	private ClassVO cls;
+	/** 쿠폰금액 */
+	private String couponMoney;
+	/** 멘토번호 */
+	private String mentoMblPno;
+	/** 클래스허용인원 */
+	private String classApplyNo;
+	/** 클래스허용인원 */
+	private String classBigNo;
 	
-	
-	public ClassVO getCls() {
-		return cls;
+	public String getClassBigNo() {
+		return classBigNo;
 	}
-	public void setCls(ClassVO cls) {
-		this.cls = cls;
+	public void setClassBigNo(String classBigNo) {
+		this.classBigNo = classBigNo;
 	}
-	public String getPaySq() {
-		return paySq;
+	public String getClassApplyNo() {
+		return classApplyNo;
 	}
-	public void setPaySq(String paySq) {
-		this.paySq = paySq;
+	public void setClassApplyNo(String classApplyNo) {
+		this.classApplyNo = classApplyNo;
 	}
-	public String getcSq() {
-		return cSq;
+	public String getCouponMoney() {
+		return couponMoney;
 	}
-	public void setcSq(String cSq) {
-		this.cSq = cSq;
+	public void setCouponMoney(String couponMoney) {
+		this.couponMoney = couponMoney;
 	}
-	public String getuSq() {
-		return uSq;
+	public String getMentoMblPno() {
+		return mentoMblPno;
 	}
-	public void setuSq(String uSq) {
-		this.uSq = uSq;
+	public void setMentoMblPno(String mentoMblPno) {
+		this.mentoMblPno = mentoMblPno;
 	}
-	public String getCpnSq() {
-		return cpnSq;
+	public String getPayId() {
+		return payId;
 	}
-	public void setCpnSq(String cpnSq) {
-		this.cpnSq = cpnSq;
+	public void setPayId(String payId) {
+		this.payId = payId;
+	}
+	public String getClassId() {
+		return classId;
+	}
+	public void setClassId(String classId) {
+		this.classId = classId;
+	}
+	public String getCouponId() {
+		return couponId;
+	}
+	public void setCouponId(String couponId) {
+		this.couponId = couponId;
 	}
 	public Date getPayDt() {
 		return payDt;
@@ -74,12 +95,6 @@ public class PayVO extends CommDefaultVO implements Serializable {
 	}
 	public void setPayCostNo(String payCostNo) {
 		this.payCostNo = payCostNo;
-	}
-	public UserVO getUser() {
-		return user;
-	}
-	public void setUser(UserVO user) {
-		this.user = user;
 	}
 	
 }

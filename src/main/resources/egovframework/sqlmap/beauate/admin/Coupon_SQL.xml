@@ -158,5 +158,33 @@
 		<![CDATA[    
 		WHERE  cpn_sq   = #{couponId}
 		]]>
-    </update>
+	</update>
+
+	<!-- 쿼리명 : 사용자가 사용 가능한 쿠폰조회
+	설명 : 사용자가 사용 가능한 쿠폰조회
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.17
+	-->
+	<select id="selectUserHavingCoupon" parameterType="couponVO" resultMap="couponMap">
+		SELECT 
+			a.cpn_sq,
+			a.cpn_nm,
+			a.cpn_rate,
+			a.cpn_end_dt,
+			a.cpn_st 
+		FROM 
+			admin_cpn a
+		WHERE 
+			a.cpn_st = 'Y'
+			AND cpn_sq = (SELECT 
+								b.cpn_sq 
+							FROM 
+								u_cpn b
+							WHERE 
+								b.u_sq = #{usrId}
+								AND b.u_cpn_fl = 'Y')
+	</select>
 </mapper>
