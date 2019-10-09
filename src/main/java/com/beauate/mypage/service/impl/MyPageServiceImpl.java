@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
+import com.beauate.common.DateUtil;
 import com.beauate.common.StringUtil;
 import com.beauate.mypage.service.MyPageService;
 import com.beauate.pay.service.PayDao;
@@ -66,10 +67,13 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 			//이미지 경로수정 yyyyMM/파일명
 			selectList = fullImgPathChang(selectList);
 		}
+		//오늘날짜
+		String today = DateUtil.getCurrentYearMonthDay();
 		
 		rsltMap.put("paginationInfo", paginationInfo);
 		rsltMap.put("selectList", selectList);
 		rsltMap.put("selectListCnt", cnt);
+		rsltMap.put("today", today);
 		
 		return rsltMap;
 	}
@@ -77,7 +81,7 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 	//이미지 경로를 WAS의 경로로 변환한다.
 	private List<PayVO> fullImgPathChang(List<PayVO> sqlList) {
 		for(int i=0; i<sqlList.size(); i++) {
-			String tempSrc = sqlList.get(i).getImgSrc3();
+			String tempSrc = sqlList.get(i).getImgSrc2();
 			log.debug(">> origin Path >> "+tempSrc);
 			if(!StringUtil.isEmpty(tempSrc)) {
 				int cnt = tempSrc.indexOf("\\");
@@ -86,10 +90,41 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 				}
 				String resultSrc = tempSrc.substring(cnt+1);
 				log.debug(">> result Path >> "+resultSrc);
-				sqlList.get(i).setImgSrc3(resultSrc);
-				log.debug(">> vo Path >> "+sqlList.get(i).getImgSrc3());
+				sqlList.get(i).setImgSrc2(resultSrc);
+				log.debug(">> vo Path >> "+sqlList.get(i).getImgSrc2());
 			}
 		}
 		return sqlList;
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 결제내역삭제
+	 * 2. 처리내용 :  결제내역삭제
+	 * </pre>
+	 * @Method Name : deletePayProc
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param payVO
+	 * @return void
+	 * @throws Exception
+	 */ 
+	public void deletePayProc(PayVO payVO) throws Exception {
+		String [] payIdList = payVO.getPayId().split(",");
+		if(payIdList.length == 1) {
+			payDao.deletePayProc(payVO);
+		} else {
+			for(String payId : payIdList) {
+				payVO.setPayId(payId);
+				payDao.deletePayProc(payVO);
+			}
+		}
 	}
 }

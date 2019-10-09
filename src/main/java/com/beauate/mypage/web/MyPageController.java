@@ -1,5 +1,7 @@
 package com.beauate.mypage.web;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
@@ -9,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.beauate.login.service.LoginVO;
 import com.beauate.mypage.service.MyPageService;
 import com.beauate.pay.service.PayVO;
 
@@ -65,12 +68,37 @@ public class MyPageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/mypage/r/n/selectApplyClassList.do")
-	public String selectApplyClassList(@ModelAttribute("payVO") PayVO payVO, ModelMap model) throws Exception {
-//		Map<String, Object> rsltMap = myPageService.selectApplyClassList(payVO);
-		
+	public String selectApplyClassList(@ModelAttribute("payVO") PayVO payVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		payVO.setUsrId(sessionVO.getUsrId());
+		Map<String, Object> rsltMap = myPageService.selectApplyClassList(payVO);
+		model.addAttribute("rslt", rsltMap);
 		return "/mypage/applyClassAjax";
 	}
 	
+	/**
+	 * <pre>
+	 * 1. 개요 : 결제내역삭제
+	 * 2. 처리내용 :  결제내역삭제
+	 * </pre>
+	 * @Method Name : deletePayProc
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param payVO
+	 * @return void
+	 * @throws Exception
+	 */ 
+	@RequestMapping(value = "/mypage/w/n/deletePayProc.do")
+	public String deletePayProc(PayVO payVO, ModelMap model) throws Exception {
+		myPageService.deletePayProc(payVO);
+		return "redirect:/mypage/r/t/selectMyClassList.do";
+	}
 	
 	/**
 	 * <pre>

@@ -38,12 +38,44 @@ public class PayVO extends CommDefaultVO implements Serializable {
 	/** 클래스시작일 */
 	private String classStartDt;
 	/** 마이페이지이미지경로 */
-	private String imgSrc3;
+	private String imgSrc2;
 	/** 쿠폰할인율 */
 	private String cpnRate;
 	/** 마이페이지 탭번호 */
 	private String mypageTab;
+	/** 지역명 */
+	private String areaNm;
+	/** 클래스종료일 */
+	private String classEndDt;
+	/** 클래스 상태 */
+	private String classSt;
+	/** 결제 삭제 여부 */
+	private String delYn;
 	
+	public String getDelYn() {
+		return delYn;
+	}
+	public void setDelYn(String delYn) {
+		this.delYn = delYn;
+	}
+	public String getClassEndDt() {
+		return classEndDt;
+	}
+	public void setClassEndDt(String classEndDt) {
+		this.classEndDt = classEndDt;
+	}
+	public String getClassSt() {
+		return classSt;
+	}
+	public void setClassSt(String classSt) {
+		this.classSt = classSt;
+	}
+	public String getAreaNm() {
+		return areaNm;
+	}
+	public void setAreaNm(String areaNm) {
+		this.areaNm = areaNm;
+	}
 	public String getMypageTab() {
 		return mypageTab;
 	}
@@ -74,11 +106,11 @@ public class PayVO extends CommDefaultVO implements Serializable {
 	public void setClassStartDt(String classStartDt) {
 		this.classStartDt = classStartDt;
 	}
-	public String getImgSrc3() {
-		return imgSrc3;
+	public String getImgSrc2() {
+		return imgSrc2;
 	}
-	public void setImgSrc3(String imgSrc3) {
-		this.imgSrc3 = imgSrc3;
+	public void setImgSrc2(String imgSrc2) {
+		this.imgSrc2 = imgSrc2;
 	}
 	public String getCpnRate() {
 		return cpnRate;

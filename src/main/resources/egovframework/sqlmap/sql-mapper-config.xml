@@ -37,7 +37,7 @@
 		<typeAlias alias="bannerVO" type="com.beauate.admin.banner.service.BannerVO"/>
 		<!-- 알람VO -->
 		<typeAlias alias="alarmVO" type="com.beauate.alarm.service.AlarmVO"/>
-		
+		<!-- 결재VO -->
 		<typeAlias alias="payVO" type="com.beauate.pay.service.PayVO"/>
 		
 		<typeAlias alias="classReviewVO" type="com.beauate.admin.classmng.service.ClassReviewVO"/>

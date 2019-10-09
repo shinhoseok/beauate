@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.beauate.pay.service.PayDao">
+	
 	<resultMap id="payResultMap" type="com.beauate.pay.service.PayVO">
 		<id column="pay_sq" property="payId" />
 		<result column="c_sq" property="classId" />
@@ -12,14 +13,21 @@
 		<result column="c_cost_no" property="classCostNo" />
 		<result column="c_title" property="classTitle" />
 		<result column="c_adr" property="classAdr" />
+		<result column="c_st" property="classSt" />
+		<result column="c_end_dt" property="classEndDt" />
 		<result column="u_start_dt" property="classStartDt" />
 		<result column="img_sq" property="atchFileId" />
 		<result column="cpn_rate" property="cpnRate" />
+		<result column="c_area_st" property="classAreaSt" />
+		<result column="pay_cost_no" property="payCostNo" />
+		<result column="c_big_no" property="classBigNo" />
+		<result column="c_apply_no" property="classApplyNo" />
 	</resultMap>
 
 	<sql id="payGubunSql">
 		<where>
 			a.u_sq = #{usrId}
+			AND a.del_yn = 'N'
 		</where>
 	</sql>
 	
@@ -31,13 +39,14 @@
 	작성자 : 신호석
 	최초작성일 : 2019. 9.17
 	-->
-	<select id="selectPayListCnt">
+	<select id="selectPayListCnt" parameterType="payVO" resultType="int">
 	SELECT 
 		COUNT (*) CNT
 	FROM 
 		pay a
 		LEFT JOIN off_class b ON  a.c_sq = b.c_sq
 		LEFT JOIN admin_cpn d ON a.cpn_sq = d.cpn_sq
+		LEFT JOIN common_cd_scls f ON (b.c_area_st = f.mcls_cd AND f.lcls_cd='CCT')
 		<include refid="payGubunSql"/>
 	</select>
 	
@@ -49,7 +58,7 @@
 	작성자 : 신호석
 	최초작성일 : 2019. 9.17
 	-->
-	<select id="selectPayList">
+	<select id="selectPayList" parameterType="payVO" resultMap="payResultMap">
 	SELECT
 		e.*
 	FROM
@@ -68,13 +77,19 @@
 			b.c_title,
 			b.c_adr,
 			b.u_start_dt,
-			(SELECT c.file_stre_cours || '/' || c.stre_file_nm FROM comtnfiledetail c WHERE c.atch_file_id = b.img_sq AND file_cn='M3') AS imgSrc3,
+			b.c_st,
+			b.c_end_dt,
+			b.c_big_no,
+			b.c_apply_no,
+			f.mcls_nm as areaNm,
+			(SELECT c.file_stre_cours || '/' || c.stre_file_nm FROM comtnfiledetail c WHERE c.atch_file_id = b.img_sq AND file_cn='M2') AS imgSrc2,
 			b.img_sq,
 			d.cpn_rate
 		FROM 
 			pay a
 			LEFT JOIN off_class b ON  a.c_sq = b.c_sq
 			LEFT JOIN admin_cpn d ON a.cpn_sq = d.cpn_sq
+			LEFT JOIN common_cd_scls f ON (b.c_area_st = f.mcls_cd AND f.lcls_cd='CCT')
 		<include refid="payGubunSql"/>
 		) e
 	WHERE
@@ -100,7 +115,8 @@
 					pay_dt,
 					pay_st,
 					pay_method_st,
-					pay_cost_no
+					pay_cost_no,
+					del_yn
 				)
 			VALUES
 				(
@@ -111,9 +127,21 @@
 					sysdate,
 					#{paySt},
 					#{payMethodSt},
-					#{payCostNo}
+					#{payCostNo},
+					'N'
 				)]]>
 	</insert>
-	
+
+	<!-- 쿼리명 : 결재내역삭제
+	설명 : 결재내역삭제
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 5.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.17
+	-->
+	<update id="deletePayProc" parameterType="payVO">
+		UPDATE pay SET del_yn = #{delYn} WHERE pay_sq = #{payId}
+	</update>
 </mapper>
 
