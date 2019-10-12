@@ -14,6 +14,8 @@ import com.beauate.admin.classmng.service.ClassManageDao;
 import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.common.DateUtil;
 import com.beauate.common.StringUtil;
+import com.beauate.jjim.service.JjimDao;
+import com.beauate.jjim.service.JjimVO;
 import com.beauate.mypage.service.MyPageService;
 import com.beauate.pay.service.PayDao;
 import com.beauate.pay.service.PayVO;
@@ -39,6 +41,9 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 	
 	@Resource(name="classManageDao")
 	private ClassManageDao classManageDao;
+	
+	@Resource(name="jjimDao")
+	private JjimDao jjimDao;
 	
 	/**
 	 * <pre>
@@ -113,6 +118,78 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 	
 	/**
 	 * <pre>
+	 * 1. 개요 : 마이페이지 찜 리스트
+	 * 2. 처리내용 : 마이페이지 찜 리스트
+	 * </pre>
+	 * @Method Name : selectJjimList
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param payVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */ 
+	public Map<String, Object> selectJjimList(JjimVO jjimVO) throws Exception {
+		Map<String, Object> rsltMap = new HashMap<String, Object>();
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(jjimVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(jjimVO.getPageUnit());
+		paginationInfo.setPageSize(jjimVO.getPageSize());
+		
+		jjimVO.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
+		jjimVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		jjimVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		
+		List<JjimVO> selectList = null;
+		
+		int cnt = jjimDao.selectJjimListCnt(jjimVO);
+		paginationInfo.setTotalRecordCount(cnt);
+		if(cnt > 0){
+			//리스트
+			selectList = jjimDao.selectJjimList(jjimVO);
+			//이미지 경로수정 yyyyMM/파일명
+			selectList = fullImgPathChang2(selectList);
+		}
+		//오늘날짜
+		String today = DateUtil.getCurrentYearMonthDay();
+		
+		rsltMap.put("paginationInfo", paginationInfo);
+		rsltMap.put("selectList", selectList);
+		rsltMap.put("selectListCnt", cnt);
+		rsltMap.put("today", today);
+		
+		return rsltMap;
+	}
+	
+	//이미지 경로를 WAS의 경로로 변환한다.
+	private List<JjimVO> fullImgPathChang2(List<JjimVO> sqlList) {
+		for(int i=0; i<sqlList.size(); i++) {
+			String tempSrc = sqlList.get(i).getImgSrc1();
+			log.debug(">> origin Path >> "+tempSrc);
+			if(!StringUtil.isEmpty(tempSrc)) {
+				int cnt = tempSrc.indexOf("\\");
+				if(cnt == -1) {
+					cnt = tempSrc.indexOf("//");
+				}
+				String resultSrc = tempSrc.substring(cnt+1);
+				log.debug(">> result Path >> "+resultSrc);
+				sqlList.get(i).setImgSrc1(resultSrc);
+				log.debug(">> vo Path >> "+sqlList.get(i).getImgSrc1());
+			}
+		}
+		return sqlList;
+	}
+	
+	
+	/**
+	 * <pre>
 	 * 1. 개요 : 결제내역삭제
 	 * 2. 처리내용 :  결제내역삭제
 	 * </pre>
@@ -180,5 +257,36 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 		int applyNo = currentNo - 1;
 		tempVO.setClassApplyNo(String.valueOf(applyNo));
 		classManageDao.updateClassMngProc(tempVO);
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 찜 삭제
+	 * 2. 처리내용 :  찜 삭제
+	 * </pre>
+	 * @Method Name : deleteJjimProc
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param jjimVO
+	 * @return void
+	 * @throws Exception
+	 */ 
+	public void deleteJjimProc(JjimVO jjimVO) throws Exception {
+		String [] jjimIdList = jjimVO.getJjimId().split(",");
+		if(jjimIdList.length == 1) {
+			jjimDao.deleteJjimProc(jjimVO);
+		} else {
+			for(String jjimId : jjimIdList) {
+				jjimVO.setJjimId(jjimId);
+				jjimDao.deleteJjimProc(jjimVO);
+			}
+		}
 	}
 }

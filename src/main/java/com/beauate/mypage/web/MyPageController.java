@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.beauate.jjim.service.JjimVO;
 import com.beauate.login.service.LoginVO;
 import com.beauate.mypage.service.MyPageService;
 import com.beauate.pay.service.PayVO;
@@ -27,7 +28,7 @@ public class MyPageController {
 	 * 1. 개요 : 마이페이지 신청한 클래스 리스트
 	 * 2. 처리내용 : 마이페이지 신청한 클래스 리스트
 	 * </pre>
-	 * @Method Name : selectUserList
+	 * @Method Name : selectMyClassList
 	 * @date : 2019. 5. 17.
 	 * @author : 신호석
 	 * @history : 
@@ -37,7 +38,7 @@ public class MyPageController {
 	 *	2019. 5. 17.		신호석				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
-	 * @param userVO
+	 * @param payVO
 	 * @param model
 	 * @return
 	 * @throws Exception
@@ -52,7 +53,35 @@ public class MyPageController {
 	 * 1. 개요 : 마이페이지 신청한 클래스 리스트
 	 * 2. 처리내용 : 마이페이지 신청한 클래스 리스트
 	 * </pre>
-	 * @Method Name : selectUserList
+	 * @Method Name : selectApplyClassList
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param payVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mypage/r/n/selectApplyClassList.do")
+	public String selectApplyClassList(@ModelAttribute("payVO") PayVO payVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		payVO.setUsrId(sessionVO.getUsrId());
+		Map<String, Object> rsltMap = myPageService.selectApplyClassList(payVO);
+		model.addAttribute("rslt", rsltMap);
+		return "/mypage/applyClassAjax";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 신청한 클래스 리스트
+	 * 2. 처리내용 : 마이페이지 신청한 클래스 리스트
+	 * </pre>
+	 * @Method Name : selectMyClassTabList
 	 * @date : 2019. 5. 17.
 	 * @author : 신호석
 	 * @history : 
@@ -64,15 +93,43 @@ public class MyPageController {
 	 * 
 	 * @param userVO
 	 * @param model
-	 * @return
+	 * @return String
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/mypage/r/n/selectApplyClassList.do")
-	public String selectApplyClassList(@ModelAttribute("payVO") PayVO payVO, ModelMap model, LoginVO sessionVO) throws Exception {
+	@RequestMapping(value = "/mypage/r/t/selectMyClassTabList.do")
+	public String selectMyClassTabList(@ModelAttribute("payVO") PayVO payVO, ModelMap model, LoginVO sessionVO) throws Exception {
 		payVO.setUsrId(sessionVO.getUsrId());
 		Map<String, Object> rsltMap = myPageService.selectApplyClassList(payVO);
 		model.addAttribute("rslt", rsltMap);
-		return "/mypage/applyClassAjax";
+		return "/mypage/applyClassTabAjax";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 신청한 클래스 리스트
+	 * 2. 처리내용 : 마이페이지 신청한 클래스 리스트
+	 * </pre>
+	 * @Method Name : selectMyClassTabList
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param userVO
+	 * @param model
+	 * @return String
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mypage/r/n/selectMyJjimClassList.do")
+	public String selectMyJjimClassList(@ModelAttribute("jjimVO") JjimVO jjimVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		jjimVO.setUsrId(sessionVO.getUsrId());
+		Map<String, Object> rsltMap = myPageService.selectJjimList(jjimVO);
+		model.addAttribute("rslt", rsltMap);
+		return "/mypage/jjimClassListAjax";
 	}
 	
 	/**
@@ -131,6 +188,30 @@ public class MyPageController {
 		return "/common/temp_action_message";
 	}
 	
+	/**
+	 * <pre>
+	 * 1. 개요 : 찜삭제
+	 * 2. 처리내용 :  찜삭제
+	 * </pre>
+	 * @Method Name : deleteJjimProc
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param payVO
+	 * @return void
+	 * @throws Exception
+	 */ 
+	@RequestMapping(value = "/mypage/w/n/deleteJjimProc.do")
+	public String deleteJjimProc(JjimVO jjimVO, ModelMap model) throws Exception {
+		myPageService.deleteJjimProc(jjimVO);
+		return "jsonView";
+	}
 	/**
 	 * <pre>
 	 * 1. 개요 : 마이페이지 작성 가능한 리스트

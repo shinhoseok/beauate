@@ -4,9 +4,81 @@
 
 	<resultMap id="jjimResultMap" type="com.beauate.jjim.service.JjimVO">
 		<id column="jjim_sq" property="jjimId" />
-		<result column="c_sq" property="classId" />
 		<result column="u_sq" property="usrId" />
+		<result column="c_sq" property="classId" />
+		<result column="c_cost_no" property="classCostNo" />
+		<result column="c_title" property="classTitle" />
+		<result column="c_adr" property="classAdr" />
+		<result column="u_start_dt" property="classStartDt" />
+		<result column="c_st" property="classSt" />
+		<result column="c_end_dt" property="classEndDt" />
+		<result column="c_big_no" property="classBigNo" />
+		<result column="c_apply_no" property="classApplyNo" />
+		<result column="img_sq" property="atchFileId" />
 	</resultMap>
+	
+	<sql id="jjimGubunSql">
+		<where>
+			a.u_sq = #{usrId}
+		</where>
+	</sql>
+	
+	<!-- 쿼리명 : 찜리스트 카운트
+	설명 : 찜리스트 카운트
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 9.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 9.17
+	-->
+	<select id="selectJjimListCnt" parameterType="payVO" resultType="int">
+		SELECT 
+			COUNT (*) CNT
+		FROM 
+			jjim a
+			LEFT JOIN off_class b ON  a.c_sq = b.c_sq
+			LEFT JOIN common_cd_scls f ON (b.c_area_st = f.mcls_cd AND f.lcls_cd='CCT')
+		<include refid="jjimGubunSql"/>
+	</select>
+	
+	<!-- 쿼리명 : 찜 리스트
+	설명 : 찜 조회
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.16     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<select id="selectJjimList" parameterType="jjimVO" resultMap="jjimResultMap">
+		SELECT
+			e.*
+		FROM
+			(
+			SELECT 
+				ROW_NUMBER() OVER(ORDER BY a.jjim_sq DESC) RNUM,
+				a.jjim_sq,
+				a.u_sq,
+				a.c_sq,
+				b.c_cost_no,
+				b.c_title,
+				b.c_adr,
+				b.u_start_dt,
+				b.c_st,
+				b.c_end_dt,
+				b.c_big_no,
+				b.c_apply_no,
+				f.mcls_nm as classCt,
+				(SELECT c.file_stre_cours || '/' || c.stre_file_nm FROM comtnfiledetail c WHERE c.atch_file_id = b.img_sq AND file_cn='M1') AS imgSrc1,
+				b.img_sq
+			FROM 
+				jjim a
+				LEFT JOIN off_class b ON  a.c_sq = b.c_sq
+				LEFT JOIN common_cd_scls f ON (b.c_area_st = f.mcls_cd AND f.lcls_cd='CCT')
+			<include refid="jjimGubunSql"/>
+			) e
+		WHERE
+			e.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
+	</select>
 	
 	<!-- 쿼리명 : 찜 조회
 	설명 : 찜 조회
@@ -63,9 +135,18 @@
 	최초작성일 : 2019. 10.16
 	-->	
 	<delete id="deleteJjimProc" parameterType="jjimVO">
-		<![CDATA[
-			DELETE FROM jjim WHERE u_sq = #{usrId} and c_sq = #{classId}
-		]]>
+		DELETE FROM 
+			jjim 
+		<where>
+			<choose>
+				<when test="jjimId != null and jjimId != ''">
+					jjim_sq = #{jjimId}
+				</when>
+				<otherwise>
+					u_sq = #{usrId} and c_sq = #{classId}
+				</otherwise>
+			</choose>
+		</where>
 	</delete>
 </mapper>
 

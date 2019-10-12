@@ -149,7 +149,7 @@
 					#{usrId},
 					#{classId},
 					#{alarmFl},
-					'N'
+					#{alarmSendDt}
 				)
 		]]>
 	</insert>
