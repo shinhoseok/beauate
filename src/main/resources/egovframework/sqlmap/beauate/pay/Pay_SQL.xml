@@ -143,5 +143,17 @@
 	<update id="deletePayProc" parameterType="payVO">
 		UPDATE pay SET del_yn = #{delYn} WHERE pay_sq = #{payId}
 	</update>
+	
+	<!-- 쿼리명 : 환불처리
+	설명 : 환불처리
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 5.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.17
+	-->
+	<update id="updatePayRefundProc" parameterType="payVO">
+		UPDATE pay SET pay_st = #{paySt} WHERE pay_sq = #{payId}
+	</update>
 </mapper>
 

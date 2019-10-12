@@ -29,7 +29,7 @@ var fn_couponEvent = function() {
 	}
 	var params = {};
 	params.usrId = usrId;
-	params.couponId = "CPN-000002";
+	params.couponId = "CPN-000000";
 	//쿠폰내역 테이블에 쿠폰이 있으면 이미 받았다. 없으면 발급했다.
 	$.ajax({	
 		url: "${basePath}/board/w/t/insertCouponHistoryProc.do",

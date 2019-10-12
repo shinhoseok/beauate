@@ -253,10 +253,11 @@ var offClassPaymenting = function(classApplyNo, classBigNo) {
 	var frm = document.payVO;
 	frm.classApplyNo.value = classApplyNo;
 	frm.classBigNo.value = classBigNo;
-	if(couponId == null || couponId == "") {
+	var couponId = $("#couponSelectBox option:selected").val();
+	if(couponId == null || couponId == "" || couponId == undefined) {
 		frm.payCostNo.value = "${rslt.resultVO.classCost }"; //쿠폰없는 토탈금액
 	} else {
-		frm.couponId.value = $("#couponSelectBox option:selected").val();
+		frm.couponId.value = couponId
 		frm.couponMoney.value = "${couponMoney}"; //쿠폰금액
 		frm.payCostNo.value = "${totalMoney}"; //토탈금액
 	}

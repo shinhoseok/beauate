@@ -10,13 +10,18 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
+import com.beauate.admin.classmng.service.ClassManageDao;
+import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.common.DateUtil;
 import com.beauate.common.StringUtil;
 import com.beauate.mypage.service.MyPageService;
 import com.beauate.pay.service.PayDao;
 import com.beauate.pay.service.PayVO;
+import com.beauate.refund.service.RefundDao;
+import com.beauate.refund.service.RefundVO;
 
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import egovframework.rte.fdl.idgnr.EgovIdGnrService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @Service("myPageService")
@@ -25,6 +30,15 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 	
 	@Resource(name="payDao")
 	private PayDao payDao;
+	
+	@Resource(name="refundDao")
+	private RefundDao refundDao;
+	
+	@Resource(name="refundIdGnrService")
+	private EgovIdGnrService refundIdGnrService;
+	
+	@Resource(name="classManageDao")
+	private ClassManageDao classManageDao;
 	
 	/**
 	 * <pre>
@@ -126,5 +140,45 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 				payDao.deletePayProc(payVO);
 			}
 		}
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 환불처리
+	 * 2. 처리내용 :  환불처리
+	 * </pre>
+	 * @Method Name : updatePayRefundProc
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param payVO
+	 * @return void
+	 * @throws Exception
+	 */ 
+	public void updatePayRefundProc(PayVO payVO) throws Exception {
+		//결재내역 취소2로 저장
+		payVO.setPaySt("2");
+		payDao.updatePayRefundProc(payVO);
+		
+		//취소,환불내역 저장
+		RefundVO refundVO = new RefundVO();
+		refundVO.setRefundId(refundIdGnrService.getNextStringId());
+		refundVO.setPayId(payVO.getPayId());
+		refundDao.insertRefundProc(refundVO);
+		
+		//현재 클래스에 등록한 인원체크
+		ClassVO tempVO = new ClassVO();
+		tempVO.setClassId(payVO.getClassId());
+		ClassVO queryVO = classManageDao.selectClassMngDetail(tempVO);
+		int currentNo = Integer.parseInt(queryVO.getClassApplyNo());
+		int applyNo = currentNo - 1;
+		tempVO.setClassApplyNo(String.valueOf(applyNo));
+		classManageDao.updateClassMngProc(tempVO);
 	}
 }

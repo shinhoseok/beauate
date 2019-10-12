@@ -102,6 +102,37 @@ public class MyPageController {
 	
 	/**
 	 * <pre>
+	 * 1. 개요 : 취소/환불처리
+	 * 2. 처리내용 :  취소/환불처리
+	 * </pre>
+	 * @Method Name : updatePayRefundProc
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param payVO
+	 * @return void
+	 * @throws Exception
+	 */ 
+	@RequestMapping(value = "/mypage/w/n/updatePayRefundProc.do")
+	public String updatePayRefundProc(PayVO payVO, ModelMap model) throws Exception {
+		myPageService.updatePayRefundProc(payVO);
+		String message = null;
+		message = "취소처리가 완료되었습니다.";
+
+		model.addAttribute("message", message);
+		model.addAttribute("redirectUrl", "/mypage/r/t/selectMyClassList.do");
+		
+		return "/common/temp_action_message";
+	}
+	
+	/**
+	 * <pre>
 	 * 1. 개요 : 마이페이지 작성 가능한 리스트
 	 * 2. 처리내용 : 마이페이지 작성 가능한 리스트
 	 * </pre>

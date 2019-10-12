@@ -97,7 +97,7 @@
 								<!--오른쪽 회색 테두리 영역-->
 								<li class="my-c3">
 									<!--20% 동그라미-->
-									<c:if test="${not empty list.couponId }">
+									<c:if test="${not empty list.couponId}">
 										<div class="c2-one">
 											<sapn class="one-per"><c:out value="${list.cpnRate }"/>%</sapn>
 										</div>
@@ -114,9 +114,17 @@
 												<p class="c3-txt3"></p>
 											</c:otherwise>
 										</c:choose>
-										<c:if test="${classStartDtNum < todayNum and list.classSt eq 1 and list.classSt eq 2}">
+										<c:if test="${classStartDtNum < todayNum and list.classSt eq 1 or list.classSt eq 2}">
 											<div class="c3-btn">
-												<a href="javascript:void(0);" onclick="fn_payCancel('${list.payId }, ${list.classId }');"><span>참여취소</span></a>
+												<c:choose>
+													<c:when test="${list.paySt eq 1}">
+														<a href="javascript:void(0);" onclick="fn_payCancel('${list.payId }', '${list.classId }');"><span>참여취소</span></a>
+													</c:when>
+													<c:otherwise>
+														<a href="javascript:void(0);" onclick="alert('이미 취소처리가 완료되었습니다.')"><span>취소완료</span></a>
+													</c:otherwise>
+												</c:choose>
+												
 											</div>
 										</c:if>
 									</div>
@@ -137,9 +145,11 @@
 <div class="paging">
 	<ui:pagination paginationInfo="${rslt.paginationInfo}" type="image" jsFunction="fn_searchList" />
 </div>
-<form name="myAppClassDelForm" id="myAppClassDelForm" method="post" action="${basePath}/mypage/w/n/deletePayProc.do" >
+<form name="myAppClassDelForm" id="myAppClassDelForm" method="post" action="" >
 	<input type="hidden" id="payId" name="payId">
+	<input type="hidden" id="classId" name="classId">
 </form>
+
 <script>
 //지도보기
 var fn_applyClassMapView = function() {
@@ -186,6 +196,7 @@ var fn_mypageChkDel = function() {
 				var attrId = ($(this).parent().parent().parent().attr("payId"));
 				payId = payId + comFlag + String(attrId);
 			});
+			$('#myAppClassDelForm').attr("action","${basePath}/mypage/w/n/deletePayProc.do");
 			$("#myAppClassDelForm #payId").val(payId);
 			$("#myAppClassDelForm").submit();
 		}
@@ -198,7 +209,11 @@ var fn_mypageChkDel = function() {
 var fn_payCancel = function(payId, classId) {
 	var result = confirm("신청하신 클래스를 취소하시겠습니까?");
 	if(result) {
-		//결제상태 환불로, 취소환불테이블 인서트, 클래스인원 1증가
+		//결제상태 취소2로, 취소환불테이블 인서트, 클래스인원 1증가
+		$('#myAppClassDelForm').attr("action","${basePath}/mypage/w/n/updatePayRefundProc.do");
+		$("#myAppClassDelForm #payId").val(payId);
+		$("#myAppClassDelForm #classId").val(classId);
+		$("#myAppClassDelForm").submit();
 	}
 };
 </script>

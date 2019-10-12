@@ -90,4 +90,25 @@ public interface PayDao {
 	 * @throws Exception
 	 */ 
 	void deletePayProc(PayVO payVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 환불처리
+	 * 2. 처리내용 :  환불처리
+	 * </pre>
+	 * @Method Name : updatePayRefundProc
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param payVO
+	 * @return void
+	 * @throws Exception
+	 */ 
+	int updatePayRefundProc(PayVO payVO) throws Exception;
 }

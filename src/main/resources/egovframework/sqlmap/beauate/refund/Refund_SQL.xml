@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beauate.refund.service.RefundDao">
+	
+	<resultMap id="refundResultMap" type="com.beauate.refund.service.RefundVO">
+		<id column="rc_sq" property="refundId" />
+		<result column="pay_sq" property="payId" />
+		<result column="cancel_dt" property="cancelDt" />
+		<result column="refund_start_dt" property="refundStartDt" />
+		<result column="refund_end_dt" property="refundEndDt" />
+	</resultMap>
+	
+	<!-- 쿼리명 : 결제 등록
+	설명 : 결제 등록
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 9.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 9.17
+	-->
+	<insert id="insertRefundProc" parameterType="refundVO">
+		<![CDATA[
+			INSERT INTO
+				RC (
+					rc_sq,
+					pay_sq,
+					cancel_dt,
+					refund_start_dt,
+					refund_end_dt
+				)
+			VALUES
+				(
+					#{refundId},
+					#{payId},
+					sysdate,
+					#{refundStartDt},
+					#{refundEndDt}
+				)
+			]]>
+	</insert>
+
+</mapper>
+

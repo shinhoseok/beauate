@@ -4,16 +4,17 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge; charset=utf-8" />
-<title>enki_admin</title>
+<title>beauate</title>
 </head>
 <%
 	String message = (String) request.getAttribute("message");
 	String redirectUrl = (String) request.getAttribute("redirectUrl");
 %>
+
 <body>
 <script type="text/javascript">
-	alert("<%=message%>");
-	window.location.href = "${basePath}<%=redirectUrl%>";
+	alert('<c:out value="${message }"/>');
+	window.location.href = '${basePath}<c:out value="${redirectUrl }"/>';
 </script>
 </body>
 </html>
