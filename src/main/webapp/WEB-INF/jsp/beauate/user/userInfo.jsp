@@ -21,9 +21,9 @@
 		<a href="#container">본문 내용 바로가기</a>
 	</div>
 	<!-- header -->
-	<div id="header">
+<!-- 	<div id="header"> -->
 		<jsp:include page="/WEB-INF/jsp/beauate/ucommon/top.jsp" flush="false" />
-	</div>
+<!-- 	</div> -->
 	<!-- //header -->
 	<script type="text/javascript" src="${scriptPath}/validation/validation.js"></script>
 	<script type="text/javascript" src="${scriptPath}/common.js"></script>

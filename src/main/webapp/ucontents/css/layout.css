@@ -48,7 +48,7 @@
 #container .page-title .title-desc {font-size:16px;line-height:1.5;letter-spacing:-0.5px;color:#fff;}
 
 /* footer */
-#footer {position:relative; z-index:10001; height:254px;background-color:#080808;}
+#footer {/*position:relative;*/ z-index:10001; height:254px;background-color:#080808;}
 #footer .foot-inner {position:relative;content:''; display:block; clear:both;padding-top:60px;}
 #footer .flogo {position:absolute; top:60px; left:0;}
 #footer .flogo h2 {position:relative; display:block; text-indent:-999999px; height:21px; width:117px;background:url('../images/common/bi_logo.png') no-repeat 0 0;}

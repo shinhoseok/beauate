@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.beauate.common.DateUtil;
 import com.beauate.jjim.service.JjimVO;
 import com.beauate.login.service.LoginVO;
 import com.beauate.mypage.service.MyPageService;
@@ -212,6 +213,32 @@ public class MyPageController {
 		myPageService.deleteJjimProc(jjimVO);
 		return "jsonView";
 	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 수강후기
+	 * 2. 처리내용 : 마이페이지 수강후기
+	 * </pre>
+	 * @Method Name : selectWritePossibleReviewList
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param userVO
+	 * @param model
+	 * @return /mypage/r/t/selectWritePossibleHoogiList.do
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mypage/r/n/selectClassReviewList.do")
+	public String selectWritePossibleReviewList(@ModelAttribute("payVO") PayVO payVO, ModelMap model) throws Exception {
+		return "/mypage/reviewListAjax";
+	}
+	
 	/**
 	 * <pre>
 	 * 1. 개요 : 마이페이지 작성 가능한 리스트
@@ -227,15 +254,73 @@ public class MyPageController {
 	 *	2019. 5. 17.		신호석				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
-	 * @param userVO
+	 * @param payVO
 	 * @param model
-	 * @return
+	 * @return String
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/mypage/r/n/selectWritePossibleReviewList.do")
-	public String selectWritePossibleReviewList(@ModelAttribute("payVO") PayVO payVO, ModelMap model) throws Exception {
+	@RequestMapping(value = "/mypage/r/t/selectWritePossibleReviewList.do")
+	public String selectWritePossibleHoogiList(@ModelAttribute("payVO") PayVO payVO, ModelMap model) throws Exception {
+		payVO.setClassEndDt(DateUtil.getCurrentDateTime()); //종료일 오늘과 비교
+		payVO.setClassSt("4"); //클래스상태 종료된것만
+		Map<String, Object> rsltMap = myPageService.selectApplyClassList(payVO);
+		model.addAttribute("rslt", rsltMap);
+		return "/mypage/writePossibleReview";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 작성 가능한 리스트
+	 * 2. 처리내용 : 마이페이지 작성 가능한 리스트
+	 * </pre>
+	 * @Method Name : insertReviewProc
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param payVO
+	 * @param model
+	 * @return String
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mypage/w/n/insertReview.do")
+	public String insertReview(@ModelAttribute("payVO") PayVO payVO, ModelMap model) throws Exception {
+		payVO.setClassEndDt(DateUtil.getCurrentDateTime()); //종료일 오늘과 비교
+		payVO.setClassSt("4"); //클래스상태 종료된것만
+		Map<String, Object> rsltMap = myPageService.selectApplyClassList(payVO);
+		model.addAttribute("rslt", rsltMap);
+		return "/mypage/reviewInsert";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 내가 작성한 후기 리스트
+	 * 2. 처리내용 : 마이페이지 내가 작성한 후기 리스트
+	 * </pre>
+	 * @Method Name : selectMyWriteReviewList
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param userVO
+	 * @param model
+	 * @return 
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mypage/r/n/selectMyWriteReviewList.do")
+	public String selectMyWriteReviewList(@ModelAttribute("payVO") PayVO payVO, ModelMap model) throws Exception {
 		
-		return "/mypage/writePossibleReviewAjax";
+		return "/mypage/myWriteReview";
 	}
 	
 	/**

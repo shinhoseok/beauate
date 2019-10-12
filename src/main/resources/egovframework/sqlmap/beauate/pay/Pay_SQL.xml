@@ -28,6 +28,12 @@
 		<where>
 			a.u_sq = #{usrId}
 			AND a.del_yn = 'N'
+			<if test="classEndDt != null and  classEndDt != ''">
+				AND b.c_end_dt <![CDATA[ < ]]> #{classEndDt}
+			</if>
+			<if test="classSt != null and  classSt != ''">
+				OR b.c_st = #{classSt}
+			</if>
 		</where>
 	</sql>
 	

@@ -21,9 +21,9 @@
 			<a href="#container">본문 내용 바로가기</a>
 		</div>
 		<!-- header -->
-		<div id="header">
+<!-- 		<div id="header"> -->
 			<jsp:include page="/WEB-INF/jsp/beauate/ucommon/top.jsp" flush="false" />
-		</div>
+<!-- 		</div> -->
 		<!-- //header -->
 		<!-- container -->
 		<div id="container">
@@ -83,7 +83,7 @@ var fn_myPageCommonAjax = function(params) {
 	if(params.mypageTab == '1') {
 		url = "${basePath}/mypage/r/n/selectApplyClassList.do";
 	} else if(params.mypageTab == '2') {
-		url = "${basePath}/mypage/r/n/selectWritePossibleReviewList.do";
+		url = "${basePath}/mypage/r/n/selectClassReviewList.do";
 	} else if(params.mypageTab == '3') {
 		url = "${basePath}/mypage/r/n/selectUsePossibleCpnList.do";
 	} else if(params.mypageTab == '4') {

@@ -88,9 +88,9 @@ public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffC
 	public Map<String, Object> selectOffClassList(ClassVO classVO) throws Exception {
 		Map<String, Object> rsltMap = new HashMap<String, Object>();
 		String today = DateUtil.getCurrentYearMonthDay();
-		log.debug(">>>>>>>>>>>>>>>>>>> selectOffClassList ClassCtSt >>>>>>>>>>>>>>>>>>>>>>>> "+classVO.getClassSt());
+		log.debug(">>>>>>>>>>>>>>>>>>> selectOffClassList ClassCtSt >>>>>>>>>>>>>>>>>>>>>>>> "+classVO.getClassCtSt());
 		//*********************헤어리스트 8장
-//		classVO.setClassCtSt("1");
+		classVO.setClassCtSt("1");
 		classVO.setImgCnt("8");
 		List<ClassVO> hairList = offClassDao.selectOffClassList(classVO);
 		if(hairList != null) {
@@ -215,7 +215,7 @@ public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffC
 	public Map<String, Object> selectOffClassTabList(ClassVO classVO) throws Exception {
 		Map<String, Object> rsltMap = new HashMap<>();
 		String today = DateUtil.getCurrentYearMonthDay();
-		log.debug(">>>>>>>>>>>>>>>>>>> selectOffClassList ClassCtSt >>>>>>>>>>>>>>>>>>>>>>>> "+classVO.getClassSt());
+		log.debug(">>>>>>>>>>>>>>>>>>> selectOffClassList ClassCtSt >>>>>>>>>>>>>>>>>>>>>>>> "+classVO.getClassCtSt());
 //		classVO.setClassCtSt("1");
 		//상단 최신순 4개
 		classVO.setImgCnt("4");

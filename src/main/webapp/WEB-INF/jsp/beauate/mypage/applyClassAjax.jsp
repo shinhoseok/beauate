@@ -35,7 +35,7 @@ var fn_myClassSearchList = function(page) {
 	params.pageIndex = myClassCuurPage;
 	params.mypageTab = myClassTabId; //카테고리(탭구분값 1,2탭)
 	fn_myClassCommonAjax(params);
-}
+};
 
 //신청한 클래스, 찜한 클래스 Ajax
 var fn_myClassCommonAjax = function(params) {
