@@ -13,8 +13,8 @@
 
 <body>
 <script type="text/javascript">
-	alert('<c:out value="${message }"/>');
-	window.location.href = '${basePath}<c:out value="${redirectUrl }"/>';
+	alert("<%=message%>");
+	window.location.href = "${basePath}<%=redirectUrl%>";
 </script>
 </body>
 </html>

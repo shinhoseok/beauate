@@ -67,7 +67,23 @@ public class ClassVO extends CommDefaultVO implements Serializable {
 	private boolean orderByYn = false;
 	/** 클래스인원체크 */
 	private boolean personnelChk = false;
+	/** 클래스담당자 전화번호 */
+	private String mblPno;
+	/** 클래스상세페이지 탭이동할 값 */
+	private String detailGoTab;
 	
+	public String getDetailGoTab() {
+		return detailGoTab;
+	}
+	public void setDetailGoTab(String detailGoTab) {
+		this.detailGoTab = detailGoTab;
+	}
+	public String getMblPno() {
+		return mblPno;
+	}
+	public void setMblPno(String mblPno) {
+		this.mblPno = mblPno;
+	}
 	public boolean isPersonnelChk() {
 		return personnelChk;
 	}

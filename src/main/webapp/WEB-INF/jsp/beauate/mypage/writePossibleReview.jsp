@@ -61,7 +61,7 @@
 									</c:otherwise>
 								</c:choose>
 								<div class="c3-btn-review">
-									<a href="javascript:void(0);" onclick="javascript:fn_insertReview()"><span>후기작성</span></a>
+									<a href="javascript:void(0);" onclick="javascript:fn_insertReview('<c:out value="${list.classId }"/>')"><span>후기작성</span></a>
 								</div>
 							</div>
 						</li>
@@ -138,7 +138,7 @@
 			</div>
 			<!--내용작성-->
 			<div class="mypageR_ctt">
-				<textarea id="reviewCtt" name="reviewCtt" rows="5" onfocus="checker(this, 200 , 'nbytes_reviewCtt');" onblur="stopchecker();" placeholder="멘티님께 어떤 도움이 되었나요?"></textarea>
+				<textarea id="reviewCttTextArea" name="reviewCttTextArea" rows="5" onfocus="checker(this, 200 , 'nbytes_reviewCtt');" onblur="stopchecker();" placeholder="멘티님께 어떤 도움이 되었나요?"></textarea>
 				<div class="ctt-300">(<span id="nbytes_reviewCtt" class="color_red">0</span>/300)</div>
 			</div>
 
@@ -154,16 +154,46 @@
 		
 	</div>
 </div>
+<form name="reviewWriteForm" id="reviewWriteForm" method="post" action="${basePath}/mypage/w/n/insertReviewProc.do">
+	<input type="hidden" id="curriculum" name="curriculum">
+	<input type="hidden" id="kindness" name="kindness">
+	<input type="hidden" id="timePro" name="timePro">
+	<input type="hidden" id="community" name="community">
+	<input type="hidden" id="reviewCtt" name="reviewCtt">
+	<input type="hidden" id="classId" name="classId">
+</form>
+
 <script type="text/javascript" src="${scriptPath}/star.js" ></script>
 <script>
+//클래스아이디 전역변수
+var reviewClassId = "";
+
 //지도보기
 var fn_reviewMapView = function() {
 	alert("준비중 입니다.");
 };
 
 //후기작성
-var fn_insertReview = function() {	
-	$("#reviewPopOpen").get(0).click();
+var fn_insertReview = function(classId) {
+	reviewClassId = classId;
+	//유저는 같은 클래스에서 한번만 후기작성 가능
+	$.ajax({ 	
+		url: "${basePath}/mypage/r/n/selectUserReviewCnt.do",
+		type: 'POST',
+		dataType : "json",
+		data : {"classId" : classId},
+		error: function(){
+			 alert("현재 찜 서비스가 원할하지 않습니다.\n잠시후 다시 이용해 주십시요.");
+			 return;
+		},
+		success: function(r) { 
+			if(r.cnt == 0) {
+				$("#reviewPopOpen").get(0).click();
+			} else{
+				alert("해당 클래스에 이미 작성된 리뷰가 있습니다.");
+			}
+		}
+	});
 };
 
 //로그인 팝업 닫기
@@ -185,11 +215,25 @@ $(".starRev span").click(function(){
 
 //후기등록
 var fn_insertReviewProc = function() {
-	var curriculum = $("#curriculum > .starR.on").length;
-	var kindness = $("#kindness > .starR.on").length;
-	var timePro = $("#timePro > .starR.on").length;
-	var community = $("#community > .starR.on").length;
-	var reviewCtt = $("#reviewCtt").val();
+	var curriculum = $("#curriculum > .starR.on").length*1;
+	var kindness = $("#kindness > .starR.on").length*1;
+	var timePro = $("#timePro > .starR.on").length*1;
+	var community = $("#community > .starR.on").length*1;
+	var reviewCtt = $("#reviewCttTextArea").val();
+	$("#reviewWriteForm #reviewCtt").val(reviewCtt); //리뷰내용
+	$("#reviewWriteForm #classId").val(reviewClassId); //클래스아이디
+	$("#reviewWriteForm #curriculum").val(curriculum); //커리큘럼평점
+	$("#reviewWriteForm #kindness").val(kindness); //친절도평점
+	$("#reviewWriteForm #timePro").val(timePro); //시간준수 평점
+	$("#reviewWriteForm #community").val(community); //전달력 평점
+	
+	if(reviewCtt == null && reviewCtt == "") {
+		alert("후기를 등록해주세요.");
+		$("#reviewCtt").focus();
+		return;
+	}
+	
+	$("#reviewWriteForm").submit();
 };
 
 </script>

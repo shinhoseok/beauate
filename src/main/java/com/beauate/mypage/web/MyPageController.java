@@ -16,6 +16,7 @@ import com.beauate.jjim.service.JjimVO;
 import com.beauate.login.service.LoginVO;
 import com.beauate.mypage.service.MyPageService;
 import com.beauate.pay.service.PayVO;
+import com.beauate.review.service.ReviewVO;
 
 @Controller
 public class MyPageController {
@@ -256,7 +257,7 @@ public class MyPageController {
 	 * 
 	 * @param payVO
 	 * @param model
-	 * @return String
+	 * @return String /mypage/w/n/insertReviewProc.do
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/mypage/r/t/selectWritePossibleReviewList.do")
@@ -266,6 +267,68 @@ public class MyPageController {
 		Map<String, Object> rsltMap = myPageService.selectApplyClassList(payVO);
 		model.addAttribute("rslt", rsltMap);
 		return "/mypage/writePossibleReview";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 하나의 클래스에 하나의 리뷰만 Ajax
+	 * 2. 처리내용 : 마이페이지 하나의 클래스에 하나의 리뷰만 Ajax
+	 * </pre>
+	 * @Method Name : selectUserReviewCnt
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param payVO
+	 * @param model
+	 * @return String
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mypage/r/n/selectUserReviewCnt.do")
+	public String selectUserReviewCnt(ReviewVO reviewVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		
+		reviewVO.setUsrId(sessionVO.getUsrId());
+		int cnt = myPageService.selectUserReviewCnt(reviewVO);
+		model.addAttribute("cnt", cnt);
+		
+		return "jsonView";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 리뷰작성 처리
+	 * 2. 처리내용 : 마이페이지 리뷰작성 처리
+	 * </pre>
+	 * @Method Name : insertReviewProc
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param payVO
+	 * @param model
+	 * @return String
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mypage/w/n/insertReviewProc.do")
+	public String insertReviewProc(@ModelAttribute("reviewVO") ReviewVO reviewVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		reviewVO.setUsrId(sessionVO.getUsrId());
+		myPageService.insertReviewProc(reviewVO);
+		String message = null;
+		message = "후기가 정상적으로 등록 되었습니다.";
+
+		model.addAttribute("message", message);
+		model.addAttribute("redirectUrl", "/offclass/a/t/selectOffClassDetail.do?classId="+reviewVO.getClassId()+"&detailGoTab=review");
+		return "/common/temp_action_message";
 	}
 	
 	/**

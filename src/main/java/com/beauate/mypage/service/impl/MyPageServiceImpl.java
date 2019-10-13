@@ -21,6 +21,8 @@ import com.beauate.pay.service.PayDao;
 import com.beauate.pay.service.PayVO;
 import com.beauate.refund.service.RefundDao;
 import com.beauate.refund.service.RefundVO;
+import com.beauate.review.service.ReviewDao;
+import com.beauate.review.service.ReviewVO;
 
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
@@ -44,6 +46,12 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 	
 	@Resource(name="jjimDao")
 	private JjimDao jjimDao;
+	
+	@Resource(name="reviewDao")
+	private ReviewDao reviewDao;
+	
+	@Resource(name="reviewIdGnrService")
+	private EgovIdGnrService reviewIdGnrService;
 	
 	/**
 	 * <pre>
@@ -288,5 +296,52 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 				jjimDao.deleteJjimProc(jjimVO);
 			}
 		}
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 리뷰작성 등록처리
+	 * 2. 처리내용 :  리뷰작성 등록처리
+	 * </pre>
+	 * @Method Name : insertReviewProc
+	 * @date : 2019. 5. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param reviewVO
+	 * @return
+	 * @throws Exception
+	 */ 
+	public void insertReviewProc(ReviewVO reviewVO) throws Exception {
+		reviewVO.setReviewId(reviewIdGnrService.getNextStringId());
+		reviewDao.insertReviewProc(reviewVO);
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 사용자가 하나의 클래스에 작성한 리뷰카운트
+	 * 2. 처리내용 :  사용자가 하나의 클래스에 작성한 리뷰카운트
+	 * </pre>
+	 * @Method Name : selectUserReviewCnt
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param reviewVO
+	 * @return int
+	 * @throws Exception
+	 */ 
+	public int selectUserReviewCnt(ReviewVO reviewVO) throws Exception {
+		return reviewDao.selectUserReviewCnt(reviewVO);
 	}
 }

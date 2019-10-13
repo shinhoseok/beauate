@@ -19,6 +19,7 @@ import com.beauate.common.StringUtil;
 import com.beauate.login.service.LoginVO;
 import com.beauate.offclass.service.OffClassService;
 import com.beauate.pay.service.PayVO;
+import com.beauate.review.service.ReviewVO;
 
 @Controller
 public class OffClassController {
@@ -55,6 +56,7 @@ public class OffClassController {
 	public String selectOffClassList(@ModelAttribute("classVO") ClassVO classVO, ModelMap model) throws Exception {
 		Map<String, Object> rsltMap = offClassService.selectOffClassList(classVO);
 		model.addAttribute("rslt", rsltMap);
+		model.addAttribute("classVO", classVO);
 		return "/offclass/offClassList";
 	}
 	
@@ -131,7 +133,7 @@ public class OffClassController {
 	 * 
 	 * @param classVO
 	 * @param model
-	 * @return
+	 * @return String
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/offclass/a/t/selectOffClassDetail.do")
@@ -141,6 +143,34 @@ public class OffClassController {
 		model.addAttribute("rslt", rsltMap);
 		
 		return "/offclass/offClassDetail";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인클래스 상세화면
+	 * 2. 처리내용 : 오프라인클래스 상세화면
+	 * </pre>
+	 * @Method Name : selectReviewList
+	 * @date : 2019. 10. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param classVO
+	 * @param model
+	 * @return String
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/offclass/a/n/selectReviewList.do")
+	public String selectReviewList(ReviewVO reviewVO, ModelMap model) throws Exception {
+		Map<String, Object> rsltMap = offClassService.selectReviewList(reviewVO);
+		model.addAttribute("rslt", rsltMap);
+		
+		return "/offclass/offClassReviewList";
 	}
 		
 	/**

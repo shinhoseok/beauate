@@ -41,8 +41,8 @@
 		<typeAlias alias="payVO" type="com.beauate.pay.service.PayVO"/>
 		<!-- 취소환불VO -->
 		<typeAlias alias="refundVO" type="com.beauate.refund.service.RefundVO"/>
-		
-		<typeAlias alias="classReviewVO" type="com.beauate.admin.classmng.service.ClassReviewVO"/>
+		<!-- 리뷰VO -->
+		<typeAlias alias="reviewVO" type="com.beauate.review.service.ReviewVO"/>
 		
 	</typeAliases>
 </configuration>

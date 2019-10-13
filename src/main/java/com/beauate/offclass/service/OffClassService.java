@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.pay.service.PayVO;
+import com.beauate.review.service.ReviewVO;
 
 public interface OffClassService {
 	/**
@@ -89,6 +90,27 @@ public interface OffClassService {
 	 * @throws Exception
 	 */ 
 	public Map<String, Object> selectOffClassDetail(ClassVO classVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인클래스 상세 리뷰리스트
+	 * 2. 처리내용 :  오프라인클래스 상세 리뷰리스트
+	 * </pre>
+	 * @Method Name : selectReviewList
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param reviewVO
+	 * @return Map<String, Object>
+	 * @throws Exception
+	 */ 
+	public Map<String, Object> selectReviewList(ReviewVO reviewVO) throws Exception;
 	
 	/**
 	 * <pre>

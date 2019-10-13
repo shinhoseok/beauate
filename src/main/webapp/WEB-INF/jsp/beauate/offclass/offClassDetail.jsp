@@ -198,8 +198,8 @@
 							<ul>
 								<li><a href="#class_intro" class="active" onclick="fn_move('offline-view-cont');">클래스 소개</a></li>
 								<li><a href="javascript:void(0);" onclick="fn_move('class_map');">오시는길</a></li>
-								<li><a href="javascript:void(0);" onclick="fn_move('review');">문의하기</a></li>
-								<li><a href="javascript:void(0);">클래스 후기</a></li>
+								<li><a href="javascript:void(0);" onclick="fn_move('class_ask');">문의하기</a></li>
+								<li><a href="javascript:void(0);" onclick="fn_move('review');">클래스 후기</a></li>
 								<li><a href="javascript:void(0);">취소/환불 정책</a></li>
 							</ul>
 						</div>
@@ -234,93 +234,23 @@
 											</ul>
 										</div>
 									</div>
-									<div class="info_map">
+									<div class="info_map" id="class_ask">
 										<img src="${imagePath}/sub/class_map.jpg" />
 									</div>
 								</div>
 							</div>
 							<!--// 오시는 길-->
 							<div class="class_ask">
-								<span class="class_ask_inner"> <span> <strong>멘토</strong> <span>뷰아떼님</span>
-								</span> <span> <strong>문의</strong> <span class="num">010-1234-5678</span>
-								</span> <span class="kakao_wrap"> <span class="icon_kakao">플러스친구 :</span> <span>박승철헤어스투디오도곡동</span>
-								</span>
+								<span class="class_ask_inner">
+								<span><strong>멘토</strong><span><c:out value="${rslt.resultVO.usrNm }"/></span></span>
+								<span> <strong>문의</strong> <span class="num"><c:out value="${rslt.resultVO.mblPno }"/></span></span>
+<!-- 								<span class="kakao_wrap"> <span class="icon_kakao">플러스친구 :</span> <span>박승철헤어스투디오도곡동</span></span> -->
 								</span>
 							</div>
 						</div>
 						<!--// 클래스 상세 -->
 						<!-- 리뷰 -->
-						<div class="review" id="review">
-							<h3>Review class 수강후기</h3>
-							<div class="grade">
-								<p class="grade-num">4.5</p>
-								<ul class="grade-list">
-									<li><span class="tit">커리큘럼</span> <span class="star"><span style="width: 80%;"></span></span></li>
-									<li><span class="tit">시간준수</span> <span class="star"><span style="width: 100%;"></span></span></li>
-									<li><span class="tit">전달력</span> <span class="star"><span style="width: 80%;"></span></span></li>
-									<li><span class="tit">친절도</span> <span class="star"><span style="width: 40%;"></span></span></li>
-								</ul>
-							</div>
-							<ul class="review-list">
-								<li>
-									<div class="review-info">
-										<span class="name">박소*</span> <span class="date">19.08.27</span>
-									</div>
-									<p class="txt">2시간 알찬 수업이었어요! 전 쿨톤임에도 불구하고 메이업이나 옷은 웜톤으로 입고 있다는 걸 알았어요ㅎㅎㅎ 수업을 통해 제매력을 더 뿜뿜할 수 있는 색을 찾아서 뿌듯해요</p>
-								</li>
-								<li>
-									<div class="review-info">
-										<span class="name">박소*</span> <span class="date">19.08.27</span>
-									</div>
-									<p class="txt">2시간 알찬 수업이었어요! 전 쿨톤임에도 불구하고 메이업이나 옷은 웜톤으로 입고 있다는 걸 알았어요ㅎㅎㅎ 수업을 통해 제매력을 더 뿜뿜할 수 있는 색을 찾아서 뿌듯해요</p>
-									<div class="reply">
-										<a href="#">댓글보기<span class="cnt">2</span></a>
-									</div>
-								</li>
-								<li>
-									<div class="review-info">
-										<span class="name">박소*</span> <span class="date">19.08.27</span>
-									</div>
-									<p class="txt">2시간 알찬 수업이었어요! 전 쿨톤임에도 불구하고 메이업이나 옷은 웜톤으로 입고 있다는 걸 알았어요ㅎㅎㅎ 수업을 통해 제매력을 더 뿜뿜할 수 있는 색을 찾아서 뿌듯해요</p>
-									<div class="reply">
-										<a href="#">댓글보기<span class="cnt">2</span></a>
-									</div>
-								</li>
-								<li>
-									<div class="review-info">
-										<span class="name">박소*</span> <span class="date">19.08.27</span>
-									</div>
-									<p class="txt">2시간 알찬 수업이었어요! 전 쿨톤임에도 불구하고 메이업이나 옷은 웜톤으로 입고 있다는 걸 알았어요ㅎㅎㅎ 수업을 통해 제매력을 더 뿜뿜할 수 있는 색을 찾아서 뿌듯해요</p>
-									<div class="reply">
-										<a href="#">댓글보기<span class="cnt">2</span></a>
-									</div>
-								</li>
-								<li>
-									<div class="review-info">
-										<span class="name">박소*</span> <span class="date">19.08.27</span>
-									</div>
-									<p class="txt">2시간 알찬 수업이었어요! 전 쿨톤임에도 불구하고 메이업이나 옷은 웜톤으로 입고 있다는 걸 알았어요ㅎㅎㅎ 수업을 통해 제매력을 더 뿜뿜할 수 있는 색을 찾아서 뿌듯해요</p>
-									<div class="reply">
-										<a href="#">댓글보기<span class="cnt">2</span></a>
-									</div>
-								</li>
-							</ul>
-							<div class="paging">
-								<button type="button" class="btn-prev">
-									<span>이전</span>
-								</button>
-								<ul>
-									<li class="active"><span>1</span></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">5</a></li>
-								</ul>
-								<button type="button" class="btn-next">
-									<span>다음</span>
-								</button>
-							</div>
-						</div>
+						<div class="review" id="review"></div>
 						<!-- //리뷰 -->
 					</div>
 					<br />
@@ -341,6 +271,9 @@
 
 <script type="text/javascript">
 $(function() {
+	//리뷰리스트
+	fn_searchReviewList(1);
+	
 	//따라다니는 메뉴
 	var floatPosition = parseInt($("#quick-class").css('top'));
 	var footerTop = $("#footer").offset().top;
@@ -353,7 +286,41 @@ $(function() {
 			"top" : newPosition
 		}, 500);
 	}).scroll();
+	
+	//마이페이지 후기등록 후 이동될 탭
+	var detailGoTab = '<c:out value="${classVO.detailGoTab }"/>';
+	if(detailGoTab != null || detailGoTab != "" || detailGoTab != "undefined") {
+		fn_move(detailGoTab);
+	}
 });
+
+//리뷰 현재페이지 전역변수
+var cuurPage = 1;
+
+//param : 클릭페이지
+function fn_searchReviewList(page){
+	cuurPage= page;
+	var params = {};
+	params.pageIndex = cuurPage;
+	fn_selectReviewList(params);
+}
+
+//리뷰 페이지 ajax
+var fn_selectReviewList = function(params) {
+	$.ajax({	
+		url: "${basePath}/offclass/a/n/selectReviewList.do",
+		data: params,
+		type: 'POST',
+		dataType: 'html',
+		success: function(r) {
+			$('#review').children().remove();
+			$('#review').html(r);
+		},
+		error : function() {
+		  alert('오류가 발생했습니다.\n관리자에게 문의 바랍니다.');
+		}
+	});
+};
 
 //탭메뉴 이동(클래스소개, 오시는길, 문의하기)
 var fn_move = function(param) {

@@ -2,9 +2,12 @@ package beauate;
 
 public class Test {
 	public static void main(String[] args) {
+		double e = 2.71828;
+		System.out.println(Math.round(e*10)/10.0);
 		String temp = "/opt/tomcat/webapps/ROOT/ucontents/upload//201910/CLASS_201910060156196800";
 		String result = getWasfilePath(temp); 
 		System.out.println(result);
+		System.out.println(0*1);
 //		String result = temp.substring(temp.length()-);
 	}
 	

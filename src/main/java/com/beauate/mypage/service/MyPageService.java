@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.beauate.jjim.service.JjimVO;
 import com.beauate.pay.service.PayVO;
+import com.beauate.review.service.ReviewVO;
 
 public interface MyPageService {
 	/**
@@ -112,4 +113,46 @@ public interface MyPageService {
 	 * @throws Exception
 	 */ 
 	public void deleteJjimProc(JjimVO jjimVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 리뷰작성 등록처리
+	 * 2. 처리내용 :  리뷰작성 등록처리
+	 * </pre>
+	 * @Method Name : insertReviewProc
+	 * @date : 2019. 5. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param reviewVO
+	 * @return
+	 * @throws Exception
+	 */ 
+	public void insertReviewProc(ReviewVO reviewVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 사용자가 하나의 클래스에 작성한 리뷰카운트
+	 * 2. 처리내용 :  사용자가 하나의 클래스에 작성한 리뷰카운트
+	 * </pre>
+	 * @Method Name : selectUserReviewCnt
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param reviewVO
+	 * @return int
+	 * @throws Exception
+	 */ 
+	public int selectUserReviewCnt(ReviewVO reviewVO) throws Exception;
 }

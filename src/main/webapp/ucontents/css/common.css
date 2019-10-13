@@ -50,7 +50,7 @@
 .table-col tbody .link a {text-decoration:underline;}
 
 /* paging */
-.paging{text-align:center; font-size:0;}
+.paging{text-align:center; font-size:0; margin-top:40px;}
 .paging [class^=btn-]{width:32px; height:32px; border-radius:0; background:url('../images/common/btn_paging.png') no-repeat; background-size: 64px;}
 .paging .btn-prev-end{background-position:-23px 0;}
 .paging .btn-next-end{background-position:-40px -32px;}

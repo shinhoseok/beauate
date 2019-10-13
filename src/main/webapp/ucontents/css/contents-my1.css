@@ -280,13 +280,14 @@ font-size: 16px;line-height: 1.5; letter-spacing: -0.5px;}
 .myinfo_input li:nth-child(2) {font-weight: 900; font-size: 30px;line-height: 10px; letter-spacing: 2px;}
 .myinfo_pwd_input li:nth-child(4) {text-align: center; padding-top: 46px;}
 .myinfo_dash{margin: 0 8px; opacity: 0.6;}
-.myinfo_input li input[type=text], input[type=password]{border: 1px solid #a7a7a7; border-radius: 4px; width: 380px; padding: 20px;}
-.myinfo_pwd_input li input[type=text], input[type=password]{border: 1px solid #a7a7a7; border-radius: 4px; width: 380px; padding: 20px;}
+.myinfo_input li input[type=text], .myinfo_input li input[type=password]{border: 1px solid #a7a7a7; border-radius: 4px; width: 380px; padding: 20px;}
+.myinfo_pwd_input li input[type=text],.myinfo_pwd_input li input[type=password]{border: 1px solid #a7a7a7; border-radius: 4px; width: 380px; padding: 20px;}
 .myinfo_input li .emp, .myinfo_pwd_input li .emp  {display:block;font-size:12px;line-height:2;letter-spacing:-0.43px;color:#ee3724;}
 /*myinfo 수정,삭제,취소 버튼*/
 .myinfo_fix_btn{font-size: 12px; padding: 6px 14px; border: 1px solid #000000; opacity: 0.4; border-radius: 2px; margin-left: 20px; font-weight: 400;}
 .myinfo_save_btn{font-size: 12px; padding: 6px 14px; border: 1px solid #6a2cfe;border-radius: 2px; margin-left: 20px; font-weight: 400; background-color: #6a2cfe; color: #ffffff;}
-.myinfo_cancle_btn{font-size: 12px; padding: 6px 14px; border: 1px solid #000000; border-radius: 2px; margin-left: 10px; font-weight: 400;}
+.myinfo_cancle_btn{font-size: 12px; padding: 6px 14px; border: 1px solid #000000
+; border-radius: 2px; margin-left: 10px; font-weight: 400;}
 .myinfo_pwd_save_btn{font-size: 12px; padding: 9px 38px; border: 1px solid #000000; border-radius: 2px; margin-left: 10px; font-weight: 400;background-color: #000000; color: #ffffff;}
 .myinfo_pwd_cancle_btn{font-size: 12px; padding: 9px 38px; border: 1px solid #000000;border-radius: 2px; margin-left: 20px; font-weight: 400;opacity: 0.4;}
 

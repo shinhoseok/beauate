@@ -195,6 +195,8 @@
 		SELECT 
 			c.c_sq,
 			c.u_sq,
+			u.phone_no AS mblPno,
+			u.u_nm AS usrNm,
 			c.img_sq,
 		<if test="adminYn != null or adminYn != '' or adminYn != Y">
 			(SELECT b.file_stre_cours || '/' || b.stre_file_nm FROM comtnfiledetail b WHERE b.atch_file_id = c.img_sq AND file_cn='M0') AS imgSrc,
@@ -222,6 +224,7 @@
 			off_class c 
 			LEFT JOIN common_cd_scls cd ON (c.c_area_st = cd.mcls_cd AND cd.lcls_cd='ARA')
 			LEFT JOIN common_cd_scls cd2 ON (c.c_st = cd.mcls_cd AND cd.lcls_cd='CST')
+			LEFT JOIN users u ON (c.u_sq = u.u_sq)
 		WHERE 
 			c.c_sq = #{classId}
 	</select>

@@ -29,6 +29,8 @@ import com.beauate.offclass.service.OffClassDao;
 import com.beauate.offclass.service.OffClassService;
 import com.beauate.pay.service.PayDao;
 import com.beauate.pay.service.PayVO;
+import com.beauate.review.service.ReviewDao;
+import com.beauate.review.service.ReviewVO;
 
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
@@ -65,6 +67,9 @@ public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffC
 	
 	@Resource(name="couponHistoryDao")
 	private CouponHistoryDao couponHistoryDao;
+	
+	@Resource(name="reviewDao")
+	private ReviewDao reviewDao;
 	
 	/**
 	 * <pre>
@@ -270,27 +275,17 @@ public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffC
 		//Detail List >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		classVO.setAdminYn("N");
 		ClassVO resultVO = classManageDao.selectClassMngDetail(classVO);
+		//전화번호 형식변경
+		if(!StringUtil.isEmpty(resultVO.getMblPno())) {
+			String tempMblPno = resultVO.getMblPno();
+			resultVO.setMblPno(StringUtil.phone(tempMblPno)); 
+		}
 		log.debug(">> origin Path >> "+resultVO.getImgSrc2());
 		//이미지 WAS경로 변환
 		String tempSrc = resultVO.getImgSrc();
 		String tempSrc2 = resultVO.getImgSrc2();
 		String tempSrc3 = resultVO.getImgSrc3();
 		if(!StringUtil.isEmpty(tempSrc) && !StringUtil.isEmpty(tempSrc2)) {
-			/*int cnt1 = tempSrc.indexOf("\\");
-			if(cnt1 == -1) {
-				cnt1 = tempSrc.indexOf("//");
-			}
-			int cnt2 = tempSrc2.indexOf("\\");
-			if(cnt2 == -1) {
-				cnt2 = tempSrc2.indexOf("//");
-			}
-			int cnt3 = tempSrc3.indexOf("\\");
-			if(cnt3 == -1) {
-				cnt3 = tempSrc3.indexOf("//");
-			}
-			String resultSrc = tempSrc.substring(cnt1+1);
-			String resultSrc2 = tempSrc2.substring(cnt2+1);
-			String resultSrc3 = tempSrc3.substring(cnt3+1);*/
 			String resultSrc = StringUtil.getWasfilePath(tempSrc);
 			String resultSrc2 = StringUtil.getWasfilePath(tempSrc2);
 			String resultSrc3 = StringUtil.getWasfilePath(tempSrc3);
@@ -318,12 +313,126 @@ public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffC
 			paramVO.setClassId(resultVO.getClassId());
 			jjimVO = jjimDao.selectJjim(paramVO);
 		}
-				
+		
 		rsltMap.put("resultVO", resultVO);
 		rsltMap.put("today", today);
 		rsltMap.put("sideImgVO", sideImgVO);
 		rsltMap.put("jjimVO", jjimVO);
 		
+		return rsltMap;
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 오프라인클래스 상세 리뷰리스트
+	 * 2. 처리내용 :  오프라인클래스 상세 리뷰리스트
+	 * </pre>
+	 * @Method Name : selectReviewList
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param reviewVO
+	 * @return Map<String, Object>
+	 * @throws Exception
+	 */ 
+	public Map<String, Object> selectReviewList(ReviewVO reviewVO) throws Exception {
+		
+		Map<String, Object> rsltMap = new HashMap<String, Object>();
+		
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(reviewVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(reviewVO.getPageUnit());
+		paginationInfo.setPageSize(reviewVO.getPageSize());
+		
+		reviewVO.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
+		reviewVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		reviewVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		
+		List<ReviewVO> selectList = null;
+		
+		//총 카운트 
+		int cnt = reviewDao.selectReviewListCnt(reviewVO);
+		paginationInfo.setTotalRecordCount(cnt);
+		
+		if(cnt > 0){
+			//합계
+			double curriculumSum = 0;
+			double kindnessSum = 0;
+			double timeProSum = 0;
+			double communitySum = 0;
+			//별점 합계
+			double curriculumStarSum = 0;
+			double kindnessStarSum = 0;
+			double timeProStarSum = 0;
+			double communityStarSum = 0;
+			//평점 합계
+			double curriculumScoreSum = 0;
+			double kindnessScoreSum = 0;
+			double timeProScoreSum = 0;
+			double communityScoreSum = 0;
+			double scoreSum = 0;
+			//리스트
+			selectList = reviewDao.selectReviewList(reviewVO);
+			//별점평점
+			for(ReviewVO reviewTmpVO : selectList) {
+				curriculumSum += Integer.parseInt(reviewTmpVO.getCurriculum());
+				kindnessSum += Integer.parseInt(reviewTmpVO.getKindness());
+				timeProSum += Integer.parseInt(reviewTmpVO.getTimePro());
+				communitySum += Integer.parseInt(reviewTmpVO.getCommunity());
+			}
+			//평점합계
+			curriculumScoreSum = curriculumSum;
+			kindnessScoreSum = kindnessSum;
+			timeProScoreSum = timeProSum;
+			communityScoreSum = communitySum;
+			//별점합계
+			curriculumStarSum = curriculumSum * 20;
+			kindnessStarSum = kindnessSum * 20;
+			timeProStarSum = timeProSum * 20;
+			communityStarSum = communitySum * 20;
+			
+			if(curriculumSum != 0) {
+				curriculumScoreSum = curriculumScoreSum / cnt;
+				curriculumScoreSum = Math.round(curriculumScoreSum*10)/10.0;
+				curriculumStarSum = curriculumStarSum / cnt;
+				curriculumStarSum = Math.round(curriculumStarSum*10)/10.0;
+			}else { }
+			if(kindnessSum != 0) {
+				kindnessScoreSum = kindnessScoreSum / cnt;
+				kindnessScoreSum = Math.round(kindnessScoreSum*10)/10.0;
+				kindnessStarSum = kindnessStarSum / cnt;
+				kindnessStarSum = Math.round(kindnessStarSum*10)/10.0;
+			}else { }
+			if(timeProSum != 0) {
+				timeProScoreSum = timeProScoreSum / cnt;
+				timeProScoreSum = Math.round(timeProScoreSum*10)/10.0;
+				timeProStarSum = timeProStarSum / cnt;
+				timeProStarSum = Math.round(timeProStarSum*10)/10.0;
+			}else { }
+			if(communitySum != 0) {
+				communityScoreSum = communityScoreSum / cnt;
+				communityScoreSum = Math.round(communityScoreSum*10)/10.0;
+				communityStarSum = communityStarSum / cnt;
+				communityStarSum = Math.round(communityStarSum*10)/10.0;
+			}else { }
+			scoreSum = (communityScoreSum + timeProScoreSum + kindnessScoreSum + curriculumScoreSum) / 4;
+			scoreSum = Math.round(scoreSum*10)/10.0;
+			rsltMap.put("scoreSum", scoreSum);
+			rsltMap.put("communityStarSum", communityStarSum);
+			rsltMap.put("timeProStarSum", timeProStarSum);
+			rsltMap.put("kindnessStarSum", kindnessStarSum);
+			rsltMap.put("curriculumStarSum", curriculumStarSum);
+		}
+		
+		rsltMap.put("paginationInfo", paginationInfo);
+		rsltMap.put("selectList", selectList);
+		rsltMap.put("selectListCnt", cnt);
 		
 		return rsltMap;
 	}

@@ -45,7 +45,7 @@
 							<span style="display: none;" id="emailAddrChk" class="emp"> 이메일을 다시 확인해주세요</span>
 						</li>
 						<li>
-							<input type="password" id="usrPw" name="usrPw" onkeypress="if(event.keyCode==13){fn_login();} " title="비밀번호를 입력해주세요." maxlength="21" />
+							<input type="password" id="usrPw" name="usrPw" placeholder="비밀번호" onkeypress="if(event.keyCode==13){fn_login();} " title="비밀번호를 입력해주세요." maxlength="21" />
 						</li>
 					</ul>
 					<div class="btn-area"><button type="button" class="btn" id="loginBtn" onclick="fn_login();"><span>로그인</span></button></div>
