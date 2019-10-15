@@ -43,6 +43,7 @@
 		<typeAlias alias="refundVO" type="com.beauate.refund.service.RefundVO"/>
 		<!-- 리뷰VO -->
 		<typeAlias alias="reviewVO" type="com.beauate.review.service.ReviewVO"/>
-		
+		<!-- 댓글VO -->
+		<typeAlias alias="commentVO" type="com.beauate.admin.comment.service.CommentVO"/>
 	</typeAliases>
 </configuration>

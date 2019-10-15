@@ -24,7 +24,39 @@ public class ReviewVO extends CommDefaultVO implements Serializable {
 	private String reviewCtt;
 	/** 삭제여부 */
 	private String delYn;
+	/** 관리자페이지여부(사용자/관리자 쿼리구분) */
+	private boolean adminYn = false;
+	/** 클래스제목 */
+	private String classTitle;
+	/** 코멘트아이디 */
+	private String commentId;
+	/** 댓글 */
+	private String commentCtt;
 	
+	public String getCommentCtt() {
+		return commentCtt;
+	}
+	public void setCommentCtt(String commentCtt) {
+		this.commentCtt = commentCtt;
+	}
+	public String getCommentId() {
+		return commentId;
+	}
+	public void setCommentId(String commentId) {
+		this.commentId = commentId;
+	}
+	public String getClassTitle() {
+		return classTitle;
+	}
+	public void setClassTitle(String classTitle) {
+		this.classTitle = classTitle;
+	}
+	public boolean isAdminYn() {
+		return adminYn;
+	}
+	public void setAdminYn(boolean adminYn) {
+		this.adminYn = adminYn;
+	}
 	public String getReviewId() {
 		return reviewId;
 	}

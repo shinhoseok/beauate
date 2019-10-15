@@ -5,9 +5,8 @@
 		<p class="footer_logo">
 			<img src="${imagePath }/logo2.png" width="144" height="18" />
 		</p>
-		<span class="footer_text">06051 서울시 강남구 논현로 722 신한빌딩 4층 TEL :
-			02-419-6362 | FAX : 02-419-6372<br /> Copyright(C) 2001 ENKISOFT,
-			Inc. All Rights Reserved.<a href="mailto:cpcp@nia.or.kr">webmaster@enkisoft.co.kr</a>
+		<span class="footer_text">경기도 안산시 단원구 원곡1동 931 | 플러스친구 : 뷰아떼<br /> COPYRIGHTSⓒ 2019 BEAUATE. ALL RIGHTS RESERVED.,
+			Inc. All Rights Reserved.<a href="mailto:beauate@beauate.com">beauate@beauate.com</a>
 		</span>
 	</div>
 </div>

@@ -1,94 +1,30 @@
-package com.beauate.review.service;
+package com.beauate.admin.review.service;
 
-import java.util.List;
+import java.util.Map;
 
-import egovframework.rte.psl.dataaccess.mapper.Mapper;
+import com.beauate.admin.comment.service.CommentVO;
+import com.beauate.review.service.ReviewVO;
 
-@Mapper("reviewDao")
-public interface ReviewDao {
-	
+public interface ReviewManageService {
 	/**
 	 * <pre>
-	 * 1. 개요 : 리뷰리스트 카운트
-	 * 2. 처리내용 : 리뷰리스트 카운트
-	 * </pre>
-	 * @Method Name : insertReviewProc
-	 * @date : 2019. 10. 16.
-	 * @author : 신호석
-	 * @history : 
-	 *	-----------------------------------------------------------------------
-	 *	변경일			작성자					변경내용  
-	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 16  신호석			                    최초 작성 
-	 *	-----------------------------------------------------------------------
-	 * 
-	 * @param reviewVO
-	 * @return int
-	 * @throws Exception
-	 */ 
-	int selectReviewListCnt(ReviewVO reviewVO) throws Exception;
-	
-	/**
-	 * <pre>
-	 * 1. 개요 : 리뷰리스트
-	 * 2. 처리내용 :  리뷰리스트
+	 * 1. 개요 : 후기 리스트
+	 * 2. 처리내용 : 후기 리스트
 	 * </pre>
 	 * @Method Name : selectReviewList
-	 * @date : 2019. 10. 16.
+	 * @date : 2019. 10. 17.
 	 * @author : 신호석
 	 * @history : 
 	 *	-----------------------------------------------------------------------
-	 *	변경일			작성자					변경내용  
+	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 16  신호석			                    최초 작성 
-	 *	-----------------------------------------------------------------------
-	 * 
-	 * @param reviewVO
-	 * @return List<ReviewVO>
-	 * @throws Exception
-	 */ 
-	List<ReviewVO> selectReviewList(ReviewVO reviewVO) throws Exception;
-	
-	/**
-	 * <pre>
-	 * 1. 개요 : 리뷰작성 등록처리
-	 * 2. 처리내용 :  리뷰작성 등록처리
-	 * </pre>
-	 * @Method Name : insertReviewProc
-	 * @date : 2019. 10. 16.
-	 * @author : 신호석
-	 * @history : 
-	 *	-----------------------------------------------------------------------
-	 *	변경일			작성자					변경내용  
-	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 16  신호석			                    최초 작성 
-	 *	-----------------------------------------------------------------------
-	 * 
-	 * @param reviewVO
-	 * @return int
-	 * @throws Exception
-	 */ 
-	int insertReviewProc(ReviewVO reviewVO) throws Exception;
-	
-	/**
-	 * <pre>
-	 * 1. 개요 : 사용자가 하나의 클래스에 작성한 리뷰카운트
-	 * 2. 처리내용 :  사용자가 하나의 클래스에 작성한 리뷰카운트
-	 * </pre>
-	 * @Method Name : selectUserReviewCnt
-	 * @date : 2019. 10. 16.
-	 * @author : 신호석
-	 * @history : 
-	 *	-----------------------------------------------------------------------
-	 *	변경일			작성자					변경내용  
-	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	2019. 10. 17.		신호석				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * @param reviewVO
-	 * @return int
+	 * @return Map<String, Object>
 	 * @throws Exception
 	 */ 
-	int selectUserReviewCnt(ReviewVO reviewVO) throws Exception;
+	public Map<String, Object> selectReviewList(ReviewVO reviewVO) throws Exception;
 	
 	/**
 	 * <pre>
@@ -105,10 +41,10 @@ public interface ReviewDao {
 	 *	2019. 10. 16  신호석			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * @param reviewVO
-	 * @return int
+	 * @return void
 	 * @throws Exception
 	 */ 
-	int updateReviewProc(ReviewVO reviewVO) throws Exception;
+	public void updateReviewProc(ReviewVO reviewVO) throws Exception;
 	
 	/**
 	 * <pre>
@@ -128,5 +64,65 @@ public interface ReviewDao {
 	 * @return ReviewVO
 	 * @throws Exception
 	 */ 
-	ReviewVO selectReviewMngDetail(ReviewVO reviewVO) throws Exception;
+	public ReviewVO selectReviewMngDetail(ReviewVO reviewVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 댓글등록
+	 * 2. 처리내용 :  댓글등록
+	 * </pre>
+	 * @Method Name : insertCommentMngProc
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param commentVO
+	 * @return void
+	 * @throws Exception
+	 */ 
+	public void insertCommentMngProc(CommentVO commentVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 댓글 수정/삭제
+	 * 2. 처리내용 :  댓글 수정/삭제
+	 * </pre>
+	 * @Method Name : updateCommentProc
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param commentVO
+	 * @return Integer
+	 * @throws Exception
+	 */ 
+	public void updateCommentProc(CommentVO commentVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 댓글 삭제
+	 * 2. 처리내용 :  댓글 삭제
+	 * </pre>
+	 * @Method Name : deleteCommentProc
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param commentVO
+	 * @return void
+	 * @throws Exception
+	 */ 
+	public void deleteCommentProc(CommentVO commentVO) throws Exception;
 }

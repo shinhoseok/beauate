@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beauate.admin.comment.service.CommentDao">
+
+	<resultMap id="reviewResultMap" type="com.beauate.admin.comment.service.CommentVO">
+		<id column="cmt_sq" property="commentId" />
+		<result column="r_sq" property="reviewId" />
+		<result column="u_sq" property="classTitle" />
+		<result column="cmt_dt" property="commentDt" />
+		<result column="cmt_ctt" property="commentCtt" />
+	</resultMap>
+	<!-- 
+	쿼리명 : 댓글 등록
+	  설명 : 댓글 등록
+	수정일      		수정자  	수정내용
+	==========  ======  ===================
+	2019. 10.13 	신호석 		최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.13
+	-->	
+	<insert id="insertCommentMngProc" parameterType="commentVO">
+		<![CDATA[
+	    INSERT INTO R_CMT 
+	    		(cmt_sq,
+                 r_sq,
+                 u_sq,
+                 cmt_dt,
+                 cmt_ctt)
+	    VALUES	(#{commentId},
+	             #{reviewId},
+	             #{usrId},
+	             sysdate,
+	             #{commentCtt})
+		]]>
+	</insert>
+	
+	<!-- 쿼리명 : 댓글상세조회
+	설명 : 댓글상세조회
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 5.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.17
+	-->
+	<select id="selectCommentMngDetail" parameterType="commentVO" resultType="commentVO">
+		<![CDATA[
+		SELECT 
+			r_sq,
+			cmt_sq,
+			u_sq,
+			cmt_dt,
+			cmt_ctt
+		FROM 
+			R_CMT
+		WHERE 
+			cmt_sq = #{commentId}
+		 ]]>
+	</select>
+	
+	<!-- 쿼리명 : 댓글 수정
+	설명 : 댓글 수정
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 5.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.17
+	-->
+	<update id="updateCommentProc" parameterType="commentVO">
+		<![CDATA[
+		UPDATE R_CMT
+		]]>  
+		<trim prefix="SET" suffixOverrides=",">
+				cmt_ctt      = #{commentCtt},
+	    </trim>
+		<![CDATA[    
+		WHERE  cmt_sq   = #{commentId}
+		]]>
+	</update>
+	
+	<!-- 쿼리명 : 댓글 삭제
+	설명 : 댓글 삭제
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 5.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.17
+	-->
+	<delete id="deleteCommentProc" parameterType="commentVO">
+		DELETE FROM R_CMT WHERE cmt_sq = #{commentId}
+	</delete>
+</mapper>

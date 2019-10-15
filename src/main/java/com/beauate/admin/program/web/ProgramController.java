@@ -47,7 +47,7 @@ public class ProgramController {
 	 * @param model
 	 * @return String
 	 * @throws Exception
-	 */ 	
+	 */
 	//method = RequestMethod.POST
 	@RequestMapping(value = "/program/r/m/selectProgramList.do")
 	public String selectProgramList(@ModelAttribute("programVO") ProgramVO programVO, ModelMap model) throws Exception {

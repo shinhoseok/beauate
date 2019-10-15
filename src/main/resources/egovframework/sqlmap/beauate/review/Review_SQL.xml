@@ -5,6 +5,7 @@
 	<resultMap id="reviewResultMap" type="com.beauate.review.service.ReviewVO">
 		<id column="r_sq" property="reviewId" />
 		<result column="c_sq" property="classId" />
+		<result column="c_title" property="classTitle" />
 		<result column="u_sq" property="usrId" />
 		<result column="r_dt" property="reviewDt" />
 		<result column="sco_1" property="curriculum" />
@@ -14,11 +15,25 @@
 		<result column="r_ctt" property="reviewCtt" />
 		<result column="r_fl" property="delYn" />
 		<result column="u_nm" property="usrNm" />
+		<result column="cmt_sq" property="commentId" />
+		<result column="cmt_ctt" property="commentCtt" />
 	</resultMap>
 	
 	<sql id="reviewGubunSql">
 		<where>
-			b.r_fl = 'N'
+			<if test="!adminYn">
+				b.r_fl = 'N'
+			</if>
+			<if test="searchKeyword != null and searchKeyword != ''">
+				<choose>
+					<when test="searchCondition == 'usrNm'">
+						AND c.u_nm LIKE '%'|| #{searchKeyword} ||'%'
+					</when>
+					<otherwise>
+						AND c.u_email LIKE '%'|| #{searchKeyword} ||'%'
+					</otherwise>
+				</choose>
+			</if>
 		</where>
 	</sql>
 	
@@ -53,7 +68,45 @@
 		FROM
 			(
 			SELECT
-				ROW_NUMBER() OVER(ORDER BY b.r_dt DESC) RNUM,
+				ROW_NUMBER() OVER(
+			<choose>
+				<when test="sortSubject == 'emailAddr'">
+					ORDER BY c.u_email
+				</when>
+				<when test="sortSubject == 'usrNm'">
+					ORDER BY c.u_nm
+				</when>
+				<when test="sortSubject == 'curriculum'">
+					ORDER BY b.sco_1
+				</when>
+				<when test="sortSubject == 'kindness'">
+					ORDER BY b.sco_2
+				</when>
+				<when test="sortSubject == 'timePro'">
+					ORDER BY b.sco_3
+				</when>
+				<when test="sortSubject == 'community'">
+					ORDER BY b.sco_4
+				</when>
+				<when test="sortSubject == 'delYn'">
+					ORDER BY b.r_fl
+				</when>
+				<when test="sortSubject == 'cmtDelYn'">
+					ORDER BY d.cmt_fl
+				</when>
+				<otherwise>
+					ORDER BY b.r_dt
+				</otherwise>
+			</choose>
+			<choose>
+				<when test="sortDescend == 'asc'">
+					ASC
+				</when>
+				<otherwise>
+					DESC
+				</otherwise>
+			</choose>
+				) RNUM,
 				b.r_sq,
 				b.c_sq,
 				b.u_sq,
@@ -64,10 +117,13 @@
 				b.sco_4,
 				b.r_ctt,
 				b.r_fl,
-				c.u_nm
+				c.u_nm,
+				c.u_email AS emailAddr,
+				d.cmt_sq AS commentId
 			FROM
 				class_r b
 				LEFT JOIN users c ON b.u_sq = c.u_sq
+				LEFT JOIN r_cmt d ON d.r_sq = b.r_sq
 				<include refid="reviewGubunSql"/>
 				) a
 		WHERE
@@ -122,5 +178,62 @@
 			]]>
 	</insert>
 
+	<!-- 쿼리명 : 후기삭제/취소(delYn)
+	설명 : 후기삭제/취소(delYn)
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.17
+	-->
+	<update id="updateReviewProc" parameterType="reviewVO">
+		<![CDATA[
+		UPDATE CLASS_R
+		]]>  
+		<trim prefix="SET" suffixOverrides=",">
+		    <if test="delYn != null and  delYn != ''">
+				r_fl      = #{delYn}
+		    </if>
+	    </trim>
+		<![CDATA[    
+		WHERE  r_sq   = #{reviewId}
+		]]>
+	</update>
+	
+	<!-- 쿼리명 : 후기 상세
+	설명 : 후기 상세
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.16     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<select id="selectReviewMngDetail" parameterType="reviewVO" resultMap="reviewResultMap">
+		<![CDATA[
+			SELECT
+				b.r_sq,
+				b.c_sq,
+				b.u_sq,
+				b.r_dt,
+				b.sco_1,
+				b.sco_2,
+				b.sco_3,
+				b.sco_4,
+				b.r_ctt,
+				b.r_fl,
+				c.u_nm,
+				c.u_email AS emailAddr,
+				d.c_title,
+				e.cmt_sq,
+				e.cmt_ctt
+			FROM
+				class_r b
+				LEFT JOIN users c ON b.u_sq = c.u_sq
+				LEFT JOIN off_class d ON b.c_sq = d.c_sq
+				LEFT JOIN r_cmt e ON e.r_sq = b.r_sq
+			WHERE 
+				b.r_sq = #{reviewId}
+		]]>
+	</select>
 </mapper>
 

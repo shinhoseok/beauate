@@ -218,10 +218,12 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 	public void deletePayProc(PayVO payVO) throws Exception {
 		String [] payIdList = payVO.getPayId().split(",");
 		if(payIdList.length == 1) {
+			payVO.setDelYn("Y");
 			payDao.deletePayProc(payVO);
 		} else {
 			for(String payId : payIdList) {
 				payVO.setPayId(payId);
+				payVO.setDelYn("Y");
 				payDao.deletePayProc(payVO);
 			}
 		}

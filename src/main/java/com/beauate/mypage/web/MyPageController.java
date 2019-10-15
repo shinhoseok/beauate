@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.beauate.common.DateUtil;
 import com.beauate.jjim.service.JjimVO;
@@ -154,8 +155,9 @@ public class MyPageController {
 	 * @throws Exception
 	 */ 
 	@RequestMapping(value = "/mypage/w/n/deletePayProc.do")
-	public String deletePayProc(PayVO payVO, ModelMap model) throws Exception {
+	public String deletePayProc(PayVO payVO, ModelMap model, SessionStatus status) throws Exception {
 		myPageService.deletePayProc(payVO);
+		status.setComplete();	//중복 submit 방지
 		return "redirect:/mypage/r/t/selectMyClassList.do";
 	}
 	
@@ -179,8 +181,9 @@ public class MyPageController {
 	 * @throws Exception
 	 */ 
 	@RequestMapping(value = "/mypage/w/n/updatePayRefundProc.do")
-	public String updatePayRefundProc(PayVO payVO, ModelMap model) throws Exception {
+	public String updatePayRefundProc(PayVO payVO, ModelMap model, SessionStatus status) throws Exception {
 		myPageService.updatePayRefundProc(payVO);
+		status.setComplete();	//중복 submit 방지
 		String message = null;
 		message = "취소처리가 완료되었습니다.";
 
@@ -210,8 +213,9 @@ public class MyPageController {
 	 * @throws Exception
 	 */ 
 	@RequestMapping(value = "/mypage/w/n/deleteJjimProc.do")
-	public String deleteJjimProc(JjimVO jjimVO, ModelMap model) throws Exception {
+	public String deleteJjimProc(JjimVO jjimVO, ModelMap model, SessionStatus status) throws Exception {
 		myPageService.deleteJjimProc(jjimVO);
+		status.setComplete();	//중복 submit 방지
 		return "jsonView";
 	}
 	
@@ -320,9 +324,10 @@ public class MyPageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/mypage/w/n/insertReviewProc.do")
-	public String insertReviewProc(@ModelAttribute("reviewVO") ReviewVO reviewVO, ModelMap model, LoginVO sessionVO) throws Exception {
+	public String insertReviewProc(@ModelAttribute("reviewVO") ReviewVO reviewVO, ModelMap model, LoginVO sessionVO, SessionStatus status) throws Exception {
 		reviewVO.setUsrId(sessionVO.getUsrId());
 		myPageService.insertReviewProc(reviewVO);
+		status.setComplete();	//중복 submit 방지
 		String message = null;
 		message = "후기가 정상적으로 등록 되었습니다.";
 

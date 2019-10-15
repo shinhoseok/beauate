@@ -172,7 +172,6 @@
 					}
 					alarmId = alarmId + comFlag + $(this).val();
 				});
-				alert(alarmId);
 				var frm = document.updateForm;
 				frm.pageIndex.value = 1;
 				frm.alarmId.value = alarmId;
