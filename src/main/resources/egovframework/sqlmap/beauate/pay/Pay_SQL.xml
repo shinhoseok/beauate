@@ -161,5 +161,123 @@
 	<update id="updatePayRefundProc" parameterType="payVO">
 		UPDATE pay SET pay_st = #{paySt} WHERE pay_sq = #{payId}
 	</update>
+	
+	<sql id="payMngGubunSql">
+		<where>
+			<if test="searchKeyword != null and searchKeyword != ''">
+				<choose>
+					<when test="searchCondition == 'usrNm'">
+						AND h.u_nm LIKE '%'|| #{searchKeyword} ||'%'
+					</when>
+					<when test="searchCondition == 'classTitle'">
+						AND b.c_title LIKE '%'|| #{searchKeyword} ||'%'
+					</when>
+					<otherwise>
+						AND h.u_email LIKE '%'|| #{searchKeyword} ||'%'
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 쿼리명 : 결제관리 리스트 카운트
+	설명 : 결제관리 리스트 카운트
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 5.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.17
+	-->
+	<select id="selectPayMngListCnt" parameterType="payVO" resultType="int">
+		SELECT
+			COUNT(*) cnt
+		FROM
+			pay a
+			LEFT JOIN off_class b ON a.c_sq = b.c_sq
+			LEFT JOIN admin_cpn d ON a.cpn_sq = d.cpn_sq
+			LEFT JOIN users h ON a.u_sq = h.u_sq
+			LEFT JOIN common_cd_scls f ON (a.pay_st = f.mcls_cd AND f.lcls_cd = 'PAY')
+			LEFT JOIN common_cd_scls g ON (a.pay_method_st = g.mcls_cd AND g.lcls_cd = 'PBB')
+		<include refid="payMngGubunSql"/>
+	</select>
+	
+	<!-- 쿼리명 : 결제관리 리스트
+	설명 : 결제관리 리스트
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 5.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.17
+	-->
+	<select id="selectPayMngList" parameterType="payVO" resultMap="payResultMap">
+		SELECT
+			e.*
+		FROM
+			(
+				SELECT
+					ROW_NUMBER() OVER(
+				<choose>
+					<when test="sortSubject == 'usrNm'">
+						ORDER BY h.u_nm
+					</when>
+					<when test="sortSubject == 'payMethodNm'">
+						ORDER BY g.mcls_nm
+					</when>
+					<when test="sortSubject == 'payStNm'">
+						ORDER BY f.mcls_nm
+					</when>
+					<when test="sortSubject == 'classTitle'">
+						ORDER BY b.c_title
+					</when>
+					<when test="sortSubject == 'payCostNo'">
+						ORDER BY a.pay_cost_no
+					</when>
+					<otherwise>
+						ORDER BY a.pay_dt
+					</otherwise>
+				</choose>
+				<choose>
+					<when test="sortDescend == 'asc'">
+						ASC
+					</when>
+					<otherwise>
+						DESC
+					</otherwise>
+				</choose>
+						) RNUM,
+					a.pay_sq,
+					a.c_sq,
+					a.u_sq,
+					a.cpn_sq,
+					a.pay_dt,
+					a.pay_st,
+					a.pay_method_st,
+					a.pay_cost_no,
+					b.c_cost_no,
+					b.c_title,
+					b.c_adr,
+					b.u_start_dt,
+					b.c_st,
+					b.c_end_dt,
+					b.c_big_no,
+					b.c_apply_no,
+					f.mcls_nm AS payStNm,
+					g.mcls_nm AS payMethodNm,
+					b.img_sq,
+					d.cpn_rate,
+					h.u_email AS emailAddr,
+					h.u_nm AS usrNm
+				FROM
+					pay a
+					LEFT JOIN off_class b ON a.c_sq = b.c_sq
+					LEFT JOIN admin_cpn d ON a.cpn_sq = d.cpn_sq
+					LEFT JOIN users h ON a.u_sq = h.u_sq
+					LEFT JOIN common_cd_scls f ON (a.pay_st = f.mcls_cd AND f.lcls_cd = 'PAY')
+					LEFT JOIN common_cd_scls g ON (a.pay_method_st = g.mcls_cd AND g.lcls_cd = 'PBB')
+				<include refid="payMngGubunSql"/>
+			) e
+		WHERE
+			e.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
+	</select>
 </mapper>
 

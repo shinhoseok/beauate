@@ -51,7 +51,23 @@ public class PayVO extends CommDefaultVO implements Serializable {
 	private String classSt;
 	/** 결제 삭제 여부 */
 	private String delYn;
+	/** 결제 방법명 */
+	private String payMethodNm;
+	/** 결제 상태명 */
+	private String payStNm;
 	
+	public String getPayMethodNm() {
+		return payMethodNm;
+	}
+	public void setPayMethodNm(String payMethodNm) {
+		this.payMethodNm = payMethodNm;
+	}
+	public String getPayStNm() {
+		return payStNm;
+	}
+	public void setPayStNm(String payStNm) {
+		this.payStNm = payStNm;
+	}
 	public String getDelYn() {
 		return delYn;
 	}

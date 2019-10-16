@@ -67,10 +67,8 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 	 *	----------- ------------------- ---------------------------------------
 	 *	2019. 5. 17.		신호석				최초 작성 
 	 *	-----------------------------------------------------------------------
-	 * 
 	 * @param payVO
-	 * @param model
-	 * @return
+	 * @return Map<String, Object>
 	 * @throws Exception
 	 */ 
 	public Map<String, Object> selectApplyClassList(PayVO payVO) throws Exception {
