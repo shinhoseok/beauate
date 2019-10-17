@@ -1,7 +1,9 @@
 package com.beauate.review.service;
 
 import java.io.Serializable;
+import java.util.List;
 
+import com.beauate.admin.comment.service.CommentVO;
 import com.beauate.common.service.CommDefaultVO;
 
 @SuppressWarnings("serial")
@@ -32,7 +34,31 @@ public class ReviewVO extends CommDefaultVO implements Serializable {
 	private String commentId;
 	/** 댓글 */
 	private String commentCtt;
+	/** 이미지경로 */
+	private String imgSrc3;
 	
+	private List<CommentVO> commentList;
+	
+	private String areaNm;
+	
+	public String getAreaNm() {
+		return areaNm;
+	}
+	public void setAreaNm(String areaNm) {
+		this.areaNm = areaNm;
+	}
+	public List<CommentVO> getCommentList() {
+		return commentList;
+	}
+	public void setCommentList(List<CommentVO> commentList) {
+		this.commentList = commentList;
+	}
+	public String getImgSrc3() {
+		return imgSrc3;
+	}
+	public void setImgSrc3(String imgSrc3) {
+		this.imgSrc3 = imgSrc3;
+	}
 	public String getCommentCtt() {
 		return commentCtt;
 	}

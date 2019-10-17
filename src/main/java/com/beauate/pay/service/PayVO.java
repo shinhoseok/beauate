@@ -39,6 +39,8 @@ public class PayVO extends CommDefaultVO implements Serializable {
 	private String classStartDt;
 	/** 마이페이지이미지경로 */
 	private String imgSrc2;
+	/** 마이페이지이미지경로 */
+	private String imgSrc3;
 	/** 쿠폰할인율 */
 	private String cpnRate;
 	/** 마이페이지 탭번호 */
@@ -56,6 +58,12 @@ public class PayVO extends CommDefaultVO implements Serializable {
 	/** 결제 상태명 */
 	private String payStNm;
 	
+	public String getImgSrc3() {
+		return imgSrc3;
+	}
+	public void setImgSrc3(String imgSrc3) {
+		this.imgSrc3 = imgSrc3;
+	}
 	public String getPayMethodNm() {
 		return payMethodNm;
 	}

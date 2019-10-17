@@ -155,4 +155,45 @@ public interface MyPageService {
 	 * @throws Exception
 	 */ 
 	public int selectUserReviewCnt(ReviewVO reviewVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 내가 작성한 후기리스트
+	 * 2. 처리내용 :  마이페이지 내가 작성한 후기리스트
+	 * </pre>
+	 * @Method Name : selectUserReviewCnt
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param reviewVO
+	 * @return Map<String, Object>
+	 * @throws Exception
+	 */ 
+	public Map<String, Object> selectMyReviewList(ReviewVO reviewVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 후기 수정 및 삭제
+	 * 2. 처리내용 :  마이페이지 후기 수정 및 삭제
+	 * </pre>
+	 * @Method Name : selectUserReviewCnt
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param reviewVO
+	 * @return Map<String, Object>
+	 * @throws Exception
+	 */ 
+	public void updateReviewProc(ReviewVO reviewVO) throws Exception;
 }

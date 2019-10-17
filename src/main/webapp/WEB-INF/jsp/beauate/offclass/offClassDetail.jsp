@@ -71,7 +71,7 @@
 							</dl>
 						</div>
 						<c:choose>
-							<c:when test="${rslt.resultVO.classSt eq '3' or rslt.resultVO.classSt eq '4'}"> <!-- 마감되었거나, 사람꽉찻을때 -->
+							<c:when test="${rslt.resultVO.classSt eq '3' or rslt.resultVO.classSt eq '4' or todayNum >= classStartDtNum}"> <!-- 마감되었거나, 사람꽉찻을때 -->
 								<div class="btn-area">
 									<a href="#modal-alarm" class="btn-util" id="alarmBtn" onclick="javascript:fn_selectAlarmPop();">알람신청</a>
 									<c:choose>

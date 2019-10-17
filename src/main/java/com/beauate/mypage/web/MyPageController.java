@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.beauate.admin.review.service.ReviewManageService;
 import com.beauate.common.DateUtil;
 import com.beauate.jjim.service.JjimVO;
 import com.beauate.login.service.LoginVO;
@@ -25,6 +26,9 @@ public class MyPageController {
 	
 	@Resource(name = "myPageService")
 	private MyPageService myPageService;
+	
+	@Resource(name = "reviewManageService")
+	private ReviewManageService reviewManageService;
 	
 	/**
 	 * <pre>
@@ -386,9 +390,98 @@ public class MyPageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/mypage/r/n/selectMyWriteReviewList.do")
-	public String selectMyWriteReviewList(@ModelAttribute("payVO") PayVO payVO, ModelMap model) throws Exception {
+	public String selectMyWriteReviewList(@ModelAttribute("reviewVO") ReviewVO reviewVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		reviewVO.setUsrId(sessionVO.getUsrId());
+		Map<String, Object> rsltMap = myPageService.selectMyReviewList(reviewVO);
+		model.addAttribute("rslt", rsltMap);
 		
 		return "/mypage/myWriteReview";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 후기 수정 팝업
+	 * 2. 처리내용 :  마이페이지 후기 수정 팝업
+	 * </pre>
+	 * @Method Name : updateHoogiPop
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param String
+	 * @return ReviewVO
+	 * @throws Exception
+	 */ 
+	@RequestMapping(value = "/mypage/r/n/updateHoogiPop.do")
+	public String updateHoogiPop(ReviewVO reviewVO, ModelMap model) throws Exception {
+		ReviewVO resultVO = reviewManageService.selectReviewMngDetail(reviewVO);
+		model.addAttribute("resultVO", resultVO);
+		return "jsonView";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 후기 수정 처리
+	 * 2. 처리내용 :  마이페이지 후기 수정 처리
+	 * </pre>
+	 * @Method Name : updateHoogiPop
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param String
+	 * @return ReviewVO
+	 * @throws Exception
+	 */ 
+	@RequestMapping(value = "/mypage/w/n/updateReviewProc.do")
+	public String updateReviewProc(ReviewVO reviewVO, ModelMap model, SessionStatus status) throws Exception {
+		myPageService.updateReviewProc(reviewVO);
+		status.setComplete();	//중복 submit 방지
+		String message = null;
+		message = "후기가 정상적으로 수정 되었습니다.";
+
+		model.addAttribute("message", message);
+		model.addAttribute("redirectUrl", "/offclass/a/t/selectOffClassDetail.do?classId="+reviewVO.getClassId()+"&detailGoTab=review");
+		return "/common/temp_action_message";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 후기 삭제
+	 * 2. 처리내용 :  마이페이지 후기 삭제
+	 * </pre>
+	 * @Method Name : updateHoogiPop
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param String
+	 * @return ReviewVO
+	 * @throws Exception
+	 */ 
+	@RequestMapping(value = "/mypage/w/n/deleteReviewProc.do")
+	public String deleteReviewProc(ReviewVO reviewVO, ModelMap model, SessionStatus status) throws Exception {
+		reviewVO.setDelYn("Y");
+		myPageService.updateReviewProc(reviewVO);
+		status.setComplete();	//중복 submit 방지
+		String message = null;
+		message = "후기가 정상적으로 삭제 되었습니다.";
+
+		model.addAttribute("message", message);
+		model.addAttribute("redirectUrl", "/offclass/a/t/selectOffClassDetail.do?classId="+reviewVO.getClassId()+"&detailGoTab=review");
+		return "/common/temp_action_message";
 	}
 	
 	/**

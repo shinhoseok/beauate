@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.beauate.admin.classmng.service.ClassManageDao;
 import com.beauate.admin.classmng.service.ClassVO;
+import com.beauate.admin.comment.service.CommentDao;
+import com.beauate.admin.comment.service.CommentVO;
 import com.beauate.common.DateUtil;
 import com.beauate.common.StringUtil;
 import com.beauate.jjim.service.JjimDao;
@@ -52,6 +54,9 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 	
 	@Resource(name="reviewIdGnrService")
 	private EgovIdGnrService reviewIdGnrService;
+	
+	@Resource(name="commentDao")
+	private CommentDao commentDao;
 	
 	/**
 	 * <pre>
@@ -343,5 +348,99 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 	 */ 
 	public int selectUserReviewCnt(ReviewVO reviewVO) throws Exception {
 		return reviewDao.selectUserReviewCnt(reviewVO);
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 내가 작성한 후기리스트
+	 * 2. 처리내용 :  마이페이지 내가 작성한 후기리스트
+	 * </pre>
+	 * @Method Name : selectUserReviewCnt
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param reviewVO
+	 * @return Map<String, Object>
+	 * @throws Exception
+	 */ 
+	public Map<String, Object> selectMyReviewList(ReviewVO reviewVO) throws Exception {
+		Map<String, Object> rsltMap = new HashMap<>();
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(reviewVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(reviewVO.getPageUnit());
+		paginationInfo.setPageSize(reviewVO.getPageSize());
+		
+		reviewVO.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
+		reviewVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		reviewVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		
+		List<ReviewVO> selectList = null;
+		
+		int cnt = reviewDao.selectMyReviewListCnt(reviewVO);
+		paginationInfo.setTotalRecordCount(cnt);
+		if(cnt > 0){
+			//리스트
+			selectList = reviewDao.selectMyReviewList(reviewVO);
+			//이미지 경로수정 yyyyMM/파일명
+			selectList = fullImgPathChang3(selectList);
+		}
+		
+		//후기리스트
+		
+		rsltMap.put("paginationInfo", paginationInfo);
+		rsltMap.put("selectList", selectList);
+		rsltMap.put("selectListCnt", cnt);
+		
+		return rsltMap;
+	}
+	
+	//이미지 경로를 WAS의 경로로 변환 및 댓글리스트 포함시키기
+	private List<ReviewVO> fullImgPathChang3(List<ReviewVO> sqlList) throws Exception {
+		CommentVO commentVO = new CommentVO();
+		for(int i=0; i<sqlList.size(); i++) {
+			String tempSrc = sqlList.get(i).getImgSrc3();
+			String reviewId = sqlList.get(i).getReviewId();
+			//경로 변환
+			if(!StringUtil.isEmpty(tempSrc)) {
+				int cnt = tempSrc.indexOf("\\");
+				if(cnt == -1) {
+					cnt = tempSrc.indexOf("//");
+				}
+				String resultSrc = tempSrc.substring(cnt+1);
+				sqlList.get(i).setImgSrc3(resultSrc);
+			}
+			//댓글리스트포함
+			commentVO.setReviewId(reviewId);
+			List<CommentVO> resultVO = commentDao.selectCommentDetail(commentVO);
+			sqlList.get(i).setCommentList(resultVO);
+		}
+		return sqlList;
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 후기 수정 및 삭제
+	 * 2. 처리내용 :  마이페이지 후기 수정 및 삭제
+	 * </pre>
+	 * @Method Name : selectUserReviewCnt
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param reviewVO
+	 * @return Map<String, Object>
+	 * @throws Exception
+	 */ 
+	public void updateReviewProc(ReviewVO reviewVO) throws Exception {
+		reviewDao.updateReviewProc(reviewVO);
 	}
 }

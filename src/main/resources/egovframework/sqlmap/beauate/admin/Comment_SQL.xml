@@ -2,12 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.beauate.admin.comment.service.CommentDao">
 
-	<resultMap id="reviewResultMap" type="com.beauate.admin.comment.service.CommentVO">
+	<resultMap id="commentResultMap" type="com.beauate.admin.comment.service.CommentVO">
 		<id column="cmt_sq" property="commentId" />
 		<result column="r_sq" property="reviewId" />
-		<result column="u_sq" property="classTitle" />
+		<result column="u_sq" property="usrId" />
 		<result column="cmt_dt" property="commentDt" />
 		<result column="cmt_ctt" property="commentCtt" />
+		<result column="u_nm" property="usrNm" />
 	</resultMap>
 	<!-- 
 	쿼리명 : 댓글 등록
@@ -42,11 +43,11 @@
 	작성자 : 신호석
 	최초작성일 : 2019. 5.17
 	-->
-	<select id="selectCommentMngDetail" parameterType="commentVO" resultType="commentVO">
+	<select id="selectCommentMngDetail" parameterType="commentVO" resultMap="commentResultMap">
 		<![CDATA[
 		SELECT 
-			r_sq,
 			cmt_sq,
+			r_sq
 			u_sq,
 			cmt_dt,
 			cmt_ctt
@@ -88,4 +89,29 @@
 	<delete id="deleteCommentProc" parameterType="commentVO">
 		DELETE FROM R_CMT WHERE cmt_sq = #{commentId}
 	</delete>
+	
+	<!-- 쿼리명 : 마이페이지 수강후기 댓글 리스트
+	설명 : 마이페이지 수강후기 댓글 리스트
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 5.17     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 5.17
+	-->
+	<select id="selectCommentDetail" parameterType="commentVO" resultMap="commentResultMap">
+		<![CDATA[
+		SELECT 
+			a.cmt_sq,
+			a.r_sq,
+			a.u_sq,
+			a.cmt_dt,
+			a.cmt_ctt,
+			b.u_nm
+		FROM 
+			R_CMT a
+			LEFT JOIN users b ON a.u_sq = b.u_sq
+		WHERE 
+			a.r_sq = #{reviewId}
+		 ]]>
+	</select>
 </mapper>

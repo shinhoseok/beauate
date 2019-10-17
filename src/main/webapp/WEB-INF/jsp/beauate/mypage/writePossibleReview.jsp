@@ -151,7 +151,7 @@
 			<p style="display: none;"><a href="#review-modal" rel="modal:open" id="reviewPopOpen">로그인 팝업</a></p>
 		</div>
 		<!-- //리뷰작성 팝업 -->
-		
+		</div>
 	</div>
 </div>
 <form name="reviewWriteForm" id="reviewWriteForm" method="post" action="${basePath}/mypage/w/n/insertReviewProc.do">
@@ -197,10 +197,10 @@ var fn_insertReview = function(classId) {
 };
 
 //로그인 팝업 닫기
-var fn_reviewPopClose = function () {
-	$.unblockUI();
-	$("#reviewPop").empty();
-};
+// var fn_reviewPopClose = function () {
+// 	$.unblockUI();
+// 	$("#reviewPop").empty();
+// };
 
 //별점 클릭
 $(".starRev span").click(function(){

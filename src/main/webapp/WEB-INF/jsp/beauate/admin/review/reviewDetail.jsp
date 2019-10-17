@@ -59,10 +59,10 @@
 							</tr>
 							<tr>
 								<th>후기등록일</th>
-								<td>
-									<fmt:parseDate value="${resultVO.reviewDt}" var="reviewDt" pattern="yyyy-MM-dd"/> 
-									<fmt:formatDate value="${reviewDt}" pattern="yyyy-MM-dd"/>
-								</td>
+								<td><c:out value="${resultVO.reviewDt}"/></td>
+<%-- 									<fmt:parseDate value="${resultVO.reviewDt}" var="reviewDt" pattern="yyyy-MM-dd"/>  --%>
+<%-- 									<fmt:formatDate value="${reviewDt}" pattern="yyyy-MM-dd"/> --%>
+<!-- 								</td> -->
 								<th>삭제여부</th>
 								<td><c:out value="${resultVO.delYn}"/></td>
 							</tr>

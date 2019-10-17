@@ -17,6 +17,7 @@
 		<result column="u_nm" property="usrNm" />
 		<result column="cmt_sq" property="commentId" />
 		<result column="cmt_ctt" property="commentCtt" />
+		<result column="c_title" property="classTitle" />
 	</resultMap>
 	
 	<sql id="reviewGubunSql">
@@ -140,7 +141,7 @@
 	-->	
 	<select id="selectUserReviewCnt" parameterType="reviewVO" resultType="int">
 		<![CDATA[
-		SELECT COUNT (*) CNT FROM class_r where c_sq = #{classId} AND u_sq = #{usrId}
+		SELECT COUNT (*) CNT FROM class_r where c_sq = #{classId} AND u_sq = #{usrId} AND r_fl = 'N'
 		]]>
 	</select>
 	
@@ -191,8 +192,23 @@
 		UPDATE CLASS_R
 		]]>  
 		<trim prefix="SET" suffixOverrides=",">
+		    <if test="curriculum != null and  curriculum != ''">
+				sco_1      = #{curriculum},
+		    </if>
+		    <if test="kindness != null and  kindness != ''">
+				sco_2      = #{kindness},
+		    </if>
+		    <if test="timePro != null and  timePro != ''">
+				sco_3      = #{timePro},
+		    </if>
+		    <if test="community != null and  community != ''">
+				sco_4      = #{community},
+		    </if>
+		    <if test="reviewCtt != null and  reviewCtt != ''">
+				r_ctt      = #{reviewCtt},
+		    </if>
 		    <if test="delYn != null and  delYn != ''">
-				r_fl      = #{delYn}
+				r_fl      = #{delYn},
 		    </if>
 	    </trim>
 		<![CDATA[    
@@ -214,7 +230,7 @@
 				b.r_sq,
 				b.c_sq,
 				b.u_sq,
-				b.r_dt,
+				TO_CHAR(b.r_dt, 'yyyy.MM.dd') AS reviewDt,
 				b.sco_1,
 				b.sco_2,
 				b.sco_3,
@@ -225,15 +241,81 @@
 				c.u_email AS emailAddr,
 				d.c_title,
 				e.cmt_sq,
-				e.cmt_ctt
+				e.cmt_ctt,
+				f.mcls_nm AS areaNm
 			FROM
 				class_r b
 				LEFT JOIN users c ON b.u_sq = c.u_sq
 				LEFT JOIN off_class d ON b.c_sq = d.c_sq
 				LEFT JOIN r_cmt e ON e.r_sq = b.r_sq
+				LEFT JOIN common_cd_scls f ON (d.c_area_st = f.mcls_cd AND f.lcls_cd='ARA')
 			WHERE 
 				b.r_sq = #{reviewId}
 		]]>
+	</select>
+	
+	<sql id="myReviewGubunSql">
+		<where>
+			a.r_fl = 'N'
+			AND a.u_sq = #{usrId}
+		</where>
+	</sql>
+	
+	<!-- 쿼리명 : 마이페이지 내가 작성한 후기리스트
+	설명 : 마이페이지 내가 작성한 후기리스트
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.16     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<select id="selectMyReviewList" parameterType="reviewVO" resultMap="reviewResultMap">
+		SELECT
+			c.*
+		FROM
+			(
+				SELECT 
+					ROW_NUMBER() OVER(ORDER BY a.r_dt DESC) RNUM,
+					a.r_sq,
+					a.c_sq,
+					a.u_sq,
+					a.r_dt,
+					a.sco_1,
+					a.sco_2,
+					a.sco_3,
+					a.sco_4,
+					a.r_ctt,
+					a.r_fl,
+					b.c_title,
+					b.img_sq,
+					(SELECT d.file_stre_cours || '/' || d.stre_file_nm FROM comtnfiledetail d WHERE d.atch_file_id = b.img_sq AND file_cn='M3') AS imgSrc3,
+					c.mcls_nm AS areaNm
+				FROM 
+					class_r a
+					LEFT JOIN off_class b ON a.c_sq = b.c_sq
+					LEFT JOIN common_cd_scls c ON (b.c_area_st = c.mcls_cd AND c.lcls_cd='ARA')
+				<include refid="myReviewGubunSql"/>
+			) c
+		WHERE
+			c.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
+	</select>
+	
+	<!-- 쿼리명 : 마이페이지 내가 작성한 후기리스트 카운트
+	설명 : 마이페이지 내가 작성한 후기리스트 카운트
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.16     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<select id="selectMyReviewListCnt" parameterType="reviewVO" resultType="int">
+		SELECT 
+			COUNT(*) cnt
+		FROM 
+			class_r a
+			LEFT JOIN off_class b ON a.c_sq = b.c_sq
+			LEFT JOIN common_cd_scls c ON (b.c_area_st = c.mcls_cd AND c.lcls_cd='ARA')
+		<include refid="myReviewGubunSql"/>
 	</select>
 </mapper>
 

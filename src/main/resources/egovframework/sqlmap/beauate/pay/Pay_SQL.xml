@@ -89,6 +89,7 @@
 			b.c_apply_no,
 			f.mcls_nm as areaNm,
 			(SELECT c.file_stre_cours || '/' || c.stre_file_nm FROM comtnfiledetail c WHERE c.atch_file_id = b.img_sq AND file_cn='M2') AS imgSrc2,
+			(SELECT c.file_stre_cours || '/' || c.stre_file_nm FROM comtnfiledetail c WHERE c.atch_file_id = b.img_sq AND file_cn='M3') AS imgSrc3,
 			b.img_sq,
 			d.cpn_rate
 		FROM 

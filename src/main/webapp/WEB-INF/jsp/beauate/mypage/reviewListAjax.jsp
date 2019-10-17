@@ -25,7 +25,7 @@ $(function() {
 	fn_hoogiSearchList(1);
 });
 
-//신청한 클래스, 찜한 클래스 탭
+//작성가능한후기, 내가 작성한 후기 탭
 var fn_hoogiSearchList = function(page) {
 	hoogiCuurPage= page;
 	var params = {};

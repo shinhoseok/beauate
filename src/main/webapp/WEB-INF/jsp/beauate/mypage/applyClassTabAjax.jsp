@@ -111,8 +111,14 @@
 											<c:when test="${list.paySt eq 1}">
 												<a href="javascript:void(0);" onclick="fn_payCancel('${list.payId }', '${list.classId }');"><span>참여취소</span></a>
 											</c:when>
+											<c:when test="${list.paySt eq 2}">
+												<span>취소완료</span>
+											</c:when>
+											<c:when test="${list.paySt eq 3}">
+												<span>환불신청중</span>
+											</c:when>
 											<c:otherwise>
-												<a href="javascript:void(0);" onclick="alert('이미 취소처리가 완료되었습니다.')"><span>취소완료</span></a>
+												<span>환불진행중</span>
 											</c:otherwise>
 										</c:choose>
 										

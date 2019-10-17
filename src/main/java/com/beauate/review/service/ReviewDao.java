@@ -129,4 +129,44 @@ public interface ReviewDao {
 	 * @throws Exception
 	 */ 
 	ReviewVO selectReviewMngDetail(ReviewVO reviewVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 내가 작성한 후기리스트
+	 * 2. 처리내용 :  마이페이지 내가 작성한 후기리스트
+	 * </pre>
+	 * @Method Name : selectMyReviewList
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param reviewVO
+	 * @return List<ReviewVO>
+	 * @throws Exception
+	 */ 
+	List<ReviewVO> selectMyReviewList(ReviewVO reviewVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 내가 작성한 후기리스트 카운트
+	 * 2. 처리내용 :  마이페이지 내가 작성한 후기리스트 카운트
+	 * </pre>
+	 * @Method Name : selectMyReviewList
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param reviewVO
+	 * @return Integer
+	 * @throws Exception
+	 */ 
+	Integer selectMyReviewListCnt(ReviewVO reviewVO) throws Exception;
 }

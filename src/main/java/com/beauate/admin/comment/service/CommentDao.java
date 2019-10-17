@@ -1,5 +1,7 @@
 package com.beauate.admin.comment.service;
 
+import java.util.List;
+
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("commentDao")
@@ -84,4 +86,24 @@ public interface CommentDao {
 	 * @throws Exception
 	 */ 
 	Integer deleteCommentProc(CommentVO commentVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 수강후기 댓글 리스트
+	 * 2. 처리내용 :  마이페이지 수강후기 댓글 리스트
+	 * </pre>
+	 * @Method Name : selectCommentDetail
+	 * @date : 2019. 10. 16.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param commentVO
+	 * @return CommentVO
+	 * @throws Exception
+	 */ 
+	List<CommentVO> selectCommentDetail(CommentVO commentVO) throws Exception;
 }
