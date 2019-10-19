@@ -16,6 +16,9 @@ import com.beauate.admin.comment.service.CommentDao;
 import com.beauate.admin.comment.service.CommentVO;
 import com.beauate.admin.coupon.service.CouponManageDao;
 import com.beauate.admin.coupon.service.CouponVO;
+import com.beauate.admin.user.service.UserDao;
+import com.beauate.admin.user.service.UserVO;
+import com.beauate.common.CommonUtils;
 import com.beauate.common.DateUtil;
 import com.beauate.common.StringUtil;
 import com.beauate.jjim.service.JjimDao;
@@ -62,6 +65,12 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 	
 	@Resource(name="couponManageDao")
 	private CouponManageDao couponManageDao;
+	
+	@Resource(name="userDao")
+	private UserDao userDao;
+	
+	@Resource(name="commonUtils")
+	private CommonUtils commonUtils;
 	
 	/**
 	 * <pre>
@@ -569,5 +578,132 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 		rsltMap.put("selectListCnt", cnt);
 		
 		return rsltMap;
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 내 정보 수정
+	 * 2. 처리내용 : 마이페이지 내 정보 수정
+	 * </pre>
+	 * @Method Name : updateMyInfo
+	 * @date : 2019. 10. 12.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일					작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 12  		신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userVO
+	 * @return UserVO
+	 * @throws Exception
+	 */ 
+	public UserVO updateMyInfo(UserVO userVO) throws Exception {
+		UserVO resultVO = userDao.selectUser(userVO);
+		//전화번호 하이픈추가
+		String temp = resultVO.getMblPno();
+		if(!StringUtil.isEmpty(temp)) {
+			String mblPno = StringUtil.phone(temp);
+			resultVO.setMblPno(mblPno);
+		}
+		return resultVO;
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 내 정보 수정 > 비밀번호 정합성
+	 * 2. 처리내용 : 마이페이지 내 정보 수정 > 비밀번호 정합성
+	 * </pre>
+	 * @Method Name : updateMyInfo
+	 * @date : 2019. 10. 12.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일					작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 12  		신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userVO
+	 * @return UserVO
+	 * @throws Exception
+	 */ 
+	public boolean selectPasswordChk(UserVO userVO) throws Exception {
+		String tmpPwd = commonUtils.encryption(userVO.getUsrPw());
+		UserVO resultVO = userDao.selectUser(userVO);
+
+		boolean result = false;
+		if(tmpPwd.equals(resultVO.getUsrPw())) {
+			result = true;
+		}
+		return result;
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 내 정보수정 > 비밀번호 변경 처리
+	 * 2. 처리내용 : 마이페이지 내 정보수정 > 비밀번호 변경 처리
+	 * </pre>
+	 * @Method Name : updatePasswordProc
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userVO
+	 * @return void
+	 * @throws Exception
+	 */
+	public void updatePasswordProc(UserVO userVO) throws Exception {
+		String newUserPw = commonUtils.encryption(userVO.getNewUsrPw());
+		log.debug("After usrPw:"+ newUserPw);
+		userVO.setUsrPw(newUserPw);
+		userDao.userPwReset(userVO);
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 내 정보수정 > 휴대폰 변경 처리
+	 * 2. 처리내용 : 마이페이지 내 정보수정 > 휴대폰 변경 처리
+	 * </pre>
+	 * @Method Name : updateMblPnoProc
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userVO
+	 * @return void
+	 * @throws Exception
+	 */
+	public void updateMblPnoProc(UserVO userVO) throws Exception {
+		userDao.updateUser(userVO);
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 내 정보수정 > 회원탈퇴
+	 * 2. 처리내용 : 마이페이지 내 정보수정 > 회원탈퇴
+	 * </pre>
+	 * @Method Name : deleteMemberProc
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userVO
+	 * @return void
+	 * @throws Exception
+	 */
+	public void deleteMemberProc(UserVO userVO) throws Exception {
+		userDao.updateUserProc(userVO);
 	}
 }

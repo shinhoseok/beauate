@@ -30,7 +30,15 @@ public class UserVO extends CommDefaultVO implements Serializable {
 	private String pwChangeGubun;
 	/** 권한 이름 */
 	private String rlName;
+	/** 사용자 비밀번호 변경값 */
+	private String newUsrPw;
 	
+	public String getNewUsrPw() {
+		return newUsrPw;
+	}
+	public void setNewUsrPw(String newUsrPw) {
+		this.newUsrPw = newUsrPw;
+	}
 	public String getRlName() {
 		return rlName;
 	}

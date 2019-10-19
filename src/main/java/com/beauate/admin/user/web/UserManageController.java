@@ -180,7 +180,7 @@ public class UserManageController {
 		model.addAttribute("message", message);
 		model.addAttribute("redirectUrl", redirectUrl);
 		
-		return"/common/temp_action_message";
+		return "/common/temp_action_message";
 	}
 	
 	/**

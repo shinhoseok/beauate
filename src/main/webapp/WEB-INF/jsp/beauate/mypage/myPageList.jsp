@@ -43,7 +43,7 @@
 						<li tabId="2"><a href="javascript:void(0);">수강후기</a></li>
 						<li tabId="3"><a href="javascript:void(0);">할인쿠폰</a></li>
 						<li tabId="4"><a href="javascript:void(0);">결제내역</a></li>
-						<li tabId="5"><a href="javascript:void(0);">내 정보 수정</a></li>
+						<li tabId="5"><a href="javascript:void(0);" id="myInfoBtn">내 정보 수정</a></li>
 					</ul>
 				</div>
 				<div class="content-inner" id="content-inner"></div>
@@ -60,6 +60,15 @@ var tabId = 1; //탭번호 전역변수(첫페이지 1탭)
 var cuurPage = 1; //현재페이지 전역변수
 
 $(function() {
+	//내정보 수정에서 비밀번호 변경 후 info로..
+	var mypageTab = "${mypageTab}";
+	if(mypageTab == "5") {
+		tabId = mypageTab;
+		$("#myInfoBtn").get(0).click();
+		$("ul.tabs li").children("a").removeClass("active");
+		$("#myInfoBtn").addClass("active");
+	}
+	//탭이벤트
 	$("ul.tabs li").click(function() {
 		$("ul.tabs li").children("a").removeClass("active");
 		$(this).children("a").addClass("active");

@@ -14,6 +14,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.beauate.admin.coupon.service.CouponVO;
 import com.beauate.admin.review.service.ReviewManageService;
+import com.beauate.admin.user.service.UserVO;
 import com.beauate.common.DateUtil;
 import com.beauate.jjim.service.JjimVO;
 import com.beauate.login.service.LoginVO;
@@ -52,7 +53,8 @@ public class MyPageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/mypage/r/t/selectMyClassList.do")
-	public String selectMyClassList(@ModelAttribute("payVO") PayVO payVO, ModelMap model) throws Exception {
+	public String selectMyClassList(String mypageTab, ModelMap model) throws Exception {
+		model.addAttribute("mypageTab", mypageTab);
 		return "/mypage/myPageList";
 	}
 	
@@ -662,15 +664,218 @@ public class MyPageController {
 	 *	----------- ------------------- ---------------------------------------
 	 *	2019. 5. 17.		신호석				최초 작성 
 	 *	-----------------------------------------------------------------------
-	 * 
 	 * @param userVO
 	 * @param model
-	 * @return
+	 * @return String
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/mypage/r/n/updateMyInfo.do")
-	public String updateMyInfo(@ModelAttribute("payVO") PayVO payVO, ModelMap model) throws Exception {
-		
+	public String updateMyInfo() throws Exception {
 		return "/mypage/myInfoUpdateAjax";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 내 정보수정 ajax
+	 * 2. 처리내용 : 마이페이지 내 정보수정 ajax
+	 * </pre>
+	 * @Method Name : selectPayHistoryList
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userVO
+	 * @param model
+	 * @return String
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mypage/r/n/updateMyInfoChild.do")
+	public String updateMyInfo(UserVO userVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		userVO.setUsrId(sessionVO.getUsrId());
+		UserVO resultVO = myPageService.updateMyInfo(userVO);
+		model.addAttribute("resultVO", resultVO);
+		return "/mypage/myInfoUpdateChildAjax";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 내 정보수정 > 비밀번호 변경
+	 * 2. 처리내용 : 마이페이지 내 정보수정 > 비밀번호 변경
+	 * </pre>
+	 * @Method Name : updatePassword
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param 
+	 * @param 
+	 * @return String
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mypage/r/n/updatePassword.do")
+	public String updatePassword() throws Exception {
+		return "/mypage/passwordUpdate";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 내 정보수정 > 비밀번호 변경 > 비밀번호 정합성 ajax
+	 * 2. 처리내용 : 마이페이지 내 정보수정 > 비밀번호 변경 > 비밀번호 정합성 ajax
+	 * </pre>
+	 * @Method Name : selectPasswordChk
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userVO
+	 * @param model
+	 * @return 
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mypage/r/n/selectPasswordChk.do")
+	public String selectPasswordChk(UserVO userVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		
+		userVO.setUsrId(sessionVO.getUsrId());
+		model.addAttribute("result", myPageService.selectPasswordChk(userVO));
+		
+		return "jsonView";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 내 정보수정 > 비밀번호 변경 처리
+	 * 2. 처리내용 : 마이페이지 내 정보수정 > 비밀번호 변경 처리
+	 * </pre>
+	 * @Method Name : updatePasswordProc
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userVO
+	 * @param model
+	 * @return String
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mypage/w/n/updatePasswordProc.do")
+	public String updatePasswordProc(UserVO userVO, ModelMap model, LoginVO sessionVO, SessionStatus status) throws Exception {
+		String message;
+		String redirectUrl;
+		
+		try {
+			userVO.setUsrId(sessionVO.getUsrId());
+			myPageService.updatePasswordProc(userVO);
+			redirectUrl = "/mypage/r/t/selectMyClassList.do?mypageTab=5";
+			message = "수정 되었습니다.";
+			//중복 submit 방지
+			status.setComplete();
+		} catch (Exception e) {
+			redirectUrl = "/mypage/r/t/selectMyClassList.do?mypageTab=5";
+			message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.";
+		}
+		
+		model.addAttribute("message", message);
+		model.addAttribute("redirectUrl", redirectUrl);
+		
+		return "/common/temp_action_message";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 내 정보수정 > 휴대폰 변경 처리
+	 * 2. 처리내용 : 마이페이지 내 정보수정 > 휴대폰 변경 처리
+	 * </pre>
+	 * @Method Name : updateMblPnoProc
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userVO
+	 * @param model
+	 * @return String
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mypage/w/n/updateMblPnoProc.do")
+	public String updateMblPnoProc(UserVO userVO, ModelMap model, LoginVO sessionVO, SessionStatus status) throws Exception {
+		String message;
+		String redirectUrl;
+		
+		try {
+			userVO.setUsrId(sessionVO.getUsrId());
+			myPageService.updateMblPnoProc(userVO);
+			redirectUrl = "/mypage/r/t/selectMyClassList.do?mypageTab=5";
+			message = "수정 되었습니다.";
+			//중복 submit 방지
+			status.setComplete();
+		} catch (Exception e) {
+			redirectUrl = "/mypage/r/t/selectMyClassList.do?mypageTab=5";
+			message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.";
+		}
+		
+		model.addAttribute("message", message);
+		model.addAttribute("redirectUrl", redirectUrl);
+		
+		return "/common/temp_action_message";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 내 정보수정 > 회원탈퇴
+	 * 2. 처리내용 : 마이페이지 내 정보수정 > 회원탈퇴
+	 * </pre>
+	 * @Method Name : deleteMemberProc
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userVO
+	 * @param model
+	 * @return String
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mypage/w/n/deleteMemberProc.do")
+	public String deleteMemberProc(UserVO userVO, ModelMap model, LoginVO sessionVO, SessionStatus status) throws Exception {
+		String message;
+		String redirectUrl;
+		
+		try {
+			userVO.setUsrId(sessionVO.getUsrId());
+			myPageService.deleteMemberProc(userVO);
+			redirectUrl = "/user/a/n/logOut.do";
+			message = "탈퇴 되었습니다.";
+			//중복 submit 방지
+			status.setComplete();
+		} catch (Exception e) {
+			redirectUrl = "/mypage/r/t/selectMyClassList.do?mypageTab=5";
+			message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.";
+		}
+		
+		model.addAttribute("message", message);
+		model.addAttribute("redirectUrl", redirectUrl);
+		
+		return "/common/temp_action_message";
 	}
 }

@@ -45,7 +45,7 @@
 						<tbody class="line">
 							<tr>
 								<th>이름</th>
-								<td><c:out value="${userVO.usrId}"/></td>
+								<td><c:out value="${userVO.usrNm}"/></td>
 								<th>계정상태</th>
 								<td><c:out value="${userVO.userSt}"/></td>
 							</tr>
