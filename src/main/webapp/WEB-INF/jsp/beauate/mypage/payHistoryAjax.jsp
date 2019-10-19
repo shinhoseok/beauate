@@ -32,7 +32,7 @@ var fn_paySearchList = function(page) {
 	payCuurPage = page;
 	var params = {};
 	params.pageIndex = payCuurPage;
-	params.mypageTab = payCuurPage; //카테고리(탭구분값 1,2탭)
+	params.mypageTab = payTabId; //카테고리(탭구분값 1,2탭)
 	fn_payCommonAjax(params);
 };
 

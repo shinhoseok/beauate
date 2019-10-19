@@ -24,7 +24,7 @@ public class CouponVO extends CommDefaultVO implements Serializable {
 	private String mypageTab;
 	/** 사용자,관리자 페이지 구분 */
 	private String adminYn;
-	/** 만료기간 비교값 */
+	/** 만료기간 비교값 > or < */
 	private String comPare;
 	
 	public String getComPare() {

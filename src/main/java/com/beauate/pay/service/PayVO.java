@@ -59,7 +59,7 @@ public class PayVO extends CommDefaultVO implements Serializable {
 	private String payMethodNm;
 	/** 결제 상태명 */
 	private String payStNm;
-	
+
 	public String getClassStNm() {
 		return classStNm;
 	}

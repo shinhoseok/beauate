@@ -217,4 +217,24 @@ public interface MyPageService {
 	 * @throws Exception
 	 */ 
 	public Map<String, Object> selectCouponList(CouponVO couponVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 결재내역 리스트
+	 * 2. 처리내용 : 마이페이지 결재내역 리스트
+	 * </pre>
+	 * @Method Name : selectPayHisotryAjaxList
+	 * @date : 2019. 10. 12.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일					작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 12  		신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param couponVO
+	 * @return Map<String, Object>
+	 * @throws Exception
+	 */ 
+	public Map<String, Object> selectPayHisotryAjaxList(PayVO payVO) throws Exception;
 }

@@ -28,11 +28,19 @@
 		<where>
 			a.u_sq = #{usrId}
 			AND a.del_yn = 'N'
-			<if test="classEndDt != null and  classEndDt != ''">
-				AND b.c_end_dt <![CDATA[ < ]]> #{classEndDt}
-			</if>
 			<if test="classSt != null and  classSt != ''">
-				OR b.c_st = #{classSt}
+				AND b.u_start_dt <![CDATA[ < ]]> sysdate
+				OR a.pay_st = #{paySt}
+			</if>
+			<if test="paySt != null and  paySt != ''">
+				<choose>
+					<when test="paySt == '1'.toString()">
+						AND a.pay_st = #{paySt}
+					</when>
+					<otherwise>
+						AND a.pay_st != '1'
+					</otherwise>
+				</choose>
 			</if>
 		</where>
 	</sql>
@@ -52,7 +60,10 @@
 		pay a
 		LEFT JOIN off_class b ON  a.c_sq = b.c_sq
 		LEFT JOIN admin_cpn d ON a.cpn_sq = d.cpn_sq
-		LEFT JOIN common_cd_scls f ON (b.c_area_st = f.mcls_cd AND f.lcls_cd='CCT')
+		LEFT JOIN common_cd_scls f ON (b.c_st = f.mcls_cd AND f.lcls_cd='CCT')
+		LEFT JOIN common_cd_scls h ON (a.pay_st = h.mcls_cd AND h.lcls_cd='PAY')
+		LEFT JOIN common_cd_scls i ON (a.pay_method_st = i.mcls_cd AND i.lcls_cd='PBB')
+		LEFT JOIN common_cd_scls g ON (b.c_area_st = g.mcls_cd AND g.lcls_cd='ARA')
 		<include refid="payGubunSql"/>
 	</select>
 	
@@ -87,8 +98,10 @@
 			b.c_end_dt,
 			b.c_big_no,
 			b.c_apply_no,
-			f.mcls_nm as areaNm,
-			g.mcls_nm as classStNm,
+			f.mcls_nm AS classStNm,
+			g.mcls_nm as areaNm,
+			h.mcls_nm AS payStNm,
+			i.mcls_nm AS payMethodNm,
 			(SELECT c.file_stre_cours || '/' || c.stre_file_nm FROM comtnfiledetail c WHERE c.atch_file_id = b.img_sq AND file_cn='M2') AS imgSrc2,
 			(SELECT c.file_stre_cours || '/' || c.stre_file_nm FROM comtnfiledetail c WHERE c.atch_file_id = b.img_sq AND file_cn='M3') AS imgSrc3,
 			b.img_sq,
@@ -97,7 +110,9 @@
 			pay a
 			LEFT JOIN off_class b ON  a.c_sq = b.c_sq
 			LEFT JOIN admin_cpn d ON a.cpn_sq = d.cpn_sq
-			LEFT JOIN common_cd_scls f ON (b.c_area_st = f.mcls_cd AND f.lcls_cd='CCT')
+			LEFT JOIN common_cd_scls f ON (b.c_st = f.mcls_cd AND f.lcls_cd='CCT')
+			LEFT JOIN common_cd_scls h ON (a.pay_st = h.mcls_cd AND h.lcls_cd='PAY')
+			LEFT JOIN common_cd_scls i ON ( a.pay_method_st = i.mcls_cd AND i.lcls_cd='PBB')
 			LEFT JOIN common_cd_scls g ON (b.c_area_st = g.mcls_cd AND g.lcls_cd='ARA')
 		<include refid="payGubunSql"/>
 		) e

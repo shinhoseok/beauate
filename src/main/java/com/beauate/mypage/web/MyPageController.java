@@ -270,7 +270,8 @@ public class MyPageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/mypage/r/t/selectWritePossibleReviewList.do")
-	public String selectWritePossibleHoogiList(@ModelAttribute("payVO") PayVO payVO, ModelMap model) throws Exception {
+	public String selectWritePossibleHoogiList(@ModelAttribute("payVO") PayVO payVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		payVO.setUsrId(sessionVO.getUsrId());
 		payVO.setClassEndDt(DateUtil.getCurrentDateTime()); //종료일 오늘과 비교
 		payVO.setClassSt("4"); //클래스상태 종료된것만
 		Map<String, Object> rsltMap = myPageService.selectApplyClassList(payVO);
@@ -611,9 +612,40 @@ public class MyPageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/mypage/r/t/selectPayHisotryAjaxList.do")
-	public String selectPayHisotryAjaxList(PayVO payVO, ModelMap model) throws Exception {
-		
+	public String selectPayHisotryAjaxList(PayVO payVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		payVO.setUsrId(sessionVO.getUsrId());
+		payVO.setPaySt("1"); //결재완료 코드
+		Map<String, Object> rsltMap = myPageService.selectPayHisotryAjaxList(payVO);
+		model.addAttribute("rslt", rsltMap);
 		return "/mypage/payHistoryChildAjax";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 취소/환불 리스트 
+	 * 2. 처리내용 : 마이페이지 취소/환불 리스트
+	 * </pre>
+	 * @Method Name : selectPayCancelList
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param payVO
+	 * @param model
+	 * @return 
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mypage/r/n/selectPayCancelList.do")
+	public String selectPayCancelList(PayVO payVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		payVO.setUsrId(sessionVO.getUsrId());
+		payVO.setPaySt("2"); //결재완료 1만 아니면됨.
+		Map<String, Object> rsltMap = myPageService.selectPayHisotryAjaxList(payVO);
+		model.addAttribute("rslt", rsltMap);
+		return "/mypage/payCancelListAjax";
 	}
 	
 	/**

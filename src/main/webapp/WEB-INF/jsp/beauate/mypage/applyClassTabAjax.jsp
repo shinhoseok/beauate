@@ -32,7 +32,7 @@
 											<div class="img-list-black2"></div>
 											<p class="c2-img-txt22">신청마감</p>
 										</c:if>
-										<c:if test="${list.classSt eq 4 and classStartDtNum <= todayNum }">
+										<c:if test="${list.classSt eq 4 or classStartDtNum <= todayNum }">
 											<div class="img-list-black2"></div>
 											<p class="c2-img-txt33">종료</p>
 										</c:if>
@@ -43,7 +43,7 @@
 											<div class="img-list-black2"></div>
 											<p class="c2-img-txt22">신청마감</p>
 										</c:if>
-										<c:if test="${list.classSt eq 4 and classStartDtNum <= todayNum }">
+										<c:if test="${list.classSt eq 4 or classStartDtNum <= todayNum }">
 											<div class="img-list-black2"></div>
 											<p class="c2-img-txt33">종료</p>
 										</c:if>
@@ -54,7 +54,7 @@
 											<div class="img-list-black2"></div>
 											<p class="c2-img-txt22">신청마감</p>
 										</c:if>
-										<c:if test="${list.classSt eq 4 and classStartDtNum <= todayNum }">
+										<c:if test="${list.classSt eq 4 or classStartDtNum <= todayNum }">
 											<div class="img-list-black2"></div>
 											<p class="c2-img-txt33">종료</p>
 										</c:if>
@@ -65,7 +65,7 @@
 											<div class="img-list-black2"></div>
 											<p class="c2-img-txt22">신청마감</p>
 										</c:if>
-										<c:if test="${list.classSt eq 4 and classStartDtNum <= todayNum }">
+										<c:if test="${list.classSt eq 4 or classStartDtNum <= todayNum }">
 											<div class="img-list-black2"></div>
 											<p class="c2-img-txt33">종료</p>
 										</c:if>
