@@ -1,4 +1,4 @@
-package com.beauate.coupon.service;
+package com.beauate.couponhistory.service;
 
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 

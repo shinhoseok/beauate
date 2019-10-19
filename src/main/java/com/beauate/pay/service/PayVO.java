@@ -51,6 +51,8 @@ public class PayVO extends CommDefaultVO implements Serializable {
 	private String classEndDt;
 	/** 클래스 상태 */
 	private String classSt;
+	/** 클래스 상태명 */
+	private String classStNm;
 	/** 결제 삭제 여부 */
 	private String delYn;
 	/** 결제 방법명 */
@@ -58,6 +60,12 @@ public class PayVO extends CommDefaultVO implements Serializable {
 	/** 결제 상태명 */
 	private String payStNm;
 	
+	public String getClassStNm() {
+		return classStNm;
+	}
+	public void setClassStNm(String classStNm) {
+		this.classStNm = classStNm;
+	}
 	public String getImgSrc3() {
 		return imgSrc3;
 	}

@@ -9,11 +9,15 @@
 		<result column="cpn_rate" property="couponRate" />
 		<result column="cpn_end_dt" property="couponEndDt" />
 		<result column="cpn_st" property="couponSt" />
+		<result column="cpn_cdt" property="couponCdt" />
 	</resultMap>
 	
 	<sql id="cpnGubunSql">
 		<where>
-			b.cpn_st = 'Y'
+			<if test="adminYn == 'N'.toString">
+				AND cpn_st = #{couponSt}
+				OR cpn_end_dt <![CDATA[ ${comPare} ]]> sysdate
+			</if>
 		</where>
 	</sql>
 	
@@ -52,13 +56,14 @@
 					b.cpn_nm,
 					b.cpn_rate,
 					TO_CHAR(b.cpn_end_dt, 'yyyy-MM-dd') AS cpn_end_dt,
-					b.cpn_st
+					b.cpn_st,
+					b.cpn_cdt
 				FROM
 					ADMIN_CPN b
 				<include refid="cpnGubunSql"/>
 			) A
 		WHERE
-			A.RNUM BETWEEN 1 AND 5
+			A.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
 	</select>
 	
 	<!-- 
@@ -78,13 +83,15 @@
                  cpn_nm,
                  cpn_rate,
                  cpn_end_dt,
-                 cpn_st)
+                 cpn_st,
+                 cpn_cdt)
 	    VALUES	(#{couponId}, 
 	             sysdate, 
 	             #{couponNm}, 
 	             #{couponRate}, 
 	             TO_DATETIME(#{couponEndDt}, 'YYYY-MM-DD'),
-	             #{couponSt}) 
+	             #{couponSt},
+	             #{couponCdt}) 
 		]]>
 	</insert>
 	
@@ -103,7 +110,8 @@
 			cpn_nm,
 			cpn_rate,
 			TO_CHAR(cpn_end_dt, 'yyyy-MM-dd') AS cpn_end_dt,
-			cpn_st
+			cpn_st,
+			cpn_cdt
 		FROM 
 			ADMIN_CPN
 		WHERE 
@@ -154,6 +162,9 @@
 		    <if test="couponSt != null and  couponSt != ''">
 				cpn_st      = #{couponSt},
 		    </if>
+		    <if test="couponCdt != null and  couponCdt != ''">
+				cpn_cdt      = #{couponCdt},
+		    </if>
 	    </trim>
 		<![CDATA[    
 		WHERE  cpn_sq   = #{couponId}
@@ -174,7 +185,8 @@
 			a.cpn_nm,
 			a.cpn_rate,
 			a.cpn_end_dt,
-			a.cpn_st 
+			a.cpn_st,
+			a.cpn_cdt
 		FROM 
 			admin_cpn a
 		WHERE 

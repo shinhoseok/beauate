@@ -1,4 +1,4 @@
-package com.beauate.coupon.service;
+package com.beauate.couponhistory.service;
 
 public interface CouponHistoryService {
 	/**

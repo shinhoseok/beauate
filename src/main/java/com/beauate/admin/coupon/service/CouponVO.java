@@ -18,7 +18,39 @@ public class CouponVO extends CommDefaultVO implements Serializable {
 	private String couponEndDt;
 	/** 쿠폰 상태 */
 	private String couponSt;
+	/** 사용 조건 */
+	private String couponCdt;
+	/** 마이페이지 탭번호 */
+	private String mypageTab;
+	/** 사용자,관리자 페이지 구분 */
+	private String adminYn;
+	/** 만료기간 비교값 */
+	private String comPare;
 	
+	public String getComPare() {
+		return comPare;
+	}
+	public void setComPare(String comPare) {
+		this.comPare = comPare;
+	}
+	public String getAdminYn() {
+		return adminYn;
+	}
+	public void setAdminYn(String adminYn) {
+		this.adminYn = adminYn;
+	}
+	public String getMypageTab() {
+		return mypageTab;
+	}
+	public void setMypageTab(String mypageTab) {
+		this.mypageTab = mypageTab;
+	}
+	public String getCouponCdt() {
+		return couponCdt;
+	}
+	public void setCouponCdt(String couponCdt) {
+		this.couponCdt = couponCdt;
+	}
 	public String getCouponStartDt() {
 		return couponStartDt;
 	}

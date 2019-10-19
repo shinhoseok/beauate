@@ -88,6 +88,7 @@
 			b.c_big_no,
 			b.c_apply_no,
 			f.mcls_nm as areaNm,
+			g.mcls_nm as classStNm,
 			(SELECT c.file_stre_cours || '/' || c.stre_file_nm FROM comtnfiledetail c WHERE c.atch_file_id = b.img_sq AND file_cn='M2') AS imgSrc2,
 			(SELECT c.file_stre_cours || '/' || c.stre_file_nm FROM comtnfiledetail c WHERE c.atch_file_id = b.img_sq AND file_cn='M3') AS imgSrc3,
 			b.img_sq,
@@ -97,6 +98,7 @@
 			LEFT JOIN off_class b ON  a.c_sq = b.c_sq
 			LEFT JOIN admin_cpn d ON a.cpn_sq = d.cpn_sq
 			LEFT JOIN common_cd_scls f ON (b.c_area_st = f.mcls_cd AND f.lcls_cd='CCT')
+			LEFT JOIN common_cd_scls g ON (b.c_area_st = g.mcls_cd AND g.lcls_cd='ARA')
 		<include refid="payGubunSql"/>
 		) e
 	WHERE

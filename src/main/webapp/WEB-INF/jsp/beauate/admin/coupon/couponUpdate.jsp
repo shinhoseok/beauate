@@ -55,8 +55,18 @@
 									<td colspan="3">
 										<div class="commonSearch_wrap">
 											<label class="blind" for=" ">d</label>
-											<form:input path="couponNm" onfocus="checker(this, 30 , 'nbytes_couponNm');" onblur="stopchecker();" style="width: 810px;"/>
-											&nbsp;[<span id="nbytes_couponNm" class="color_red">0</span>/30]byte
+											<form:input path="couponNm" onfocus="checker(this, 50 , 'nbytes_couponNm');" onblur="stopchecker();" style="width: 810px;"/>
+											&nbsp;[<span id="nbytes_couponNm" class="color_red">0</span>/50]byte
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th>사용조건</th>
+									<td colspan="3">
+										<div class="commonSearch_wrap">
+											<label class="blind" for=" ">d</label>
+											<form:input path="couponCdt" onfocus="checker(this, 50 , 'nbytes_couponCdt');" onblur="stopchecker();" style="width: 810px;"/>
+											&nbsp;[<span id="nbytes_couponCdt" class="color_red">0</span>/50]byte
 										</div>
 									</td>
 								</tr>

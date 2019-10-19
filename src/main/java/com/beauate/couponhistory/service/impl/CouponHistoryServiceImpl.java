@@ -1,4 +1,4 @@
-package com.beauate.coupon.service.impl;
+package com.beauate.couponhistory.service.impl;
 
 import javax.annotation.Resource;
 
@@ -6,9 +6,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
-import com.beauate.coupon.service.CouponHistoryDao;
-import com.beauate.coupon.service.CouponHistoryService;
-import com.beauate.coupon.service.CouponHistoryVO;
+import com.beauate.couponhistory.service.CouponHistoryDao;
+import com.beauate.couponhistory.service.CouponHistoryService;
+import com.beauate.couponhistory.service.CouponHistoryVO;
 
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;

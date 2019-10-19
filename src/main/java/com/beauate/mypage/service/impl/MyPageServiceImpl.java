@@ -14,6 +14,8 @@ import com.beauate.admin.classmng.service.ClassManageDao;
 import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.admin.comment.service.CommentDao;
 import com.beauate.admin.comment.service.CommentVO;
+import com.beauate.admin.coupon.service.CouponManageDao;
+import com.beauate.admin.coupon.service.CouponVO;
 import com.beauate.common.DateUtil;
 import com.beauate.common.StringUtil;
 import com.beauate.jjim.service.JjimDao;
@@ -58,6 +60,9 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 	@Resource(name="commentDao")
 	private CommentDao commentDao;
 	
+	@Resource(name="couponManageDao")
+	private CouponManageDao couponManageDao;
+	
 	/**
 	 * <pre>
 	 * 1. 개요 : 마이페이지 신청한 클래스 리스트
@@ -96,6 +101,9 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 			selectList = payDao.selectPayList(payVO);
 			//이미지 경로수정 yyyyMM/파일명
 			selectList = fullImgPathChang(selectList);
+			if(!StringUtil.isEmpty(selectList.get(0).getImgSrc3())) {
+				selectList = fullImgPathChang33(selectList);
+			}
 		}
 		//오늘날짜
 		String today = DateUtil.getCurrentYearMonthDay();
@@ -122,6 +130,25 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 				log.debug(">> result Path >> "+resultSrc);
 				sqlList.get(i).setImgSrc2(resultSrc);
 				log.debug(">> vo Path >> "+sqlList.get(i).getImgSrc2());
+			}
+		}
+		return sqlList;
+	}
+	
+	//이미지 경로를 WAS의 경로로 변환한다.
+	private List<PayVO> fullImgPathChang33(List<PayVO> sqlList) {
+		for(int i=0; i<sqlList.size(); i++) {
+			String tempSrc = sqlList.get(i).getImgSrc3();
+			log.debug(">> origin Path >> "+tempSrc);
+			if(!StringUtil.isEmpty(tempSrc)) {
+				int cnt = tempSrc.indexOf("\\");
+				if(cnt == -1) {
+					cnt = tempSrc.indexOf("//");
+				}
+				String resultSrc = tempSrc.substring(cnt+1);
+				log.debug(">> result Path >> "+resultSrc);
+				sqlList.get(i).setImgSrc3(resultSrc);
+				log.debug(">> vo Path >> "+sqlList.get(i).getImgSrc3());
 			}
 		}
 		return sqlList;
@@ -442,5 +469,105 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 	 */ 
 	public void updateReviewProc(ReviewVO reviewVO) throws Exception {
 		reviewDao.updateReviewProc(reviewVO);
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 사용 가능한 쿠폰 리스트
+	 * 2. 처리내용 : 사용 가능한 쿠폰 리스트
+	 * </pre>
+	 * @Method Name : selectCouponList
+	 * @date : 2019. 10. 12.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일					작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 12  		신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param couponVO
+	 * @return Map<String, Object>
+	 * @throws Exception
+	 */ 
+	public Map<String, Object> selectCouponList(CouponVO couponVO) throws Exception {
+		Map<String, Object> rsltMap = new HashMap<String, Object>();
+		
+		//페이징 
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(couponVO.getPageIndex());
+		couponVO.setPageUnit(6); //한페이지당 게시물수 6
+		paginationInfo.setRecordCountPerPage(couponVO.getPageUnit());
+		paginationInfo.setPageSize(couponVO.getPageSize());
+		
+		couponVO.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
+		couponVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		couponVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+		List<CouponVO> selectList = null;
+		//총 카운트 
+		int cnt = couponManageDao.selectCouponMngListCnt(couponVO);
+		paginationInfo.setTotalRecordCount(cnt);
+		
+		if(cnt > 0){
+			//리스트
+			selectList = couponManageDao.selectCouponMngList(couponVO);
+		}
+		
+		rsltMap.put("paginationInfo", paginationInfo);
+		rsltMap.put("selectList", selectList);
+		rsltMap.put("selectListCnt", cnt);
+		
+		return rsltMap;
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 결재내역 리스트
+	 * 2. 처리내용 : 마이페이지 결재내역 리스트
+	 * </pre>
+	 * @Method Name : selectPayHisotryAjaxList
+	 * @date : 2019. 10. 12.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일					작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 12  		신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param couponVO
+	 * @return Map<String, Object>
+	 * @throws Exception
+	 */ 
+	public Map<String, Object> selectPayHisotryAjaxList(PayVO payVO) throws Exception {
+		Map<String, Object> rsltMap = new HashMap<String, Object>();
+		
+		//페이징 
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(payVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(payVO.getPageUnit());
+		paginationInfo.setPageSize(payVO.getPageSize());
+		
+		payVO.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
+		payVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		payVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+		List<PayVO> selectList = null;
+		//총 카운트 
+		int cnt = payDao.selectPayListCnt(payVO);
+		paginationInfo.setTotalRecordCount(cnt);
+		
+		if(cnt > 0){
+			//리스트
+			selectList = payDao.selectPayList(payVO);
+			if(!StringUtil.isEmpty(selectList.get(0).getImgSrc3())) {
+				selectList = fullImgPathChang33(selectList);
+			}
+		}
+		
+		rsltMap.put("paginationInfo", paginationInfo);
+		rsltMap.put("selectList", selectList);
+		rsltMap.put("selectListCnt", cnt);
+		
+		return rsltMap;
 	}
 }

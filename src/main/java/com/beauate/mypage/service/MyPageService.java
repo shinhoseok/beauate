@@ -2,6 +2,7 @@ package com.beauate.mypage.service;
 
 import java.util.Map;
 
+import com.beauate.admin.coupon.service.CouponVO;
 import com.beauate.jjim.service.JjimVO;
 import com.beauate.pay.service.PayVO;
 import com.beauate.review.service.ReviewVO;
@@ -196,4 +197,24 @@ public interface MyPageService {
 	 * @throws Exception
 	 */ 
 	public void updateReviewProc(ReviewVO reviewVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 사용 가능한 쿠폰 리스트
+	 * 2. 처리내용 : 사용 가능한 쿠폰 리스트
+	 * </pre>
+	 * @Method Name : selectCouponList
+	 * @date : 2019. 10. 12.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일					작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 12  		신호석			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param couponVO
+	 * @return Map<String, Object>
+	 * @throws Exception
+	 */ 
+	public Map<String, Object> selectCouponList(CouponVO couponVO) throws Exception;
 }

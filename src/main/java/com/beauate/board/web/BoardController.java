@@ -17,8 +17,8 @@ import com.beauate.admin.board.service.BoardVO;
 import com.beauate.admin.code.service.CodeVO;
 import com.beauate.board.service.BoardService;
 import com.beauate.common.StringUtil;
-import com.beauate.coupon.service.CouponHistoryService;
-import com.beauate.coupon.service.CouponHistoryVO;
+import com.beauate.couponhistory.service.CouponHistoryService;
+import com.beauate.couponhistory.service.CouponHistoryVO;
 
 @Controller
 public class BoardController {

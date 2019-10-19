@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.beauate.coupon.service.CouponHistoryDao">
+<mapper namespace="com.beauate.couponhistory.service.CouponHistoryDao">
 
-	<resultMap id="couponHistoryMap" type="com.beauate.coupon.service.CouponHistoryVO">
+	<resultMap id="couponHistoryMap" type="com.beauate.couponhistory.service.CouponHistoryVO">
 		<id column="u_cpn_sq" property="cpnHistoryId" />
 		<result column="u_cpn_dt" property="cpnDt" />
 		<result column="cpn_sq" property="couponId" />

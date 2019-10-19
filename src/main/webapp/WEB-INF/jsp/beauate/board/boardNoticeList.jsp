@@ -26,6 +26,5 @@
 </div><br/>
 <!-- 페이징// -->
 <div class="paging">
-<%-- 	<ui:pagination paginationInfo="${rslt.paginationInfo}" type="front" jsFunction="fn_searchList" /> --%>
 	<ui:pagination paginationInfo="${rslt.paginationInfo}" type="image" jsFunction="fn_searchList" />
 </div>

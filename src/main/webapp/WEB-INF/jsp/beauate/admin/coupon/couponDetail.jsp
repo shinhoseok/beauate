@@ -43,8 +43,8 @@
 						</colgroup>
 						<tbody class="line">
 							<tr>
-								<th>쿠폰번호</th>
-								<td><c:out value="${resultVO.couponId}"/></td>
+								<th>쿠폰상태</th>
+								<td><c:out value="${resultVO.couponSt}"/></td>
 								<th>생성일</th>
 								<td>
 									<fmt:parseDate value="${resultVO.couponStartDt}" var="couponStartDt" pattern="yyyy-MM-dd"/> 
@@ -56,6 +56,10 @@
 								<td colspan="4">${resultVO.couponNm}</td>
 							</tr>
 							<tr>
+								<th>사용조건</th>
+								<td colspan="4">${resultVO.couponCdt}</td>
+							</tr>
+							<tr>
 								<th>할인율</th>
 								<td><c:out value="${resultVO.couponRate}"/>%</td>
 								<th>만료기간</th>
@@ -63,10 +67,6 @@
 									<fmt:parseDate value="${resultVO.couponEndDt}" var="couponEndDt" pattern="yyyy-MM-dd"/> 
 									<fmt:formatDate value="${couponEndDt}" pattern="yyyy-MM-dd"/>
 								</td>
-							</tr>
-							<tr>
-								<th>쿠폰상태</th>
-								<td><c:out value="${resultVO.couponSt}"/></td>
 							</tr>
 						</tbody>
 					</table>

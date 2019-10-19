@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.beauate.admin.coupon.service.CouponVO;
 import com.beauate.admin.review.service.ReviewManageService;
 import com.beauate.common.DateUtil;
 import com.beauate.jjim.service.JjimVO;
@@ -486,8 +487,8 @@ public class MyPageController {
 	
 	/**
 	 * <pre>
-	 * 1. 개요 : 마이페이지 할인쿠폰 리스트
-	 * 2. 처리내용 : 마이페이지 할인쿠폰 리스트
+	 * 1. 개요 : 마이페이지 할인쿠폰 메인
+	 * 2. 처리내용 : 마이페이지 할인쿠폰 메인
 	 * </pre>
 	 * @Method Name : selectUsePossibleCpnList
 	 * @date : 2019. 5. 17.
@@ -498,22 +499,78 @@ public class MyPageController {
 	 *	----------- ------------------- ---------------------------------------
 	 *	2019. 5. 17.		신호석				최초 작성 
 	 *	-----------------------------------------------------------------------
-	 * 
-	 * @param userVO
+	 * @param payVO
 	 * @param model
 	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/mypage/r/n/selectUsePossibleCpnList.do")
-	public String selectUsePossibleCpnList(@ModelAttribute("payVO") PayVO payVO, ModelMap model) throws Exception {
-		
+	public String selectUsePossibleCpnList() throws Exception {
 		return "/mypage/usePossibleCpnAjax";
 	}
 	
 	/**
 	 * <pre>
-	 * 1. 개요 : 마이페이지 결재내역 리스트
-	 * 2. 처리내용 : 마이페이지 결재내역 리스트
+	 * 1. 개요 : 마이페이지 할인쿠폰 리스트 ajax
+	 * 2. 처리내용 : 마이페이지 할인쿠폰 리스트 ajax
+	 * </pre>
+	 * @Method Name : selectPossibleCouponList
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mypage/r/t/selectPossibleCouponList.do")
+	public String selectUsePossibleCpnList(CouponVO couponVO, ModelMap model) throws Exception {
+		couponVO.setCouponSt("Y");
+		couponVO.setAdminYn("N");
+		couponVO.setComPare(">="); //쿼리 구분 오늘날짜보다 크거나 같으면 만료아님
+		Map<String, Object> rsltMap = myPageService.selectCouponList(couponVO);
+		model.addAttribute("rslt", rsltMap);
+		return "/mypage/possibleCpnAjax";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 만료쿠폰 리스트 ajax
+	 * 2. 처리내용 : 마이페이지 만료쿠폰 리스트 ajax
+	 * </pre>
+	 * @Method Name : selectManRyoCouponList
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mypage/r/n/selectManRyoCouponList.do")
+	public String selectManRyoCouponList(CouponVO couponVO, ModelMap model) throws Exception {
+		couponVO.setCouponSt("N");
+		couponVO.setAdminYn("N");
+		couponVO.setComPare("<"); //쿼리 구분 오늘날짜가 더크면 만료
+		Map<String, Object> rsltMap = myPageService.selectCouponList(couponVO);
+		model.addAttribute("rslt", rsltMap);
+		return "/mypage/manRyoCpnAjax";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 결재내역 메인
+	 * 2. 처리내용 : 마이페이지 결재내역 메인
 	 * </pre>
 	 * @Method Name : selectPayHistoryList
 	 * @date : 2019. 5. 17.
@@ -524,16 +581,39 @@ public class MyPageController {
 	 *	----------- ------------------- ---------------------------------------
 	 *	2019. 5. 17.		신호석				최초 작성 
 	 *	-----------------------------------------------------------------------
-	 * 
-	 * @param userVO
+	 * @param payVO
 	 * @param model
-	 * @return
+	 * @return String
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/mypage/r/n/selectPayHistoryList.do")
-	public String selectPayHistoryList(@ModelAttribute("payVO") PayVO payVO, ModelMap model) throws Exception {
-		
+	public String selectPayHistoryList() throws Exception {
 		return "/mypage/payHistoryAjax";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 마이페이지 결재내역 리스트 
+	 * 2. 처리내용 : 마이페이지 결재내역 리스트
+	 * </pre>
+	 * @Method Name : selectPayHisotryAjaxList
+	 * @date : 2019. 5. 17.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param payVO
+	 * @param model
+	 * @return 
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mypage/r/t/selectPayHisotryAjaxList.do")
+	public String selectPayHisotryAjaxList(PayVO payVO, ModelMap model) throws Exception {
+		
+		return "/mypage/payHistoryChildAjax";
 	}
 	
 	/**

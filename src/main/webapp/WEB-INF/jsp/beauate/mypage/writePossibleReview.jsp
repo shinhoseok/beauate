@@ -32,7 +32,10 @@
 								<div class="c2-img-txt2">수강완료</div>
 							</div>
 							<div class="c2-center-txt">
-								<p class="center-txt1"><c:out value="${list.classTitle }"/> | 7월 23일 (화)</p>
+								<p class="center-txt1"><c:out value="${list.classTitle }"/> | 
+									<fmt:parseDate value="${list.classStartDt}" var="classStartDt" pattern="yyyy-MM-dd"/>
+									<fmt:formatDate value="${classStartDt}" pattern="yyyy.MM.dd"/>
+								</p>
 								<p class="center-txt2"><c:out value="${list.areaNm }"/></p>
 								<p class="center-txt3"><c:out value="${list.classAdr }"/></p>
 								<p class="center-txt4">
@@ -61,7 +64,7 @@
 									</c:otherwise>
 								</c:choose>
 								<div class="c3-btn-review">
-									<a href="javascript:void(0);" onclick="javascript:fn_insertReview('<c:out value="${list.classId }"/>')"><span>후기작성</span></a>
+									<a href="javascript:void(0);" onclick="javascript:fn_insertReview('<c:out value="${list.classId }"/>', '${list.imgSrc3 }', '${list.classStNm }', '${list.classStartDt}', '${list.classTitle }')"><span>후기작성</span></a>
 								</div>
 							</div>
 						</li>
@@ -90,10 +93,9 @@
 			<p>클래스 후기작성</p>
 			<div class="mypageR_list">
 				<ul>
-					<li><img src="${imgPath}/my-r-img.jpg" /></li>
-					<li>Self-하루만에 배우는 감쪽같은 속눈썹</li>
-					<li>강남<span>|</span>7월 23일(화)
-					</li>
+					<li><img id="reviewPopImg" src=""/></li>
+					<li id="reviewPopTitle">Self-하루만에 배우는 감쪽같은 속눈썹</li>
+					<li id="areaAndDate"></li>
 				</ul>
 			</div>
 			<!--별점-->
@@ -174,7 +176,7 @@ var fn_reviewMapView = function() {
 };
 
 //후기작성
-var fn_insertReview = function(classId) {
+var fn_insertReview = function(classId, imgSrc3, classStNm, classStartDt, classTitle) {
 	reviewClassId = classId;
 	//유저는 같은 클래스에서 한번만 후기작성 가능
 	$.ajax({ 	
@@ -188,6 +190,10 @@ var fn_insertReview = function(classId) {
 		},
 		success: function(r) { 
 			if(r.cnt == 0) {
+				$("#reviewPopImg").attr("src", "${uploadPath}/"+imgSrc3);
+				$("#reviewPopTitle").text(classTitle);
+				var temp = classStartDt.substring(0,10);
+				$("#areaAndDate").html(classStNm+"<span>|</span>"+temp);
 				$("#reviewPopOpen").get(0).click();
 			} else{
 				alert("해당 클래스에 이미 작성된 리뷰가 있습니다.");

@@ -3,103 +3,60 @@
 <!-- 수강 가능한 쿠폰-->
 <div class="cpn">
 	<div class="myclass-left">
-		<ul>
-			<li><a href="#" class="active">사용가능한 쿠폰</a></li>
-			<li><a href="#">사용/만료 쿠폰</a></li>
+		<ul class="coupon_tabs">
+			<li tabId="1"><a href="javascript:void(0);" class="active">사용가능한 쿠폰</a></li>
+			<li tabId="2"><a href="javascript:void(0);">사용/만료 쿠폰</a></li>
 		</ul>
 	</div>
-	<div class="myclass-right">
-		<h3 class="h3-head3-1"></h3>
-		<ul class="cpn-list1">
-			<li>
-				<div class="cpn-title">
-					<a href="#" class="active">뷰아떼 미션 수행완료 25% 쿠폰</a>
-				</div>
-				<div class="cpn-one">
-					<span>25%</span>
-				</div>
-				<p class="p1">사용조건</p>
-				<p class="p2">30,000이상 결제시</p>
-				<p class="p3">쿠폰만료일</p>
-				<p class="p4">2019.10.16</p>
-			</li>
-			<li>
-				<div class="cpn-title">
-					<a href="#" class="active">뷰아떼 미션 수행완료 25% 쿠폰</a>
-				</div>
-				<div class="cpn-one">
-					<span>25%</span>
-				</div>
-				<p class="p1">사용조건</p>
-				<p class="p2">30,000이상 결제시</p>
-				<p class="p3">쿠폰만료일</p>
-				<p class="p4">2019.10.16</p>
-			</li>
-			<li>
-				<div class="cpn-title">
-					<a href="#" class="active">self-하루만에 배우는 감쪽같은 속눈썹! 같은 속눈썹!</a>
-				</div>
-				<div class="cpn-one">
-					<span>25%</span>
-				</div>
-				<p class="p1">사용조건</p>
-				<p class="p2">30,000이상 결제시</p>
-				<p class="p3">쿠폰만료일</p>
-				<p class="p4">2019.10.16</p>
-			</li>
-			<li>
-				<div class="cpn-title">
-					<a href="#" class="active">친구 추천 반값</a>
-				</div>
-				<div class="cpn-one">
-					<span>25%</span>
-				</div>
-				<p class="p1">사용조건</p>
-				<p class="p2">30,000이상 결제시</p>
-				<p class="p3">쿠폰만료일</p>
-				<p class="p4">2019.10.16</p>
-			</li>
-			<li>
-				<div class="cpn-title">
-					<a href="#" class="active">웰컴50%쿠폰</a>
-				</div>
-				<div class="cpn-one">
-					<span>25%</span>
-				</div>
-				<p class="p1">사용조건</p>
-				<p class="p2">30,000이상 결제시</p>
-				<p class="p3">쿠폰만료일</p>
-				<p class="p4">2019.10.16</p>
-			</li>
-			<li>
-				<div class="cpn-title">
-					<a href="#" class="active">self-하루만에 배우는 감쪽같은 속눈썹!</a>
-				</div>
-				<div class="cpn-one">
-					<span>25%</span>
-				</div>
-				<p class="p1">사용조건</p>
-				<p class="p2">30,000이상 결제시</p>
-				<p class="p3">쿠폰만료일</p>
-				<p class="p4">2019.10.16</p>
-			</li>
-		</ul>
-	</div>
+	<div class="myclass-right" id="couponTarget"></div>
 </div>
 <!--//수강 가능한 쿠폰-->
-<!--페이징-->
-<div class="paging">
-	<button type="button" class="btn-prev">
-		<span>이전</span>
-	</button>
-	<ul>
-		<li class="active"><span>1</span></li>
-		<li><a href="#">2</a></li>
-		<li><a href="#">3</a></li>
-		<li><a href="#">4</a></li>
-		<li><a href="#">5</a></li>
-	</ul>
-	<button type="button" class="btn-next">
-		<span>다음</span>
-	</button>
-</div>
+
+
+<script type="text/javascript">
+var couponTabId = 1; //탭번호 전역변수(첫페이지 1탭)
+var couponCuurPage = 1; //현재페이지 전역변수
+
+$(function() {
+	$("ul.coupon_tabs li").click(function() {
+		$("ul.coupon_tabs li").children("a").removeClass("active");
+		$(this).children("a").addClass("active");
+		couponTabId = $(this).attr("tabId");
+		fn_couponSearchList(1);
+	});
+	fn_couponSearchList(1);
+});
+
+//사용가능한 쿠폰, 사용/만료 쿠폰 탭
+var fn_couponSearchList = function(page) {
+	hoogiCuurPage= page;
+	var params = {};
+	params.pageIndex = hoogiCuurPage;
+	params.mypageTab = couponTabId; //카테고리(탭구분값 1,2탭)
+	fn_couponCommonAjax(params);
+};
+
+//사용가능한 쿠폰, 사용/만료 쿠폰 Ajax
+var fn_couponCommonAjax = function(params) {
+	var url = "";
+	if(params.mypageTab == '1') {
+		url = "${basePath}/mypage/r/t/selectPossibleCouponList.do";
+	} else {
+		url = "${basePath}/mypage/r/n/selectManRyoCouponList.do";
+	}
+	$.ajax({
+		url: url,
+		data: params,
+		type: 'POST',
+		dataType: 'html',
+		cache: false,
+		success: function(r) {
+			$('#couponTarget').children().remove();
+			$('#couponTarget').html(r);
+		},
+		error : function() {
+		  alert('오류가 발생했습니다.\n관리자에게 문의 바랍니다.');
+		}
+	});
+};
+</script>

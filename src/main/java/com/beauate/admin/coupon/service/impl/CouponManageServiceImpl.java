@@ -48,7 +48,6 @@ public class CouponManageServiceImpl extends EgovAbstractServiceImpl implements 
 	 *	----------- ------------------- ---------------------------------------
 	 *	2019. 10. 12  		신호석			                    최초 작성 
 	 *	-----------------------------------------------------------------------
-	 * 
 	 * @param couponVO
 	 * @return Map<String, Object>
 	 * @throws Exception
