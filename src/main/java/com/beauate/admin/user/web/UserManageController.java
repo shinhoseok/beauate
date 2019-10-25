@@ -174,7 +174,7 @@ public class UserManageController {
 			status.setComplete();
 		} catch (Exception e) {
 			redirectUrl = "/usermgr/w/m/userInsert.do";
-			message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.";
+			message = "현재 서비스가 원활하지 않습니다. 잠시후 다시 이용해 주십시요.";
 		}
 		
 		model.addAttribute("message", message);

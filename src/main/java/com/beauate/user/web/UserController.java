@@ -80,7 +80,7 @@ public class UserController {
 			LoginVO resultVO = (LoginVO)loginService.selectLoginUserInfo(loginVO);
 			if(resultVO == null){
 				redirectUrl = "/user/w/n/userInsertProc.do";
-				message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.";
+				message = "현재 서비스가 원활하지 않습니다. 잠시후 다시 이용해 주십시요.";
 				model.addAttribute("message", message);
 				model.addAttribute("redirectUrl", redirectUrl);
 				return "jsonView";
@@ -112,7 +112,7 @@ public class UserController {
 			
 		} catch (Exception e) {
 			redirectUrl = "/user/w/n/userInsertProc.do";
-			message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.";
+			message = "현재 서비스가 원활하지 않습니다. 잠시후 다시 이용해 주십시요.";
 		}
 		
 		model.addAttribute("message", message);
@@ -186,7 +186,7 @@ public class UserController {
 			LoginVO resultVO = (LoginVO)loginService.selectLoginUserInfo(loginVO);
 			if(resultVO == null){
 				redirectUrl = "/user/w/t/userPasswordChange.do";
-				message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.";
+				message = "현재 서비스가 원활하지 않습니다. 잠시후 다시 이용해 주십시요.";
 				model.addAttribute("message", message);
 				model.addAttribute("redirectUrl", redirectUrl);
 				return "jsonView";
@@ -210,7 +210,7 @@ public class UserController {
 			status.setComplete();
 		} catch (Exception e) {
 			redirectUrl = "/user/w/t/userPasswordChange.do";
-			message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.";
+			message = "현재 서비스가 원활하지 않습니다. 잠시후 다시 이용해 주십시요.";
 		}
 		
 		model.addAttribute("message", message);

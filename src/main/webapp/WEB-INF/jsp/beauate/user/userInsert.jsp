@@ -112,7 +112,7 @@
 			},
 			success: function(r) { 
 				if(r.chkResult == 'N') {
-					$("#userVO #emailAddr").parent().next().text("사용자 아이디가 중복되었습니다 다른값으로 입력바랍니다.").show();
+					$("#userVO #emailAddr").parent().next().text("사용자 아이디와 중복되었습니다 다른값으로 입력바랍니다.").show();
 					$("#emailAddr").focus();
 					return;
 				} else{

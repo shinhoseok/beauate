@@ -786,7 +786,7 @@ public class MyPageController {
 			status.setComplete();
 		} catch (Exception e) {
 			redirectUrl = "/mypage/r/t/selectMyClassList.do?mypageTab=5";
-			message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.";
+			message = "현재 서비스가 원활하지 않습니다. 잠시후 다시 이용해 주십시요.";
 		}
 		
 		model.addAttribute("message", message);
@@ -828,7 +828,7 @@ public class MyPageController {
 			status.setComplete();
 		} catch (Exception e) {
 			redirectUrl = "/mypage/r/t/selectMyClassList.do?mypageTab=5";
-			message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.";
+			message = "현재 서비스가 원활하지 않습니다. 잠시후 다시 이용해 주십시요.";
 		}
 		
 		model.addAttribute("message", message);
@@ -870,7 +870,7 @@ public class MyPageController {
 			status.setComplete();
 		} catch (Exception e) {
 			redirectUrl = "/mypage/r/t/selectMyClassList.do?mypageTab=5";
-			message = "현재 서비스가 원활하지 않습니다.\n잠시후 다시 이용해 주십시요.";
+			message = "현재 서비스가 원활하지 않습니다. 잠시후 다시 이용해 주십시요.";
 		}
 		
 		model.addAttribute("message", message);

@@ -155,7 +155,7 @@
 				return;
 			}
 			
-			if(!confirm("수정 하시겠습니까?")){
+			if(!confirm("등록 하시겠습니까?")){
 				return;
 			}
 			//중복체크
