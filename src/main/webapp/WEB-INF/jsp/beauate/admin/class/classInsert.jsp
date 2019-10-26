@@ -218,11 +218,13 @@ var fn_insertClassProc = function() {
 	var usrId = $("#usrId").val();
 	var classStartDt = $("#classStartDt").val();
 	var classEndDt = $("#classEndDt").val();
+	var classCost = $("#classCost").val();
 	if(usrId == null || usrId == "" || usrId == 'undefined') {
 		alert("클래스 신청자 이메일은 필수 입력입니다.");
 		$("#usrId").focus();
 		return;
 	}
+	
 	if (!TypeChecker.email(usrId)) {
 		alert("이메일은 "+TypeChecker.emailText);
 		$("#usrId").focus();
@@ -238,7 +240,7 @@ var fn_insertClassProc = function() {
 	}
 	
 	//등록된 아이디인지 여부체크
-	$.ajax({ 	
+	$.ajax({
 		url: "${basePath}/classmng/r/n/selectUserIdChk.do",
 		type: 'POST',
 		dataType : "json",
@@ -254,6 +256,9 @@ var fn_insertClassProc = function() {
 				return;
 			} else{
 				$("#usrId").val(r.result);
+				if(classCost == null || classCost == "" || classCost == 'undefined') {
+					$("#classCost").val(0);
+				}
 				document.classVO.submit();
 			}
 		}

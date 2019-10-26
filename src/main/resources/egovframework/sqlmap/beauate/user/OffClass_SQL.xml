@@ -69,7 +69,7 @@
 				AND ROWNUM <![CDATA[ <= ]]> #{imgCnt}
 			</if>
 			<if test="orderByYn">
-				ORDER BY c.u_start_dt ASC;
+				ORDER BY c.u_start_dt desc
 			</if>
 		</where>
 	</select>

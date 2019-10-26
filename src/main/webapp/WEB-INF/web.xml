@@ -70,6 +70,6 @@
 		<location>/common/error.jsp</location>
 	</error-page>
 	<session-config>
-    	<session-timeout>10</session-timeout>
+    	<session-timeout>60</session-timeout>
   	</session-config>
 </web-app>
