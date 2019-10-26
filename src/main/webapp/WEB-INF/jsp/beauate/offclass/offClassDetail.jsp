@@ -261,14 +261,12 @@
 		<form name="detailForm" id="detailForm" method="post" action="/offclass/r/t/selectOffClassApplyDetail.do">
 			<input type="hidden" id="classId" name="classId">
 		</form>
-		<input type="hidden" id="shareUrlAddress">
 		<!-- //container -->
 		<!-- footer -->
 		<%@ include file="/WEB-INF/jsp/beauate/ucommon/footer.jsp"%>
 		<!-- //footer -->
 	</div>
-	
-
+<input type="text" style="position:absolute;top:-9999em;" id="shareUrlAddress" value="${basePath}/offclass/a/t/selectOffClassDetail.do?classId=${rslt.resultVO.classId}">
 <script type="text/javascript">
 $(function() {
 	//리뷰리스트
@@ -330,10 +328,9 @@ var fn_move = function(param) {
 
 //공유하기
 var fn_shareOffClass = function(classId) {
-	var obShareUrl = document.getElementById("shareUrlAddress");
-	obShareUrl.value = window.document.location.href;  // 현재 URL 을 세팅해 줍니다.
-	obShareUrl.select();  // 해당 값이 선택되도록 select() 합니다
-	document.execCommand("copy"); // 클립보드에 복사합니다.
+	$("#shareUrlAddress").val(window.document.location.href);
+	$("#shareUrlAddress").select();
+	document.execCommand("copy");
 	alert("복사되었습니다"); 
 };
 
