@@ -244,8 +244,6 @@ var fn_payment = function() {
 			}
 		}
 	});
-	
-	
 };
 
 //결제진행
