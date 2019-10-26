@@ -331,9 +331,10 @@ var fn_move = function(param) {
 //공유하기
 var fn_shareOffClass = function(classId) {
 	var obShareUrl = document.getElementById("shareUrlAddress");
-	var f = document.getElementById("shareUrlAddress");
-	f.value = document.location.href;
-	alert("URL을 복사하세요.\n"+$("#shareUrlAddress").val());
+	obShareUrl.value = window.document.location.href;  // 현재 URL 을 세팅해 줍니다.
+	obShareUrl.select();  // 해당 값이 선택되도록 select() 합니다
+	document.execCommand("copy"); // 클립보드에 복사합니다.
+	alert("복사되었습니다"); 
 };
 
 //찜하기
