@@ -5,7 +5,7 @@
     <resultMap id="classMap" type="com.beauate.admin.classmng.service.ClassVO">
         <id column="c_sq" property="classId"/>
         <result column="u_sq" property="classUserId"/>
-        <result column="img_sq" property="classImgId"/>
+        <result column="img_sq" property="atchFileId"/>
         <result column="c_dt" property="classRegDt"/>
         <result column="c_st" property="classSt"/>
         <result column="c_st_nm" property="classStNm"/>
@@ -288,6 +288,9 @@
 		    </if>
 		    <if test="classWebAdr != null and  classWebAdr != ''">
 				c_web_adr     = #{classWebAdr},
+		    </if>
+		    <if test="atchFileId != null and  atchFileId != ''">
+				img_sq     = #{atchFileId},
 		    </if>
 	    </trim>
 		 WHERE c_sq = #{classId}

@@ -67,7 +67,6 @@ public class EgovFileMngUtil {
      */
     public List<FileVO> parseFileInf(Map<String, MultipartFile> files, String KeyStr, int fileKeyParam, String atchFileId, String storePath) throws Exception {
     	int fileKey = fileKeyParam;
-    	System.out.println("fileKey1 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+fileKey);
     	String storePathString = "";
     	String atchFileIdString = "";
     
@@ -148,7 +147,6 @@ public class EgovFileMngUtil {
                     fvo.setStreFileNm(newName);
                     fvo.setAtchFileId(atchFileIdString);
                     fvo.setFileSn(String.valueOf(fileKey));
-                    System.out.println("fileKey2 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+fileKey);
                     fvo.setMonthDir(monthDir);
                     
                     if(KeyStr.equals("CLASS_")) { //클래스 이미지등록. 상세1 > 슬라이드3~5 > 목록 3이므로 거꾸로 등록함.(상세~ 큰목록이미지까지) 

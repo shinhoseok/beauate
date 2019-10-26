@@ -270,8 +270,8 @@ public class ClassManageController {
 		final Map<String, MultipartFile> files = multiRequest.getFileMap();
 
 		if (!files.isEmpty()) {
-			if ("".equals(_atchFileId)) {
-				List<FileVO> _result = fileUtil.parseFileInf(files, "CLASS_", 0, _atchFileId, "");
+			if ("".equals(_atchFileId) || null == _atchFileId) {
+				List<FileVO> _result = fileUtil.parseFileInf(files, "CLASS_", 0, "", "");
 				_atchFileId = fileMngService.insertFileInfs(_result);
 				classVO.setAtchFileId(_atchFileId);
 			} else {

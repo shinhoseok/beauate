@@ -143,7 +143,7 @@
 								</tr>
 								<tr>
 									<th>이미지파일아이디</th>
-									<td><c:out value="${resultVO.classImgId}"/></td>
+									<td><c:out value="${resultVO.atchFileId}"/></td>
 									<th>외부링크</th>
 									<td><c:out value="${resultVO.classWebAdr}"/></td>
 								</tr>
