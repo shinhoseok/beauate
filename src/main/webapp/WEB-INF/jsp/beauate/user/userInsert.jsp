@@ -45,7 +45,7 @@
 			}
 		}
 		if(!$.trim($("#userVO #emailAddr").val())) {
-			$("#userVO #emailAddr").parent().next().text("이메일을 입력해 주세요").show();
+			$("#userVO #emailAddr").next().text("이메일을 입력해 주세요").show();
 			//$("#userVO #emailAddr").focus();
 			isValid = false;
 		}
@@ -60,25 +60,25 @@
 			//$("#userVO #usrNm").focus();
 			isValid = false;
 		}
-		if(!$.trim($("#userVO #usrPw").val())) {
-			$("#userVO #usrPw").next().text("패스워드 입력해 주세요").show();
+		if(!$.trim($("#userVO #usrPw11").val())) {
+			$("#userVO #usrPw11").next().text("패스워드 입력해 주세요").show();
 			//$("#userVO #usrPw").focus();
 			isValid = false;
 		}
 		//패스워드조합3가지
 		if((e.type=='keyup' || e.type=='change')==false){
-			if(!fn_checkPass("usrPw")) {
+			if(!fn_checkPass("usrPw11")) {
 				isValid = false;
 			}
 		}
-		if($("#userVO #usrPw").val() != $("#userVO #user_pw_confirm").val()) {
+		if($("#userVO #usrPw11").val() != $("#userVO #user_pw_confirm").val()) {
 //				alert($("#userVO #user_pw").val() +" >> "+$("#userVO #user_pw_confirm").val())
 			$("#userVO #user_pw_confirm").next().text("패스워드를 확인해주세요").show();
 			//$("#userVO #user_pw_confirm").focus();
 			isValid = false;
 		}
 		if (!TypeChecker.email($("#userVO #emailAddr").val())) {
-			$("#userVO #emailAddr").parent().next().text("이메일은 "+TypeChecker.emailText).show();
+			$("#userVO #emailAddr").next().text("이메일은 "+TypeChecker.emailText).show();
 			//$("#userVO #emailAddr").focus();
 			isValid = false;
 		}
@@ -112,7 +112,7 @@
 			},
 			success: function(r) { 
 				if(r.chkResult == 'N') {
-					$("#userVO #emailAddr").parent().next().text("사용자 아이디와 중복되었습니다 다른값으로 입력바랍니다.").show();
+					$("#userVO #emailAddr").next().text("사용자 아이디와 중복되었습니다 다른값으로 입력바랍니다.").show();
 					$("#emailAddr").focus();
 					return;
 				} else{
@@ -167,7 +167,7 @@
 								<div class="rcont">
 									<ul class="input-area">
 										<li><form:input path="emailAddr" id="emailAddr" value="" placeholder="이메일 입력 (name@mail.com)" title="이메일을 입력해주세요." maxlength="21" /><span class="emp"> 이메일 형식이 맞지 않습니다.</span></li>
-										<li><form:password path="usrPw" id="usrPw" value="" placeholder="비밀번호 (최소 8자 이상)" title="비밀번호를 입력해주세요." maxlength="21" /><span class="emp"> 이메일 형식이 맞지 않습니다.</span></li>
+										<li><form:password path="usrPw" id="usrPw11" value="" placeholder="비밀번호 (최소 8자 이상)" title="비밀번호를 입력해주세요." maxlength="21" /><span class="emp"> 이메일 형식이 맞지 않습니다.</span></li>
 										<li><input id="user_pw_confirm" type="password" value="" placeholder="비밀번호 확인" title="비밀번호 다시 입력해주세요." maxlength="21" /><span class="emp"> 이메일 형식이 맞지 않습니다.</span></li>
 										<li><form:input path="usrNm" id="usrNm" value="" placeholder="이름" title="이름을 입력해주세요." maxlength="21" /><span class="emp"> 이메일 형식이 맞지 않습니다.</span></li>
 										<li><form:input path="mblPno" id="mblPno" value="" placeholder="휴대전화 ('-'없이 숫자만 입력)" title="휴대전화 ('-'없이 숫자만 입력)을 입력해주세요." maxlength="21" /><span class="emp"> 이메일 형식이 맞지 않습니다.</span></li>

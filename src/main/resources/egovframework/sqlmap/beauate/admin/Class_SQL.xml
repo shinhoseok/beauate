@@ -92,11 +92,6 @@
 				AND c.c_area_st = #{classAreaSt}
 			</if>
 				AND (c.c_del_yn = 'N' OR c.c_del_yn IS NULL)
-			<if test='adminYn != null and adminYn != ""'>
-				<if test='adminYn == "N"'>
-					AND c.c_st != '1'
-				</if>
-			</if>
 		</where>
 	</sql>
 	

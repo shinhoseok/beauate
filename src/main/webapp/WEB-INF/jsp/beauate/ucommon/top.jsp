@@ -41,11 +41,11 @@
 					<p class="title-desc">오늘도 힘내세요</p>
 					<ul class="input-area">
 						<li>
-							<input type="text" name="emailAddr" id="emailAddr" placeholder="이메일" title="이메일을 입력해주세요." maxlength="21" />
+							<input type="text" name="emailAddr" id="emailAddr11" placeholder="이메일" title="이메일을 입력해주세요." maxlength="21" />
 							<span style="display: none;" id="emailAddrChk" class="emp"> 이메일을 다시 확인해주세요</span>
 						</li>
 						<li>
-							<input type="password" id="usrPw" name="usrPw" placeholder="비밀번호" onkeypress="if(event.keyCode==13){fn_login();} " title="비밀번호를 입력해주세요." maxlength="21" />
+							<input type="password" id="usrPw22" name="usrPw" placeholder="비밀번호" onkeypress="if(event.keyCode==13){fn_login();} " title="비밀번호를 입력해주세요." maxlength="21" />
 						</li>
 					</ul>
 					<div class="btn-area"><button type="button" class="btn" id="loginBtn" onclick="fn_login();"><span>로그인</span></button></div>
@@ -83,23 +83,23 @@
 	
 	//login
 	var fn_login = function() {
-		var emailAddr = $("#emailAddr").val();
-		var usrPw = $("#usrPw").val();
+		var emailAddr = $("#emailAddr11").val();
+		var usrPw = $("#usrPw22").val();
 		if(!$.trim(emailAddr)){
 			alert("아이디를 입력해 주십시오.");
 			return;
 		}
-		if(!$.trim(usrPw)){
+		if(!$.trim(usrPw22)){
 			alert("비밀번호를 입력해 주십시오.");
 			return;
 		}
-		if (!TypeChecker.email($("#loginVO #emailAddr").val())) {
+		if (!TypeChecker.email($("#loginVO #emailAddr11").val())) {
 			alert("이메일은 "+TypeChecker.emailText);
-			$("#loginVO #emailAddr").focus();
+			$("#loginVO #emailAddr11").focus();
 			return;
 		}
 		//패스워드조합3가지
-		if(!fn_checkPass("usrPw")) {
+		if(!fn_checkPass("usrPw22")) {
 			return;
 		}
 		//아이디체크
@@ -115,7 +115,7 @@
 			success: function(r) { 
 				if(r.message == 'N') {
 					$("#emailAddrChk").show();
-					$("#emailAddr").focus();
+					$("#emailAddr11").focus();
 					return;
 				} else{
 					$("#loginVO").submit();

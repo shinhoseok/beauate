@@ -39,7 +39,7 @@
 		isValid = true;
 		$("#userVO span.emp").hide();
 		if(!$.trim($("#userVO #usrPw").val())) {
-			$("#userVO #usrPw").parent().next().text("패스워드 입력해 주세요").show();
+			$("#userVO #usrPw").next().text("패스워드 입력해 주세요").show();
 			//$("#userVO #usrPw").focus();
 			isValid = false;
 		}
