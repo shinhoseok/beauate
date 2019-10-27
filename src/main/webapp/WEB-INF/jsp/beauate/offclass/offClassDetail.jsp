@@ -202,6 +202,7 @@
 								<li><a href="javascript:void(0);" onclick="fn_move('review');">클래스 후기</a></li>
 								<li><a href="javascript:void(0);">취소/환불 정책</a></li>
 							</ul>
+<%-- 							<input type="text" style="position:absolute;top:-9999em;" id="shareUrlAddress" value="${basePath}/offclass/a/t/selectOffClassDetail.do?classId=${rslt.resultVO.classId}"> --%>
 						</div>
 						<!--클래스 상세-->
 						<div class="offline-view-cont" id="offline-view-cont">
@@ -266,7 +267,6 @@
 		<%@ include file="/WEB-INF/jsp/beauate/ucommon/footer.jsp"%>
 		<!-- //footer -->
 	</div>
-<input type="text" style="position:absolute;top:-9999em;" id="shareUrlAddress" value="${basePath}/offclass/a/t/selectOffClassDetail.do?classId=${rslt.resultVO.classId}">
 <script type="text/javascript">
 $(function() {
 	//리뷰리스트
@@ -328,10 +328,33 @@ var fn_move = function(param) {
 
 //공유하기
 var fn_shareOffClass = function(classId) {
-	$("#shareUrlAddress").val(window.document.location.href);
-	$("#shareUrlAddress").select();
-	document.execCommand("copy");
-	alert("복사되었습니다"); 
+// 	$("#shareUrlAddress").val(window.document.location.href);
+	// 최신 브라우저에서도 복사되도록 함
+	var textArea = document.createElement("textarea");
+	// 임시로 textarea 생성
+	textArea.style.position = 'fixed';
+	textArea.style.top = 0;
+	textArea.style.left = 0;
+	textArea.style.width = '2em';
+	textArea.style.height = '2em';
+	textArea.style.padding = 0;
+	textArea.style.border = 'none';
+	textArea.style.outline = 'none';
+	textArea.style.boxShadow = 'none';
+	textArea.style.background = 'transparent';
+	textArea.value = window.document.location.href;
+	document.body.appendChild(textArea);
+	// text를 넣은 후 선택
+	textArea.select();
+	// 복사 시도
+	try {
+		var successful = document.execCommand('copy');
+		if(successful) alert("주소가 복사되었습니다.");
+	} catch (err) {
+		console.log('Unable to copy');
+	}
+	// textarea 삭제
+	document.body.removeChild(textArea);
 };
 
 //찜하기
