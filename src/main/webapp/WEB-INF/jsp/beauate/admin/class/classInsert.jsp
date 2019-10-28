@@ -121,7 +121,7 @@
 									</td>
 								</tr>
 								<tr>
-									<th>클래스비용</th>
+									<th>클래스비용(가격 모르면 -1)</th>
 									<td>
 										<div class="commonSearch_wrap">
 											<label class="blind" for=" ">d</label>
@@ -176,7 +176,7 @@
 								</tr>
 								<tr>
 									<th colspan="2"><span class="thstar"></span>
-										이미지 등록 (상세대표이미지1장, 상세슬라이드1~5장, 메인이미지 크기 작은 순서로 4장)
+										이미지 등록 (상세슬라이드1~5장, 모바일상세1장, 클래스상세1장, 메인이미지 크기 작은 순서로 4장)
 									</th>
 									<td colspan="4">
 										<input class="hideFile" name="file_1" id="egovComFileUploader" type="file" title="첨부파일입력" />
@@ -201,7 +201,7 @@
 	<!-- footer End -->
 	
 <script type="text/javascript">
-var maxFileNum = 10;
+var maxFileNum = 11;
 makeFileAttachment = function(){
 	multi_selector = new MultiSelector( document.getElementById( 'egovComFileList' ), maxFileNum, 0);
 	multi_selector.addElement( document.getElementById( 'egovComFileUploader' ) );
@@ -257,7 +257,7 @@ var fn_insertClassProc = function() {
 			} else{
 				$("#usrId").val(r.result);
 				if(classCost == null || classCost == "" || classCost == 'undefined') {
-					$("#classCost").val(0);
+					$("#classCost").val(-1);
 				}
 				document.classVO.submit();
 			}

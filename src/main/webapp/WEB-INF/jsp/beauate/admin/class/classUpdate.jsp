@@ -122,7 +122,7 @@
 									</td>
 								</tr>
 								<tr>
-									<th>클래스비용</th>
+									<th>클래스비용(가격모르면-1)</th>
 									<td>
 										<div class="commonSearch_wrap">
 											<label class="blind" for=" ">d</label>
@@ -177,7 +177,7 @@
 								</tr>
 								<tr>
 									<th colspan="2"><span class="thstar"></span>
-										이미지 등록 (상세대표이미지1장, 상세슬라이드1~5장, 메인이미지 크기 작은 순서로 4장)${classVO.atchFileId}
+										이미지 등록 (상세슬라이드1~5장, 모바일상세1장, 클래스상세1장, 메인이미지 크기 작은 순서로 4장)
 									</th>
 									<td colspan="4">
 										<input class="hideFile" name="file_1" id="egovComFileUploader" type="file" title="첨부파일입력" /> <img src="${imagePath}/btn_plus.png" alt="" class="FileBtn" /> <span id="atchFileNot" style="margin-left: 5px; display: none;">(* 첨부파일을 더 이상 등록 할 수 없습니다.)</span>
@@ -205,7 +205,7 @@
 <script type="text/javascript">
 	makeFileAttachment = function() {
 		var existFileNum = $("#fileListCnt").val();
-		var maxFileNum = 10;
+		var maxFileNum = 11;
 		var uploadableFileNum = maxFileNum - existFileNum;
 		if (uploadableFileNum < 0) {
 			uploadableFileNum = 0;

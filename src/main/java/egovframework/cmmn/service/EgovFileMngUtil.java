@@ -150,15 +150,14 @@ public class EgovFileMngUtil {
                     fvo.setMonthDir(monthDir);
                     
                     if(KeyStr.equals("CLASS_")) { //클래스 이미지등록. 상세1 > 슬라이드3~5 > 목록 3이므로 거꾸로 등록함.(상세~ 큰목록이미지까지) 
-                    	if(cnt >= 0 && cnt < 4) {
+                    	if(cnt >= 0 && cnt < 4) { //클래스목록 1~3
                         	fvo.setFileCn("M"+String.valueOf(cnt));
-                        }
-                        if(cnt > 3) {
-                        	fvo.setFileCn("S"+String.valueOf(cnt));
-                        }
-                        //마지막 사진은 상세
-                        if (!itr.hasNext()) {
+                        } else if(cnt == 4) { //클래스상세
                         	fvo.setFileCn("D");
+                        } else if(cnt == 5) { //모바일상세
+                        	fvo.setFileCn("MD");
+                        } else { //나머지 슬라이드
+                        	fvo.setFileCn("S"+String.valueOf(cnt));
                         }
                     } else if(KeyStr.equals("BOARD_")) { //게시판 이미지 등록 첫번째 사진은 목록이미지, 두번째 사진은 상세이미지
                     	if(cnt == 0) {

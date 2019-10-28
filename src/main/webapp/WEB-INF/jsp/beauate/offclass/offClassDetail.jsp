@@ -65,8 +65,14 @@
 							<dl class="totalprice">
 								<dt>총 결제금액</dt>
 								<dd>
-									<fmt:formatNumber value="${rslt.resultVO.classCost }" pattern="#,###" /><span class="unit">원</span>
-<!-- 									<span class="discount">124,000</span> -->
+									<c:choose>
+										<c:when test="${rslt.resultVO.classCost == -1}">
+											-
+										</c:when>
+										<c:otherwise>
+											<fmt:formatNumber value="${rslt.resultVO.classCost }" pattern="#,###" /><span class="unit">원</span>
+										</c:otherwise>
+									</c:choose>
 								</dd>
 							</dl>
 						</div>
