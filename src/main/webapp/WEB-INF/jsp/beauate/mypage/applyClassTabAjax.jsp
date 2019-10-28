@@ -121,7 +121,6 @@
 												<span>환불진행중</span>
 											</c:otherwise>
 										</c:choose>
-										
 									</div>
 								</c:if>
 							</div>
