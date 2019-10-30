@@ -296,7 +296,7 @@ public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffC
 			resultVO.setImgSrc3(resultSrc3);
 			log.debug(">> vo Path >> "+resultVO.getImgSrc2());
 		} else {
-			throw new NullPointerException("해당 클래스에 등록된 이미지 파일이 없습니다. classId >>> "+classVO.getClassId());
+			log.error("해당 클래스에 등록된 이미지 파일이 없습니다. classId >>> "+classVO.getClassId());
 		}
 		
 		//Side List >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -473,7 +473,7 @@ public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffC
 			resultVO.setImgSrc3(resultSrc3);
 			log.debug(">> vo Path >> "+resultVO.getImgSrc3());
 		} else {
-			throw new NullPointerException("해당 클래스에 등록된 이미지 파일이 없습니다. classId >>> "+classVO.getClassId());
+			log.error("해당 클래스에 등록된 이미지 파일이 없습니다. classId >>> "+classVO.getClassId());
 		}
 		
 		//멘토 전화번호
@@ -602,7 +602,7 @@ public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffC
 			resultVO.setImgSrc3(resultSrc3);
 			log.debug(">> vo Path >> "+resultVO.getImgSrc3());
 		} else {
-			throw new NullPointerException("해당 클래스에 등록된 이미지 파일이 없습니다. classId >>> "+paramClassVO.getClassId());
+			log.error("해당 클래스에 등록된 이미지 파일이 없습니다. classId >>> "+paramClassVO.getClassId());
 		}
 		
 		return resultVO;
