@@ -42,7 +42,7 @@
 					<ul class="input-area">
 						<li>
 							<input type="text" name="emailAddr" id="emailAddr11" placeholder="이메일" title="이메일을 입력해주세요." maxlength="21" />
-							<span style="display: none;" id="emailAddrChk" class="emp"> 이메일을 다시 확인해주세요</span>
+							<span style="display: none;" id="emailAddrChk" class="emp"> 이메일 또는 비밀번호를 다시 확인해주세요</span>
 						</li>
 						<li>
 							<input type="password" id="usrPw22" name="usrPw" placeholder="비밀번호" onkeypress="if(event.keyCode==13){fn_login();} " title="비밀번호를 입력해주세요." maxlength="21" />
@@ -93,15 +93,15 @@
 			alert("비밀번호를 입력해 주십시오.");
 			return;
 		}
-		if (!TypeChecker.email($("#loginVO #emailAddr11").val())) {
-			alert("이메일은 "+TypeChecker.emailText);
-			$("#loginVO #emailAddr11").focus();
-			return;
-		}
+// 		if (!TypeChecker.email($("#loginVO #emailAddr11").val())) {
+// 			alert("이메일은 "+TypeChecker.emailText);
+// 			$("#loginVO #emailAddr11").focus();
+// 			return;
+// 		}
 		//패스워드조합3가지
-		if(!fn_checkPass("usrPw22")) {
-			return;
-		}
+// 		if(!fn_checkPass("usrPw22")) {
+// 			return;
+// 		}
 		//아이디체크
 		$.ajax({ 	
 			url: "${basePath}/login/a/n/selectIdPwdcheck.do",
