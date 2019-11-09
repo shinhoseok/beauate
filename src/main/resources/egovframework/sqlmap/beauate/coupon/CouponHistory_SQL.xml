@@ -8,6 +8,9 @@
 		<result column="cpn_sq" property="couponId" />
 		<result column="u_sq" property="usrId" />
 		<result column="u_cpn_fl" property="cpnFl" />
+		<result column="cpn_nm" property="couponNm" />
+		<result column="cpn_cdt" property="couponCdt" />
+		<result column="cpn_rate" property="couponRate" />
 	</resultMap>
 	
 	<!-- 쿼리명 : 쿠폰내역 상세조회
@@ -76,5 +79,75 @@
 			UPDATE U_CPN SET u_cpn_fl = #{cpnFl} WHERE u_sq = #{usrId} and cpn_sq = #{couponId}
 		]]>
 	</update>
+	
+	<sql id="cpnHisotryGubunSql">
+		<where>
+			b.u_sq = #{usrId}
+			AND c.cpn_st = 'Y'
+			AND b.u_cpn_fl = #{cpnFl}
+			<choose>
+				<when test="cpnFl == 'N'.toString">
+					OR c.cpn_end_dt <![CDATA[ ${comPare} ]]> sysdate
+				</when>
+				<otherwise>
+					AND c.cpn_end_dt <![CDATA[ ${comPare} ]]> sysdate
+				</otherwise>
+			</choose>
+		</where>
+	</sql>
+	
+	<!-- 쿼리명 : 마이페이지 사용가능한 쿠폰 리스트
+	설명 : 마이페이지 사용가능한 쿠폰 리스트
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.16     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<select id="selectMyCouponList" parameterType="couponHistoryVO" resultMap="couponHistoryMap">
+		<![CDATA[
+		SELECT
+			A.*
+		FROM
+			(
+				SELECT
+					ROW_NUMBER() OVER(ORDER BY b.u_cpn_dt DESC) RNUM,
+					b.u_cpn_sq,
+					TO_CHAR(b.u_cpn_dt, 'yyyy-MM-dd') AS cpnDt,
+					b.cpn_sq,
+					b.u_sq,
+					b.u_cpn_fl,
+					c.cpn_nm,
+					c.cpn_cdt,
+					c.cpn_rate,
+					TO_CHAR(c.cpn_end_dt, 'yyyy-MM-dd') AS couponEndDt
+				FROM 
+					U_CPN b
+					LEFT JOIN admin_cpn c ON (b.cpn_sq = c.cpn_sq)
+		]]>
+		<include refid="cpnHisotryGubunSql"/>
+			) A
+		WHERE
+			A.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
+	</select>
+	
+	<!-- 쿼리명 : 마이페이지 사용가능한 쿠폰 갯수
+	설명 : 마이페이지 사용가능한 쿠폰 갯수
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 10.16     신호석           최초 생성
+	작성자 : 신호석
+	최초작성일 : 2019. 10.16
+	-->	
+	<select id="selectMyCouponListCnt" parameterType="couponHistoryVO" resultType="java.lang.Integer">
+		<![CDATA[
+		SELECT
+			COUNT(*) cnt
+		FROM 
+			U_CPN b
+			LEFT JOIN admin_cpn c ON (b.cpn_sq = c.cpn_sq)
+		]]>
+		<include refid="cpnHisotryGubunSql"/>
+	</select>
 </mapper>
 

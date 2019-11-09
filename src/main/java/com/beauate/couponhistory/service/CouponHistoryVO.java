@@ -14,7 +14,47 @@ public class CouponHistoryVO extends CommDefaultVO implements Serializable {
 	private String couponId;
 	/** 쿠폰 사용여부 */
 	private String cpnFl;
+	/** 쿠폰 명 */
+	private String couponNm;
+	/** 사용 조건 */
+	private String couponCdt;
+	/** 쿠폰 만료기간 */
+	private String couponEndDt;
+	/** 쿠폰 만료 날짜 비교값(<, >) */
+	private String comPare;
+	/** 쿠폰 할인율 */
+	private int couponRate;
 	
+	public String getCouponNm() {
+		return couponNm;
+	}
+	public void setCouponNm(String couponNm) {
+		this.couponNm = couponNm;
+	}
+	public String getCouponCdt() {
+		return couponCdt;
+	}
+	public void setCouponCdt(String couponCdt) {
+		this.couponCdt = couponCdt;
+	}
+	public String getCouponEndDt() {
+		return couponEndDt;
+	}
+	public void setCouponEndDt(String couponEndDt) {
+		this.couponEndDt = couponEndDt;
+	}
+	public String getComPare() {
+		return comPare;
+	}
+	public void setComPare(String comPare) {
+		this.comPare = comPare;
+	}
+	public int getCouponRate() {
+		return couponRate;
+	}
+	public void setCouponRate(int couponRate) {
+		this.couponRate = couponRate;
+	}
 	public String getCpnHistoryId() {
 		return cpnHistoryId;
 	}

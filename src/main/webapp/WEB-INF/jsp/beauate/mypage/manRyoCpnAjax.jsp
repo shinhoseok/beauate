@@ -14,7 +14,16 @@
 					<p class="p22"><c:out value="${list.couponCdt}"/></p>
 					<p class="p33">쿠폰만료일</p>
 					<p class="p44"><c:out value="${list.couponEndDt}"/></p>
-					<p class="p55">사용만료</p>
+					<p class="p55">
+						<c:choose>
+							<c:when test="${list.cpnFl eq 'N'}">
+								사용만료
+							</c:when>
+							<c:otherwise>
+								기간만료
+							</c:otherwise>
+						</c:choose>
+					</p>
 				</li>
 			</c:forEach>
 		</c:when>

@@ -15,12 +15,13 @@ import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.admin.comment.service.CommentDao;
 import com.beauate.admin.comment.service.CommentVO;
 import com.beauate.admin.coupon.service.CouponManageDao;
-import com.beauate.admin.coupon.service.CouponVO;
 import com.beauate.admin.user.service.UserDao;
 import com.beauate.admin.user.service.UserVO;
 import com.beauate.common.CommonUtils;
 import com.beauate.common.DateUtil;
 import com.beauate.common.StringUtil;
+import com.beauate.couponhistory.service.CouponHistoryDao;
+import com.beauate.couponhistory.service.CouponHistoryVO;
 import com.beauate.jjim.service.JjimDao;
 import com.beauate.jjim.service.JjimVO;
 import com.beauate.mypage.service.MyPageService;
@@ -71,6 +72,9 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 	
 	@Resource(name="commonUtils")
 	private CommonUtils commonUtils;
+	
+	@Resource(name="couponHistoryDao")
+	private CouponHistoryDao couponHistoryDao;
 	
 	/**
 	 * <pre>
@@ -498,28 +502,28 @@ public class MyPageServiceImpl extends EgovAbstractServiceImpl implements MyPage
 	 * @return Map<String, Object>
 	 * @throws Exception
 	 */ 
-	public Map<String, Object> selectCouponList(CouponVO couponVO) throws Exception {
+	public Map<String, Object> selectCouponList(CouponHistoryVO couponHistoryVO) throws Exception {
 		Map<String, Object> rsltMap = new HashMap<String, Object>();
 		
 		//페이징 
 		PaginationInfo paginationInfo = new PaginationInfo();
-		paginationInfo.setCurrentPageNo(couponVO.getPageIndex());
-		couponVO.setPageUnit(6); //한페이지당 게시물수 6
-		paginationInfo.setRecordCountPerPage(couponVO.getPageUnit());
-		paginationInfo.setPageSize(couponVO.getPageSize());
+		paginationInfo.setCurrentPageNo(couponHistoryVO.getPageIndex());
+		couponHistoryVO.setPageUnit(6); //한페이지당 게시물수 6
+		paginationInfo.setRecordCountPerPage(couponHistoryVO.getPageUnit());
+		paginationInfo.setPageSize(couponHistoryVO.getPageSize());
 		
-		couponVO.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
-		couponVO.setLastIndex(paginationInfo.getLastRecordIndex());
-		couponVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		couponHistoryVO.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
+		couponHistoryVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		couponHistoryVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		List<CouponVO> selectList = null;
+		List<CouponHistoryVO> selectList = null;
 		//총 카운트 
-		int cnt = couponManageDao.selectCouponMngListCnt(couponVO);
+		int cnt = couponHistoryDao.selectMyCouponListCnt(couponHistoryVO);
 		paginationInfo.setTotalRecordCount(cnt);
 		
 		if(cnt > 0){
 			//리스트
-			selectList = couponManageDao.selectCouponMngList(couponVO);
+			selectList = couponHistoryDao.selectMyCouponList(couponHistoryVO);
 		}
 		
 		rsltMap.put("paginationInfo", paginationInfo);

@@ -2,8 +2,8 @@ package com.beauate.mypage.service;
 
 import java.util.Map;
 
-import com.beauate.admin.coupon.service.CouponVO;
 import com.beauate.admin.user.service.UserVO;
+import com.beauate.couponhistory.service.CouponHistoryVO;
 import com.beauate.jjim.service.JjimVO;
 import com.beauate.pay.service.PayVO;
 import com.beauate.review.service.ReviewVO;
@@ -217,7 +217,7 @@ public interface MyPageService {
 	 * @return Map<String, Object>
 	 * @throws Exception
 	 */ 
-	public Map<String, Object> selectCouponList(CouponVO couponVO) throws Exception;
+	public Map<String, Object> selectCouponList(CouponHistoryVO couponHistoryVO) throws Exception;
 	
 	/**
 	 * <pre>

@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.beauate.admin.coupon.service.CouponVO;
 import com.beauate.admin.review.service.ReviewManageService;
 import com.beauate.admin.user.service.UserVO;
 import com.beauate.common.DateUtil;
+import com.beauate.couponhistory.service.CouponHistoryVO;
 import com.beauate.jjim.service.JjimVO;
 import com.beauate.login.service.LoginVO;
 import com.beauate.mypage.service.MyPageService;
@@ -530,12 +530,15 @@ public class MyPageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/mypage/r/t/selectPossibleCouponList.do")
-	public String selectUsePossibleCpnList(CouponVO couponVO, ModelMap model) throws Exception {
-		couponVO.setCouponSt("Y");
-		couponVO.setAdminYn("N");
-		couponVO.setComPare(">="); //쿼리 구분 오늘날짜보다 크거나 같으면 만료아님
-		Map<String, Object> rsltMap = myPageService.selectCouponList(couponVO);
+	public String selectUsePossibleCpnList(CouponHistoryVO couponHistoryVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		
+		couponHistoryVO.setUsrId(sessionVO.getUsrId());
+		couponHistoryVO.setCpnFl("Y");
+		couponHistoryVO.setComPare(">="); //쿼리 구분 오늘날짜보다 크거나 같으면 만료아님
+		
+		Map<String, Object> rsltMap = myPageService.selectCouponList(couponHistoryVO);
 		model.addAttribute("rslt", rsltMap);
+		
 		return "/mypage/possibleCpnAjax";
 	}
 	
@@ -559,11 +562,13 @@ public class MyPageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/mypage/r/n/selectManRyoCouponList.do")
-	public String selectManRyoCouponList(CouponVO couponVO, ModelMap model) throws Exception {
-		couponVO.setCouponSt("N");
-		couponVO.setAdminYn("N");
-		couponVO.setComPare("<"); //쿼리 구분 오늘날짜가 더크면 만료
-		Map<String, Object> rsltMap = myPageService.selectCouponList(couponVO);
+	public String selectManRyoCouponList(CouponHistoryVO couponHistoryVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		
+		couponHistoryVO.setUsrId(sessionVO.getUsrId());
+		couponHistoryVO.setCpnFl("N");
+		couponHistoryVO.setComPare("<"); //쿼리 구분 오늘날짜가 더크면 만료
+		
+		Map<String, Object> rsltMap = myPageService.selectCouponList(couponHistoryVO);
 		model.addAttribute("rslt", rsltMap);
 		return "/mypage/manRyoCpnAjax";
 	}

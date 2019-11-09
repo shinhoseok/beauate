@@ -16,7 +16,14 @@
 		<where>
 			<if test="adminYn == 'N'.toString">
 				AND cpn_st = #{couponSt}
-				OR cpn_end_dt <![CDATA[ ${comPare} ]]> sysdate
+				<choose>
+					<when test="couponSt == 'N'.toString">
+						OR cpn_end_dt <![CDATA[ ${comPare} ]]> sysdate
+					</when>
+					<otherwise>
+						AND cpn_end_dt <![CDATA[ ${comPare} ]]> sysdate
+					</otherwise>
+				</choose>
 			</if>
 		</where>
 	</sql>
