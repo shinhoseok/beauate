@@ -138,13 +138,13 @@
 					</div>
 					<div class="my-r3"><c:out value="${list.reviewCtt }"/></div>
 					<c:if test="${fn:length(list.commentList) != 0}">
-						<div class="my-r4">
-							<div class="my-r4-i">
-								<a href="javascript:void(0);" onclick="javascript:fn_commentShowOrHide();">댓글보기<span class="my-r4-no">${fn:length(list.commentList)}</span></a>
+						<c:forEach items="${list.commentList}" var="commList" varStatus="status">
+							<div class="my-r4">
+								<div class="my-r4-i">
+									<a href="javascript:void(0);" onclick="javascript:fn_commentShowOrHide('${i.count}');">댓글보기<span class="my-r4-no">${fn:length(list.commentList)}</span></a>
+								</div>
 							</div>
-						</div>
-						<c:forEach items="${list.commentList}" var="commList" varStatus="i">
-							<div class="my-r4-m" id="my_r4_m" style="display: none;">
+							<div class="my-r4-m" id="my_r4_m${i.count}" style="display: none;">
 								<p class="r4-m-nm">
 									<c:choose>
 										<c:when test="${commList.usrId eq 'USR-000000'}">
@@ -236,7 +236,6 @@
 		</div>
 		<!--내용작성-->
 		<div class="mypageR_ctt">
-<!-- 			<p id="reviewCtt"></p> -->
 			<textarea id="reviewCttTextArea" name="reviewCttTextArea" rows="5" onfocus="checker(this, 200 , 'nbytes_reviewCtt');" onblur="stopchecker();" placeholder="멘티님께 어떤 도움이 되었나요?"></textarea>
 			<div class="ctt-300">(<span id="nbytes_reviewCtt" class="color_red">0</span>/300)</div>
 		</div>
@@ -267,11 +266,11 @@
 </form>
 <script type="text/javascript">
 //댓글보기 show&hide
-var fn_commentShowOrHide = function() {
-	if($("#my_r4_m").css("display") == "none") {
-		$("#my_r4_m").show();
+var fn_commentShowOrHide = function(idx) {
+	if($("#my_r4_m"+idx).css("display") == "none") {
+		$("#my_r4_m"+idx).show();
 	} else {
-		$("#my_r4_m").hide();
+		$("#my_r4_m"+idx).hide();
 	}
 };
 

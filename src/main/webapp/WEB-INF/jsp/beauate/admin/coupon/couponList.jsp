@@ -39,7 +39,7 @@
 					<!-- sub_path End -->
 					<div class="selectBox">
 						<select name="select" class="w13p">
-							<option>2014</option>
+							<option>쿠폰명</option>
 						</select>
 						<input class="searchName" name="" type="text" />
 						<button type="button" class="grayBtn ico">

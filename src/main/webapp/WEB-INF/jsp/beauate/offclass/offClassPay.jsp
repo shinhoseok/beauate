@@ -57,25 +57,54 @@
 						<ul class="pay-priceinfo" id="pay-priceinfo">
 							<li>
 								<span class="txt">상품금액</span>
-								<span class="price"><fmt:formatNumber value="${rslt.resultVO.classCost }" pattern="#,###" />원</span>
+								<c:choose>
+									<c:when test="${rslt.resultVO.classCost == -1}">
+										<span class="price">-</span>
+									</c:when>
+									<c:otherwise>
+										<span class="price"><fmt:formatNumber value="${rslt.resultVO.classCost }" pattern="#,###" />원</span>
+									</c:otherwise>
+								</c:choose>
 							</li>
 							<c:choose>
 								<c:when test="${not empty rslt.couponList[0].couponId }">
 									<li>
 										<span class="txt">쿠폰사용</span>
-										<c:set var="couponMoney" value="${rslt.resultVO.classCost * rslt.couponList[0].couponRate / 100}"/>
-										<span class="price"><fmt:formatNumber value="${couponMoney}" pattern="#,###" /></span>
+										<c:choose>
+											<c:when test="${rslt.resultVO.classCost == -1}">
+												<span class="price">-</span>
+											</c:when>
+											<c:otherwise>
+												<c:set var="couponMoney" value="${rslt.resultVO.classCost * rslt.couponList[0].couponRate / 100}"/>
+												<span class="price"><fmt:formatNumber value="${couponMoney}" pattern="#,###" /></span>
+											</c:otherwise>
+										</c:choose>
+										
 									</li>
 									<li class="total-sum">
 										<span class="txt">총 결제금액</span>
-										<c:set var="totalMoney" value="${rslt.resultVO.classCost - couponMoney}"/>
-										<span class="price"><fmt:formatNumber value="${totalMoney}" pattern="#,###" /><span class="unit">원</span></span>
+										<c:choose>
+											<c:when test="${rslt.resultVO.classCost == -1}">
+												<span class="price">-</span>
+											</c:when>
+											<c:otherwise>
+												<c:set var="totalMoney" value="${rslt.resultVO.classCost - couponMoney}"/>
+												<span class="price"><fmt:formatNumber value="${totalMoney}" pattern="#,###" /><span class="unit">원</span></span>
+											</c:otherwise>
+										</c:choose>
 									</li>
 								</c:when>
 								<c:otherwise>
 									<li class="total-sum">
-										<span class="txt">총 결제금액</span>
-										<span class="price"><fmt:formatNumber value="${rslt.resultVO.classCost }" pattern="#,###" />원</span></span>
+										<c:choose>
+											<c:when test="${rslt.resultVO.classCost == -1}">
+												<span class="price">-</span>
+											</c:when>
+											<c:otherwise>
+												<span class="txt">총 결제금액</span>
+												<span class="price"><fmt:formatNumber value="${rslt.resultVO.classCost }" pattern="#,###" />원</span></span>
+											</c:otherwise>
+										</c:choose>
 									</li>
 								</c:otherwise>
 							</c:choose>

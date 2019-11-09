@@ -34,7 +34,7 @@ var fn_hoogiSearchList = function(page) {
 	fn_hoogiCommonAjax(params);
 };
 
-//신청한 클래스, 찜한 클래스 Ajax
+//작성가능한후기, 내가 작성한 후기 탭 Ajax
 var fn_hoogiCommonAjax = function(params) {
 	var url = "";
 	if(params.mypageTab == '1') {

@@ -165,7 +165,7 @@
 	<input type="hidden" id="classId" name="classId">
 </form>
 
-<script type="text/javascript" src="${scriptPath}/star.js" ></script>
+<%-- <script type="text/javascript" src="${scriptPath}/star.js" ></script> --%>
 <script>
 //클래스아이디 전역변수
 var reviewClassId = "";

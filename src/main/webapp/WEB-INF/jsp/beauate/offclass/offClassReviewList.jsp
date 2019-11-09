@@ -23,6 +23,35 @@
 						</span>
 					</div>
 					<p class="txt"><c:out value="${list.reviewCtt}"/></p>
+					<c:if test="${fn:length(list.commentList) != 0}">
+						<c:forEach items="${list.commentList}" var="commList" varStatus="status">
+							<div class="my-r4">
+								<div class="my-r4-i">
+									<a href="javascript:void(0);" onclick="javascript:fn_commentShowOrHide('${i.count}');">댓글보기<span class="my-r4-no">${fn:length(list.commentList)}</span></a>
+								</div>
+							</div>
+							<div class="my-r4-m" id="my_r4_m${i.count}" style="display: none;">
+								<p class="r4-m-nm">
+									<c:choose>
+										<c:when test="${commList.usrId eq 'USR-000000'}">
+											<img src="${imgPath}/my-r4-admin.png" alt="" /><c:out value="${commList.usrNm }"/>
+										</c:when>
+										<c:otherwise>
+											<img src="${imgPath}/my-r4-m.png" alt="" /><c:out value="${commList.usrNm }"/>
+										</c:otherwise>
+									</c:choose>
+									<span>
+										<fmt:parseDate value="${commList.commentDt}" var="commentDt" pattern="yyyy-MM-dd"/>
+										<fmt:formatDate value="${commentDt}" pattern="yyyy.MM.dd"/>
+									</span>
+								</p>
+								<p class="cmt-m">
+									<c:out value="${commList.commentCtt }"/>
+								</p>
+							</div> <!--마지막 선-->
+							<div class="my-last-line"></div>
+						</c:forEach>
+					</c:if>
 				</li>
 			</c:forEach>
 		</c:when>
@@ -35,3 +64,14 @@
 <div class="paging">
 	<ui:pagination paginationInfo="${rslt.paginationInfo}" type="image" jsFunction="fn_searchReviewList" />
 </div>
+
+<script type="text/javascript">
+//댓글보기 show&hide
+var fn_commentShowOrHide = function(idx) {
+	if($("#my_r4_m"+idx).css("display") == "none") {
+		$("#my_r4_m"+idx).show();
+	} else {
+		$("#my_r4_m"+idx).hide();
+	}
+};
+</script>

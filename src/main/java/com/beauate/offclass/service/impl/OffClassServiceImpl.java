@@ -14,6 +14,8 @@ import com.beauate.admin.classmng.service.ClassManageDao;
 import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.admin.code.service.CodeDao;
 import com.beauate.admin.code.service.CodeVO;
+import com.beauate.admin.comment.service.CommentDao;
+import com.beauate.admin.comment.service.CommentVO;
 import com.beauate.admin.coupon.service.CouponManageDao;
 import com.beauate.admin.coupon.service.CouponVO;
 import com.beauate.admin.user.service.UserDao;
@@ -70,6 +72,9 @@ public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffC
 	
 	@Resource(name="reviewDao")
 	private ReviewDao reviewDao;
+	
+	@Resource(name="commentDao")
+	private CommentDao commentDao;
 	
 	/**
 	 * <pre>
@@ -428,6 +433,15 @@ public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffC
 			rsltMap.put("timeProStarSum", timeProStarSum);
 			rsltMap.put("kindnessStarSum", kindnessStarSum);
 			rsltMap.put("curriculumStarSum", curriculumStarSum);
+		}
+		
+		//댓글리스트 포함
+		CommentVO commentVO = new CommentVO();
+		for(int i=0; i<selectList.size(); i++) {
+			String reviewId = selectList.get(i).getReviewId();
+			commentVO.setReviewId(reviewId);
+			List<CommentVO> resultVO = commentDao.selectCommentDetail(commentVO);
+			selectList.get(i).setCommentList(resultVO);
 		}
 		
 		rsltMap.put("paginationInfo", paginationInfo);

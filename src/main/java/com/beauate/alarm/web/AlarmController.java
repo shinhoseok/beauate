@@ -54,7 +54,7 @@ public class AlarmController {
 		
 		return "jsonView";
 	}
-	
+
 	/**
 	 * <pre>
 	 * 1. 개요 : 알람이 신청시 사용자 핸드폰 조회
@@ -86,5 +86,4 @@ public class AlarmController {
 		}
 		return "jsonView";
 	}
-	
 }

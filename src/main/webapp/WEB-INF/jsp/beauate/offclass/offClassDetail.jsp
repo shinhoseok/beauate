@@ -417,7 +417,7 @@ var fn_selectAlarmPop = function() {
 	$("#alarmBtn").attr("rel", "modal:open");
 	
 	$.ajax({ 	
-		url: "${basePath}/alarm/r/n/selectUserPhon.do",
+		url: "${basePath}/offclass/r/n/selectUserPhon.do",
 		type: 'POST',
 		dataType : "json",
 		data : { "usrId" : usrId},
@@ -446,7 +446,7 @@ var fn_selectAlarmProc = function(classId) {
 	params.classId = classId;
 	
 	$.ajax({ 	
-		url: "${basePath}/alarm/w/n/selectAlarmProc.do",
+		url: "${basePath}/offclass/w/n/selectAlarmProc.do",
 		type: 'POST',
 		dataType : "json",
 		data : params,

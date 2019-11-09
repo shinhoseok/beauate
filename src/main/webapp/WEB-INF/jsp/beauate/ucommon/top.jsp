@@ -14,7 +14,7 @@
 			<ul class="header-util header-util-right">
 				<c:choose>
 				<c:when test="${sessionScope.loginVO != null && sessionScope.loginVO.emailAddr != null}">
-					<strong>${sessionScope.loginVO.usrNm}</strong> 님 환영합니다.
+<%-- 					<strong>${sessionScope.loginVO.usrNm}</strong> 님 환영합니다. --%>
 					<li><a href="${basePath}/mypage/r/t/selectMyClassList.do">마이페이지</a></li>
 					<li><a href="${basePath}/user/w/t/userPasswordChange.do">비밀번호 변경</a></li>
 					<li><a href="javascript:void(0);" onclick="fn_logout();">로그아웃</a></li>
@@ -29,45 +29,32 @@
 		</div>
 	</div>
 </div>
-<!-- container -->
-<div id="container" style="display: none;">
-	<!-- content -->
-	<div class="content">
-		<div class="content-inner">			
-			<!-- 팝업 : 로그인 -->
-			<div id="modal-login" class="modal">
-				<form id="loginVO" name="loginVO" method="post" action="${basePath}/login/a/n/afterLogin.do">
-					<h2>sign in</h2>
-					<p class="title-desc">오늘도 힘내세요</p>
-					<ul class="input-area">
-						<li>
-							<input type="text" name="emailAddr" id="emailAddr11" placeholder="이메일" title="이메일을 입력해주세요." maxlength="21" />
-							<span style="display: none;" id="emailAddrChk" class="emp"> 이메일 또는 비밀번호를 다시 확인해주세요</span>
-						</li>
-						<li>
-							<input type="password" id="usrPw22" name="usrPw" placeholder="비밀번호" onkeypress="if(event.keyCode==13){fn_login();} " title="비밀번호를 입력해주세요." maxlength="21" />
-						</li>
-					</ul>
-					<div class="btn-area"><button type="button" class="btn" id="loginBtn" onclick="fn_login();"><span>로그인</span></button></div>
-					<div class="login-link">
-						<a href="#">회원가입</a>
-						<a href="${basePath}/login/a/n/selectPwdSearch.do">비밀번호찾기</a>
-					</div>
-					<a href="javascript:void(0);" rel="modal:close" class="modal-close">닫기</a>
-				</form>
-			</div>
-			<p style="display: none;"><a href="#modal-login" rel="modal:open" id="loginPopOpen">로그인 팝업</a></p>
-		</div>
-	</div>
-	<!-- //content -->
-</div>
-<!-- <div id="modal-login" class="modal"></div> -->
+<div id="modal-login" class="modal"></div>
 <script type="text/javascript" src="${scriptPath}/validation/validation.js"></script>
 <script type="text/javascript" src="${scriptPath}/common.js"></script>
 <script type="text/javascript">
 	//로그인 팝업
 	var fn_loginPopUpLayer = function() {
-		$("#loginPopOpen").get(0).click();
+// 		$("#loginPopOpen").get(0).click();	
+
+		$.ajax({ 
+			url: "${basePath}/login/a/n/login.do",
+			type: 'POST',
+			dataType : 'html',
+			error: function(){
+				alert("현재 조회 서비스가 원할하지 않습니다.\n잠시후 다시 이용해 주십시요.");
+			},
+			success: function(r){
+				//타입까지 비교
+				$("#modal-login").html(r);
+			}
+		}); 
+		$.blockUI({message:$("#modal-login"),css:{width:"0px",height:"0px",position:"absolute",left:"35%",top:"20%", textAlign:"left"}});
+	};
+	
+	var fn_loginPopClose = function() {
+		$.unblockUI();
+		$("#modal-login").empty();
 	};
 
 	var fn_logout = function() {
@@ -79,48 +66,5 @@
 	//온라인클래스 준비중
 	var fn_onlineClass = function() {
 		alert("준비 중 입니다.");
-	};
-	
-	//login
-	var fn_login = function() {
-		var emailAddr = $("#emailAddr11").val();
-		var usrPw = $("#usrPw22").val();
-		if(!$.trim(emailAddr)){
-			alert("아이디를 입력해 주십시오.");
-			return;
-		}
-		if(!$.trim(usrPw22)){
-			alert("비밀번호를 입력해 주십시오.");
-			return;
-		}
-// 		if (!TypeChecker.email($("#loginVO #emailAddr11").val())) {
-// 			alert("이메일은 "+TypeChecker.emailText);
-// 			$("#loginVO #emailAddr11").focus();
-// 			return;
-// 		}
-		//패스워드조합3가지
-// 		if(!fn_checkPass("usrPw22")) {
-// 			return;
-// 		}
-		//아이디체크
-		$.ajax({ 	
-			url: "${basePath}/login/a/n/selectIdPwdcheck.do",
-			type: 'POST',
-			dataType : "json",
-			data : {"emailAddr" : emailAddr, "usrPw" : usrPw},
-			error: function(){
-				 alert("현재 조회 서비스가 원할하지 않습니다.\n잠시후 다시 이용해 주십시요.");
-				 return;
-			},
-			success: function(r) { 
-				if(r.message == 'N') {
-					$("#emailAddrChk").show();
-					$("#emailAddr11").focus();
-					return;
-				} else{
-					$("#loginVO").submit();
-				}
-			}
-		});
 	};
 </script>
