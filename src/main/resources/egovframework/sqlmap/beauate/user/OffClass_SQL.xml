@@ -89,7 +89,7 @@
 		FROM 
 			comtnfiledetail
 		WHERE 
-			atch_file_id = #{classImgId}
+			atch_file_id = #{atchFileId}
 			AND file_cn LIKE 'S%'
 	</select>
 </mapper>

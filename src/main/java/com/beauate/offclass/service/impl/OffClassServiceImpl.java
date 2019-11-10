@@ -436,12 +436,14 @@ public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffC
 		}
 		
 		//댓글리스트 포함
-		CommentVO commentVO = new CommentVO();
-		for(int i=0; i<selectList.size(); i++) {
-			String reviewId = selectList.get(i).getReviewId();
-			commentVO.setReviewId(reviewId);
-			List<CommentVO> resultVO = commentDao.selectCommentDetail(commentVO);
-			selectList.get(i).setCommentList(resultVO);
+		if(null != selectList) {
+			CommentVO commentVO = new CommentVO();
+			for(int i=0; i<selectList.size(); i++) {
+				String reviewId = selectList.get(i).getReviewId();
+				commentVO.setReviewId(reviewId);
+				List<CommentVO> resultVO = commentDao.selectCommentDetail(commentVO);
+				selectList.get(i).setCommentList(resultVO);
+			}
 		}
 		
 		rsltMap.put("paginationInfo", paginationInfo);

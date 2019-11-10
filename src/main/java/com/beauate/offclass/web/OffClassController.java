@@ -332,15 +332,20 @@ public class OffClassController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/offclass/r/n/selectUserPhon.do")
-	public String selectUserPhon(UserVO userVO, ModelMap model) throws Exception {
-		userVO = userManageService.selectUser(userVO);
+	public String selectUserPhon(ClassVO classVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		UserVO paramVO = new UserVO();
+		paramVO.setUsrId(sessionVO.getUsrId());
+		UserVO userVO = userManageService.selectUser(paramVO);
 		if(!StringUtil.isEmpty(userVO.getMblPno())) {
 			String mblPno = StringUtil.phone(userVO.getMblPno());
 			model.addAttribute("mblPno", mblPno);
+			model.addAttribute("classPopVO", classVO);
 		} else {
-			model.addAttribute("mblPno", "N");
+			model.addAttribute("mblPno", "-");
+			model.addAttribute("classPopVO", classVO);
 		}
-		return "jsonView";
+		
+		return "/offclass/alarmInsertPop";
 	}
 	
 	/**

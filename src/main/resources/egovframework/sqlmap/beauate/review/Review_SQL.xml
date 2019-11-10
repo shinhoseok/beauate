@@ -24,6 +24,7 @@
 		<where>
 			<if test="!adminYn">
 				b.r_fl = 'N'
+				AND b.c_sq = #{classId}
 			</if>
 			<if test="searchKeyword != null and searchKeyword != ''">
 				<choose>

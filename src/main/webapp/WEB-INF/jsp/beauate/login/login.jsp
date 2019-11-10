@@ -8,10 +8,11 @@
 	<ul class="input-area">
 		<li>
 			<form:input path="emailAddr" id="emailAddr11" placeholder="이메일" title="이메일을 입력해주세요." maxlength="21" />
-			<span style="display: none;" id="emailAddrChk" class="emp"> 이메일 또는 비밀번호를 다시 확인해주세요</span>
+			<span style="display: none;" id="emailAddrEmp" class="emp"></span>
 		</li>
 		<li>
 			<form:password id="usrPw22" path="usrPw" onkeypress="if(event.keyCode==13){fn_login();} " placeholder="비밀번호" title="비밀번호를 입력해주세요." maxlength="21" />
+			<span style="display: none;" id="usrPwEmp" class="emp"></span>
 		</li>
 	</ul>
 	<div class="btn-area"><button type="button" class="btn" id="loginBtn" onclick="fn_login();"><span>로그인</span></button></div>
@@ -26,18 +27,27 @@
 
 <script>
 //login
+var isValid;
 var fn_login = function() {
+	
+	isValid = true;
+	$("#emailAddrEmp").text("");
+	$("#usrPwEmp").text("");
 	var emailAddr11 = $("#emailAddr11").val();
 	var usrPw22 = $("#usrPw22").val();
+	
 	if(!$.trim(emailAddr11)){
-		alert("아이디를 입력해 주십시오.");
-		return;
+		$("#emailAddrEmp").text("이메일을 입력해 주세요").show();
+		isValid = false;
 	}
 	if(!$.trim(usrPw22)){
-		alert("비밀번호를 입력해 주십시오.");
+		$("#usrPwEmp").text("패스워드 입력해 주세요").show();
+		isValid = false;
+	}
+	if(!isValid){
 		return;
 	}
-
+	
 	//아이디체크
 	$.ajax({ 	
 		url: "${basePath}/login/a/n/selectIdPwdcheck.do",
@@ -50,7 +60,7 @@ var fn_login = function() {
 		},
 		success: function(r) { 
 			if(r.message == 'N') {
-				$("#emailAddrChk").show();
+				$("#emailAddrEmp").parent().find("span").text("이메일 또는 비밀번호를 다시 확인해주세요.").show();
 				$("#emailAddr11").focus();
 				return;
 			} else{

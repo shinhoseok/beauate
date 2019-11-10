@@ -122,38 +122,7 @@
 							</c:otherwise>
 						</c:choose>
 						<!-- 팝업 : 알람신청 -->
-						<div id="modal-alarm" class="modal">
-							<h2>sign in</h2>
-							<p class="title-desc">알람신청</p>
-							<div class="item">
-								<div class="thumb">
-									<img src="${uploadPath}/<c:out value="${rslt.resultVO.imgSrc3 }"/>" alt="" />
-								</div>
-								<div class="rcont">
-									<div class="desc"><c:out value="${rslt.resultVO.classTitle}"/></div>
-									<div class="etc">
-										<span>개강일</span>
-										<span>
-											<fmt:parseDate value="${rslt.resultVO.classStartDt}" var="classStartDt" pattern="yyyy-MM-dd"/> 
-											<fmt:formatDate value="${classStartDt}" pattern="yyyy-MM-dd"/>
-										</span>
-									</div>
-								</div>
-							</div>
-							<dl class="alarm-phone" id="alarm-phone">
-								<dt>휴대폰</dt>
-								<dd></dd>
-							</dl>
-							<div class="my-modify">
-								<span>번호변경을 원하실 경우 마이페이지에 변경하실 수 있습니다.</span> <a href="#">내 정보수정</a>
-							</div>
-							<div class="btn-area">
-								<button class="btn" type="button" onclick="javascript:fn_selectAlarmProc('<c:out value="${rslt.resultVO.classId}"/>');">
-									<span>알람신청</span>
-								</button>
-							</div>
-							<a href="#" rel="modal:close" class="modal-close" id="alarm_modal_close">닫기</a>
-						</div>
+						<div id="modal-alarm" class="modal"></div>
 					</div>
 					<!-- //우측 퀵 영역 end -->
 					
@@ -277,18 +246,19 @@
 $(function() {
 	//리뷰리스트
 	fn_searchReviewList(1);
-	
 	//따라다니는 메뉴
 	var floatPosition = parseInt($("#quick-class").css('top'));
-	var footerTop = $("#footer").offset().top;
 	$(window).scroll(function() {
 		// 현재 스크롤 위치를 가져온다.
 		var scrollTop = $(window).scrollTop();
-		var newPosition = scrollTop + floatPosition + "px";
-		$("#quick-class").css("position", "absolue");
-		$("#quick-class").stop().animate({
-			"top" : newPosition
-		}, 500);
+		var scrollendVal = ($("#footer").offset().top)-900;
+		if(scrollTop < scrollendVal) {
+			var newPosition = scrollTop + floatPosition + "px";
+			$("#quick-class").css("position", "absolue");
+			$("#quick-class").stop().animate({
+				"top" : newPosition
+			}, 500);
+		}
 	}).scroll();
 	
 	//마이페이지 후기등록 후 이동될 탭
@@ -306,6 +276,7 @@ function fn_searchReviewList(page){
 	cuurPage= page;
 	var params = {};
 	params.pageIndex = cuurPage;
+	params.classId = "${rslt.resultVO.classId}";
 	fn_selectReviewList(params);
 }
 
@@ -409,33 +380,39 @@ var fn_outWebAdrOffClass = function(classWebAdr) {
 //알람신청 팝업
 var fn_selectAlarmPop = function() {
 	var usrId = "${sessionScope.loginVO.usrId}";
+	
 	if(usrId == null || usrId == "") {
 		alert("로그인 후 사용이 가능합니다.");
 		fn_loginPopUpLayer();
 		return;
 	}
-	$("#alarmBtn").attr("rel", "modal:open");
+	
+	var params = {};
+	params.imgSrc3 = "${rslt.resultVO.imgSrc3 }";
+	params.usrId = usrId;
+	params.classTitle = "${rslt.resultVO.classTitle}";
+	params.classStartDt = "${rslt.resultVO.classStartDt}";
+	params.classId = "${rslt.resultVO.classId}";
 	
 	$.ajax({ 	
 		url: "${basePath}/offclass/r/n/selectUserPhon.do",
 		type: 'POST',
-		dataType : "json",
-		data : { "usrId" : usrId},
+		dataType : "html",
+		data : params,
 		error: function(){
 			 alert("현재 알람신청 서비스가 원할하지 않습니다.\n잠시후 다시 이용해 주십시요.");
 			 return;
 		},
-		success: function(r) { 
-			if(r.mblPno != "N") {
-				$("#alarm-phone").children("dd").remove();
-				$("#alarm-phone").append("<dd>"+r.mblPno+"</dd>");
-			} else {
-				$("#alarm-phone").children("dd").remove();
-				$("#alarm-phone").append("<dd>등록하신 연락처가 없습니다.</dd>");
-			}
-			
+		success: function(r) {
+			$("#modal-alarm").html(r);
 		}
 	}); 
+	$.blockUI({message:$("#modal-alarm"),css:{width:"0px",height:"0px",position:"absolute",left:"35%",top:"20%", textAlign:"left"}});
+};
+
+var fn_offClassAlarmPopClose = function() {
+	$.unblockUI();
+	$("#modal-alarm").empty();
 };
 
 //알람신청을 하면 알람신청이 되었는지 확인하고 되었으면 리턴 안되었으면 인서트
