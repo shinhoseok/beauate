@@ -12,7 +12,7 @@
 #header {}
 .header-wrap {border-bottom:1px solid #525252;background-color:#080808;}
 .header-wrap > .header-inner {position:relative; height:69px;}
-.header-logo {position:absolute; top:25px; left:0;background:url('../images/common/bi_logo.png') no-repeat 0 0;}
+.header-logo {position:absolute; top:25px; left:0;background:url('../images/common/bi_logo.svg') no-repeat 0 0;}
 .header-logo a {position:relative; display:block; text-indent:-999999px; height:21px; width:117px;}
 .header-util {position:absolute;top:20px;}
 .header-util-left {left:180px;}
@@ -34,6 +34,8 @@
 #container:before{content:''; display:block; overflow:hidden; height:1px; margin-top:-1px;}
 .content {padding-bottom:100px;}
 .contents:before {content:''; display:block; overflow:hidden; height:1px; margin-top:-1px;}
+
+.content2 {padding:100px 0; background-color: #080808;}
 
 /* SNB */
 #container.cols-2 {width:1200px; margin: 0 auto;}

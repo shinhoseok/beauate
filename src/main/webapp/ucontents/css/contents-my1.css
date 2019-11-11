@@ -384,16 +384,16 @@ font-size: 16px;line-height: 1.5; letter-spacing: -0.5px;}
 /*헤어 목록 상세 */
 .page-title .content-inner .class_tit{ width: 33%; margin: 0 auto;}
 .offline .besthair h3{width: 22%; margin-left: -3px;}
-.offline .besthair .stitle-best{ background: url('../img/txt_best.png') no-repeat; width: 100%; height: 100%; text-indent: -9999999em; position: absolute; top:122px; left: 18px; background-size: 119px;}
+.offline .besthair .stitle-best{ background: url('../img/txt_best.png') no-repeat; width: 100%; height: 100%; text-indent: -9999999em; position: absolute; top:420px; left: 18px; background-size: 119px;}
 
 .besthair-title{z-index: 10;}
 
 /*오프라인 목록  */
 .off_title{ height: 400px; background: url('../img/bg_off_tit.jpg') no-repeat; background-position: 50% 0; background-color: #000000;}
-.offline .off_list h3 {background: url('../img/txt_off_tit_list.png') no-repeat; text-indent: -999999em; background-position: 50% 16px; margin: 30px 0 10px 0; height: 50px;}
+.offline .off_list h3 {background: url('../img/txt_off_tit_list.svg') no-repeat; text-indent: -999999em; background-position: 50% 16px; margin: 30px 0 10px 0; height: 50px;}
 .offline .off_list p{font-size: 14px; text-align: center;}
 .offline .off_list ul{overflow: hidden; margin-top: 20px;}
-.offline .off_list ul li a{ width: 410px; height: 120px;background: url('../img/off_sub_list.png') no-repeat; float: left; margin-right: 20px; margin-bottom: 20px; text-indent: -999999em;} 
+.offline .off_list ul li a{ width: 410px; height: 120px;background: url('../img/off_sub_list.png') no-repeat; float: left; margin-right: 20px; margin-bottom: 20px; text-indent: -999999em; background-size: 310%;} 
 .offline .off_list ul li:nth-child(1) a{background-position: 0 0;}
 .offline .off_list ul li:nth-child(2) a{background-position: -430px 0;}
 .offline .off_list ul li:nth-child(3) a{background-position: -860px 0; margin-right: 0;}
@@ -405,7 +405,7 @@ font-size: 16px;line-height: 1.5; letter-spacing: -0.5px;}
 .bestoff-title{ height: 15px; position: relative; padding: 60px 0 0 20px; z-index: 10;}
 .offline .bestoff-title h3 {display:inline-block;width:300px;height:105px;text-indent:-999999em;background:url('../img/txt_offline.png') no-repeat 0 0;}
 .offline .bestoff-title .stxt{margin-left: -200px;}
-.offline .bestoff-title .stitle-best{ background: url('../img/txt_best.png') no-repeat; width: 100%; height: 100%; text-indent: -9999999em; position: absolute; top:416px; left: 18px;}
+
 /*오프라인 클래스 타이틀*/
 .offline .off_tit h3 { margin-top: 130px; height:75px;border-bottom:4px solid #0a0a0a;text-indent:-999999em;}
 .off_hair{background:url('../img/txt_off_tit_hair.png') no-repeat 50% 0;}
@@ -425,16 +425,16 @@ font-size: 16px;line-height: 1.5; letter-spacing: -0.5px;}
 .offline .slider-banner2 .swiper-pagination{ font-size: 15px; font-family: 'Roboto Mono';}
 .offline .slider-banner2 .swiper-button-next{ background:url('../images/common/btn_slider01.png') no-repeat 0 -15px; left:72px; top:2px; z-index: 100;}
 .offline .slider-banner2 .swiper-pagination .swiper-pagination-current{color:#6a2cfe; }
-.main-title{height: 600px; background: url('../img/bg_main.jpg') no-repeat; background-position: 50% 0; background-color: #000000;}
+.main-title{height: 600px; background: url('../img/bg_main.jpg') no-repeat; background-position: 50% 0; background-color: #030303; background-size: 1920px;}
 .new_class {margin-top: 30px;}
 .new_class div {font-size: 16px;}
 .new_class ul{ overflow: hidden; margin:30px 0;}
-.new_class ul li{float: left; margin-right: 20px; margin-bottom: 50px;}
+.new_class ul li{float: left; margin-right: 15px; margin-bottom: 50px;}
 .new_class ul li:nth-child(3), .new_class ul li:nth-child(6){margin: 0;}
 .new_sub{font-weight: 300; opacity: 0.6; margin-top: -3px;}
 .new_class .new_mentor{background: url('../img/txt_mentor.png') no-repeat; font-size: 14px; padding-left: 54px; background-position: 0 6px; margin-top: 10px;}
 .marBig{margin-top: 150px}
-.offline .new_class h3{height: 121px; background: url('../img/txt_new_class.png') no-repeat; background-position: 50%; text-indent: -999999em;} 
+.offline .new_class h3{height: 121px; background: url('../img/txt_new_class.svg') no-repeat; background-position: 50%; text-indent: -999999em;} 
 .offline .new_class p{font-size: 16px; position: absolute; top:80px; left: 508px;}
 .offline .new_class .label_new{font-size: 14px; position: absolute; display: inline-block; width: 20px; height: 20px; border-radius: 50%; background-color: #6a2cfe; color: #ffffff; line-height: 19px; text-align: center; top:3px; font-family: 'Roboto Mono'; font-weight: 800; left: 72px;}
 

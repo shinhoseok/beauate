@@ -257,7 +257,7 @@
 				<div class="content-inner">
 					<form:form commandName="classVO" name="classVO" id="classVO" method="post" action="" >
 						<div class="list-top">
-							<h3>전체</h3>
+<!-- 							<h3>전체</h3> -->
 							<div class="sort-list">
 								<form:select style="width: 90px;" path="classAreaSt" id="classAreaSt" onchange="javascript:fn_selectBoxAreaClass();">
 									<option value="">전체</option>
@@ -298,6 +298,7 @@ function fn_searchList(page, areaParam){
 	var params = {};
 	params.pageIndex = cuurPage;
 	params.classAreaSt = areaParam;
+	params.classCtSt = "${classVO.classCtSt}";
 	$.ajax({	
 		url: "${basePath}/offclass/a/t/selectOffClassAjaxList.do",
 		data: params,

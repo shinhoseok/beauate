@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="257px" height="69px" viewBox="0 0 257 69" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59 (86127) - https://sketch.com -->
+    <title>txt_new_class</title>
+    <desc>Created with Sketch.</desc>
+    <g id="export" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-4.000000, -83.000000)" fill="#000000">
+            <g id="txt_new_class" transform="translate(0.000000, 67.000000)">
+                <text id="New" stroke="#000000" font-family="Futura-Bold, Futura" font-size="60" font-weight="bold" letter-spacing="-2.14285714" fill-opacity="0">
+                    <tspan x="0" y="62">New</tspan>
+                </text>
+                <text id="class" font-family="Didot-Italic, Didot" font-size="65" font-style="italic" font-weight="normal">
+                    <tspan x="138" y="84">class</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -13,7 +13,7 @@
 
 /* offline */
 .offline .content-inner {position:relative;}
-.offline .header-wrap {background-color:#16151e;}
+/*.offline .header-wrap {background-color:#16151e;}*/
 .offline #container .page-title {height:280px;text-align:center;background-color:#16151e;}
 .offline #container .page-title .title {padding-top:80px;}
 
@@ -579,3 +579,8 @@ html .ui-datepicker .ui-button.ui-state-disabled:active {width:32px; height:32px
 .loginArea .login-cont .check-area label .input-checkbox {margin-right:10px;}
 #tab-login2 {height:411px;}
 .loginArea .login-cont .login-noti {margin-top:15px;font-size:16px;line-height:26px;}
+
+/* 멘토지원 */
+.apply_mentor_wrap { background-color: #050505; height: 491px;}
+.apply_mentor_btn .btn-area{ position: absolute; bottom: 36px; left: 158px; width: 286px;}
+.apply_mentor_btn .btn-area .btn{line-height: 72px;}

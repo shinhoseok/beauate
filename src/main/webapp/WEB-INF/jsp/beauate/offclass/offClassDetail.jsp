@@ -407,7 +407,9 @@ var fn_selectAlarmPop = function() {
 			$("#modal-alarm").html(r);
 		}
 	}); 
-	$.blockUI({message:$("#modal-alarm"),css:{width:"0px",height:"0px",position:"absolute",left:"35%",top:"20%", textAlign:"left"}});
+	// 현재 스크롤 위치를 가져온다.
+	var scrollTop = $(window).scrollTop();
+	$.blockUI({message:$("#modal-alarm"),css:{width:"0px",height:"0px",position:"absolute",left:"35%",top: scrollTop+"px", textAlign:"left"}});
 };
 
 var fn_offClassAlarmPopClose = function() {

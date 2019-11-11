@@ -122,6 +122,7 @@ public class OffClassController {
 		
 		Map<String, Object> rsltMap = offClassService.selectOffClassTabList(classVO);
 		model.addAttribute("rslt", rsltMap);
+		model.addAttribute("classVO", classVO);
 		
 		return "/offclass/offClassTabList";
 	}
