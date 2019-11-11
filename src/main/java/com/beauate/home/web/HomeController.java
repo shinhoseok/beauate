@@ -1,5 +1,9 @@
 package com.beauate.home.web;
 
+import java.util.Map;
+
+import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -8,11 +12,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.beauate.admin.classmng.service.ClassVO;
-import com.beauate.login.service.LoginVO;
+import com.beauate.home.service.HomeService;
 
 @Controller
 public class HomeController {
 	protected Log log = LogFactory.getLog(this.getClass());
+	
+	@Resource(name = "homeService")
+	private HomeService homeService;
 	
 	/**
 	 * <pre>
@@ -35,7 +42,10 @@ public class HomeController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/home/a/n/main.do")
-	public String main(@ModelAttribute("classVO") ClassVO classVO, LoginVO sessionVO, ModelMap model ) throws Exception{
+	public String main(@ModelAttribute("classVO") ClassVO classVO, ModelMap model ) throws Exception{
+		
+		Map<String, Object> rsltMap = homeService.selectMainList(classVO);
+		model.addAttribute("rslt", rsltMap);
 		
 		return "/home/main";
 	}

@@ -63,8 +63,6 @@ public class ClassVO extends CommDefaultVO implements Serializable {
 	private String adminYn;
 	/** 게시판에 이미지가 몇장 들어가는지 */
 	private String imgCnt;
-	/** 오더바이 필요여부 */
-	private boolean orderByYn = false;
 	/** 클래스인원체크 */
 	private boolean personnelChk = false;
 	/** 클래스담당자 전화번호 */
@@ -101,12 +99,6 @@ public class ClassVO extends CommDefaultVO implements Serializable {
 	}
 	public void setImgSrc2(String imgSrc2) {
 		this.imgSrc2 = imgSrc2;
-	}
-	public boolean isOrderByYn() {
-		return orderByYn;
-	}
-	public void setOrderByYn(boolean orderByYn) {
-		this.orderByYn = orderByYn;
 	}
 	public String getImgCnt() {
 		return imgCnt;

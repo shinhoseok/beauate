@@ -22,11 +22,14 @@
 	return check;
 	}
 	if(mobilecheck()){
-		location.href='http://m.beauate.com';
+		location.href='https://m.beauate.com';
 		//모바일로 접속시 이동 경로
 	}
 </SCRIPT>
 <body>
+<!-- 오늘날짜 todayNum -->
+<fmt:parseDate value="${rslt.today}" var="todayParseDate" pattern="yyyy-MM-dd"/> 
+<fmt:parseNumber value="${todayParseDate.time / (1000*60*60*24)}" integerOnly="true" var="todayNum"/>
 	<div id="wrap" class="offline">
 		<div id="skip">
 			<a href="#container">본문 내용 바로가기</a>
@@ -180,51 +183,48 @@
 							</div>
 							<div class="cont-right">
 								<ul class="product-list-01" data-column="2">
-									<li><a href="#">
-											<div class="thumb">
-												<img src="libs/images/empty/img-tumb-290x295_2.png" alt="" />
-												<div class="count">
-													<span>1일 남았어요!</span>
-												</div>
-											</div>
-											<div class="title">강남</div>
-											<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-											<div class="etc">
-												<span>개강일</span> <span>7월 23일(화)</span>
-											</div>
-									</a></li>
-									<li><a href="#">
-											<div class="thumb">
-												<img src="libs/images/empty/img-tumb-290x295_2.png" alt="" />
-											</div>
-											<div class="title">강남</div>
-											<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-											<div class="etc">
-												<span>개강일</span> <span>7월 23일(화)</span>
-											</div>
-									</a></li>
-									<li><a href="#">
-											<div class="thumb">
-												<img src="libs/images/empty/img-tumb-290x295_2.png" alt="" />
-												<div class="soldout"></div>
-												<div class="soldout-txt">신청마감</div>
-											</div>
-											<div class="title">강남</div>
-											<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-											<div class="etc">
-												<span>개강일</span> <span>7월 23일(화)</span>
-											</div>
-									</a></li>
-									<li><a href="#">
-											<div class="thumb">
-												<img src="libs/images/empty/img-tumb-290x295_2.png" alt="" />
-											</div>
-											<div class="title">강남</div>
-											<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-											<div class="etc">
-												<span>개강일</span> <span>7월 23일(화)</span>
-											</div>
-									</a></li>
+									<c:choose>
+										<c:when test="${fn:length(rslt.newList) != 0}">
+											<c:forEach items="${rslt.newList}" var="list" varStatus="i">
+												<!-- 개강일 classStartDtNum -->
+												<fmt:parseDate value="${list.classStartDt}" var="classStartDtParseDate" pattern="yyyy-MM-dd"/>
+												<fmt:parseNumber value="${classStartDtParseDate.time / (1000*60*60*24)}" integerOnly="true" var="classStartDtNum"/>
+												<li>
+													<a href="${basePath}/offclass/a/t/selectOffClassDetail.do?classId=${list.classId }">
+														<div class="thumb">
+															<img src="${uploadPath}/<c:out value="${list.imgSrc }"/>" alt="" />
+															<c:choose>
+																<c:when test="${classStartDtNum < todayNum or list.classSt eq 4}">
+																	<div class="soldout"></div>
+																	<div class="soldout-txt">종료</div>
+																</c:when>
+																<c:when test="${list.classSt eq 3}">
+																	<div class="soldout"></div>
+																	<div class="soldout-txt">신청마감</div>
+																</c:when>
+																<c:otherwise>
+																	<div class="count"><span>${((todayNum - classStartDtNum)*-1) +1 }일 남았어요!</span></div>
+																</c:otherwise>
+															</c:choose>
+														</div>
+														<div class="title"><c:out value="${list.classAreaStNm }"/></div>
+														<div class="desc"><c:out value="${list.classTitle }"/></div>
+														<div class="etc">
+															<span>개강일</span>
+															<span>
+																<fmt:parseDate value="${list.classStartDt}" var="classStartDt" pattern="yyyy-MM-dd"/> 
+																<fmt:formatDate value="${classStartDt}" pattern="yyyy-MM-dd"/>
+															</span>
+														</div>
+													</a>
+												</li>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<br/><br/>
+											<li>데이터가 없습니다.</li>
+										</c:otherwise>
+									</c:choose>
 								</ul>
 							</div>
 						</div>
@@ -238,51 +238,48 @@
 						<div class="specialmentor-inner">
 							<div class="cont-left2">
 								<ul class="product-list-01" data-column="2">
-									<li><a href="#">
-											<div class="thumb">
-												<img src="libs/images/empty/img-tumb-290x295_2.png" alt="" />
-												<div class="count">
-													<span>1일 남았어요!</span>
-												</div>
-											</div>
-											<div class="title">강남</div>
-											<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-											<div class="etc">
-												<span>개강일</span> <span>7월 23일(화)</span>
-											</div>
-									</a></li>
-									<li><a href="#">
-											<div class="thumb">
-												<img src="libs/images/empty/img-tumb-290x295_2.png" alt="" />
-											</div>
-											<div class="title">강남</div>
-											<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-											<div class="etc">
-												<span>개강일</span> <span>7월 23일(화)</span>
-											</div>
-									</a></li>
-									<li><a href="#">
-											<div class="thumb">
-												<img src="libs/images/empty/img-tumb-290x295_2.png" alt="" />
-												<div class="soldout"></div>
-												<div class="soldout-txt">신청마감</div>
-											</div>
-											<div class="title">강남</div>
-											<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-											<div class="etc">
-												<span>개강일</span> <span>7월 23일(화)</span>
-											</div>
-									</a></li>
-									<li><a href="#">
-											<div class="thumb">
-												<img src="libs/images/empty/img-tumb-290x295_2.png" alt="" />
-											</div>
-											<div class="title">강남</div>
-											<div class="desc">인기상승! 속눈썹 연장술에 필요한 특수모 선정방법 및 연장 요령</div>
-											<div class="etc">
-												<span>개강일</span> <span>7월 23일(화)</span>
-											</div>
-									</a></li>
+									<c:choose>
+										<c:when test="${fn:length(rslt.hurryList) != 0}">
+											<c:forEach items="${rslt.hurryList}" var="list" varStatus="i">
+												<!-- 개강일 classStartDtNum -->
+												<fmt:parseDate value="${list.classStartDt}" var="classStartDtParseDate" pattern="yyyy-MM-dd"/>
+												<fmt:parseNumber value="${classStartDtParseDate.time / (1000*60*60*24)}" integerOnly="true" var="classStartDtNum"/>
+												<li>
+													<a href="${basePath}/offclass/a/t/selectOffClassDetail.do?classId=${list.classId }">
+														<div class="thumb">
+															<img src="${uploadPath}/<c:out value="${list.imgSrc }"/>" alt="" />
+															<c:choose>
+																<c:when test="${classStartDtNum < todayNum or list.classSt eq 4}">
+																	<div class="soldout"></div>
+																	<div class="soldout-txt">종료</div>
+																</c:when>
+																<c:when test="${list.classSt eq 3}">
+																	<div class="soldout"></div>
+																	<div class="soldout-txt">신청마감</div>
+																</c:when>
+																<c:otherwise>
+																	<div class="count"><span>${((todayNum - classStartDtNum)*-1) +1 }일 남았어요!</span></div>
+																</c:otherwise>
+															</c:choose>
+														</div>
+														<div class="title"><c:out value="${list.classAreaStNm }"/></div>
+														<div class="desc"><c:out value="${list.classTitle }"/></div>
+														<div class="etc">
+															<span>개강일</span>
+															<span>
+																<fmt:parseDate value="${list.classStartDt}" var="classStartDt" pattern="yyyy-MM-dd"/> 
+																<fmt:formatDate value="${classStartDt}" pattern="yyyy-MM-dd"/>
+															</span>
+														</div>
+													</a>
+												</li>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<br/><br/>
+											<li>데이터가 없습니다.</li>
+										</c:otherwise>
+									</c:choose>
 								</ul>
 							</div>
 							<div class="cont-right2">

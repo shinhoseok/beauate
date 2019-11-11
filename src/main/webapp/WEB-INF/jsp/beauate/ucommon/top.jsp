@@ -9,7 +9,7 @@
 				<li><a href="${basePath}/offclass/a/t/selectOffClassList.do">오프라인 클래스</a></li>
 				<li><a href="javascript:void(0);" onclick="javascript:fn_onlineClass();">온라인 클래스</a></li>
 				<li><a href="${basePath}/board/a/t/selectBoardList.do">제품소개</a></li>
-				<li><a href="javascript:void(0);" onclick="javascript:fn_onlineClass();">뷰아떼 스토리</a></li>
+				<li><a href="${basePath}/intro/a/n/intro.do"">뷰아떼 스토리</a></li>
 			</ul>
 			<ul class="header-util header-util-right">
 				<c:choose>
@@ -22,7 +22,7 @@
 				<c:otherwise>
 					<li><a href="javascript:void(0);" onclick="javascript:fn_loginPopUpLayer();">로그인</a></li>
 					<li><a href="${basePath}/user/a/t/userInsert.do">회원가입</a></li>
-					<li><a href="javascript:void(0);" onclick="javascript:fn_onlineClass();" class="line">멘토지원</a></li>
+					<li><a href="${basePath}/mento/a/n/mentoApply.do" class="line">멘토지원</a></li>
 				</c:otherwise>
 				</c:choose>
 			</ul>

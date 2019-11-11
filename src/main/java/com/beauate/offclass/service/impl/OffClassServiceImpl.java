@@ -229,6 +229,7 @@ public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffC
 //		classVO.setClassCtSt("1");
 		//상단 최신순 4개
 		classVO.setImgCnt("4");
+		classVO.setSortSubject("newOffClass");
 		List<ClassVO> selectNewList = offClassDao.selectOffClassList(classVO);
 		if(selectNewList != null) {
 			selectNewList = fullImgPathChang(selectNewList);
@@ -236,7 +237,7 @@ public class OffClassServiceImpl extends EgovAbstractServiceImpl implements OffC
 		
 		//중단 마감임박 8개
 		classVO.setImgCnt("8");
-		classVO.setOrderByYn(true);
+		classVO.setSortSubject("hurryOffClass");
 		List<ClassVO> selectHurryList = offClassDao.selectOffClassList(classVO);
 		if(selectHurryList != null) {
 			selectHurryList = fullImgPathChang(selectHurryList);
