@@ -38,7 +38,7 @@
 					<form:hidden path="sortSubject" />
 					<form:hidden path="sortDescend" />
 					<div class="selectBox">
-						<form:select path="searchCondition" class="w13p" onchange="javascript:fn_selectBoxChange();" id="searchCondition">
+						<form:select path="searchCondition" class="w13p" id="searchCondition">
 							<form:option value="classUserId" label="회원번호"></form:option>
 							<form:option value="classTitle" label="클래스명"></form:option>
 							<form:option value="classCtSt" label="클래스카테고리"></form:option>

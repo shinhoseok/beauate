@@ -140,12 +140,10 @@ public class ClassManageServiceImpl implements ClassManageService {
 			//리스트
 			selectList = classManageDao.selectClassMngList(classVO);
 		}
-		List<CodeVO> classCategoryList = codeDao.selectScodeList(GlobalConstants.CLASS_CATEGORY_CODE);
 		
 		rsltMap.put("paginationInfo", paginationInfo);
 		rsltMap.put("selectList", selectList);
 		rsltMap.put("selectListCnt", cnt);
-		rsltMap.put("classCategoryList", classCategoryList);
 		
 		return rsltMap;
 	}
