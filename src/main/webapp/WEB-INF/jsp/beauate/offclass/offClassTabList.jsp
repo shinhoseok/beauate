@@ -29,13 +29,35 @@
 		<div id="container">
 			<!-- content -->
 			<div class="content">
-				<div class="page-title">
-					<div class="content-inner">
-						<h2 class="title class_tit">
-							<img src="${imagePath}/txt/tit_hairclass.png" alt="hair class">
-						</h2>
+				<div>
+					<div>
+						<c:choose>
+							<c:when test="${classVO.classCtSt eq '1'}">
+								<div class="offclass_tit offtit_hair"></div>
+							</c:when>
+							<c:when test="${classVO.classCtSt eq '2'}">
+								<div class="offclass_tit offtit_makeup"></div>
+							</c:when>
+							<c:when test="${classVO.classCtSt eq '3'}">
+								<div class="offclass_tit offtit_eyelash"></div>
+							</c:when>
+							<c:when test="${classVO.classCtSt eq '4'}">
+								<div class="offclass_tit offtit_skin"></div>
+							</c:when>
+							<c:when test="${classVO.classCtSt eq '5'}">
+								<div class="offclass_tit offtit_nail"></div>
+							</c:when>
+							<c:otherwise>
+								<div class="offclass_tit offtit_etc"></div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
+
+
+
+
+
 				<!-- 뷰티 type  -->
 				<div class="content-inner">
 					<div class="beauty-list">

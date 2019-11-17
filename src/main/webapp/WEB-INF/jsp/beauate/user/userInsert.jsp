@@ -146,7 +146,7 @@
 		<div class="content">
 			<div class="page-title">
 				<div class="content-inner">
-					<h2 class="title"><img src="${imagePath}/common/tit_cont_password.png" alt="password"></h2>
+					<h2 class="title"><img src="${imagePath}/common/tit_cont_singup.png" alt="singup"></h2>
 					<p class="title-desc">뷰아떼 회원가입을 환영합니다.</p>
 				</div>
 			</div>

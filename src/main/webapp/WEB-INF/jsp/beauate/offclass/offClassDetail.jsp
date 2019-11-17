@@ -27,6 +27,7 @@
 		<!-- //header -->
 		<!-- container -->
 		<div id="container">
+			<div class="detail_navi"></div>
 			<!-- content -->
 			<div class="content">
 				<div class="content-inner">
@@ -53,7 +54,7 @@
 										</div>
 										<div class="title"><c:out value="${rslt.resultVO.classAreaStNm}"/></div>
 										<div class="desc"><c:out value="${rslt.resultVO.classTitle}"/></div>
-										<div class="etc">
+										<div class="etc num mg_b10">
 											<fmt:parseDate value="${rslt.resultVO.classStartDt}" var="classStartDt" pattern="yyyy-MM-dd"/> 
 											<fmt:formatDate value="${classStartDt}" pattern="yyyy-MM-dd"/>
 										</div>
@@ -64,7 +65,7 @@
 							</button>
 							<dl class="totalprice">
 								<dt>총 결제금액</dt>
-								<dd>
+								<dd class="num">
 									<c:choose>
 										<c:when test="${rslt.resultVO.classCost == -1}">
 											-
@@ -198,7 +199,7 @@
 										</div>
 										<div class="text_right">
 											<ul>
-												<li>
+												<li class="num">
 													<fmt:parseDate value="${rslt.resultVO.classStartDt}" var="classStartDt" pattern="yyyy-MM-dd"/> 
 													<fmt:formatDate value="${classStartDt}" pattern="yyyy-MM-dd"/>
 												</li>
