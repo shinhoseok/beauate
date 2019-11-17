@@ -92,7 +92,10 @@
 				AND c.c_area_st = #{classAreaSt}
 			</if>
 			<if test="classCtSt != null and classCtSt != ''">
-				AND c_category_st = #{classCtSt}
+				AND c.c_category_st = #{classCtSt}
+			</if>
+			<if test="mentoGb != null and mentoGb != '' and mentoGb == 'Y'.toString">
+				AND c.u_sq = #{usrId}
 			</if>
 				AND (c.c_del_yn = 'N' OR c.c_del_yn IS NULL)
 		</where>

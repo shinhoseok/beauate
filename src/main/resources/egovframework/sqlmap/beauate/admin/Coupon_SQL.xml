@@ -25,6 +25,16 @@
 					</otherwise>
 				</choose>
 			</if>
+			<if test="searchKeyword != null and searchKeyword != ''">
+				<choose>
+					<when test="searchCondition == 'couponCdt'">
+						AND cpn_cdt LIKE '%'|| #{searchKeyword} ||'%'
+					</when>
+					<otherwise>
+						AND cpn_nm LIKE '%'|| #{searchKeyword} ||'%'
+					</otherwise>
+				</choose>
+			</if>
 		</where>
 	</sql>
 	

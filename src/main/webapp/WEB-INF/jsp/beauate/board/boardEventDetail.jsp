@@ -9,7 +9,7 @@
 	</div>
 	<div class="board-view-cot">
 		<p style="cursor: pointer" onclick="javascript:fn_couponEvent();"><img src="${imagePath}/empty/img-board-view.png" alt="" /></p>
-		<p><c:out value="${boardVO.postTitle}"/></p>
+		<p><c:out value="${boardVO.postCtt}"/></p>
 	</div>
 	<div class="board-view-fot">
 		<a href="javascript:void(0);" onclick="javascript:fn_searchNextOrPrev('N');" class="btn-prev">이전 목록</a>

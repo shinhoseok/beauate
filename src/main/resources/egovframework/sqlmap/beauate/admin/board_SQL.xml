@@ -12,6 +12,7 @@
 		<result column="POST_CTT" property="postCtt" />
 		<result column="POST_FL" property="delYn" />
 		<result column="imgSrc" property="imgSrc" />
+		<result column="cpn_sq" property="couponId" />
 	</resultMap>
 	
 	<!-- 쿼리명 : 게시판 등록
@@ -31,7 +32,8 @@
 			   						post_title, 
 			   						post_sub_title,
 			   						post_ctt,
-			   						post_fl ) 
+			   						post_fl,
+			   						cpn_sq ) 
 						VALUES (	#{postId},
 									#{atchFileId}, 
 									sysdate, 
@@ -39,7 +41,8 @@
 									#{postTitle}, 
 									#{postSubTitle},
 									#{postCtt},
-									'N')
+									'N',
+									#{couponId})
 		]]>		
 	</insert>
 
@@ -168,12 +171,13 @@
 			<if test="adminYn != null and adminYn != ''">
 			   (SELECT b.file_stre_cours || '/' || b.stre_file_nm FROM comtnfiledetail b WHERE b.atch_file_id = a.img_sq AND file_cn='D') AS imgSrc,
 			</if>
-			   post_dt,
-			   post_category_st,
-			   post_title,
-			   post_sub_title,
-			   post_ctt,
-			   post_fl
+			   a.post_dt,
+			   a.post_category_st,
+			   a.post_title,
+			   a.post_sub_title,
+			   a.post_ctt,
+			   a.post_fl,
+			   a.cpn_sq
 		  FROM ADMIN_POST a
 		 WHERE post_sq = #{postId, jdbcType=VARCHAR}
 	</select>
@@ -193,7 +197,9 @@
 		   SET post_category_st = #{postCategorySt},
 		       post_title = #{postTitle},
 		       post_sub_title = #{postSubTitle},
-		       post_ctt = #{postCtt}
+		       post_ctt = #{postCtt},
+		       img_sq = #{atchFileId},
+		       cpn_sq = #{couponId}
 		 WHERE POST_SQ = #{postId}
 		]]>
 	</update>

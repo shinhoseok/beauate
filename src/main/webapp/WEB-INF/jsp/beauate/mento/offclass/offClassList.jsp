@@ -16,13 +16,13 @@
 <body>
 	<!-- header Start -->
 	<div class="header">
-		<jsp:include page="/WEB-INF/jsp/beauate/common/top.jsp" flush="false" />
+		<jsp:include page="/WEB-INF/jsp/beauate/mcommon/top.jsp" flush="false" />
 	</div>
 	<!-- header End -->
 	<div class="wrap">
 		<div class="container">
 			<!-- left_menu Start -->
-			<%@ include file="/WEB-INF/jsp/beauate/common/leftMenu.jsp"%>
+			<%@ include file="/WEB-INF/jsp/beauate/mcommon/leftMenu.jsp"%>
 			<!-- left_menu End -->
 			<div class="contents">
 				<p class="contentTitle">클래스 리스트</p>

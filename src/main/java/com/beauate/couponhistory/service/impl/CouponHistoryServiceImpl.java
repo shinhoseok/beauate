@@ -15,7 +15,7 @@ import egovframework.rte.fdl.idgnr.EgovIdGnrService;
 
 @Service("couponHistoryService")
 public class CouponHistoryServiceImpl extends EgovAbstractServiceImpl implements CouponHistoryService {
-protected Log log = LogFactory.getLog(this.getClass());
+	protected Log log = LogFactory.getLog(this.getClass());
 	
 	@Resource(name="couponHistoryDao")
 	private CouponHistoryDao couponHistoryDao;

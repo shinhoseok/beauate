@@ -9,7 +9,7 @@
 				<c:when test="${rslt.selectListCnt != 0}">
 					<c:forEach items="${rslt.selectList}" var="list" varStatus="i">
 						<li>
-							<c:if test="${list.postSubTitle eq 'B' or list.postSubTitle eq 'A'}"><span class="emp">*중요</span></c:if>
+							<c:if test="${list.postSubTitle eq 'A'}"><span class="emp">*중요</span></c:if>
 							<a href="javascript:void(0);" onclick="javascript:fn_boardCommonDetail('${list.postId }');">
 								<span class="title"><c:out value="${list.postTitle}"/></span>
 								<span class="date"><fmt:formatDate value="${list.postDt}" pattern="yy.MM.dd"/></span>

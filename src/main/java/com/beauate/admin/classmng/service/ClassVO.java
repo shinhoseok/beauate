@@ -69,7 +69,15 @@ public class ClassVO extends CommDefaultVO implements Serializable {
 	private String mblPno;
 	/** 클래스상세페이지 탭이동할 값 */
 	private String detailGoTab;
+	/** 멘토구분값 */
+	private String mentoGb;
 	
+	public String getMentoGb() {
+		return mentoGb;
+	}
+	public void setMentoGb(String mentoGb) {
+		this.mentoGb = mentoGb;
+	}
 	public String getDetailGoTab() {
 		return detailGoTab;
 	}

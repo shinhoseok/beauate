@@ -124,11 +124,11 @@ public class BoardController {
 		BoardVO resultVO = boardService.selectBoardDetail(boardVO);
 		model.addAttribute("boardVO", resultVO);
 		//공지사항 category4 중 이벤트 postsubtitle A 는 다른 JSP로
-		if(!StringUtil.isEmpty(resultVO.getPostSubTitle())) {
-			if(resultVO.getPostCategorySt().equals("4") && resultVO.getPostSubTitle().equals("A")) {
-				return "/board/boardEventDetail";
-			}
-		}
+//		if(!StringUtil.isEmpty(resultVO.getPostSubTitle())) {
+//			if(resultVO.getPostCategorySt().equals("4") && resultVO.getPostSubTitle().equals("A")) {
+//				return "/board/boardEventDetail";
+//			}
+//		}
 		return "/board/boardDetail";
 	}
 	

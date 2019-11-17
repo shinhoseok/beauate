@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.beauate.admin.board.service.BoardManageService;
 import com.beauate.admin.board.service.BoardVO;
 import com.beauate.admin.code.service.CodeVO;
+import com.beauate.admin.coupon.service.CouponManageService;
+import com.beauate.admin.coupon.service.CouponVO;
 
 import egovframework.cmmn.service.EgovFileMngService;
 import egovframework.cmmn.service.EgovFileMngUtil;
@@ -37,6 +39,9 @@ public class BoardManageController {
 	// 첨부파일 관련
 	@Resource(name = "EgovFileMngService")
 	private EgovFileMngService fileMngService;
+	
+	@Resource(name = "couponManageService")
+	private CouponManageService couponManageService;
 	
 	/**
 	 * <pre>
@@ -108,7 +113,6 @@ public class BoardManageController {
 	 *	----------- ------------------- ---------------------------------------
 	 *	2019. 5. 12.		신호석				최초 작성 
 	 *	-----------------------------------------------------------------------
-	 * 
 	 * @param programVO
 	 * @param model
 	 * @return String
@@ -123,6 +127,36 @@ public class BoardManageController {
 		model.addAttribute("boardCateGoryList", boardCateGoryList);
 		
 		return "/admin/board/boardInsert";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 게시판관리 등록화면 쿠폰사용 팝업
+	 * 2. 처리내용 : 게시판관리 등록화면 쿠폰사용 팝업
+	 * </pre>
+	 * @Method Name : selectCouponList
+	 * @date : 2019. 5. 12.
+	 * @author : 신호석
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일					작성자				변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 12.		신호석				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param programVO
+	 * @param model
+	 * @return String
+	 * @throws Exception
+	 */ 	
+	@RequestMapping(value = "/boardm/r/n/selectCouponList.do")
+	public String selectCouponList(@ModelAttribute("couponVO") CouponVO couponVO, ModelMap model) throws Exception {
+		couponVO.setAdminYn("N"); //어드민페이지아님
+		couponVO.setCouponSt("Y"); //쿠폰상태가 쓸수 있는 것들만
+		couponVO.setComPare(">="); //쿠폰날짜가 오늘날짜보다 크거나 같은것들
+		Map<String, Object> rsltMap = couponManageService.selectCouponMngList(couponVO);
+		model.addAttribute("rslt", rsltMap);
+		
+		return "/admin/board/couponListPop";
 	}
 	
 	/**
@@ -231,8 +265,8 @@ public class BoardManageController {
 		final Map<String, MultipartFile> files = multiRequest.getFileMap();
 		
 		if (!files.isEmpty()) {
-			if ("".equals(_atchFileId)) {
-				List<FileVO> _result = fileUtil.parseFileInf(files, "BOARD_", 0, _atchFileId, "");
+			if ("".equals(_atchFileId) || ",".equals(_atchFileId)) {
+				List<FileVO> _result = fileUtil.parseFileInf(files, "BOARD_", 0, "", "");
 				_atchFileId = fileMngService.insertFileInfs(_result);
 				boardVO.setAtchFileId(_atchFileId);
 			} else {
