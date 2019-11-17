@@ -1,9 +1,9 @@
 @charset "UTF-8";
-@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400|Roboto+Mono&display=swap');
 
 html{overflow-y:scroll; overflow-x:auto; font-size:20px; color:#000;}
 body,p,h1,h2,h3,h4,h5,ul,ol,li,dl,dt,dd,table,th,td,form,fieldset,legend,input,textarea,button,select,span,a,div,fieldset,button,em,address,label,strong{margin:0;padding:0;letter-spacing:-0.05em; color:inherit;}
-body,input,textarea,select,button,table{font-family:'Noto Sans KR', 'Dotum', '돋움', 'Apple SD Gothic Neo', sans-serif; font-size:inherit; line-height:1.6;font-weight:normal;-webkit-text-size-adjust:none;-webkit-font-smoothing:antialiased}
+body,input,textarea,select,button,table{font-family:'Noto Sans KR', 'Roboto Mono', 'Dotum', '돋움', 'Apple SD Gothic Neo', sans-serif; font-size:inherit; line-height:1.6;font-weight:normal;-webkit-text-size-adjust:none;-webkit-font-smoothing:antialiased}
 body{color:#000;}
 img{max-width: 100%;}
 img,fieldset,button{border:0 none;}
@@ -45,6 +45,8 @@ input[type=password]:-ms-input-placeholder{font-weight:400; font-family:'Noto Sa
 input[type=password]::-webkit-input-placeholder{font-weight:400; font-family:'Noto Sans KR', 'Malgun Gothic','맑은 고딕', 'Dotum', '돋움', 'Apple SD Gothic Neo', sans-serif;}
 input:focus {border-color:#6a2cfe;}
 textarea {width:100%; height:100px; padding:10px 20px; vertical-align:top; line-height:20px; font-size:15px; overflow:hidden;overflow-y:auto;resize:none;background:#fff;word-break:break-all;word-wrap:break-word;white-space:pre-line;}
+
+input[type=email], input[type=number] {font-family: 'Roboto Mono';}
 textarea:focus {border-color:#000;}
 input[disabled],
 input[readonly],

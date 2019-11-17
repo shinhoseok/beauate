@@ -271,6 +271,10 @@ public class BoardManageController {
 				boardVO.setAtchFileId(_atchFileId);
 			} else {
 				FileVO fvo = new FileVO();
+				if(_atchFileId.indexOf(",") > -1) {
+					_atchFileId = _atchFileId.substring(0, _atchFileId.indexOf(","));
+					log.debug("첨부파일 아이디 2개이상 변환 >>> "+_atchFileId);
+				}
 				fvo.setAtchFileId(_atchFileId);
 //				int cnt = fileMngService.getMaxFileSN(fvo);
 				List<FileVO> _result = fileUtil.parseFileInf(files, "BOARD_", 0, _atchFileId, "");

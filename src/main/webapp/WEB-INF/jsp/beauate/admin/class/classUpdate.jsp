@@ -180,7 +180,7 @@
 										이미지 등록 (상세슬라이드1~5장, 모바일상세1장, 클래스상세1장, 메인이미지 크기 작은 순서로 4장)
 									</th>
 									<td colspan="4">
-										<input class="hideFile" name="file_1" id="egovComFileUploader" type="file" title="첨부파일입력" /> <img src="${imagePath}/btn_plus.png" alt="" class="FileBtn" /> <span id="atchFileNot" style="margin-left: 5px; display: none;">(* 첨부파일을 더 이상 등록 할 수 없습니다.)</span>
+										<input class="hideFile" name="file_1" id="egovComFileUploader" type="file" title="첨부파일입력" /><span id="atchFileNot" style="margin-left: 5px; display: none;">(* 첨부파일을 더 이상 등록 할 수 없습니다.)</span>
 										<c:import url="/cmm/fms/selectFileInfsForUpdate.do" charEncoding="utf-8">
 											<c:param name="param_atchFileId" value="${classVO.atchFileId}" />
 										</c:import>

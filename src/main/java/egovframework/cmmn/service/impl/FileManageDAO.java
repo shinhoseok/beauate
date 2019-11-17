@@ -69,7 +69,12 @@ public class FileManageDAO extends EgovComAbstractDAO {
 		Iterator<?> iter = fileList.iterator();
 		while (iter.hasNext()) {
 			vo = (FileVO) iter.next();
-			insert("FileManageDAO.insertFileDetail", vo);
+			int cnt = (int) select("FileManageDAO.selectFileDetailCnt", vo);
+			if(cnt == 0) {
+				insert("FileManageDAO.insertFileDetail",vo);
+			} else {
+				update("FileManageDAO.updateFileDetail", vo);
+			}
 		}
 	}
 

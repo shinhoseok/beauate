@@ -275,9 +275,13 @@ public class ClassManageController {
 				classVO.setAtchFileId(_atchFileId);
 			} else {
 				FileVO fvo = new FileVO();
+				if(_atchFileId.indexOf(",") > -1) {
+					_atchFileId = _atchFileId.substring(0, _atchFileId.indexOf(","));
+					log.debug("첨부파일 아이디 2개이상 변환 >>> "+_atchFileId);
+				}
 				fvo.setAtchFileId(_atchFileId);
-				int cnt = fileMngService.getMaxFileSN(fvo);
-				List<FileVO> _result = fileUtil.parseFileInf(files, "CLASS_", cnt, _atchFileId, "");
+//				int cnt = fileMngService.getMaxFileSN(fvo);
+				List<FileVO> _result = fileUtil.parseFileInf(files, "CLASS_", 0, _atchFileId, "");
 				log.debug("첨부파일 아이디 >>>>>>>>>>>>>>>>>>>>> "+_atchFileId);
 				//첨부파일 아이디가 안나어옴
 //				fileMngService.insertFileInfs(_result);

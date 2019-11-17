@@ -70,14 +70,22 @@
 	<update id="FileManageDAO.updateFileDetail" parameterClass="FileVO">
 		UPDATE COMTNFILEDETAIL
 			SET FILE_STRE_COURS = #fileStreCours#,
+				FILE_SN = #fileSn#,
 				STRE_FILE_NM = #streFileNm#,
 				ORIGNL_FILE_NM = #orignlFileNm#,
 				FILE_EXTSN = #fileExtsn#,
 				FILE_SIZE = #fileMg#,
 				FILE_CN = #fileCn#
 		WHERE	ATCH_FILE_ID = #atchFileId#
-			AND FILE_SN = #fileSn#
+			AND FILE_CN = #fileCn#
 	</update>
+	
+	<!-- 신호석 -->
+	<select id="FileManageDAO.selectFileDetailCnt" parameterClass="FileVO" resultClass="java.lang.Integer">
+		SELECT COUNT(*) cnt FROM COMTNFILEDETAIL
+		WHERE	ATCH_FILE_ID = #atchFileId#
+			AND FILE_CN = #fileCn#
+	</select>
 	
 	<delete id="FileManageDAO.deleteFileDetail" parameterClass="FileVO" >
 		<![CDATA[
