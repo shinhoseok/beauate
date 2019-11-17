@@ -18,7 +18,7 @@
 				</c:otherwise>
 			</c:choose>
 		</c:if>
-		<p><c:out value="${boardVO.postCtt}"/></p>
+		<p id="postCttDetail"><c:out value="${boardVO.postCtt}"/></p>
 	</div>
 	<div class="board-view-fot">
 		<a href="javascript:void(0);" onclick="javascript:fn_searchNextOrPrev('N');" class="btn-prev">이전 목록</a>
@@ -44,7 +44,7 @@ var fn_searchNextOrPrev = function(nextYn) {
 	params.postTitle = "${boardVO.postTitle}";
 	params.postSubTitle = "${boardVO.postSubTitle}";
 	params.imgSrc = "${boardVO.imgSrc}";
-	params.postCtt = "${boardVO.postCtt}";
+	params.postCtt = $("#postCttDetail").text();
 	$.ajax({	
 		url: "${basePath}/board/a/t/selectBoardNextPrev.do",
 		data: params,

@@ -26,12 +26,12 @@ public class CommonExcelView extends AbstractExcelView {
 	 * </pre>
 	 * @Method Name : buildExcelDocument
 	 * @date : 2019. 6. 22.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 6. 22.		신호석				최초 작성 
+	 *	2019. 6. 22.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see org.springframework.web.servlet.view.document.AbstractExcelView#buildExcelDocument(java.util.Map, org.apache.poi.hssf.usermodel.HSSFWorkbook, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)

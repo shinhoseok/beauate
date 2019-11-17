@@ -41,12 +41,12 @@ public class CodeManageServiceImpl extends EgovAbstractServiceImpl implements Co
 	 * </pre>
 	 * @Method Name : selectCodeManageList
 	 * @date : 2019. 5. 16.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 16.		신호석				최초 작성 
+	 *	2019. 5. 16.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see com.beauate.admin.code.service.CodeManageService#selectCodeManageList(com.beauate.admin.code.service.CodeVO, org.springframework.ui.ModelMap)
@@ -89,12 +89,12 @@ public class CodeManageServiceImpl extends EgovAbstractServiceImpl implements Co
 	 * </pre>
 	 * @Method Name : selectMcodeList
 	 * @date : 2019. 5. 17.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	2019. 5. 17.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see com.beauate.admin.code.service.CodeManageService#selectMcodeList(com.beauate.admin.code.service.CodeVO)
@@ -121,12 +121,12 @@ public class CodeManageServiceImpl extends EgovAbstractServiceImpl implements Co
 	 * </pre>
 	 * @Method Name : selectLCodeView
 	 * @date : 2019. 5. 17.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	2019. 5. 17.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see com.beauate.admin.code.service.CodeManageService#selectLCodeView(com.beauate.admin.code.service.CodeVO)
@@ -145,12 +145,12 @@ public class CodeManageServiceImpl extends EgovAbstractServiceImpl implements Co
 	 * </pre>
 	 * @Method Name : updateMList
 	 * @date : 2019. 5. 17.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	2019. 5. 17.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see com.beauate.admin.code.service.CodeManageService#updateMList(com.beauate.admin.code.service.CodeVO)
@@ -197,12 +197,12 @@ public class CodeManageServiceImpl extends EgovAbstractServiceImpl implements Co
 	 * </pre>
 	 * @Method Name : insertCodeManageList
 	 * @date : 2019. 5. 17.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	2019. 5. 17.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see com.beauate.admin.code.service.CodeManageService#insertCodeManageList(com.beauate.admin.code.service.CodeVO)
@@ -221,12 +221,12 @@ public class CodeManageServiceImpl extends EgovAbstractServiceImpl implements Co
 	 * </pre>
 	 * @Method Name : selectLastcodeView
 	 * @date : 2019. 5. 17.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	2019. 5. 17.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param codeVO
@@ -244,12 +244,12 @@ public class CodeManageServiceImpl extends EgovAbstractServiceImpl implements Co
 	 * </pre>
 	 * @Method Name : updateSCode
 	 * @date : 2019. 5. 17.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	2019. 5. 17.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see com.beauate.admin.code.service.CodeManageService#updateSCode(com.beauate.admin.code.service.CodeVO)
@@ -267,12 +267,12 @@ public class CodeManageServiceImpl extends EgovAbstractServiceImpl implements Co
 	 * </pre>
 	 * @Method Name : lclsCdChk
 	 * @date : 2019. 5. 17.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	2019. 5. 17.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see com.beauate.admin.code.service.CodeManageService#lclsCdChk(com.beauate.admin.code.service.CodeVO)
@@ -291,12 +291,12 @@ public class CodeManageServiceImpl extends EgovAbstractServiceImpl implements Co
 	 * </pre>
 	 * @Method Name : mclsCdChk
 	 * @date : 2019. 5. 17.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	2019. 5. 17.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see com.beauate.admin.code.service.CodeManageService#mclsCdChk(com.beauate.admin.code.service.CodeVO)

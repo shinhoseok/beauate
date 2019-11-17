@@ -31,7 +31,7 @@ public class PortalInterceptor extends HandlerInterceptorAdapter {
 	@Resource(name = "menuService")
 	private MenuService menuService;
 	
-	//신호석 추가
+	//뷰아떼1 추가
 	@Resource(name = "loginService")
 	private LoginService loginService;
 

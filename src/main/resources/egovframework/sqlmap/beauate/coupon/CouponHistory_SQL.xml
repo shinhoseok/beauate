@@ -17,8 +17,8 @@
 	설명 : 쿠폰내역 상세조회
 	수정일                     수정자           수정내용
 	==========  ======  ===================
-	2019. 10.16     신호석           최초 생성
-	작성자 : 신호석
+	2019. 10.16     뷰아떼1           최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 10.16
 	-->	
 	<select id="selectCouponHistoryDetail" parameterType="couponHistoryVO" resultMap="couponHistoryMap">
@@ -41,8 +41,8 @@
 	설명 : 쿠폰내역 등록처리
 	수정일                     수정자           수정내용
 	==========  ======  ===================
-	2019. 10.16     신호석           최초 생성
-	작성자 : 신호석
+	2019. 10.16     뷰아떼1           최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 10.16
 	-->	
 	<insert id="insertCouponHistoryProc" parameterType="couponHistoryVO">
@@ -70,8 +70,8 @@
 	설명 : 쿠폰내역 삭제처리
 	수정일                     수정자           수정내용
 	==========  ======  ===================
-	2019. 10.16     신호석           최초 생성
-	작성자 : 신호석
+	2019. 10.16     뷰아떼1           최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 10.16
 	-->	
 	<update id="updateCouponHistoryProc" parameterType="couponHistoryVO">
@@ -100,8 +100,8 @@
 	설명 : 마이페이지 사용가능한 쿠폰 리스트
 	수정일                     수정자           수정내용
 	==========  ======  ===================
-	2019. 10.16     신호석           최초 생성
-	작성자 : 신호석
+	2019. 10.16     뷰아떼1           최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 10.16
 	-->	
 	<select id="selectMyCouponList" parameterType="couponHistoryVO" resultMap="couponHistoryMap">
@@ -135,8 +135,8 @@
 	설명 : 마이페이지 사용가능한 쿠폰 갯수
 	수정일                     수정자           수정내용
 	==========  ======  ===================
-	2019. 10.16     신호석           최초 생성
-	작성자 : 신호석
+	2019. 10.16     뷰아떼1           최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 10.16
 	-->	
 	<select id="selectMyCouponListCnt" parameterType="couponHistoryVO" resultType="java.lang.Integer">

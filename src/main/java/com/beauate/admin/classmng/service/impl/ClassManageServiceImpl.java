@@ -41,12 +41,12 @@ public class ClassManageServiceImpl implements ClassManageService {
 	 * </pre>
 	 * @Method Name : selectClassCodeList
 	 * @date : 2019. 9. 17.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 9. 17.		신호석				최초 작성 
+	 *	2019. 9. 17.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param String
@@ -77,12 +77,12 @@ public class ClassManageServiceImpl implements ClassManageService {
 	 * </pre>
 	 * @Method Name : insertOffClassProc
 	 * @date : 2019. 9. 16.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일			작성자					변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 9. 16  신호석			                    최초 작성 
+	 *	2019. 9. 16  뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param classVO
@@ -105,12 +105,12 @@ public class ClassManageServiceImpl implements ClassManageService {
 	 * </pre>
 	 * @Method Name : selectClassList
 	 * @date : 2019. 9. 16.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일			작성자					변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 9. 16  신호석			                    최초 작성 
+	 *	2019. 9. 16  뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param classVO
@@ -140,9 +140,12 @@ public class ClassManageServiceImpl implements ClassManageService {
 			//리스트
 			selectList = classManageDao.selectClassMngList(classVO);
 		}
+		List<CodeVO> classCategoryList = codeDao.selectScodeList(GlobalConstants.CLASS_CATEGORY_CODE);
+		
 		rsltMap.put("paginationInfo", paginationInfo);
 		rsltMap.put("selectList", selectList);
 		rsltMap.put("selectListCnt", cnt);
+		rsltMap.put("classCategoryList", classCategoryList);
 		
 		return rsltMap;
 	}
@@ -154,12 +157,12 @@ public class ClassManageServiceImpl implements ClassManageService {
 	 * </pre>
 	 * @Method Name : selectClassMngDetail
 	 * @date : 2019. 9. 16.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일			작성자					변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 9. 16  신호석			                    최초 작성 
+	 *	2019. 9. 16  뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param classVO
@@ -177,12 +180,12 @@ public class ClassManageServiceImpl implements ClassManageService {
 	 * </pre>
 	 * @Method Name : updateClassMngProc
 	 * @date : 2019. 9. 16.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일			작성자					변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 9. 16  신호석			                    최초 작성 
+	 *	2019. 9. 16  뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param classVO
@@ -200,12 +203,12 @@ public class ClassManageServiceImpl implements ClassManageService {
 	 * </pre>
 	 * @Method Name : deleteClassMngProc
 	 * @date : 2019. 9. 16.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일			작성자					변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 9. 16  신호석			                    최초 작성 
+	 *	2019. 9. 16  뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param classVO

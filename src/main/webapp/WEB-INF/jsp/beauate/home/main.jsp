@@ -56,35 +56,35 @@
 					</p>
 					<ul>
 						<li><a href="#"> <img src="${imgPath}/list_main_new_01.jpg" />
-								<div>연령과 커트 스타일에 맞는 드라이 디자인 연출법</div>
-								<div class="new_sub">처음 단계인 디자인 구상부터 제작, 보정, 마무리(제품사용)까지</div>
-								<div class="new_mentor">최수연</div>
-						</a></li>
-						<li><a href="#"> <img src="${imgPath}/list_main_new_01.jpg" />
-								<div>연령과 커트 스타일에 맞는 드라이 디자인 연출법</div>
-								<div class="new_sub">처음 단계인 디자인 구상부터 제작, 보정, 마무리(제품사용)까지</div>
-								<div class="new_mentor">최수연</div>
-						</a></li>
-						<li><a href="#"> <img src="${imgPath}/list_main_new_01.jpg" />
-								<div>연령과 커트 스타일에 맞는 드라이 디자인 연출법</div>
-								<div class="new_sub">처음 단계인 디자인 구상부터 제작, 보정, 마무리(제품사용)까지</div>
-								<div class="new_mentor">최수연</div>
-						</a></li>
-						<li><a href="#"> <img src="${imgPath}/list_main_new_01.jpg" />
-								<div>연령과 커트 스타일에 맞는 드라이 디자인 연출법</div>
-								<div class="new_sub">처음 단계인 디자인 구상부터 제작, 보정, 마무리(제품사용)까지</div>
-								<div class="new_mentor">최수연</div>
-						</a></li>
-						<li><a href="#"> <img src="${imgPath}/list_main_new_01.jpg" />
-								<div>연령과 커트 스타일에 맞는 드라이 디자인 연출법</div>
-								<div class="new_sub">처음 단계인 디자인 구상부터 제작, 보정, 마무리(제품사용)까지</div>
-								<div class="new_mentor">최수연</div>
-						</a></li>
-						<li><a href="#"> <img src="${imgPath}/list_main_new_01.jpg" />
-								<div>연령과 커트 스타일에 맞는 드라이 디자인 연출법</div>
-								<div class="new_sub">처음 단계인 디자인 구상부터 제작, 보정, 마무리(제품사용)까지</div>
-								<div class="new_mentor">최수연</div>
-						</a></li>
+							<div>데모모델 실습이 포함된 두피문신 원데이 클래스</div>
+							<div class="new_sub">정수리기법과 헤어라인 구렛나루 기법을 한번에!</div>
+							<div class="new_mentor">채우다smp 한정욱대표님</div>
+					</a></li>
+					<li><a href="#"> <img src="${imgPath}/list_main_new_02.jpg" />
+							<div>마스터 책임 보장제 속눈썹 펌 클래스</div>
+							<div class="new_sub">1:1 밀착 수업으로 프로에게 프로기술을 배우다.</div>
+							<div class="new_mentor">코코랄하우스</div>
+					</a></li>
+					<li><a href="#"> <img src="${imgPath}/list_main_new_03.jpg" />
+							<div>2020년 달라진 자격증 완벽대비 헤어자격증 취득반</div>
+							<div class="new_sub">영국 사순스쿨쉽 정식 교육기관</div>
+							<div class="new_mentor">마로아카데미</div>
+					</a></li>
+					<li><a href="#"> <img src="${imgPath}/list_main_new_04.jpg" />
+							<div>한 달만에 합격! 메이크업 자격증 속성반</div>
+							<div class="new_sub">탄탄한 커리큘럼으로 만들어낸 임뷰티 클래스</div>
+							<div class="new_mentor">임뷰티 아카데미</div>
+					</a></li>
+					<li><a href="#"> <img src="${imgPath}/list_main_new_05.jpg" />
+							<div>제품 판매 없는 진짜 교육 반영구 세미나</div>
+							<div class="new_sub">2달간 단기속성 눈썹 완전정복(자연눈썹, 수지눈썹, 머신눈썹)</div>
+							<div class="new_mentor">로이브로우 아카데미</div>
+					</a></li>
+					<li><a href="#"> <img src="${imgPath}/list_main_new_06.jpg" />
+							<div>더브락증모 원데이클래스</div>
+							<div class="new_sub">소량 글루사용 But 유지력은 약 6주, 진하고 풍성한 속눈썹 연출</div>
+							<div class="new_mentor">슈엘뷰티 아카데미</div>
+					</a></li>
 					</ul>
 					<div class="off_more">
 						<a href="${basePath}/offclass/a/t/selectOffClassList.do">클래스 더보기<img src="${imgPath}/btn_arrow.png"></a>
@@ -98,10 +98,10 @@
 						<div class="swiper-container">
 							<div class="swiper-wrapper">
 								<div class="swiper-slide">
-									<img src="${imgPath}/bn_main_product.jpg" alt="1" />
+									<a href="https://cafe.naver.com/my5" target="_black"><img src="${imgPath}/bn_main_product.jpg" alt="1" /></a>
 								</div>
 								<div class="swiper-slide">
-									<img src="${imgPath}/bn_main_product.jpg" alt="2" />
+									<a href="https://www.instagram.com/beauate/" target="_black"><img src="${imgPath}/bn_main_product2.jpg" alt="2" /></a>
 								</div>
 							</div>
 							<div class="swiper-info">

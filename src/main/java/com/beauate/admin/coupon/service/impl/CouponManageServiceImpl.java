@@ -41,12 +41,12 @@ public class CouponManageServiceImpl extends EgovAbstractServiceImpl implements 
 	 * </pre>
 	 * @Method Name : selectCouponMngList
 	 * @date : 2019. 10. 12.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자					변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 12  		신호석			                    최초 작성 
+	 *	2019. 10. 12  		뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * @param couponVO
 	 * @return Map<String, Object>
@@ -88,12 +88,12 @@ public class CouponManageServiceImpl extends EgovAbstractServiceImpl implements 
 	 * </pre>
 	 * @Method Name : insertCpnMng
 	 * @date : 2019. 10. 12.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자					변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 12  		신호석			                    최초 작성 
+	 *	2019. 10. 12  		뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param couponVO
@@ -111,12 +111,12 @@ public class CouponManageServiceImpl extends EgovAbstractServiceImpl implements 
 	 * </pre>
 	 * @Method Name : insertCpnMngProc
 	 * @date : 2019. 10. 12.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자					변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 12  		신호석			                    최초 작성 
+	 *	2019. 10. 12  		뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param couponVO
@@ -135,12 +135,12 @@ public class CouponManageServiceImpl extends EgovAbstractServiceImpl implements 
 	 * </pre>
 	 * @Method Name : selectCpnMngDetail
 	 * @date : 2019. 10. 12.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자					변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 12  		신호석			                    최초 작성 
+	 *	2019. 10. 12  		뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param couponVO
@@ -158,12 +158,12 @@ public class CouponManageServiceImpl extends EgovAbstractServiceImpl implements 
 	 * </pre>
 	 * @Method Name : deleteCpnMngProc
 	 * @date : 2019. 10. 12.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자					변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 12  		신호석			                    최초 작성 
+	 *	2019. 10. 12  		뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param couponVO
@@ -181,12 +181,12 @@ public class CouponManageServiceImpl extends EgovAbstractServiceImpl implements 
 	 * </pre>
 	 * @Method Name : updateCpnMngProc
 	 * @date : 2019. 10. 12.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자					변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 12  		신호석			                    최초 작성 
+	 *	2019. 10. 12  		뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param couponVO

@@ -31,12 +31,12 @@ public class OffClassMentoServiceImpl extends EgovAbstractServiceImpl implements
 	 * </pre>
 	 * @Method Name : selectClassList
 	 * @date : 2019. 9. 16.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일			작성자					변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 9. 16  신호석			                    최초 작성 
+	 *	2019. 9. 16  뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * @param classVO
 	 * @return Map<String, Object>

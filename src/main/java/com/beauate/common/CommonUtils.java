@@ -19,12 +19,12 @@ public class CommonUtils {
 	 * </pre>
 	 * @Method Name : encryption
 	 * @date : 2019. 5. 17.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	2019. 5. 17.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param userPassword
@@ -67,7 +67,7 @@ public class CommonUtils {
      * @param len : 생성할 난수의 길이
      * @param dupCd : 중복 허용 여부 (1: 중복허용, 2:중복제거)
      * 
-     * Created by 신호석
+     * Created by 뷰아떼1
      */
     public String numberGen(int len, int dupCd ) {
         

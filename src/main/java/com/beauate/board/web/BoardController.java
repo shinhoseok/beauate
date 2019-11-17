@@ -40,12 +40,12 @@ public class BoardController {
 	 * </pre>
 	 * @Method Name : selectBoardList
 	 * @date : 2019. 5. 12.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자				변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 12.		신호석				최초 작성 
+	 *	2019. 5. 12.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param boardVO
@@ -69,12 +69,12 @@ public class BoardController {
 	 * </pre>
 	 * @Method Name : selectBoardList
 	 * @date : 2019. 5. 12.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자				변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 12.		신호석				최초 작성 
+	 *	2019. 5. 12.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param boardVO
@@ -105,12 +105,12 @@ public class BoardController {
 	 * </pre>
 	 * @Method Name : selectBoardDetail
 	 * @date : 2019. 5. 12.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자				변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 12.		신호석				최초 작성 
+	 *	2019. 5. 12.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param boardVO
@@ -139,12 +139,12 @@ public class BoardController {
 	 * </pre>
 	 * @Method Name : selectBoardNextPrev
 	 * @date : 2019. 10. 12.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자				변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 12.		신호석				최초 작성 
+	 *	2019. 10. 12.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param boardVO
@@ -158,11 +158,11 @@ public class BoardController {
 		BoardVO resultVO = boardService.selectBoardNextPrev(boardVO);
 		model.addAttribute("boardVO", resultVO);
 		//공지사항 category4 중 이벤트 postsubtitle A 는 다른 JSP로
-		if(!StringUtil.isEmpty(resultVO.getPostSubTitle())) {
-			if(resultVO.getPostCategorySt().equals("4") && resultVO.getPostSubTitle().equals("A")) {
-				return "/board/boardEventDetail";
-			}
-		}
+//		if(!StringUtil.isEmpty(resultVO.getPostSubTitle())) {
+//			if(resultVO.getPostCategorySt().equals("4") && resultVO.getPostSubTitle().equals("A")) {
+//				return "/board/boardEventDetail";
+//			}
+//		}
 		
 		return "/board/boardDetail";
 	}
@@ -174,12 +174,12 @@ public class BoardController {
 	 * </pre>
 	 * @Method Name : insertCouponHistoryProc
 	 * @date : 2019. 10. 12.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자				변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 12.		신호석				최초 작성 
+	 *	2019. 10. 12.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param boardVO

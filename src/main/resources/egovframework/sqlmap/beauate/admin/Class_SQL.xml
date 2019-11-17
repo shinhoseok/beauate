@@ -29,8 +29,8 @@
 	설명 : 오프라인 클래스 등록
 	수정일                     수정자           수정내용
 	==========  ======  ===================
-	2019. 9.17     신호석           최초 생성
-	작성자 : 신호석
+	2019. 9.17     뷰아떼1           최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 9.17
 	-->
 	<insert id="insertOffClassProc" parameterType="userVO">
@@ -86,6 +86,9 @@
 					<when test="searchCondition == 'classTitle'">
 						AND c.c_title LIKE '%'|| #{searchKeyword} ||'%'
 					</when>
+					<when test="searchCondition == 'classCtSt'">
+						AND cd3.mcls_nm LIKE '%'|| #{searchKeyword} ||'%'
+					</when>
 				</choose>
 			</if>
 			<if test="classAreaSt != null and classAreaSt != ''">
@@ -106,8 +109,8 @@
 	  설명 : 오프라인클래스 관리 리스트
 	수정일     		 수정자 	 수정내용
 	==========  ======  ===================
-	2019. 9.12	신호석		최초 생성
-	작성자 : 신호석
+	2019. 9.12	뷰아떼1		최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 9.12
 	-->	
 	<select id="selectClassMngList" parameterType="classVO" resultMap="classMap">
@@ -146,6 +149,7 @@
 			cd2.mcls_nm c_st_nm,
 			c.c_gb,
 			c.c_category_st,
+			cd3.mcls_cd as classCtStNm,
 			c.c_area_st,
 			cd.mcls_nm c_area_st_nm,
 			c.c_title,
@@ -161,7 +165,8 @@
 		FROM
 			off_class c 
 			LEFT JOIN common_cd_scls cd ON (c.c_area_st = cd.mcls_cd AND cd.lcls_cd='ARA')
-			LEFT JOIN common_cd_scls cd2 ON (c.c_st = cd.mcls_cd AND cd.lcls_cd='CST')
+			LEFT JOIN common_cd_scls cd2 ON (c.c_st = cd2.mcls_cd AND cd2.lcls_cd='CST')
+			LEFT JOIN common_cd_scls cd3 ON (c.c_category_st = cd3.mcls_cd AND cd3.lcls_cd='CCT')
 		<include refid="offClassGubunSql"/>
 			) A
 		WHERE A.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
@@ -172,13 +177,16 @@
 	  설명 : 오프라인클래스 관리 카운트
 	수정일     		 수정자 	 수정내용
 	==========  ======  ===================
-	2019. 9.12	신호석		최초 생성
-	작성자 : 신호석
+	2019. 9.12	뷰아떼1		최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 9.12
 	-->	
 	<select id="selectClassMngListCnt" parameterType="classVO" resultType="int">
 		<![CDATA[
 		SELECT COUNT (*) CNT FROM off_class c 
+		LEFT JOIN common_cd_scls cd ON (c.c_area_st = cd.mcls_cd AND cd.lcls_cd='ARA')
+		LEFT JOIN common_cd_scls cd2 ON (c.c_st = cd2.mcls_cd AND cd2.lcls_cd='CST')
+		LEFT JOIN common_cd_scls cd3 ON (c.c_category_st = cd3.mcls_cd AND cd3.lcls_cd='CCT')
 		]]>
 		<include refid="offClassGubunSql"/>
 	</select>
@@ -188,8 +196,8 @@
 	  설명 : 오프라인클래스 관리 상세
 	수정일     		 수정자 	 수정내용
 	==========  ======  ===================
-	2019. 9.12	신호석		최초 생성
-	작성자 : 신호석
+	2019. 9.12	뷰아떼1		최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 9.12
 	-->	
 	<select id="selectClassMngDetail" parameterType="classVO" resultMap="classMap">
@@ -235,8 +243,8 @@
 	  설명 : 프로그램 수정
 	수정일      		수정자  	수정내용
 	==========  ======  ===================
-	2019. 9.13	신호석		최초 생성
-	작성자 : 신호석
+	2019. 9.13	뷰아떼1		최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 9.13
 	-->	
 	<update id="updateClassMngProc" parameterType="classVO">
@@ -302,8 +310,8 @@
 	  설명 : 프로그램 수정
 	수정일      		수정자  	수정내용
 	==========  ======  ===================
-	2019. 9.13	신호석		최초 생성
-	작성자 : 신호석
+	2019. 9.13	뷰아떼1		최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 9.13
 	-->	
 	<update id="deleteClassMngProc" parameterType="classVO">

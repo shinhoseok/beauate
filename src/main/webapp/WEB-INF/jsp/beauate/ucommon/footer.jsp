@@ -8,15 +8,15 @@
 		</div>
 		<div class="foot-info">
 			<ul class="foot-nav">
-				<li><a href="javascript:alert('준비중 입니다.');">개인정보취급방침</a></li>
+				<li><a href="https://docs.google.com/document/d/1m_I1l9hSjZQIxQt1Yk61F5PXLw57SLy9aAUpmJ4TfL8/edit?usp=sharing" target="_blank">개인정보취급방침</a></li>
 				<li><a href="https://docs.google.com/document/d/1bnaICcR8reoAvfMxg2wP8jGKy0V3_SC0X6Yv4cwkctc/edit" target="_blank">이용약관</a></li>
-				<li><a href="javascript:alert('준비중 입니다.');">멘토문의</a></li>
+				<li><a href="${basePath}/mento/a/n/mentoApply.do">멘토지원</a></li>
 				<li><a href="${basePath}/common/a/n/portalAdminBridge.do">관리자</a></li>
 			</ul>
 			<ul class="foot-sns">
-				<li class="sns-inst"><a href="javascript:alert('준비중 입니다.');">Instagram</a></li>
+				<li class="sns-inst"><a href="https://www.instagram.com/beauate" target="_blank">Instagram</a></li>
 				<li class="sns-face"><a href="javascript:alert('준비중 입니다.');">facebook</a></li>
-				<li class="sns-blog"><a href="javascript:alert('준비중 입니다.');">blog</a></li>
+				<li class="sns-blog"><a href="https://blog.naver.com/beauate" target="_blank">blog</a></li>
 			</ul>
 			<div class="foot-deinfo">
 				<span>대표자 :  박소현</span>

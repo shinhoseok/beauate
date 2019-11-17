@@ -39,12 +39,12 @@ public class ProgramServiceImpl extends EgovAbstractServiceImpl implements Progr
 	 * </pre>
 	 * @Method Name : selectProgramList
 	 * @date : 2019. 5. 12.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자				변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 12.		신호석				최초 작성 
+	 *	2019. 5. 12.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param programVO
@@ -88,12 +88,12 @@ public class ProgramServiceImpl extends EgovAbstractServiceImpl implements Progr
 	 * </pre>
 	 * @Method Name : selectProgram
 	 * @date : 2019. 5. 16.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자				변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 16.		신호석				최초 작성 
+	 *	2019. 5. 16.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see kr.co.enkiadmin.admin.program.service.ProgramService#selectProgram(kr.co.enkiadmin.admin.program.service.ProgramVO, org.springframework.ui.ModelMap)
@@ -112,12 +112,12 @@ public class ProgramServiceImpl extends EgovAbstractServiceImpl implements Progr
 	 * </pre>
 	 * @Method Name : pgmParamChk
 	 * @date : 2019. 5. 17.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자				변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	2019. 5. 17.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see kr.co.enkiadmin.admin.program.service.ProgramService#pgmParamChk(kr.co.enkiadmin.admin.program.service.ProgramVO, org.springframework.ui.ModelMap)
@@ -141,12 +141,12 @@ public class ProgramServiceImpl extends EgovAbstractServiceImpl implements Progr
 	 * </pre>
 	 * @Method Name : insertProgram
 	 * @date : 2019. 5. 17.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자				변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 17.		신호석				최초 작성 
+	 *	2019. 5. 17.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see kr.co.enkiadmin.admin.program.service.ProgramService#insertProgram(kr.co.enkiadmin.admin.program.service.ProgramVO, org.springframework.ui.ModelMap)
@@ -166,12 +166,12 @@ public class ProgramServiceImpl extends EgovAbstractServiceImpl implements Progr
 	 * </pre>
 	 * @Method Name : updateProgram
 	 * @date : 2019. 5. 18.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자				변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 18.		신호석				최초 작성 
+	 *	2019. 5. 18.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see kr.co.enkiadmin.admin.program.service.ProgramService#updateProgram(kr.co.enkiadmin.admin.program.service.ProgramVO)
@@ -190,12 +190,12 @@ public class ProgramServiceImpl extends EgovAbstractServiceImpl implements Progr
 	 * </pre>
 	 * @Method Name : deleteProgram
 	 * @date : 2019. 5. 18.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자				변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 18.		신호석				최초 작성 
+	 *	2019. 5. 18.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see kr.co.enkiadmin.admin.program.service.ProgramService#deleteProgram(kr.co.enkiadmin.admin.program.service.ProgramVO)
@@ -218,12 +218,12 @@ public class ProgramServiceImpl extends EgovAbstractServiceImpl implements Progr
 	 * </pre>
 	 * @Method Name : selectProgramListForExel
 	 * @date : 2019. 5. 18.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자				변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 5. 18.		신호석				최초 작성 
+	 *	2019. 5. 18.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param programVO
@@ -247,12 +247,12 @@ public class ProgramServiceImpl extends EgovAbstractServiceImpl implements Progr
 	 * </pre>
 	 * @Method Name : getProgramChart
 	 * @date : 2019. 7. 1.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일					작성자				변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 7.  1.		신호석				최초 작성 
+	 *	2019. 7.  1.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param menuStatsVO

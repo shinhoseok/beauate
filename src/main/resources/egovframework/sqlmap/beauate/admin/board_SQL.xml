@@ -19,8 +19,8 @@
 	설명 : 게시판 등록
 	수정일                     수정자           수정내용
 	==========  ======  ===================
-	2019. 5.17     신호석           최초 생성
-	작성자 : 신호석
+	2019. 5.17     뷰아떼1           최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 5.17
 	-->
 	<insert id="insertBoardMngProc" parameterType="boardVO">
@@ -83,8 +83,8 @@
 	  설명 : 게시판 관리 리스트
 	수정일      		수정자  	수정내용
 	==========  ======  ===================
-	2019. 5.12	신호석		최초 생성
-	작성자 : 신호석
+	2019. 5.12	뷰아떼1		최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 5.12
 	-->		
 	<select id="selectBoardMngList" parameterType="boardVO" resultMap="boardResultMap">
@@ -145,8 +145,8 @@
 	  설명 : 게시판 관리 리스트 카운트
 	수정일     		 수정자 	 수정내용
 	==========  ======  ===================
-	2019. 5.12	신호석		최초 생성
-	작성자 : 신호석
+	2019. 5.12	뷰아떼1		최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 5.12
 	-->	
 	<select id="selectBoardMngListCnt" parameterType="boardVO" resultType="int">
@@ -161,8 +161,8 @@
 	  설명 : 게시판 관리 상세 조회
 	수정일      		수정자  	수정내용
 	==========  ======  ===================
-	2019. 5.16 	 신호석 	 최초 생성
-	작성자 : 신호석
+	2019. 5.16 	 뷰아떼1 	 최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 5.16
 	-->	
 	<select id="selectBoardMngDetail" parameterType="boardVO" resultMap="boardResultMap">
@@ -187,8 +187,8 @@
 	  설명 : 게시판 관리 수정
 	수정일      		수정자  	수정내용
 	==========  ======  ===================
-	2019. 5.13	신호석		최초 생성
-	작성자 : 신호석
+	2019. 5.13	뷰아떼1		최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 5.13
 	-->	
 	<update id="updateBoardMngProc" parameterType="boardVO">
@@ -209,8 +209,8 @@
 	  설명 : 게시판 관리 삭제
 	수정일      		수정자  	수정내용
 	==========  ======  ===================
-	2019. 5.13	신호석		최초 생성
-	작성자 : 신호석
+	2019. 5.13	뷰아떼1		최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 5.13
 	-->	
 	<update id="deleteBoardMngProc" parameterType="boardVO">
@@ -226,8 +226,8 @@
 	  설명 : 게시판 관리 상세 다음글, 이전글
 	수정일      		수정자  	수정내용
 	==========  ======  ===================
-	2019. 10.16 	 신호석 	 최초 생성
-	작성자 : 신호석
+	2019. 10.16 	 뷰아떼1 	 최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2019. 10.16
 	-->	
 	<select id="selectBoardNextPrev" parameterType="boardVO" resultMap="boardResultMap">
@@ -239,7 +239,8 @@
 			   a.post_title,
 			   a.post_sub_title,
 			   a.post_ctt,
-			   a.post_fl
+			   a.post_fl,
+			   a.cpn_sq
 		  FROM ADMIN_POST a
 		<where>
 			<if test="nextYn != null and nextYn != ''">

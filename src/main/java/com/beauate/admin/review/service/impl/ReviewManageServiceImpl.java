@@ -38,12 +38,12 @@ public class ReviewManageServiceImpl extends EgovAbstractServiceImpl implements 
 	 * </pre>
 	 * @Method Name : selectReviewList
 	 * @date : 2019. 10. 17.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 17.		신호석				최초 작성 
+	 *	2019. 10. 17.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * @param reviewVO
 	 * @return Map<String, Object>
@@ -87,12 +87,12 @@ public class ReviewManageServiceImpl extends EgovAbstractServiceImpl implements 
 	 * </pre>
 	 * @Method Name : updateReviewProc
 	 * @date : 2019. 10. 16.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일			작성자					변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	2019. 10. 16  뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * @param reviewVO
 	 * @return void
@@ -117,12 +117,12 @@ public class ReviewManageServiceImpl extends EgovAbstractServiceImpl implements 
 	 * </pre>
 	 * @Method Name : selectReviewMngDetail
 	 * @date : 2019. 10. 16.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일			작성자					변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	2019. 10. 16  뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * @param reviewVO
 	 * @return ReviewVO
@@ -140,12 +140,12 @@ public class ReviewManageServiceImpl extends EgovAbstractServiceImpl implements 
 	 * </pre>
 	 * @Method Name : insertCommentMngProc
 	 * @date : 2019. 10. 16.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일			작성자					변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	2019. 10. 16  뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * @param commentVO
 	 * @return void
@@ -163,12 +163,12 @@ public class ReviewManageServiceImpl extends EgovAbstractServiceImpl implements 
 	 * </pre>
 	 * @Method Name : updateCommentProc
 	 * @date : 2019. 10. 16.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일			작성자					변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	2019. 10. 16  뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * @param commentVO
 	 * @return Integer
@@ -185,12 +185,12 @@ public class ReviewManageServiceImpl extends EgovAbstractServiceImpl implements 
 	 * </pre>
 	 * @Method Name : deleteCommentProc
 	 * @date : 2019. 10. 16.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일			작성자					변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 10. 16  신호석			                    최초 작성 
+	 *	2019. 10. 16  뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * @param commentVO
 	 * @return void

@@ -8,7 +8,7 @@
 			<ul class="header-util header-util-left">
 				<li><a href="${basePath}/offclass/a/t/selectOffClassList.do">오프라인 클래스</a></li>
 				<li><a href="javascript:void(0);" onclick="javascript:fn_onlineClass();">온라인 클래스</a></li>
-				<li><a href="${basePath}/board/a/t/selectBoardList.do">제품소개</a></li>
+				<li><a href="${basePath}/board/a/t/selectBoardList.do">뷰티정보</a></li>
 				<li><a href="${basePath}/intro/a/n/intro.do"">뷰아떼 스토리</a></li>
 			</ul>
 			<ul class="header-util header-util-right">

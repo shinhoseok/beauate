@@ -8,14 +8,14 @@ import com.beauate.common.service.CommDefaultVO;
  * * 프로그램 정보 *
  * 1. Package	: com.beauate.admin.role.service
  * 2. FileName	: RoleVO.java
- * 3. 작성자		: 신호석
+ * 3. 작성자		: 뷰아떼1
  * 4. 작성일		: 2019. 05. 18
  * 5. 설명		: 권한 메뉴의 관련 정보를 담고 있는 VO 파일
  * 6. 수정이력
  * @
  * @  수정일				수정자			수정내용
  * @ --------------		---------		-------------------------------
- * @  2019. 05. 18		신호석			최초생성
+ * @  2019. 05. 18		뷰아떼1			최초생성
  */
 
 @SuppressWarnings("serial")

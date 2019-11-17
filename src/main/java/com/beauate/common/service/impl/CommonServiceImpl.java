@@ -30,12 +30,12 @@ public class CommonServiceImpl extends EgovAbstractServiceImpl implements Common
 	 * </pre>
 	 * @Method Name : selectMenuRole
 	 * @date : 2019. 6. 3.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 6. 3.		신호석				최초 작성 
+	 *	2019. 6. 3.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see kr.co.enkiadmin.common.service.CommonService#selectMenuRole(kr.co.enkiadmin.admin.menu.service.MenuVO)
@@ -55,12 +55,12 @@ public class CommonServiceImpl extends EgovAbstractServiceImpl implements Common
 	 * </pre>
 	 * @Method Name : selectSearchMenuId
 	 * @date : 2019. 6. 3.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 6. 3.		신호석				최초 작성 
+	 *	2019. 6. 3.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see kr.co.enkiadmin.common.service.CommonService#selectSearchMenuId(kr.co.enkiadmin.admin.menu.service.MenuVO)
@@ -85,12 +85,12 @@ public class CommonServiceImpl extends EgovAbstractServiceImpl implements Common
 	 * </pre>
 	 * @Method Name : selectTopMenuList
 	 * @date : 2019. 6. 3.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 6. 3.		신호석				최초 작성 
+	 *	2019. 6. 3.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see kr.co.enkiadmin.common.service.CommonService#selectTopMenuList(kr.co.enkiadmin.admin.menu.service.MenuVO)
@@ -110,12 +110,12 @@ public class CommonServiceImpl extends EgovAbstractServiceImpl implements Common
 	 * </pre>
 	 * @Method Name : selectPortalAdminMenu
 	 * @date : 2019. 6. 29.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 6. 29.		신호석				최초 작성 
+	 *	2019. 6. 29.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @param menuVO
@@ -134,12 +134,12 @@ public class CommonServiceImpl extends EgovAbstractServiceImpl implements Common
 	 * </pre>
 	 * @Method Name : selectSubTitleList
 	 * @date : 2019. 6. 3.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 6. 3.		신호석				최초 작성 
+	 *	2019. 6. 3.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see kr.co.enkiadmin.common.service.CommonService#selectSubTitleList(kr.co.enkiadmin.admin.menu.service.MenuVO)
@@ -158,12 +158,12 @@ public class CommonServiceImpl extends EgovAbstractServiceImpl implements Common
 	 * </pre>
 	 * @Method Name : selectLeftMenuList
 	 * @date : 2019. 6. 3.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 6. 3.		신호석				최초 작성 
+	 *	2019. 6. 3.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see kr.co.enkiadmin.common.service.CommonService#selectLeftMenuList(kr.co.enkiadmin.admin.menu.service.MenuVO)
@@ -183,12 +183,12 @@ public class CommonServiceImpl extends EgovAbstractServiceImpl implements Common
 	 * </pre>
 	 * @Method Name : selectTopMenuBridge
 	 * @date : 2019. 6. 3.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 6. 3.		신호석				최초 작성 
+	 *	2019. 6. 3.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see kr.co.enkiadmin.common.service.CommonService#selectTopMenuBridge(kr.co.enkiadmin.admin.menu.service.MenuVO)
@@ -207,12 +207,12 @@ public class CommonServiceImpl extends EgovAbstractServiceImpl implements Common
 	 * </pre>
 	 * @Method Name : selectLeftMenuUrl
 	 * @date : 2019. 6. 29.
-	 * @author : 신호석
+	 * @author : 뷰아떼1
 	 * @history : 
 	 *	-----------------------------------------------------------------------
 	 *	변경일				작성자						변경내용  
 	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 6. 29.		신호석				최초 작성 
+	 *	2019. 6. 29.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
 	 * 
 	 * @see kr.co.enkiadmin.common.service.CommonService#selectLeftMenuUrl(java.lang.String)

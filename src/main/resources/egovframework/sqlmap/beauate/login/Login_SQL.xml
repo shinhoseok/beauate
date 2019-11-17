@@ -8,8 +8,8 @@
 	  설명 : 로그인 사용자 정보
 	수정일      수정자  수정내용
 	==========  ======  ===================
-	2016. 6.3   신호석  최초 생성
-	작성자 : 신호석
+	2016. 6.3   뷰아떼1  최초 생성
+	작성자 : 뷰아떼1
 	최초작성일 : 2016. 6.3
 	-->		
 	<select id="selectLoginUserInfo" parameterType="loginVO" resultType="loginVO">
