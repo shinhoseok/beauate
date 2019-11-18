@@ -106,7 +106,7 @@
 			ORDER BY B.post_sub_title
 			</when>
 			<otherwise>
-			ORDER BY B.post_dt
+			ORDER BY B.post_sq
 			</otherwise>
 		</choose>
 		<choose>
