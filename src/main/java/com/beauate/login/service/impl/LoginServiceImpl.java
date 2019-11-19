@@ -3,12 +3,14 @@ package com.beauate.login.service.impl;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage.RecipientType;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.mail.MailException;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.beauate.admin.role.service.RoleVO;
@@ -27,8 +29,11 @@ public class LoginServiceImpl implements LoginService {
 
 	protected Log log = LogFactory.getLog(this.getClass());
 	
+//	@Resource(name="mailSender")
+//	private MailSender mailSender;
+	
 	@Resource(name="mailSender")
-	private MailSender mailSender;
+	private JavaMailSender mailSender;
 	
 	@Resource(name="propertiesService")
 	private EgovPropertyService propertiesService;
@@ -59,14 +64,23 @@ public class LoginServiceImpl implements LoginService {
 		String secureKey = "";
 		log.debug(">>> selectPwdSearch impl : "+emailAddr+" , "+ propertiesService.getString("mail.from.adress"));
 		try {
-			SimpleMailMessage mailMessage = new SimpleMailMessage();
-			mailMessage.setTo(emailAddr);
-			mailMessage.setFrom(propertiesService.getString("mail.from.adress"));
-			mailMessage.setSubject(propertiesService.getString("mail.title"));
+//			SimpleMailMessage mailMessage = new SimpleMailMessage();
+//			mailMessage.setTo(emailAddr);
+//			mailMessage.setFrom(propertiesService.getString("mail.from.adress"));
+//			mailMessage.setSubject(propertiesService.getString("mail.title"));
+//			//인증키생성
+//			secureKey = commonUtils.numberGen(6,2);
+//			mailMessage.setText(propertiesService.getString("mail.text")+" "+secureKey);
+//			mailSender.send(mailMessage);
+			
 			//인증키생성
 			secureKey = commonUtils.numberGen(6,2);
-			mailMessage.setText(propertiesService.getString("mail.text")+" "+secureKey);
-			mailSender.send(mailMessage);
+			MimeMessage mimeMessage = mailSender.createMimeMessage();
+			mimeMessage.setFrom(new InternetAddress(propertiesService.getString("mail.from.adress")));
+			mimeMessage.addRecipient(RecipientType.TO, new InternetAddress(emailAddr));
+			mimeMessage.setSubject(propertiesService.getString("mail.title"));
+			mimeMessage.setText("<b>인증키는 "+secureKey+"</b>", "UTF-8", "html");
+			mailSender.send(mimeMessage);
 		} catch(MailException e) {
 			secureKey = "";
 			log.error(">>> selectPwdSearch impl 메일발송실패");

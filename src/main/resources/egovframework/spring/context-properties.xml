@@ -9,7 +9,6 @@
 	        	<entry key="pageSize" value="5"/>
 	        	<entry key="mail.from.adress" value="${Mail.username}"/>
 	        	<entry key="mail.title" value="${Mail.title}"/>
-	        	<entry key="mail.text" value="${Mail.text}"/>
 	        	<entry key="discountPercent" value="20"/>
 	        </map>
 		</property>
