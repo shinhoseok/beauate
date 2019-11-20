@@ -30,6 +30,16 @@ public class JjimVO extends CommDefaultVO implements Serializable {
 	private String imgSrc1;
 	/** 클래스 카테고리 */
 	private String classCt;
+	/** 회원 휴대폰번호 */
+	private String mblPno;
+
+	public String getMblPno() {
+		return mblPno;
+	}
+
+	public void setMblPno(String mblPno) {
+		this.mblPno = mblPno;
+	}
 
 	public String getClassCt() {
 		return classCt;

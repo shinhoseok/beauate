@@ -11,6 +11,7 @@
 				<li><a href="https://docs.google.com/document/d/1m_I1l9hSjZQIxQt1Yk61F5PXLw57SLy9aAUpmJ4TfL8/edit?usp=sharing" target="_blank">개인정보취급방침</a></li>
 				<li><a href="https://docs.google.com/document/d/1bnaICcR8reoAvfMxg2wP8jGKy0V3_SC0X6Yv4cwkctc/edit" target="_blank">이용약관</a></li>
 				<li><a href="${basePath}/mento/a/n/mentoApply.do">멘토지원</a></li>
+				<li><a href="${basePath}/offclassm/r/n/selectOffClassChart.do">멘토</a></li>
 				<li><a href="${basePath}/common/a/n/portalAdminBridge.do">관리자</a></li>
 			</ul>
 			<ul class="foot-sns">

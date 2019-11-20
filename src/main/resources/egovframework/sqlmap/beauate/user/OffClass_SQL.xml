@@ -102,4 +102,26 @@
 			atch_file_id = #{atchFileId}
 			AND file_cn LIKE 'S%'
 	</select>
+	
+	<!-- 
+	쿼리명 : 멘토 오프라인 클래스 리스트 차트(결재,찜)
+	  설명 : 멘토 오프라인 클래스 리스트 차트(결재,찜)
+	수정일      		수정자  	수정내용
+	==========  ======  ===================
+	2019. 9.13	뷰아떼1		최초 생성
+	작성자 : 뷰아떼1
+	최초작성일 : 2019. 9.13
+	-->	
+	<select id="selectOffClassPayChart" parameterType="classVO" resultType="java.util.HashMap">
+		SELECT 
+			(SELECT COUNT(*) FROM pay b WHERE b.c_sq = a.c_sq) AS 결제,
+			(SELECT COUNT(*) FROM jjim c WHERE c.c_sq = a.c_sq) AS 찜,
+			a.c_title,
+			a.c_sq
+		FROM 
+			off_class a
+		WHERE 
+			a.u_sq = #{usrId}
+		GROUP BY a.c_sq
+	</select>
 </mapper>

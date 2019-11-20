@@ -31,10 +31,14 @@
 	<div class="gnbWrap">
 		<div id="menuArea">
 			<ul id="navi">
-				<li id="menu" class="selectMenu"><a href="${basePath}/offclassm/r/m/selectOffClassList.do">클래스관리</a></li>
-<!-- 				<li id="menu"><a href="#">포탈관리</a></li> -->
-<!-- 				<li id="menu"><a href="#">게시판관리</a></li> -->
-<!-- 				<li id="menu"><a href="#">설문관리</a></li> -->
+				<c:choose>
+					<c:when test="${alevel eq '1'}">
+						<li id="menu" class="selectMenu"><a href="${basePath}/offclassm/r/n/selectOffClassChart.do">멘토</a></li>
+<!-- 					<li id="menu"><a href="#">포탈관리</a></li> -->
+<!-- 					<li id="menu"><a href="#">게시판관리</a></li> -->
+<!-- 					<li id="menu"><a href="#">설문관리</a></li> -->
+					</c:when>
+				</c:choose>
 			</ul>
 		</div>
 	</div>

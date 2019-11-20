@@ -12,6 +12,8 @@
 <link rel="stylesheet" type="text/css" href="${cssPath}/worksite.css">
 <!-- 스크립트 선언 -->
 <script type="text/javascript" src="${scriptPath}/jquery/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="${scriptPath}/jui/chart/core.js" ></script>
+<script type="text/javascript" src="${scriptPath}/jui/chart/chart.min.js" ></script>
 </head>
 <body>
 	<!-- header Start -->
@@ -27,20 +29,17 @@
 			<div class="contents">
 				<p class="contentTitle">클래스 리스트</p>
 				<p class="sub_path">
-					<img src="${imagePath }/ico_home.png" width="10" height="9" />
-					<c:forEach items="${setSubTitleList}" var="list" >
-						>&nbsp;<c:out value="${list.menuName }"></c:out>
-					</c:forEach>
+					<p class="sub_path"><img src="${imagePath}/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;멘토&nbsp;〉&nbsp;클래스관리〉&nbsp;오프라인 클래스관리</p>
 				</p>
-				<form:form commandName="classVO" id="classVO" name="listForm" method="post" action="${basePath}/classmng/r/m/selectClassMngList.do">
+				<form:form commandName="classVO" id="classVO" name="listForm" method="post" action="${basePath}/offclassm/r/m/selectOffClassList.do">
 					<form:hidden path="classId"/>
 					<form:hidden path="pageIndex" id="pageIndex" />
 					<form:hidden path="sortSubject" />
 					<form:hidden path="sortDescend" />
 					<div class="selectBox">
 						<form:select path="searchCondition" class="w13p">
-							<form:option value="classUserId" label="회원번호"></form:option>
 							<form:option value="classTitle" label="클래스명"></form:option>
+							<form:option value="classCtSt" label="클래스카테고리"></form:option>
 						</form:select> 
 						<form:input path="searchKeyword" onkeydown="if(event.keyCode==13){javascript:fn_searchList(1);}" class="searchName" style="width: 737px;"></form:input>
 						<button type="button" class="grayBtn ico" onclick="javascript:fn_searchList(1);"><img src="${imagePath }/ico_search.png"> 검색</button>
@@ -50,7 +49,6 @@
 					<table class="tableList">
 						<caption></caption>
 						<colgroup>
-							<col width="15%">
 							<col width="*">
 							<col width="10%">
 							<col width="10%">
@@ -60,10 +58,6 @@
 							<col width="10%">
 						</colgroup>
 						<thead>
-							<th sortId="usrId" class="noBg">회원번호
-								<span class="arrow_descending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>
-								<span class="arrow_ascending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>									
-							</th>
 							<th sortId="classTitle">클래스 제목
 								<span class="arrow_descending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>
 								<span class="arrow_ascending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>									
@@ -80,7 +74,6 @@
 								<c:when test="${fn:length(rslt.selectList) != 0}">
 									<c:forEach items="${rslt.selectList}" var="list" varStatus="i">
 										<tr class="row" style="cursor: pointer;" onclick="javascript:fn_offClassDetail('${list.classId}');">
-											<td><c:out value="${list.classUserId}"/></td>
 											<td style="text-align: left;"><c:out value="${list.classTitle}"/></td>
 											<td>
 												<fmt:parseDate value="${list.classStartDt}" var="classStartDt" pattern="yyyy-MM-dd"/> 
@@ -149,7 +142,7 @@
 						</tbody>
 					</table>
 					<div class="T_btnLayer fr">
-						<a href="${basePath}/classmng/w/m/insertOffClass.do"><button type="button" class="blueBtn L">등록</button></a>
+						<a href="https://forms.gle/3Bi1mRtwbUTg8w3f9" target="_blank"><button type="button" class="blueBtn L">등록</button></a>
 					</div>
 				</div>
 				<!-- 페이징// -->
@@ -189,7 +182,7 @@ var fn_searchList = function(pageNo){
 var fn_offClassDetail = function(classId) {
 	var frm = document.listForm;
 	frm.classId.value = classId;
-	frm.action = "<c:url value='${basePath}/classmng/r/m/selectClassMngDetail.do'/>";
+	frm.action = "<c:url value='${basePath}/offclassm/r/n/selectOffClassDetail.do'/>";
 	frm.submit();
 };
 </script>

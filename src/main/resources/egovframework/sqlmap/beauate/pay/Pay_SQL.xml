@@ -22,6 +22,9 @@
 		<result column="pay_cost_no" property="payCostNo" />
 		<result column="c_big_no" property="classBigNo" />
 		<result column="c_apply_no" property="classApplyNo" />
+		<result column="u_email" property="emailAddr" />
+		<result column="u_nm" property="usrNm" />
+		<result column="phone_no" property="mblPno" />
 	</resultMap>
 
 	<sql id="payGubunSql">
@@ -297,5 +300,65 @@
 		WHERE
 			e.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
 	</select>
+	
+	<sql id="selectMentoPayUserGubun">
+		<where>
+			c_sq = #{classId}
+		</where>
+	</sql>
+	
+	<!-- 쿼리명 : 멘토페이지 결제한 사용자 리스트
+	설명 : 멘토페이지 결제한 사용자 리스트
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 5.17     뷰아떼1           최초 생성
+	작성자 : 뷰아떼1
+	최초작성일 : 2019. 5.17
+	-->
+	<select id="selectMentoPayUserList" parameterType="payVO" resultMap="payResultMap">
+		SELECT
+			e.*
+		FROM
+			(
+				SELECT
+					ROW_NUMBER() OVER(ORDER BY a.pay_dt DESC) RNUM,
+					a.c_sq,
+					a.pay_sq,
+					a.u_sq,
+					a.pay_dt,
+					c.mcls_nm AS payStNm,
+					a.pay_cost_no,
+					b.u_email,
+					b.u_nm,
+					b.phone_no
+				FROM
+					pay a
+					LEFT JOIN users b ON a.u_sq = b.u_sq
+					LEFT JOIN common_cd_scls c ON (a.pay_st = c.mcls_cd AND c.lcls_cd = 'PAY')
+				<include refid="selectMentoPayUserGubun"/>
+			) e
+		WHERE
+			e.RNUM BETWEEN #{firstIndex} AND #{lastIndex}
+	</select>
+	
+	<!-- 쿼리명 : 멘토페이지 결제한 사용자 리스트 카운트
+	설명 : 멘토페이지 결제한 사용자 리스트 카운트
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 5.17     뷰아떼1           최초 생성
+	작성자 : 뷰아떼1
+	최초작성일 : 2019. 5.17
+	-->
+	<select id="selectMentoPayUserListCnt" parameterType="payVO" resultType="java.lang.Integer">
+		SELECT
+			count(*) cnt
+		FROM
+			pay a
+			LEFT JOIN users b ON a.u_sq = b.u_sq
+			LEFT JOIN common_cd_scls c ON (a.pay_st = c.mcls_cd AND c.lcls_cd = 'PAY')
+		<include refid="selectMentoPayUserGubun"/>
+	</select>
+	
+	
 </mapper>
 

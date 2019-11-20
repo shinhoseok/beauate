@@ -59,7 +59,15 @@ public class PayVO extends CommDefaultVO implements Serializable {
 	private String payMethodNm;
 	/** 결제 상태명 */
 	private String payStNm;
+	/** 휴대폰번호 */
+	private String mblPno;
 
+	public String getMblPno() {
+		return mblPno;
+	}
+	public void setMblPno(String mblPno) {
+		this.mblPno = mblPno;
+	}
 	public String getClassStNm() {
 		return classStNm;
 	}
