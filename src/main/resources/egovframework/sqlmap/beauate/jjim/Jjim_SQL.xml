@@ -154,7 +154,7 @@
 	
 	<sql id="selectMentoJjimUserGubun">
 		<where>
-			c_sq = #{classId}
+			a.c_sq = #{classId}
 		</where>
 	</sql>
 	<!-- 쿼리명 : 멘토페이지 찜한 사용자 리스트
@@ -176,10 +176,12 @@
 					a.u_sq,
 					b.u_email,
 					b.u_nm,
-					b.phone_no
+					b.phone_no,
+					c.c_title
 				FROM
 					jjim a
 					LEFT JOIN users b ON a.u_sq = b.u_sq
+					LEFT JOIN off_class c ON c.c_sq = a.c_sq
 				<include refid="selectMentoJjimUserGubun"/>
 			) e
 		WHERE
@@ -200,6 +202,7 @@
 		FROM
 			jjim a
 			LEFT JOIN users b ON a.u_sq = b.u_sq
+			LEFT JOIN off_class c ON c.c_sq = a.c_sq
 		<include refid="selectMentoJjimUserGubun"/>
 	</select>
 </mapper>

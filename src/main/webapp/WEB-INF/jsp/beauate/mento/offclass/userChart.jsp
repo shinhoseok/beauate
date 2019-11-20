@@ -107,6 +107,7 @@ var fn_selectUserList = function(pageNo) {
 			 return;
 		},
 		success: function(r) { 
+			$("#target").children().remove();
 			$("#target").html(r);
 		}
 	}); 

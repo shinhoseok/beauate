@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.beauate.admin.classmng.service.ClassManageService;
 import com.beauate.admin.classmng.service.ClassVO;
+import com.beauate.jjim.service.JjimVO;
 import com.beauate.login.service.LoginVO;
 import com.beauate.mento.offclass.service.OffClassMentoService;
 import com.beauate.pay.service.PayVO;
@@ -87,6 +88,34 @@ public class OffClassMentoController {
 		model.addAttribute("payVO", payVO);
 		
 		return "/mento/offclass/payUserListAjax";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 멘토페이지 찜한 사용자 리스트
+	 * 2. 처리내용 :  멘토페이지 찜한 사용자 리스트
+	 * </pre>
+	 * @Method Name : selectMentoJjimUserList
+	 * @date : 2019. 10. 16.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 10. 16  뷰아떼1			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param payVO
+	 * @return void
+	 * @throws Exception
+	 */ 
+	@RequestMapping(value="/offclassm/r/n/selectMentoJjimUserList.do")
+	public String selectMentoJjimUserList(JjimVO jjimVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		
+		Map<String, Object> rsltMap = offClassMentoService.selectMentoJjimUserList(jjimVO);
+		model.addAttribute("rslt", rsltMap);
+		model.addAttribute("payVO", jjimVO);
+		
+		return "/mento/offclass/jjimUserListAjax";
 	}
 	
 	/**

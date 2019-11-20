@@ -303,7 +303,7 @@
 	
 	<sql id="selectMentoPayUserGubun">
 		<where>
-			c_sq = #{classId}
+			a.c_sq = #{classId}
 		</where>
 	</sql>
 	
