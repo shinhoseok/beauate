@@ -1,4 +1,4 @@
-package com.beauate.mento.offclass.service.impl;
+package com.beauate.mento.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,10 +11,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import com.beauate.admin.classmng.service.ClassManageDao;
+import com.beauate.admin.classmng.service.ClassManageService;
 import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.jjim.service.JjimDao;
 import com.beauate.jjim.service.JjimVO;
-import com.beauate.mento.offclass.service.OffClassMentoService;
+import com.beauate.mento.service.MentoService;
 import com.beauate.offclass.service.OffClassDao;
 import com.beauate.pay.service.PayDao;
 import com.beauate.pay.service.PayVO;
@@ -23,12 +24,16 @@ import com.google.gson.Gson;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
-@Service("offClassMentoService")
-public class OffClassMentoServiceImpl extends EgovAbstractServiceImpl implements OffClassMentoService {
+@Service("mentoService")
+public class MentoServiceImpl extends EgovAbstractServiceImpl implements MentoService {
+	
 	protected Log log = LogFactory.getLog(this.getClass());
 	
 	@Resource(name="classManageDao")
 	private ClassManageDao classManageDao;
+	
+	@Resource(name = "classManageService")
+	private ClassManageService classManageService;
 	
 	@Resource(name="OffClassDao")
 	private OffClassDao offClassDao;
@@ -213,4 +218,5 @@ public class OffClassMentoServiceImpl extends EgovAbstractServiceImpl implements
 		
 		return rsltMap;
 	}
+	
 }

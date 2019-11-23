@@ -1,4 +1,4 @@
-package com.beauate.mento.apply;
+package com.beauate.mento.apply.web;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

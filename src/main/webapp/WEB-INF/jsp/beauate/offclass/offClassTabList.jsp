@@ -149,7 +149,7 @@
 					<div class="content-inner">
 						<div class="besthair-title">
 							<h3>
-								<img src="${imagePath}/txt/text_best_hair.png" / alt="헤어클래스 베스트">
+								<img src="${imagePath}/txt/txt_offline.svg" / alt="헤어클래스 베스트">
 							</h3>
 							<span class="stxt">지금 뷰아떼에서 핫한 멘토 수업을 만나보세요</span> <span class="stitle-best">BEST</span>
 						</div>

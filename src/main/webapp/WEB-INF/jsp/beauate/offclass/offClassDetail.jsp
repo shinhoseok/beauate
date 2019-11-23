@@ -471,6 +471,7 @@ var fn_selectOffClassApply = function(classId) {
 };
 
 //지도
+//지도
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 mapOption = {
 	center : new kakao.maps.LatLng(37.56680, 126.97863), // 지도의 중심좌표
@@ -499,12 +500,10 @@ geocoder.addressSearch('${rslt.resultVO.classAdr }', function(result,
 		map.setCenter(coords);
 	}
 });
-// 마우스 드래그와 모바일 터치를 이용한 지도 이동을 막는다
-map.setDraggable(false);
 // 지도 타입 변경 컨트롤을 생성한다
 var mapTypeControl = new kakao.maps.MapTypeControl();
 // 지도의 상단 우측에 지도 타입 변경 컨트롤을 추가한다
-map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+// map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 // 지도에 확대 축소 컨트롤을 생성한다
 var zoomControl = new kakao.maps.ZoomControl();
 // 지도의 우측에 확대 축소 컨트롤을 추가한다

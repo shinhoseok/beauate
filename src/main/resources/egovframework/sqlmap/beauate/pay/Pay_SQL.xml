@@ -303,7 +303,15 @@
 	
 	<sql id="selectMentoPayUserGubun">
 		<where>
-			a.c_sq = #{classId}
+			<if test="usrId != null and  usrId != ''">
+			and a.u_sq = #{usrId}
+			</if>
+			<if test="classId != null and  classId != ''">
+			and a.c_sq = #{classId}
+			</if>
+			<if test="paySt != null and  paySt != ''">
+			and a.pay_st = #{paySt}
+			</if>
 		</where>
 	</sql>
 	

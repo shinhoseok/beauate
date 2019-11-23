@@ -330,4 +330,139 @@ public class ClassManageController {
 		log.debug(">>> After deleteClassMngProc, classVO : " + classVO);
 		return "redirect:/classmng/r/m/selectClassMngList.do";
 	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 클래스관리 리스트(헤어)
+	 * 2. 처리내용 : 클래스관리 리스트
+	 * </pre>
+	 * @Method Name : selectClassMngList
+	 * @date : 2019. 9. 17.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 17.		뷰아떼1				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param classVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/classHmng/r/m/selectClassMngList.do")
+	public String selectClassMngHairList(@ModelAttribute("classVO") ClassVO classVO, ModelMap model) throws Exception {
+		classVO.setClassCtSt("1");
+		Map<String, Object> rslt = classManageService.selectClassList(classVO);
+		model.addAttribute("rslt", rslt);
+		return "/admin/class/classList";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 클래스관리 리스트(메이크업)
+	 * 2. 처리내용 : 클래스관리 리스트
+	 * </pre>
+	 * @Method Name : selectClassMngList
+	 * @date : 2019. 9. 17.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 17.		뷰아떼1				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param classVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/classMmng/r/m/selectClassMngList.do")
+	public String selectClassMngMakeList(@ModelAttribute("classVO") ClassVO classVO, ModelMap model) throws Exception {
+		classVO.setClassCtSt("2");
+		Map<String, Object> rslt = classManageService.selectClassList(classVO);
+		model.addAttribute("rslt", rslt);
+		return "/admin/class/classList";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 클래스관리 리스트(속눈썹/반영구)
+	 * 2. 처리내용 : 클래스관리 리스트
+	 * </pre>
+	 * @Method Name : selectClassMngList
+	 * @date : 2019. 9. 17.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 17.		뷰아떼1				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param classVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/classSmng/r/m/selectClassMngList.do")
+	public String selectClassSokList(@ModelAttribute("classVO") ClassVO classVO, ModelMap model) throws Exception {
+		classVO.setClassCtSt("3");
+		Map<String, Object> rslt = classManageService.selectClassList(classVO);
+		model.addAttribute("rslt", rslt);
+		return "/admin/class/classList";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 클래스관리 리스트(피부)
+	 * 2. 처리내용 : 클래스관리 리스트
+	 * </pre>
+	 * @Method Name : selectClassMngList
+	 * @date : 2019. 9. 17.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 17.		뷰아떼1				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param classVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/classSkmng/r/m/selectClassMngList.do")
+	public String selectClassSkinList(@ModelAttribute("classVO") ClassVO classVO, ModelMap model) throws Exception {
+		classVO.setClassCtSt("4");
+		Map<String, Object> rslt = classManageService.selectClassList(classVO);
+		model.addAttribute("rslt", rslt);
+		return "/admin/class/classList";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 클래스관리 리스트(기타)
+	 * 2. 처리내용 : 클래스관리 리스트
+	 * </pre>
+	 * @Method Name : selectClassMngList
+	 * @date : 2019. 9. 17.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 17.		뷰아떼1				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param classVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/classEmng/r/m/selectClassMngList.do")
+	public String selectClassEtcList(@ModelAttribute("classVO") ClassVO classVO, ModelMap model) throws Exception {
+		classVO.setClassCtSt("5");
+		Map<String, Object> rslt = classManageService.selectClassList(classVO);
+		model.addAttribute("rslt", rslt);
+		return "/admin/class/classList";
+	}
 }

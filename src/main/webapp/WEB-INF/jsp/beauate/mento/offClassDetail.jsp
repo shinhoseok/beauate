@@ -153,9 +153,8 @@
 					</div>
 				</form:form>
 				<div class="T_btnLayer fr">
-					<a href="#" onclick="javascript:fn_updateClass();"><button type="button" class="blueBtn L">수정</button></a>
-					<a href="#" onclick="javascript:fn_deleteClass();"><button type="button" class="blueBtn L">삭제</button></a>
-					<a href="${basePath }/offclassm/r/m/selectOffClassList.do"><button type="button" class="blueBtn L">목록</button></a>
+					<a href="https://forms.gle/3Bi1mRtwbUTg8w3f9" target="_blank"><button type="button" class="blueBtn L">수정</button></a>
+					<a href="${basePath }/mento/r/n/selectOffClassList.do"><button type="button" class="blueBtn L">목록</button></a>
 				</div>
 			</div>
 		</div>
@@ -167,22 +166,6 @@
 	<!-- // footer -->
 	
 <script type="text/javascript">
-var fn_updateClass = function() {
-	var result = confirm("관리자에게 클래스 수정요청을 하시겠습니까?");
-	if(result) {
-		alert("해당 클래스의 수정사항이 접수되었습니다.\n상세내역은 구글폼에 작성해 주시기 바랍니다.");
-		var openNewWindow = window.open("about:blank");
-		openNewWindow.location.href="https://forms.gle/3Bi1mRtwbUTg8w3f9";
-	}
-};
-
-var fn_deleteClass = function() {
-	var result = confirm("관리자에게 클래스 삭제요청을 하시겠습니까?");
-	if(result) {
-		alert("해당 클래스의 삭제 요청이 접수되었습니다.");
-		location.href="${basePath}/offclassm/r/m/selectOffClassList.do";
-	}
-};
 </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.beauate.mento.offclass.web;
+package com.beauate.mento.web;
 
 import java.util.Map;
 
@@ -15,18 +15,80 @@ import com.beauate.admin.classmng.service.ClassManageService;
 import com.beauate.admin.classmng.service.ClassVO;
 import com.beauate.jjim.service.JjimVO;
 import com.beauate.login.service.LoginVO;
-import com.beauate.mento.offclass.service.OffClassMentoService;
+import com.beauate.mento.service.MentoService;
 import com.beauate.pay.service.PayVO;
 
 @Controller
-public class OffClassMentoController {
+public class MentoController {
 	protected Log log = LogFactory.getLog(this.getClass());
 	
-	@Resource(name = "offClassMentoService")
-	private OffClassMentoService offClassMentoService;
+	@Resource(name="mentoService")
+	private MentoService mentoService;
 	
 	@Resource(name = "classManageService")
 	private ClassManageService classManageService;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 클래스관리 리스트
+	 * 2. 처리내용 : 클래스관리 리스트
+	 * </pre>
+	 * @Method Name : selectClassMngList
+	 * @date : 2019. 9. 17.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 17.		뷰아떼1				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param classVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mento/r/n/selectOffClassList.do")
+	public String selectClassMngList(@ModelAttribute("classVO") ClassVO classVO, ModelMap model, LoginVO sessionVO) throws Exception {
+		classVO.setUsrId(sessionVO.getUsrId());
+		classVO.setMentoGb("Y");
+		Map<String, Object> rslt = mentoService.selectClassList(classVO);
+		model.addAttribute("rslt", rslt);
+		
+		model.addAttribute("alevel", "1");
+		model.addAttribute("blevel", "1");
+		model.addAttribute("clevel", "1");
+		return "/mento/offClassList";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 클래스관리 상세보기
+	 * 2. 처리내용 : 클래스관리 상세보기
+	 * </pre>
+	 * @Method Name : selectOffClassDetail
+	 * @date : 2019. 9. 17.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 17.		뷰아떼1				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param classVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/mento/r/n/selectOffClassDetail.do")
+	public String selectOffClassDetail(ClassVO classVO, ModelMap model) throws Exception {
+		ClassVO resultVO = classManageService.selectClassMngDetail(classVO);
+		model.addAttribute("resultVO", resultVO);
+		
+		model.addAttribute("alevel", "1");
+		model.addAttribute("blevel", "1");
+		model.addAttribute("clevel", "1");
+		return "/mento/offClassDetail";
+	}
 	
 	/**
 	 * <pre>
@@ -51,15 +113,15 @@ public class OffClassMentoController {
 	public String selectOffClassChart(ClassVO classVO, ModelMap model, LoginVO sessionVO) throws Exception {
 		
 		classVO.setUsrId(sessionVO.getUsrId());
-		Map<String, Object> rslt = offClassMentoService.selectOffClassChart(classVO);
+		Map<String, Object> rslt = mentoService.selectOffClassChart(classVO);
 		
 		model.addAttribute("rslt", rslt);
 		
 		model.addAttribute("alevel", "1");
-		model.addAttribute("blevel", "1");
+		model.addAttribute("blevel", "4");
 		model.addAttribute("clevel", "1");
 		
-		return "/mento/offclass/userChart";
+		return "/mento/userChart";
 	}
 	
 	/**
@@ -83,11 +145,11 @@ public class OffClassMentoController {
 	@RequestMapping(value="/offclassm/r/n/selectMentoPayUserList.do")
 	public String selectMentoPayUserList(PayVO payVO, ModelMap model, LoginVO sessionVO) throws Exception {
 		
-		Map<String, Object> rsltMap = offClassMentoService.selectMentoPayUserList(payVO);
+		Map<String, Object> rsltMap = mentoService.selectMentoPayUserList(payVO);
 		model.addAttribute("rslt", rsltMap);
 		model.addAttribute("payVO", payVO);
 		
-		return "/mento/offclass/payUserListAjax";
+		return "/mento/payUserListAjax";
 	}
 	
 	/**
@@ -111,73 +173,10 @@ public class OffClassMentoController {
 	@RequestMapping(value="/offclassm/r/n/selectMentoJjimUserList.do")
 	public String selectMentoJjimUserList(JjimVO jjimVO, ModelMap model, LoginVO sessionVO) throws Exception {
 		
-		Map<String, Object> rsltMap = offClassMentoService.selectMentoJjimUserList(jjimVO);
+		Map<String, Object> rsltMap = mentoService.selectMentoJjimUserList(jjimVO);
 		model.addAttribute("rslt", rsltMap);
 		model.addAttribute("payVO", jjimVO);
 		
-		return "/mento/offclass/jjimUserListAjax";
+		return "/mento/jjimUserListAjax";
 	}
-	
-	/**
-	 * <pre>
-	 * 1. 개요 : 클래스관리 리스트
-	 * 2. 처리내용 : 클래스관리 리스트
-	 * </pre>
-	 * @Method Name : selectClassMngList
-	 * @date : 2019. 9. 17.
-	 * @author : 뷰아떼1
-	 * @history : 
-	 *	-----------------------------------------------------------------------
-	 *	변경일				작성자						변경내용  
-	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 9. 17.		뷰아떼1				최초 작성 
-	 *	-----------------------------------------------------------------------
-	 * @param classVO
-	 * @param model
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "/offclassm/r/m/selectOffClassList.do")
-	public String selectClassMngList(@ModelAttribute("classVO") ClassVO classVO, ModelMap model, LoginVO sessionVO) throws Exception {
-		classVO.setUsrId(sessionVO.getUsrId());
-		classVO.setMentoGb("Y");
-		Map<String, Object> rslt = offClassMentoService.selectClassList(classVO);
-		model.addAttribute("rslt", rslt);
-		
-		model.addAttribute("alevel", "1");
-		model.addAttribute("blevel", "2");
-		model.addAttribute("clevel", "1");
-		return "/mento/offclass/offClassList";
-	}
-	
-	/**
-	 * <pre>
-	 * 1. 개요 : 클래스관리 상세보기
-	 * 2. 처리내용 : 클래스관리 상세보기
-	 * </pre>
-	 * @Method Name : selectOffClassDetail
-	 * @date : 2019. 9. 17.
-	 * @author : 뷰아떼1
-	 * @history : 
-	 *	-----------------------------------------------------------------------
-	 *	변경일				작성자						변경내용  
-	 *	----------- ------------------- ---------------------------------------
-	 *	2019. 9. 17.		뷰아떼1				최초 작성 
-	 *	-----------------------------------------------------------------------
-	 * @param classVO
-	 * @param model
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "/offclassm/r/n/selectOffClassDetail.do")
-	public String selectOffClassDetail(ClassVO classVO, ModelMap model) throws Exception {
-		ClassVO resultVO = classManageService.selectClassMngDetail(classVO);
-		model.addAttribute("resultVO", resultVO);
-		
-		model.addAttribute("alevel", "1");
-		model.addAttribute("blevel", "2");
-		model.addAttribute("clevel", "1");
-		return "/mento/offclass/offClassDetail";
-	}
-	
 }

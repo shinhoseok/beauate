@@ -29,7 +29,7 @@
 			<div class="contents">
 				<p class="contentTitle">클래스 리스트</p>
 				<p class="sub_path">
-					<p class="sub_path"><img src="${imagePath}/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;멘토&nbsp;〉&nbsp;클래스관리〉&nbsp;오프라인 클래스관리</p>
+					<p class="sub_path"><img src="${imagePath}/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;멘토&nbsp;〉&nbsp;클래스관리〉&nbsp;클래스 수정요청</p>
 				</p>
 				<form:form commandName="classVO" id="classVO" name="listForm" method="post" action="${basePath}/offclassm/r/m/selectOffClassList.do">
 					<form:hidden path="classId"/>
@@ -142,7 +142,7 @@
 						</tbody>
 					</table>
 					<div class="T_btnLayer fr">
-						<a href="https://forms.gle/3Bi1mRtwbUTg8w3f9" target="_blank"><button type="button" class="blueBtn L">등록</button></a>
+						<a href="https://forms.gle/3Bi1mRtwbUTg8w3f9" target="_blank"><button type="button" class="blueBtn L">수정</button></a>
 					</div>
 				</div>
 				<!-- 페이징// -->

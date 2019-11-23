@@ -3,7 +3,7 @@
 <div id="footer">
 	<div class="foot-inner">
 		<div class="flogo">
-			<h2>BEAUATE</h2>
+			<h2>BEAUATE ${ sessionScope.loginVO.menuRlDiv}</h2>
 			<p class="flogo-desc">미용교육전문 매거진, 뷰아뗴</p>
 		</div>
 		<div class="foot-info">
@@ -11,8 +11,10 @@
 				<li><a href="https://docs.google.com/document/d/1m_I1l9hSjZQIxQt1Yk61F5PXLw57SLy9aAUpmJ4TfL8/edit?usp=sharing" target="_blank">개인정보취급방침</a></li>
 				<li><a href="https://docs.google.com/document/d/1bnaICcR8reoAvfMxg2wP8jGKy0V3_SC0X6Yv4cwkctc/edit" target="_blank">이용약관</a></li>
 				<li><a href="${basePath}/mento/a/n/mentoApply.do">멘토지원</a></li>
-				<li><a href="${basePath}/offclassm/r/n/selectOffClassChart.do">멘토</a></li>
-				<li><a href="${basePath}/common/a/n/portalAdminBridge.do">관리자</a></li>
+				<li><a href="${basePath}/mento/r/n/selectOffClassList.do">멘토</a></li>
+<%-- 				<c:if test="${ sessionScope.loginVO.menuRlDiv == 'z'}"> --%>
+					<li><a href="${basePath}/common/a/n/portalAdminBridge.do">관리자</a></li>
+<%-- 				</c:if> --%>
 			</ul>
 			<ul class="foot-sns">
 				<li class="sns-inst"><a href="https://www.instagram.com/beauate" target="_blank">Instagram</a></li>
