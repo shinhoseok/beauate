@@ -45,7 +45,8 @@ public class ReviewManageController {
 	 */
 	@RequestMapping(value = "/review/r/m/selectReviewList.do")
 	public String selectReviewList(@ModelAttribute("reviewVO") ReviewVO reviewVO, ModelMap model) throws Exception {
-		
+		//관리자페이지
+		reviewVO.setAdminYn(true);
 		Map<String, Object> rsltMap = reviewManageService.selectReviewList(reviewVO);
 		model.addAttribute("rslt", rsltMap);
 		

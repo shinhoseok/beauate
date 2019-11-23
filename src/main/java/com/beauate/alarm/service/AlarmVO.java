@@ -20,7 +20,15 @@ public class AlarmVO extends CommDefaultVO implements Serializable {
 	private String mblPno;
 	/** 사용자이름 */
 	private String usrNm;
+	/** 클래스 제목 */
+	private String classTitle;
 	
+	public String getClassTitle() {
+		return classTitle;
+	}
+	public void setClassTitle(String classTitle) {
+		this.classTitle = classTitle;
+	}
 	public String getMblPno() {
 		return mblPno;
 	}

@@ -26,11 +26,13 @@
 			<%@ include file="/WEB-INF/jsp/beauate/mcommon/leftMenu.jsp"%>
 			<!-- left_menu End -->
 			<div class="contents">
-				<p class="contentTitle">후기 관리</p>
+				<p class="contentTitle">후기 리스트</p>
 				<!-- sub_path Start -->
-				<p class="sub_path"><img src="${imagePath}/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;멘토&nbsp;〉&nbsp;클래스 신청자 관리〉&nbsp;클래스 신청자 리스트</p>
+				<p class="sub_path">
+					<p class="sub_path"><img src="${imagePath}/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;멘토&nbsp;〉&nbsp;클래스 후기 관리〉&nbsp;후기 리스트</p>
+				</p>
 				<!-- sub_path End -->
-				<form:form commandName="reviewVO" id="reviewVO" name="listForm" method="post" action="${basePath}/review/r/m/selectReviewList.do">
+				<form:form commandName="reviewVO" id="reviewVO" name="listForm" method="post" action="${basePath}/mento/r/n/selectOffClassReviewList.do">
 					<form:hidden path="pageIndex" id="pageIndex" />
 					<form:hidden path="sortSubject" />
 					<form:hidden path="sortDescend" />
@@ -48,7 +50,6 @@
 						<table class="tableList">
 							<caption></caption>
 							<colgroup>
-								<col width="5%">
 								<col width="*">
 								<col width="10%">
 								<col width="8%">
@@ -57,11 +58,9 @@
 								<col width="8%">
 								<col width="10%">
 								<col width="10%">
-								<col width="10%">
 							</colgroup>
 							<thead>
-								<th class="noBg"><input type="checkbox" onclick="fn_AllCheck(this, 'reviewCheckBox');"/></th>
-								<th sortId="emailAddr">메일
+								<th sortId="emailAddr">클래스제목
 									<span class="arrow_descending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>
 									<span class="arrow_ascending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>
 								</th>
@@ -93,18 +92,13 @@
 									<span class="arrow_descending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>
 									<span class="arrow_ascending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>
 								</th>
-								<th sortId="delYn">삭제여부
-									<span class="arrow_descending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>
-									<span class="arrow_ascending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>
-								</th>
 							</thead>
 							<tbody>
 								<c:choose>
 									<c:when test="${rslt.selectListCnt != 0}">
 										<c:forEach items="${rslt.selectList}" var="list" varStatus="i">
 											<tr class="row" style="cursor: pointer;" onclick="javascript:fn_selectReviewMngDetail('${list.reviewId}','${list.commentId}');">
-												<td><input type="checkbox" name="reviewCheckBox" value="${list.reviewId}"/></td>
-												<td style="text-align: left;"><c:out value="${list.emailAddr}"/></td>
+												<td style="text-align: left;"><c:out value="${list.classTitle}"/></td>
 												<td><c:out value="${list.usrNm}"/></td>
 												<td><c:out value="${list.curriculum}"/></td>
 												<td><c:out value="${list.kindness}"/></td>
@@ -122,20 +116,19 @@
 														<td>N</td>
 													</c:otherwise>
 												</c:choose>
-												<td><c:out value="${list.delYn}"/></td>
 											</tr>
 										</c:forEach>
 									</c:when>
 									<c:otherwise>
-										<td colspan="10">데이터가 없습니다.</td>
+										<td colspan="8">데이터가 없습니다.</td>
 									</c:otherwise>
 								</c:choose>
 							</tbody>
 						</table>
-						<div class="T_btnLayer fr">
-							<a href="javascript:void(0);" onclick="fn_updateReviewMngProc('Y');"><button type="button" class="blueBtn L">삭제</button></a>
-							<a href="javascript:void(0);" onclick="fn_updateReviewMngProc('N');"><button type="button" class="blueBtn L">삭제취소</button></a>
-						</div>
+<!-- 						<div class="T_btnLayer fr"> -->
+<!-- 							<a href="javascript:void(0);" onclick="fn_updateReviewMngProc('Y');"><button type="button" class="blueBtn L">삭제</button></a> -->
+<!-- 							<a href="javascript:void(0);" onclick="fn_updateReviewMngProc('N');"><button type="button" class="blueBtn L">삭제취소</button></a> -->
+<!-- 						</div> -->
 					</div>
 				</form:form>
 				<!-- 페이징// -->
@@ -150,10 +143,6 @@
 		<!--container End-->
 	</div>
 	<!--wrap End-->
-	<form name="updateForm" id="updateForm" method="post" action="${basePath}/review/w/n/updateReviewMngProc.do">
-		<input type="hidden" id="reviewId" name="reviewId">
-		<input type="hidden" id="delYn" name="delYn">
-	</form>
 	<!-- footer // -->
 	<%@ include file="/WEB-INF/jsp/beauate/common/footer.jsp"%>
 	<!-- // footer -->
@@ -173,44 +162,9 @@ var fn_sort = function(obj) {
 	frm.submit();
 };
 
-//테이블 선택시 체크박스 선택
-// $("td").click(function(e) {
-// 	var chk = $(this).closest("tr").find("input:checkbox").get(0);
-// 	if(e.target != chk) {
-// 		chk.checked = !chk.checked;
-// 	}
-// });
-
-//후기삭제,취소
-var fn_updateReviewMngProc = function(delYn) {
-	if($("input[name='reviewCheckBox']:checked").length > 0) {
-		if(delYn == "Y") {
-			var result = confirm("선택하신 후기를 삭제처리 하시겠습니까?");
-		} else {
-			var result = confirm("선택하신 후기를 삭제취소 하시겠습니까?");
-		}
-		if(result) {
-			var reviewId = "";
-			var comFlag = "";
-			$("input[name='reviewCheckBox']:checked").each(function(i) {
-				if(i > 0) {
-					comFlag = ",";
-				}
-				reviewId = reviewId + comFlag + $(this).val();
-			});
-			var frm = document.updateForm;
-			frm.reviewId.value = reviewId;
-			frm.delYn.value = delYn;
-			frm.submit();
-		}
-	} else {
-		alert("발송 처리하실 알람을 선택해주세요.");
-	}
-};
-
 //후기리스트 상세보기
 var fn_selectReviewMngDetail = function(reviewId, commentId) {
-	location.href = "${basePath}/review/r/m/selectReviewMngDetail.do?reviewId="+reviewId+"&commentId="+commentId;
+	location.href = "${basePath}/mento/r/n/selectReviewMngDetail.do?reviewId="+reviewId+"&commentId="+commentId;
 };
 </script>
 </body>

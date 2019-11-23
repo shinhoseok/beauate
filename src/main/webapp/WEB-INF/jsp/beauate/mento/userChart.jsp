@@ -27,8 +27,8 @@
 			<%@ include file="/WEB-INF/jsp/beauate/mcommon/leftMenu.jsp"%>
 			<!-- left_menu End -->
 			<div class="contents">
-				<p class="contentTitle">클래스별 사용자 통계</p>
-				<p class="sub_path"><img src="${imagePath}/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;멘토&nbsp;〉&nbsp;클래스관리〉&nbsp;클래스별 사용자통계</p>
+				<p class="contentTitle">찜&결제 리스트</p>
+				<p class="sub_path"><img src="${imagePath}/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;멘토&nbsp;〉&nbsp;클래 신청자 관리〉&nbsp;찜&결제 리스트</p>
 				<!-- 차트 -->
 				<div class="potalBig_Menu" id="result" style="height: 300px;"></div><br/><br/>
 				<div id="target"></div>
@@ -93,9 +93,9 @@ var fn_selectUserList = function(pageNo) {
 	params.pageIndex = pageNo;
 	params.classId = chartClassId;
 	if(chartDataKey == "결제") {
-		url = "/offclassm/r/n/selectMentoPayUserList.do";
+		url = "/mento/r/n/selectMentoPayUserList.do";
 	} else { //찜
-		url = "/offclassm/r/n/selectMentoJjimUserList.do";
+		url = "/mento/r/n/selectMentoJjimUserList.do";
 	}
 	$.ajax({
 		url: url,

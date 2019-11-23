@@ -63,8 +63,6 @@ public class ReviewManageServiceImpl extends EgovAbstractServiceImpl implements 
 		
 		List<ReviewVO> selectList = null;
 		
-		//관리자페이지
-		reviewVO.setAdminYn(true);
 		//총 카운트 
 		int cnt = reviewDao.selectReviewListCnt(reviewVO);
 		paginationInfo.setTotalRecordCount(cnt);

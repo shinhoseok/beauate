@@ -460,6 +460,33 @@ public class ClassManageController {
 	 */
 	@RequestMapping(value = "/classEmng/r/m/selectClassMngList.do")
 	public String selectClassEtcList(@ModelAttribute("classVO") ClassVO classVO, ModelMap model) throws Exception {
+		classVO.setClassCtSt("6");
+		Map<String, Object> rslt = classManageService.selectClassList(classVO);
+		model.addAttribute("rslt", rslt);
+		return "/admin/class/classList";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 클래스관리 리스트(네일)
+	 * 2. 처리내용 : 클래스관리 리스트
+	 * </pre>
+	 * @Method Name : selectClassMngList
+	 * @date : 2019. 9. 17.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 9. 17.		뷰아떼1				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param classVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/classNmng/r/m/selectClassMngList.do")
+	public String selectClassNailList(@ModelAttribute("classVO") ClassVO classVO, ModelMap model) throws Exception {
 		classVO.setClassCtSt("5");
 		Map<String, Object> rslt = classManageService.selectClassList(classVO);
 		model.addAttribute("rslt", rslt);

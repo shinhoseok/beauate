@@ -3,7 +3,7 @@
 <div id="footer">
 	<div class="foot-inner">
 		<div class="flogo">
-			<h2>BEAUATE ${ sessionScope.loginVO.menuRlDiv}</h2>
+			<h2>BEAUATE</h2>
 			<p class="flogo-desc">미용교육전문 매거진, 뷰아뗴</p>
 		</div>
 		<div class="foot-info">

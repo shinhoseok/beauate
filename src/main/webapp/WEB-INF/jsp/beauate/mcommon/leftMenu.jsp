@@ -14,18 +14,18 @@
 							</c:if>
 						</div>
 					</li>
-					<li class="bigMenu"><a href="${basePath}/mento/r/n/selectMentoPayUserList1.do">클래스 신청자 관리</a>
+					<li class="bigMenu"><a href="${basePath}/mento/r/n/selectOffClassChart.do">클래스 신청자 관리</a>
 						<div class="subMenu">
 							<ul>
 								<li class="smallMenu"><a href="${basePath}/mento/r/n/selectOffClassChart.do">찜&결제 리스트</a></li>
-								<li class="smallMenu"><a href="${basePath}/mento/r/n/selectMentoPayUserList2.do">알람 신청 리스트</a></li>
+								<li class="smallMenu"><a href="${basePath}/mento/r/n/selectOffClassAlarmList.do">알람 신청 리스트</a></li>
 							</ul>
 						</div>
 					</li>
-					<li class="bigMenu"><a href="${basePath}/mento/r/n/selectMentohoogiList.do">후기 관리</a>
+					<li class="bigMenu"><a href="${basePath}/mento/r/n/selectOffClassReviewList.do">후기 관리</a>
 						<div class="subMenu">
 							<ul>
-								<li class="smallMenu"><a href="${basePath}/mento/r/n/selectMentohoogiList.do">후기관리 리스트</a></li>
+								<li class="smallMenu"><a href="${basePath}/mento/r/n/selectOffClassReviewList.do">후기관리 리스트</a></li>
 							</ul>
 						</div>
 					</li>
@@ -38,26 +38,26 @@
 							</ul>
 						</div>
 					</li>
-					<li class="bigMenu"><a href="${basePath}/mento/r/n/selectMentoPayUserList1.do">클래스 신청자 관리</a>
+					<li class="bigMenu"><a href="${basePath}/mento/r/n/selectOffClassChart.do">클래스 신청자 관리</a>
 						<div class="subMenu">
 							<c:if test="${clevel eq '1'}">
 								<ul>
 									<li class="selectsubMenu"><a href="${basePath}/mento/r/n/selectOffClassChart.do">찜&결제 리스트</a></li>
-									<li class="smallMenu"><a href="${basePath}/mento/r/n/selectMentoPayUserList2.do">알람 신청 리스트</a></li>
+									<li class="smallMenu"><a href="${basePath}/mento/r/n/selectOffClassAlarmList.do">알람 신청 리스트</a></li>
 								</ul>
 							</c:if>
 							<c:if test="${clevel eq '2'}">
 								<ul>
 									<li class="smallMenu"><a href="${basePath}/mento/r/n/selectOffClassChart.do">찜&결제 리스트</a></li>
-									<li class="selectsubMenu"><a href="${basePath}/mento/r/n/selectMentoPayUserList2.do">알람 신청 리스트</a></li>
+									<li class="selectsubMenu"><a href="${basePath}/mento/r/n/selectOffClassAlarmList.do">알람 신청 리스트</a></li>
 								</ul>
 							</c:if>
 						</div>
 					</li>
-					<li class="bigMenu"><a href="${basePath}/mento/r/n/selectMentohoogiList.do">후기 관리</a>
+					<li class="bigMenu"><a href="${basePath}/mento/r/n/selectOffClassReviewList.do">후기 관리</a>
 						<div class="subMenu">
 							<ul>
-								<li class="smallMenu"><a href="${basePath}/mento/r/n/selectMentohoogiList.do">후기관리 리스트</a></li>
+								<li class="smallMenu"><a href="${basePath}/mento/r/n/selectOffClassReviewList.do">후기관리 리스트</a></li>
 							</ul>
 						</div>
 					</li>
@@ -70,19 +70,19 @@
 							</ul>
 						</div>
 					</li>
-					<li class="bigMenu"><a href="${basePath}/mento/r/n/selectMentoPayUserList1.do">클래스 신청자 관리</a>
+					<li class="bigMenu"><a href="${basePath}/mento/r/n/selectOffClassChart.do">클래스 신청자 관리</a>
 						<div class="subMenu">
 							<ul>
 								<li class="smallMenu"><a href="${basePath}/mento/r/n/selectOffClassChart.do">찜&결제 리스트</a></li>
-								<li class="smallMenu"><a href="${basePath}/mento/r/n/selectMentoPayUserList2.do">알람 신청 리스트</a></li>
+								<li class="smallMenu"><a href="${basePath}/mento/r/n/selectOffClassAlarmList.do">알람 신청 리스트</a></li>
 							</ul>
 						</div>
 					</li>
-					<li class="bigMenu"><a href="${basePath}/mento/r/n/selectMentohoogiList.do">후기 관리</a>
+					<li class="bigMenu"><a href="${basePath}/mento/r/n/selectOffClassReviewList.do">후기 관리</a>
 						<div class="subMenu">
 							<c:if test="${clevel eq '1'}">
 								<ul>
-									<li class="selectsubMenu"><a href="${basePath}/mento/r/n/selectMentohoogiList.do">후기관리 리스트</a></li>
+									<li class="selectsubMenu"><a href="${basePath}/mento/r/n/selectOffClassReviewList.do">후기관리 리스트</a></li>
 								</ul>
 							</c:if>
 						</div>

@@ -27,7 +27,7 @@
 	<script type="text/javascript" src="${scriptPath}/validation/validation.js"></script>
 	<script type="text/javascript" src="${scriptPath}/common.js"></script>
 	<script>
-	$(document).ready(function($){
+	$(document).ready(function(){
 		$("#userVO span.emp").hide();
 		$("#userVO input").on('keyup change', function(e) {
 			fn_insertUserProc(e);
@@ -159,7 +159,7 @@
 							<div class="member-join-inner">
 								<h3>약관동의<em>뷰아떼는 멘티, 멘토의 <br />개인정보를 위해 개인 정보  <br />보호 관련 법규를 준수합니다.</em></h3>
 								<div class="rcont">
-									<label><input id="termsAgree" type="checkbox" /><em>필수</em> 뷰아떼의 이용약관, 개인정보 취급방침, 멘티약관, 멘토약관에 동의합니다.</label>
+									<label><input id="termsAgree" type="checkbox" /><em>필수</em> 뷰아떼의 이용약관, 개인정보 취급방침에 동의합니다.</label>
 								</div>
 							</div>
 							<div class="member-join-inner">

@@ -124,4 +124,5 @@
 			a.u_sq = #{usrId}
 		GROUP BY a.c_sq
 	</select>
+	
 </mapper>

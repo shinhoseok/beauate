@@ -48,6 +48,7 @@
 						<h2 class="title"></h2>
 					</div>
 				</div>
+				<div class="notice_1121_pc"><img src="${imgPath}/notice_1121_pc.jpg"/></div>
 				<!--new 클래스-->
 				<div class="content-inner new_class">
 					<h3>new class</h3>

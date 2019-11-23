@@ -11,6 +11,7 @@
 		<result column="alarm_send_dt" property="alarmSendDt" />
 		<result column="phone_no" property="mblPno" />
 		<result column="u_nm" property="usrNm" />
+		<result column="c_title" property="classTitle" />
 	</resultMap>
 	
 	<sql id="alarmGubunSql">
@@ -23,7 +24,13 @@
 					<when test="searchCondition == 'mblPno'">
 						AND c.phone_no LIKE '%'|| #{searchKeyword} ||'%'
 					</when>
+					<when test="searchCondition == 'classTitle'">
+						AND d.c_title LIKE '%'|| #{searchKeyword} ||'%'
+					</when>
 				</choose>
+			</if>
+			<if test="usrId != null and usrId != ''">
+				AND b.u_sq = #{usrId}
 			</if>
 		</where>
 	</sql>
@@ -38,7 +45,10 @@
 	-->	
 	<select id="selectAlarmMngListCnt" parameterType="alarmVO" resultType="int">
 		<![CDATA[
-		SELECT COUNT (*) CNT FROM ALARM b LEFT JOIN users c ON b.u_sq = c.u_sq
+		SELECT COUNT (*) CNT 
+			FROM ALARM b 
+			LEFT JOIN users c ON b.u_sq = c.u_sq
+			LEFT JOIN off_class d ON (b.c_sq = d.c_sq)
 		]]>
 		<include refid="alarmGubunSql"/>
 	</select>
@@ -88,11 +98,12 @@
 					b.alarm_fl,
 					TO_CHAR(b.alarm_send_dt, 'yyyy-MM-dd') AS alarm_send_dt,
 					c.phone_no,
-					c.u_nm
+					c.u_nm,
+					d.c_title
 				FROM
 					ALARM b
-				LEFT JOIN users c
-				ON b.u_sq = c.u_sq
+					LEFT JOIN users c ON b.u_sq = c.u_sq
+					LEFT JOIN off_class d ON (b.c_sq = d.c_sq)
 				<include refid="alarmGubunSql"/>
 			) A
 		WHERE
@@ -189,6 +200,6 @@
 		<![CDATA[    
 		WHERE  alarm_sq   = #{alarmId}
 		]]>
-    </update>
+	</update>
 </mapper>
 

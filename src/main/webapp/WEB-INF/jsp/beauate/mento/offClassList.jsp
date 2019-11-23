@@ -29,9 +29,9 @@
 			<div class="contents">
 				<p class="contentTitle">클래스 리스트</p>
 				<p class="sub_path">
-					<p class="sub_path"><img src="${imagePath}/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;멘토&nbsp;〉&nbsp;클래스관리〉&nbsp;클래스 신청</p>
+					<p class="sub_path"><img src="${imagePath}/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;멘토&nbsp;〉&nbsp;클래스관리〉&nbsp;오프라인 클래스 관리</p>
 				</p>
-				<form:form commandName="classVO" id="classVO" name="listForm" method="post" action="${basePath}/offclassm/r/m/selectOffClassList.do">
+				<form:form commandName="classVO" id="classVO" name="listForm" method="post" action="${basePath}/mento/r/m/selectOffClassList.do">
 					<form:hidden path="classId"/>
 					<form:hidden path="pageIndex" id="pageIndex" />
 					<form:hidden path="sortSubject" />

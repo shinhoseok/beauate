@@ -34,7 +34,7 @@
 				<div class="content-inner apply_mentor_btn">
 					<img src="${imagePath}/sub/apply_mentor_02.jpg">
 					<div class="btn-area">
-						<a href="https://forms.gle/3Bi1mRtwbUTg8w3f9" class="btn"><span>멘토 지원하기</span></a>
+						<a href="https://forms.gle/3Bi1mRtwbUTg8w3f9" class="btn" target="_blank"><span>멘토 지원하기</span></a>
 					</div>
 				</div>
 			</div>

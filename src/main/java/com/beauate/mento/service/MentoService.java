@@ -86,4 +86,5 @@ public interface MentoService {
 	 * @throws Exception
 	 */ 
 	public Map<String, Object> selectMentoJjimUserList(JjimVO jjimVO) throws Exception;
+	
 }

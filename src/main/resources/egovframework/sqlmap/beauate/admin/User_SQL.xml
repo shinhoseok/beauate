@@ -288,7 +288,6 @@
 		  FROM (SELECT A.ACCESS_LOG_ID,
 		               A.ACCESS_IP,
 		               A.ACCESS_DT,
-		               B.OG_CD,
 		               B.U_NM
 		          FROM ACCESS_LOG A, USERS B
 		]]>

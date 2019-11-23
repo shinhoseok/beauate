@@ -83,7 +83,7 @@
 										<c:forEach items="${rslt.selectList}" var="list" varStatus="i">
 											<tr class="row" style="cursor: pointer;">
 												<td><input type="checkbox" name="alarmCheckBox" value="${list.alarmId}"/></td>
-												<td><c:out value="${list.usrNm}"/></a></td>
+												<td><c:out value="${list.usrNm}"/></td>
 												<td><c:out value="${list.mblPno}"/></td>
 												<td>
 													<fmt:parseDate value="${list.alarmDt}" var="alarmDt" pattern="yyyy-MM-dd"/> 

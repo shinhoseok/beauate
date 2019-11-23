@@ -23,7 +23,9 @@
 	<sql id="reviewGubunSql">
 		<where>
 			<if test="!adminYn">
-				b.r_fl = 'N'
+				AND b.r_fl = 'N'
+			</if>
+			<if test="classId != null and classId != ''">
 				AND b.c_sq = #{classId}
 			</if>
 			<if test="searchKeyword != null and searchKeyword != ''">
@@ -31,10 +33,16 @@
 					<when test="searchCondition == 'usrNm'">
 						AND c.u_nm LIKE '%'|| #{searchKeyword} ||'%'
 					</when>
+					<when test="searchCondition == 'classTitle'">
+						AND e.c_title LIKE '%'|| #{searchKeyword} ||'%'
+					</when>
 					<otherwise>
 						AND c.u_email LIKE '%'|| #{searchKeyword} ||'%'
 					</otherwise>
 				</choose>
+			</if>
+			<if test="usrId != null and usrId != ''">
+				AND b.u_sq = #{usrId}
 			</if>
 		</where>
 	</sql>
@@ -53,6 +61,8 @@
 		FROM
 			class_r b
 			LEFT JOIN users c ON b.u_sq = c.u_sq
+			LEFT JOIN r_cmt d ON d.r_sq = b.r_sq
+			LEFT JOIN off_class e ON b.c_sq = e.c_sq
 		<include refid="reviewGubunSql"/>
 	</select>
 	
@@ -121,11 +131,13 @@
 				b.r_fl,
 				c.u_nm,
 				c.u_email AS emailAddr,
-				d.cmt_sq AS commentId
+				d.cmt_sq AS commentId,
+				e.c_title
 			FROM
 				class_r b
 				LEFT JOIN users c ON b.u_sq = c.u_sq
 				LEFT JOIN r_cmt d ON d.r_sq = b.r_sq
+				LEFT JOIN off_class e ON b.c_sq = e.c_sq
 				<include refid="reviewGubunSql"/>
 				) a
 		WHERE

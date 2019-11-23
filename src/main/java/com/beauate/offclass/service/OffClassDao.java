@@ -69,4 +69,5 @@ public interface OffClassDao {
 	 * @throws Exception
 	 */ 
 	List<Map<String, String>> selectOffClassPayChart(ClassVO ClassVO) throws Exception;
+	
 }
