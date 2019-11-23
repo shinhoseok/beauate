@@ -39,7 +39,7 @@
 					<div class="selectBox">
 						<form:select path="searchCondition" class="w13p">
 							<form:option value="usrNm" label="이름"></form:option>
-							<form:option value="emailAddr" label="이메일"></form:option>
+							<form:option value="classTitle" label="클래스제목"></form:option>
 						</form:select> 
 						<form:input path="searchKeyword" onkeydown="if(event.keyCode==13){javascript:fn_searchList(1);}" class="searchName" style="width: 737px;"></form:input>
 						<button type="button" class="grayBtn ico">
