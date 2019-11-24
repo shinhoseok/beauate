@@ -10,6 +10,7 @@
 <link rel="stylesheet" type="text/css" href="${cssPath}/common.css"/>
 <link rel="stylesheet" type="text/css" href="${cssPath}/contents.css"/>
 <link rel="stylesheet" type="text/css" href="${cssPath}/contents-my1.css"/>
+<meta name="naver-site-verification" content="c03e63b14e10bb3c48bb213c40e148287b19ea7f"/>
 <script type="text/javascript" src="${scriptPath}/jquery.min.js"></script>
 <script type="text/javascript" src="${scriptPath}/jquery.modal.min.js"></script>
 <script type="text/javascript" src="${scriptPath}/jquery.blockUI.js"></script>

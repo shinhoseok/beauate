@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=1280" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="naver-site-verification" content="c03e63b14e10bb3c48bb213c40e148287b19ea7f"/>
 <title>BEAUATE</title>
 <link rel="stylesheet" type="text/css" href="${cssPath}/contents.css" />
 <link rel="stylesheet" type="text/css" href="${cssPath}/contents-my1.css" />
@@ -62,8 +63,8 @@
 							<div class="new_mentor">채우다smp 한정욱대표님</div>
 					</a></li>
 					<li><a href="#"> <img src="${imgPath}/list_main_new_02.jpg" />
-							<div>마스터 책임 보장제 속눈썹 펌 클래스</div>
-							<div class="new_sub">1:1 밀착 수업으로 프로에게 프로기술을 배우다.</div>
+							<div>마스터 책임제 피부자격증 속성반</div>
+							<div class="new_sub">정부지원 전액면제! (60만원상당) 대표원장 속성반</div>
 							<div class="new_mentor">코코랄하우스</div>
 					</a></li>
 					<li><a href="#"> <img src="${imgPath}/list_main_new_03.jpg" />
@@ -77,12 +78,12 @@
 							<div class="new_mentor">임뷰티 아카데미</div>
 					</a></li>
 					<li><a href="#"> <img src="${imgPath}/list_main_new_05.jpg" />
-							<div>제품 판매 없는 진짜 교육 반영구 세미나</div>
-							<div class="new_sub">2달간 단기속성 눈썹 완전정복(자연눈썹, 수지눈썹, 머신눈썹)</div>
-							<div class="new_mentor">로이브로우 아카데미</div>
+							<div>메이크업 미용국가 자격증반</div>
+							<div class="new_sub">28년 역사를 가진 창원크리스챤쇼보 뷰티아카데미</div>
+							<div class="new_mentor">크리스챤쇼보 뷰티아카데미</div>
 					</a></li>
 					<li><a href="#"> <img src="${imgPath}/list_main_new_06.jpg" />
-							<div>더브락증모 원데이클래스</div>
+							<div>더블락증모 원데이클래스</div>
 							<div class="new_sub">소량 글루사용 But 유지력은 약 6주, 진하고 풍성한 속눈썹 연출</div>
 							<div class="new_mentor">슈엘뷰티 아카데미</div>
 					</a></li>

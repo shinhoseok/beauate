@@ -30,7 +30,7 @@
 				</choose>
 			</if>
 			<if test="usrId != null and usrId != ''">
-				AND b.u_sq = #{usrId}
+				AND d.u_sq = #{usrId}
 			</if>
 		</where>
 	</sql>

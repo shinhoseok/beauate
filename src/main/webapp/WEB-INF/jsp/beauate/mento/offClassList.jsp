@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="naver-site-verification" content="c03e63b14e10bb3c48bb213c40e148287b19ea7f"/>
 <title>BASIC</title>
 <!--공통css-->
 <link rel="stylesheet" type="text/css" href="${cssPath}/common.css">
@@ -31,7 +32,7 @@
 				<p class="sub_path">
 					<p class="sub_path"><img src="${imagePath}/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;멘토&nbsp;〉&nbsp;클래스관리〉&nbsp;오프라인 클래스 관리</p>
 				</p>
-				<form:form commandName="classVO" id="classVO" name="listForm" method="post" action="${basePath}/mento/r/m/selectOffClassList.do">
+				<form:form commandName="classVO" id="classVO" name="listForm" method="post" action="${basePath}/mento/r/n/selectOffClassList.do">
 					<form:hidden path="classId"/>
 					<form:hidden path="pageIndex" id="pageIndex" />
 					<form:hidden path="sortSubject" />

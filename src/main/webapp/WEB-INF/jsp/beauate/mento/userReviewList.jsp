@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="naver-site-verification" content="c03e63b14e10bb3c48bb213c40e148287b19ea7f"/>
 <title>BASIC</title>
 <!--공통css-->
 <link rel="stylesheet" type="text/css" href="${cssPath}/common.css">
@@ -29,7 +30,7 @@
 				<p class="contentTitle">후기 리스트</p>
 				<!-- sub_path Start -->
 				<p class="sub_path">
-					<p class="sub_path"><img src="${imagePath}/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;멘토&nbsp;〉&nbsp;클래스 후기 관리〉&nbsp;후기 리스트</p>
+					<p class="sub_path"><img src="${imagePath}/ico_home.png" width="10" height="9" />&nbsp;〉&nbsp;멘토&nbsp;〉&nbsp;후기 관리〉&nbsp;후기관리 리스트</p>
 				</p>
 				<!-- sub_path End -->
 				<form:form commandName="reviewVO" id="reviewVO" name="listForm" method="post" action="${basePath}/mento/r/n/selectOffClassReviewList.do">

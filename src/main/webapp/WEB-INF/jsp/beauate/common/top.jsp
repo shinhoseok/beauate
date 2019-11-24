@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/beauate/common/include.jsp"%>
-
 <div class="header_centerBox">
 	<h1>
 		<img src="${imagePath }/logo.png" width="143" height="19" style="cursor: pointer;" onclick="javascript:fn_userMainBack();"/>

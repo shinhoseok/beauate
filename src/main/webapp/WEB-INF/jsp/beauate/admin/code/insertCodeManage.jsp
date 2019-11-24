@@ -6,7 +6,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-	
+	<meta name="naver-site-verification" content="c03e63b14e10bb3c48bb213c40e148287b19ea7f"/>
 	<title>BASIC</title>
 	<!--공통css-->
 	<link rel="stylesheet" type="text/css" href="${cssPath}/common.css">
