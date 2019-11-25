@@ -1,5 +1,10 @@
 package com.beauate.admin.user.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +59,8 @@ public class UserManageServiceImple extends EgovAbstractServiceImpl implements U
 	
 	@Resource(name="codeDao")
 	private CodeDao codeDao;
+	
+	private final String DATE_PATTERN = "yyyy-MM-dd";
 	
 	/**
 	 * <pre>
@@ -338,44 +345,68 @@ public class UserManageServiceImple extends EgovAbstractServiceImpl implements U
 	 * @throws Exception
 	 */ 
 	public void selectUserStatisticsList(UserStatsVO userStatsVO, ModelMap model) throws Exception {
-		//페이징 
-		PaginationInfo paginationInfo = new PaginationInfo();
-		paginationInfo.setCurrentPageNo(userStatsVO.getPageIndex());
-		paginationInfo.setRecordCountPerPage(userStatsVO.getPageUnit());
-		paginationInfo.setPageSize(userStatsVO.getPageSize());
+		String inputStartDate = "";
+		String inputEndDate = "";
+		String today = DateUtil.getCurrentYearMonthDay();
 		
-		userStatsVO.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
-		userStatsVO.setLastIndex(paginationInfo.getLastRecordIndex());
-		userStatsVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-		
-		List<UserStatsVO> selectList = null;
-	  		
-		//총 카운트 
-		int cnt = userDao.selectUserStatisticsListCnt(userStatsVO);
-		paginationInfo.setTotalRecordCount(cnt);
-		
-		if(cnt > 0){
-			//리스트
-			selectList = userDao.selectUserStatisticsList(userStatsVO);
-		}
-		
-		//차트, 리스트 날짜 구분
-		if("".equals(StringUtil.nvl(userStatsVO.getEndDate()))) {
-			String today = DateUtil.getCurrentYearMonthDay();
-			userStatsVO.setChartDate(today);
+		if(StringUtil.isEmpty(userStatsVO.getStartDate()) || StringUtil.isEmpty(userStatsVO.getEndDate())) {
+			//2달 전
+			Calendar mon = Calendar.getInstance();
+			mon.add(Calendar.MONTH , -2);
+			String beforeMonth = new java.text.SimpleDateFormat(DATE_PATTERN).format(mon.getTime());
+			inputStartDate = beforeMonth;
+			inputEndDate = today;
+			userStatsVO.setStartDate(inputStartDate);
+			userStatsVO.setEndDate(inputEndDate);
 		} else {
-			userStatsVO.setChartDate(userStatsVO.getEndDate());
+			inputStartDate = userStatsVO.getStartDate();
+			inputEndDate = userStatsVO.getEndDate();
 		}
 		
-		List<Map<Object, String>> userStatsChartList = userDao.selectUserStatsChartList(userStatsVO);
+		List<Map<String, Object>> userStatsChartList = userDao.selectUserStatsChartList(userStatsVO);
+
+		//이빨빠진 날짜 채워넣기
+		List<Map<String, Object>> resultList = this.getDates(inputStartDate, inputEndDate);
+		
+		int i=0;
+		int j=0;
+		for (Map<String, Object> date : resultList) {
+			String queryDate = (String) userStatsChartList.get(i).get("accessDt");
+			String allDate = (String) date.get("accessDt");
+			if(allDate.equals(queryDate)) {
+				resultList.get(j).put("cnt", (Integer) userStatsChartList.get(i).get("cnt"));
+				i++;
+			} else {
+				resultList.get(j).put("cnt", 0);
+			}
+			j++;
+		}
+		
 		Gson gson = new Gson();
-		String resultChartList = gson.toJson(userStatsChartList);
+		String resultChartList = gson.toJson(resultList);
 		
-		
-		model.addAttribute("paginationInfo", paginationInfo);
-		model.addAttribute("userStatsList", selectList);
-		model.addAttribute("userStatsListCnt", cnt);
 		model.addAttribute("resultChartList", resultChartList);
+	}
+	
+	private List<Map<String, Object>> getDates(String inputStartDate, String inputEndDate) throws ParseException {
+		
+		ArrayList<Map<String, Object>> dates = new ArrayList<>();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+		Date startDate = sdf.parse(inputStartDate);
+		Date endDate = sdf.parse(inputEndDate);
+		
+		Date currentDate = startDate;
+		while (currentDate.compareTo(endDate) <= 0) {
+			Map<String, Object> rsltMap = new HashMap<String, Object>();
+			rsltMap.put("accessDt", sdf.format(currentDate));
+			dates.add(rsltMap);
+			Calendar c = Calendar.getInstance();
+			c.setTime(currentDate);
+			c.add(Calendar.DAY_OF_MONTH, 1);
+			currentDate = c.getTime();
+		}
+		return dates;
 	}
 	
 	/**

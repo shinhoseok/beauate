@@ -23,6 +23,7 @@
         <result column="c_adr" property="classAdr"/>
         <result column="c_cost_no" property="classCost"/>
         <result column="c_web_adr" property="classWebAdr"/>
+        <result column="c_del_yn" property="delYn"/>
     </resultMap>
     
 	<!-- 쿼리명 : 오프라인 클래스 등록
@@ -94,13 +95,18 @@
 			<if test="classAreaSt != null and classAreaSt != ''">
 				AND c.c_area_st = #{classAreaSt}
 			</if>
+			<if test="classSt != null and classSt != ''">
+				AND c.c_st = #{classSt}
+			</if>
 			<if test="classCtSt != null and classCtSt != ''">
 				AND c.c_category_st = #{classCtSt}
 			</if>
 			<if test="mentoGb != null and mentoGb != '' and mentoGb == 'Y'.toString">
 				AND c.u_sq = #{usrId}
 			</if>
+			<if test="adminYn != 'Y'.toString">
 				AND (c.c_del_yn = 'N' OR c.c_del_yn IS NULL)
+			</if>
 		</where>
 	</sql>
 	
@@ -161,7 +167,8 @@
 			c.c_apply_no,
 			c.c_adr,
 			c.c_cost_no,
-			c.c_web_adr
+			c.c_web_adr,
+			c.c_del_yn
 		FROM
 			off_class c 
 			LEFT JOIN common_cd_scls cd ON (c.c_area_st = cd.mcls_cd AND cd.lcls_cd='ARA')
@@ -228,7 +235,8 @@
 			c.c_apply_no,
 			c.c_adr,
 			c.c_cost_no,
-			c.c_web_adr
+			c.c_web_adr,
+			c.c_del_yn
 		FROM
 			off_class c 
 			LEFT JOIN common_cd_scls cd ON (c.c_area_st = cd.mcls_cd AND cd.lcls_cd='ARA')
@@ -300,6 +308,9 @@
 		    </if>
 		    <if test="atchFileId != null and  atchFileId != ''">
 				img_sq     = #{atchFileId},
+		    </if>
+		    <if test="delYn != null and  delYn != ''">
+				c_del_yn     = #{delYn},
 		    </if>
 	    </trim>
 		 WHERE c_sq = #{classId}

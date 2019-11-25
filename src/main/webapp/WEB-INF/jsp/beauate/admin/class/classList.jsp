@@ -26,7 +26,7 @@
 			<%@ include file="/WEB-INF/jsp/beauate/common/leftMenu.jsp"%>
 			<!-- left_menu End -->
 			<div class="contents">
-				<p class="contentTitle">클래스 리스트</p>
+				<p class="contentTitle">클래스 리스트</p>&nbsp;&nbsp;&nbsp;<span class="color_red">전체 : ${rslt.selectListCnt} / 오픈중 : ${rslt.openCnt}</span>
 				<p class="sub_path">
 					<img src="${imagePath }/ico_home.png" width="10" height="9" />
 					<c:forEach items="${setSubTitleList}" var="list" >
@@ -40,7 +40,7 @@
 					<form:hidden path="sortDescend" />
 					<div class="selectBox">
 						<form:select path="searchCondition" class="w13p" id="searchCondition">
-							<form:option value="classUserId" label="회원번호"></form:option>
+<%-- 							<form:option value="classUserId" label="회원번호"></form:option> --%>
 							<form:option value="classTitle" label="클래스명"></form:option>
 							<form:option value="classCtSt" label="클래스카테고리"></form:option>
 						</form:select> 
@@ -52,8 +52,8 @@
 					<table class="tableList">
 						<caption></caption>
 						<colgroup>
-							<col width="15%">
 							<col width="*">
+							<col width="10%">
 							<col width="10%">
 							<col width="10%">
 							<col width="10%">
@@ -62,10 +62,6 @@
 							<col width="10%">
 						</colgroup>
 						<thead>
-							<th sortId="usrId" class="noBg">회원번호
-								<span class="arrow_descending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>
-								<span class="arrow_ascending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>									
-							</th>
 							<th sortId="classTitle">클래스 제목
 								<span class="arrow_descending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>
 								<span class="arrow_ascending"><a href="#" onclick="javascript:fn_sort(this.parentNode);"></a></span>									
@@ -76,13 +72,13 @@
 							<th>클래스구분</th>
 							<th>클래스카테고리</th>
 							<th>지역</th>
+							<th>삭제여부</th>
 						</thead>
 						<tbody>
 							<c:choose>
 								<c:when test="${fn:length(rslt.selectList) != 0}">
 									<c:forEach items="${rslt.selectList}" var="list" varStatus="i">
 										<tr class="row" style="cursor: pointer;" onclick="javascript:fn_offClassDetail('${list.classId}');">
-											<td><c:out value="${list.classUserId}"/></td>
 											<td style="text-align: left;"><c:out value="${list.classTitle}"/></td>
 											<td>
 												<fmt:parseDate value="${list.classStartDt}" var="classStartDt" pattern="yyyy-MM-dd"/> 
@@ -141,6 +137,16 @@
 												</c:choose>
 											</td>
 											<td><c:out value="${list.classAreaStNm}"/></td>
+											<td>
+												<c:choose>
+													<c:when test="${empty list.delYn}">
+														N
+													</c:when>
+													<c:otherwise>
+														<c:out value="${list.delYn}"/>
+													</c:otherwise>
+												</c:choose>
+											</td>
 										</tr>
 									</c:forEach>
 								</c:when>

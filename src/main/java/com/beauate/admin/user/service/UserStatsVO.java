@@ -12,21 +12,31 @@ public class UserStatsVO extends CommDefaultVO implements Serializable{
 	private String accessLogId;
 	/** 사용자 로그IP */
 	private String accessIp;
-	/** 사용자 ID */
-	private String accessId;
 	/** 사용자 로그날짜 */
-	private Date accessDate;
-	/** 사용자 부서명 */
-	private String ogCd;
+	private Date accessDt;
+	/** 사용자 통계 시작일 */
+	public String startDate;
 	/** 사용자 통계 종료일 */
 	private String endDate;
 	/** 사용자 통계 사용자명 */
 	private String usrNm;
 	/** 사용자 통계 로우넘버 */
 	private String rNum;
-	/** 사용자 통계 차트날짜 */
+	/** 사용자 통계 선택한 차트날짜 */
 	private String chartDate;
 	
+	public Date getAccessDt() {
+		return accessDt;
+	}
+	public void setAccessDt(Date accessDt) {
+		this.accessDt = accessDt;
+	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
 	public String getAccessLogId() {
 		return accessLogId;
 	}
@@ -38,24 +48,6 @@ public class UserStatsVO extends CommDefaultVO implements Serializable{
 	}
 	public void setAccessIp(String accessIp) {
 		this.accessIp = accessIp;
-	}
-	public String getAccessId() {
-		return accessId;
-	}
-	public void setAccessId(String accessId) {
-		this.accessId = accessId;
-	}
-	public Date getAccessDate() {
-		return accessDate;
-	}
-	public void setAccessDate(Date accessDate) {
-		this.accessDate = accessDate;
-	}
-	public String getOgCd() {
-		return ogCd;
-	}
-	public void setOgCd(String ogCd) {
-		this.ogCd = ogCd;
 	}
 	public String getEndDate() {
 		return endDate;

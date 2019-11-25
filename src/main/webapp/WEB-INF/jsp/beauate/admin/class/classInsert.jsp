@@ -39,6 +39,20 @@
 						>&nbsp;<c:out value="${list.menuName }"></c:out>
 					</c:forEach>
 				</p>
+				<div class="selectBox">
+					<span class="search_bullet">시작/종료일자</span> 
+					<span class="contents_search_bar"></span>
+					<div class="calendar_wrap">
+						<label for="" class="blind">시작/종료일자</label> 
+						<input type="text" path="startDate" id="startDate"/> ~ 
+						<input type="text" path="endDate" id="endDate"/>
+					</div>
+					<div class="T_btnLayer cn">
+						<button type="button" class="btn-type1" onclick="javascript:fn_parentSearch();">
+							<img src="${imagePath }/ico_search.png" alt="조회 버튼" /> 조회
+						</button>
+					</div>
+				</div>
 				<h4 class="contentTitle_h4">클래스 정보</h4>
 				<form:form commandName="classVO" name="classVO" id="classVO" method="post" enctype="multipart/form-data" action="${basePath}/classmng/w/m/insertOffClassProc.do" >
 					<div class="tableLayer">

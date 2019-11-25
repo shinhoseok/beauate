@@ -366,7 +366,7 @@ public class UserServiceImple implements UserService {
 			userStatsVO.setChartDate(userStatsVO.getEndDate());
 		}
 		
-		List<Map<Object, String>> userStatsChartList = userDao.selectUserStatsChartList(userStatsVO);
+		List<Map<String, Object>> userStatsChartList = userDao.selectUserStatsChartList(userStatsVO);
 		Gson gson = new Gson();
 		String resultChartList = gson.toJson(userStatsChartList);
 		

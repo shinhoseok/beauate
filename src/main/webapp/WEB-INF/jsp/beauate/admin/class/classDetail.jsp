@@ -152,6 +152,19 @@
 									<th>주소</th>
 									<td colspan="4"><c:out value="${resultVO.classAdr}"/></td>
 								</tr>
+								<tr>
+									<th>삭제여부</th>
+									<td colspan="4">
+										<c:choose>
+											<c:when test="${empty resultVO.delYn}">
+												N
+											</c:when>
+											<c:otherwise>
+												<c:out value="${resultVO.delYn}"/>
+											</c:otherwise>
+										</c:choose>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>

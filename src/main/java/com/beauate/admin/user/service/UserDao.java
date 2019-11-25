@@ -258,7 +258,7 @@ public interface UserDao {
 	 * @return
 	 * @throws Exception
 	 */ 
-	List<Map<Object, String>> selectUserStatsChartList(UserStatsVO userStatsVO) throws Exception;
+	List<Map<String, Object>> selectUserStatsChartList(UserStatsVO userStatsVO) throws Exception;
 	
 	/**
 	 * <pre>

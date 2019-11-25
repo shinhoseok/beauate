@@ -143,26 +143,30 @@
 								<tr>
 									<th class="bullet_orange">클래스상태</th>
 									<td>
-									<form:select path="classSt" id="classSt">
-										<form:options items="${rslt.classStList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
-									</form:select>
+										<form:select path="classSt" id="classSt">
+											<form:options items="${rslt.classStList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
+										</form:select>
+									</td>
 									<th class="bullet_orange">클래스구분</th>
 									<td>
-									<form:select path="classGb" id="classGb">
-										<form:options items="${rslt.classGbList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
-									</form:select>
+										<form:select path="classGb" id="classGb">
+											<form:options items="${rslt.classGbList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
+										</form:select>
+									</td>
 								</tr>
 								<tr>
 									<th class="bullet_orange">클래스 카테고리</th>
 									<td>
-									<form:select path="classCtSt" id="classCtSt">
-										<form:options items="${rslt.classCategoryList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
-									</form:select>
+										<form:select path="classCtSt" id="classCtSt">
+											<form:options items="${rslt.classCategoryList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
+										</form:select>
+									</td>
 									<th class="bullet_orange">지역</th>
 									<td>
-									<form:select path="classAreaSt" id="classAreaSt">
-										<form:options items="${rslt.classAreaList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
-									</form:select>
+										<form:select path="classAreaSt" id="classAreaSt">
+											<form:options items="${rslt.classAreaList}" itemLabel="mclsNm"  itemValue="mclsCd"/>
+										</form:select>
+									</td>
 								</tr>
 								<tr>
 									<th class="bullet_orange">주소</th>
@@ -174,6 +178,15 @@
 												<a href="javascript:void(0);" onclick="fn_jusoPopup();"><button type="button" class="blueBtn L">주소찾기</button></a>
 											</div>
 										</div>
+									</td>
+								</tr>
+								<tr>
+									<th class="bullet_orange">삭제여부</th>
+									<td colspan="4">
+										<form:select path="delYn" id="delYn">
+											<form:option value="N">N</form:option>
+											<form:option value="Y">Y</form:option>
+										</form:select>
 									</td>
 								</tr>
 								<tr>

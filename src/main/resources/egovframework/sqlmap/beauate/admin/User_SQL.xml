@@ -250,27 +250,14 @@
 			ACCESS_DT) 
 		VALUES 		(#{accessLogId},
 		             #{accessIp},
-		             #{accessId},
+		             #{usrId},
 		             SYSDATE)
 		]]>
 	</insert>
 	
 	<sql id="selectUserStatisticsListWhere">
 		<where>
-	         A.ACCESS_LOG_ID = B.U_SQ
-	         <if test="endDate != null and endDate != ''">
-	         	AND TO_CHAR(A.ACCESS_DT, 'YYYY-MM-DD') = #{endDate}
-	         </if>
-	         <if test="searchKeyword != null and searchKeyword != ''">
-	         	<choose>
-	         		<when test="searchCondition == 'searchNm'">
-	         			AND B.U_NM like '%'|| #{searchKeyword} ||'%'
-	         		</when>
-	         		<otherwise>
-	         			AND A.ACCESS_LOG_ID like '%'|| #{searchKeyword} ||'%'
-	         		</otherwise>
-	         	</choose>
-	         </if> 
+	         TO_CHAR(a.access_dt, 'YYYY-MM-DD') = #{chartDate}
 		</where>
 	</sql>
 	
@@ -285,16 +272,10 @@
 	<select id="selectUserStatisticsListCnt" parameterType="UserStatsVO" resultType="int">
 		<![CDATA[
 		SELECT COUNT(*) cnt
-		  FROM (SELECT A.ACCESS_LOG_ID,
-		               A.ACCESS_IP,
-		               A.ACCESS_DT,
-		               B.U_NM
-		          FROM ACCESS_LOG A, USERS B
+			FROM access_log a
+				 LEFT JOIN users b ON a.u_sq = b.u_sq
 		]]>
 		<include refid="selectUserStatisticsListWhere"/>
-		<![CDATA[
-		               )
-		]]>
 	</select>
 	
 	<!-- 쿼리명 : 사용자 통계 리스트
@@ -306,42 +287,20 @@
 	최초작성일 : 2019. 6.23
 	-->
 	<select id="selectUserStatisticsList" parameterType="UserStatsVO" resultType="UserStatsVO">
-		<![CDATA[
 		SELECT *
-		  FROM (SELECT ROW_NUMBER () OVER (
-		]]>
-		<choose>
-			<when test="sortSubject == 'searchNm'">
-				ORDER BY B.U_NM
-			</when>
-			<when test="sortSubject == 'searchId'">
-				ORDER BY A.ACCESS_LOG_ID
-			</when>
-			<otherwise>
-				ORDER BY a.ACCESS_DT
-			</otherwise>
-		</choose>
-		<choose>
-			<when test="sortDescend == 'asc'">
-				ASC
-			</when>
-			<otherwise>
-				DESC
-			</otherwise>
-		</choose>
-		<![CDATA[  
-		  ) rNum,
-		               A.ACCESS_LOG_ID AS accessId,
-		               A.ACCESS_IP AS accessIp,
-		               A.ACCESS_DT AS accessDate,
-		               B.U_NM AS usrNm
-		          FROM ACCESS_LOG A, USERS B
-		]]>
-		<include refid="selectUserStatisticsListWhere"/>
-		<![CDATA[
-		               ) C
-		 WHERE C.rNum BETWEEN #{firstIndex} AND #{lastIndex}	
-		]]>
+		  FROM (SELECT ROW_NUMBER () OVER (ORDER BY a.access_log_id DESC) rNum,
+						a.access_log_id AS accessLogId,
+						a.access_ip AS accessIp,
+						a.access_dt AS accessDt,
+						a.u_sq AS usrId,
+						b.u_email AS emailAddr,
+						b.u_nm AS usrNm
+					FROM 
+						access_log a
+						LEFT JOIN users b ON a.u_sq = b.u_sq
+					<include refid="selectUserStatisticsListWhere"/>
+               ) C
+		 WHERE C.rNum BETWEEN #{firstIndex} AND #{lastIndex}
 	</select>
 	
 	<!-- 쿼리명 : 사용자 통계 차트 리스트
@@ -354,17 +313,14 @@
 	-->
 	<select id="selectUserStatsChartList" parameterType="UserStatsVO" resultType="HashMap">
 		<![CDATA[
- 		SELECT	TO_CHAR(AC_DATE,'YYYY-MM-DD') AS AC_DATE,
-				(SELECT	COUNT(*)
-				FROM	ACCESS_LOG
-				WHERE	TO_CHAR(ACCESS_DT,'YYYY-MM-DD') = AC_DATE
-				) AS AC_CNT
-		FROM
-			( SELECT	DISTINCT((TO_DATE('${chartDate}','YYYY-MM-DD')+1)-LEVEL) AS AC_DATE,
-						LEVEL
-			FROM 		ACCESS_LOG
-			CONNECT BY LEVEL < 8 )
-		ORDER BY AC_DATE ASC
+		SELECT 
+			COUNT(a.access_log_id) cnt,
+			TO_CHAR(a.access_dt, 'YYYY-MM-DD') AS accessDt
+		FROM 
+			ACCESS_LOG a
+		WHERE 
+			TO_CHAR(a.access_dt, 'YYYY-MM-DD') BETWEEN #{startDate} AND #{endDate}
+		GROUP BY TO_CHAR(a.access_dt, 'YYYY-MM-DD')
 		]]>
 	</select>
 	

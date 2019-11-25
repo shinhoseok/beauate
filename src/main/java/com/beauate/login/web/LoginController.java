@@ -123,7 +123,7 @@ public class LoginController {
 		
 		//사용자 통계 등록
 		UserStatsVO userStatsVO = new UserStatsVO();
-		userStatsVO.setAccessId(resultVO.getUsrId());
+		userStatsVO.setUsrId(resultVO.getUsrId());
 		userStatsVO.setAccessIp(request.getRemoteAddr());
 		userManageService.insertUserStatisticsProc(userStatsVO);
 		status.setComplete();

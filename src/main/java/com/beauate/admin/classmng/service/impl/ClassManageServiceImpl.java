@@ -141,9 +141,14 @@ public class ClassManageServiceImpl implements ClassManageService {
 			selectList = classManageDao.selectClassMngList(classVO);
 		}
 		
+		//오픈중인 클래스 카운트
+		classVO.setClassSt("2");
+		int openCnt = classManageDao.selectClassMngListCnt(classVO);
+		
 		rsltMap.put("paginationInfo", paginationInfo);
 		rsltMap.put("selectList", selectList);
 		rsltMap.put("selectListCnt", cnt);
+		rsltMap.put("openCnt", openCnt);
 		
 		return rsltMap;
 	}
