@@ -32,7 +32,15 @@ public class UserVO extends CommDefaultVO implements Serializable {
 	private String rlName;
 	/** 사용자 비밀번호 변경값 */
 	private String newUsrPw;
+	/** 차트날짜 */
+	private String chartDate;
 	
+	public String getChartDate() {
+		return chartDate;
+	}
+	public void setChartDate(String chartDate) {
+		this.chartDate = chartDate;
+	}
 	public String getNewUsrPw() {
 		return newUsrPw;
 	}

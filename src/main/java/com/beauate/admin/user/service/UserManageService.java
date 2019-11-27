@@ -226,4 +226,67 @@ public interface UserManageService {
 	 * @throws Exception
 	 */ 
 	public Map<String, Object> selectCodeList() throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 사용자 리스트 통계
+	 * 2. 처리내용 : 사용자 리스트 통계를 불러온다.
+	 * </pre>
+	 * @Method Name : selectUserStatisticsAjax
+	 * @date : 2019. 5. 17.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		뷰아떼1				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userStatsVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */ 
+	public Map<String, Object> selectUserStatisticsAjax(UserStatsVO userStatsVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 회원가입 차트
+	 * 2. 처리내용 : 회원가입 차트
+	 * </pre>
+	 * @Method Name : selectUserInsertChart
+	 * @date : 2019. 6. 22.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 6. 22.		뷰아떼1				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userStatsVO
+	 * @param 
+	 * @return
+	 * @throws Exception
+	 */ 
+	public void selectUserInsertChart(UserStatsVO userStatsVO, ModelMap model) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 회원가입 통계 리스트
+	 * 2. 처리내용 : 회원가입 통계 리스트
+	 * </pre>
+	 * @Method Name : selectMemberStatsAjax
+	 * @date : 2019. 5. 17.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		뷰아떼1				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userStatsVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */ 
+	public Map<String, Object> selectMemberStatsAjax(UserVO userVO) throws Exception;
 }

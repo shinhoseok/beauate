@@ -338,7 +338,6 @@ public class UserManageServiceImple extends EgovAbstractServiceImpl implements U
 	 *	----------- ------------------- ---------------------------------------
 	 *	2019. 6. 22.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
-	 * 
 	 * @param userStatsVO
 	 * @param 
 	 * @return
@@ -370,12 +369,19 @@ public class UserManageServiceImple extends EgovAbstractServiceImpl implements U
 		
 		int i=0;
 		int j=0;
+		int listSize = userStatsChartList.size();
+		String firstDate = "";
 		for (Map<String, Object> date : resultList) {
 			String queryDate = (String) userStatsChartList.get(i).get("accessDt");
 			String allDate = (String) date.get("accessDt");
+			if(j == 0) {
+				firstDate = allDate;
+			}
 			if(allDate.equals(queryDate)) {
 				resultList.get(j).put("cnt", (Integer) userStatsChartList.get(i).get("cnt"));
-				i++;
+				if(i < listSize-1) {
+					i++;
+				}
 			} else {
 				resultList.get(j).put("cnt", 0);
 			}
@@ -386,8 +392,10 @@ public class UserManageServiceImple extends EgovAbstractServiceImpl implements U
 		String resultChartList = gson.toJson(resultList);
 		
 		model.addAttribute("resultChartList", resultChartList);
+		model.addAttribute("firstDate", firstDate);
 	}
 	
+	//통계 2달간의 날짜를 가져온다. inputStartDate ~ inputEndDate
 	private List<Map<String, Object>> getDates(String inputStartDate, String inputEndDate) throws ParseException {
 		
 		ArrayList<Map<String, Object>> dates = new ArrayList<>();
@@ -407,6 +415,54 @@ public class UserManageServiceImple extends EgovAbstractServiceImpl implements U
 			currentDate = c.getTime();
 		}
 		return dates;
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 사용자 리스트 통계
+	 * 2. 처리내용 : 사용자 리스트 통계를 불러온다.
+	 * </pre>
+	 * @Method Name : selectUserStatisticsAjax
+	 * @date : 2019. 5. 17.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		뷰아떼1				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userStatsVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */ 
+	public Map<String, Object> selectUserStatisticsAjax(UserStatsVO userStatsVO) throws Exception {
+		Map<String, Object> rsltMap = new HashMap<>();
+		//페이징 
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(userStatsVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(userStatsVO.getPageUnit());
+		paginationInfo.setPageSize(userStatsVO.getPageSize());
+		
+		userStatsVO.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
+		userStatsVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		userStatsVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		
+		List<UserStatsVO> selectList = null;
+		
+		//총 카운트 
+		int cnt = userDao.selectUserStatisticsListCnt(userStatsVO);
+		paginationInfo.setTotalRecordCount(cnt);
+		
+		if(cnt > 0){
+			//리스트
+			selectList = userDao.selectUserStatisticsList(userStatsVO);
+		}
+		
+		rsltMap.put("selectListCnt", cnt);
+		rsltMap.put("selectList", selectList);
+		
+		return rsltMap;
 	}
 	
 	/**
@@ -436,6 +492,129 @@ public class UserManageServiceImple extends EgovAbstractServiceImpl implements U
 		
 		rsltMap.put("userStatsList", userStatsList);
 		rsltMap.put("roleList", roleList);
+		
+		return rsltMap;
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 회원가입 차트
+	 * 2. 처리내용 : 회원가입 차트
+	 * </pre>
+	 * @Method Name : selectUserInsertChart
+	 * @date : 2019. 6. 22.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 6. 22.		뷰아떼1				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userStatsVO
+	 * @param 
+	 * @return
+	 * @throws Exception
+	 */ 
+	public void selectUserInsertChart(UserStatsVO userStatsVO, ModelMap model) throws Exception {
+		String inputStartDate = "";
+		String inputEndDate = "";
+		String today = DateUtil.getCurrentYearMonthDay();
+		
+		if(StringUtil.isEmpty(userStatsVO.getStartDate()) || StringUtil.isEmpty(userStatsVO.getEndDate())) {
+			//2달 전
+			Calendar mon = Calendar.getInstance();
+			mon.add(Calendar.MONTH , -2);
+			String beforeMonth = new java.text.SimpleDateFormat(DATE_PATTERN).format(mon.getTime());
+			inputStartDate = beforeMonth;
+			inputEndDate = today;
+			userStatsVO.setStartDate(inputStartDate);
+			userStatsVO.setEndDate(inputEndDate);
+		} else {
+			inputStartDate = userStatsVO.getStartDate();
+			inputEndDate = userStatsVO.getEndDate();
+		}
+		
+		List<Map<String, Object>> userStatsChartList = userDao.selectUserInsertChart(userStatsVO);
+
+		//이빨빠진 날짜 채워넣기
+		List<Map<String, Object>> resultList = this.getDates(inputStartDate, inputEndDate);
+		
+		int i=0;
+		int j=0;
+		int listSize = userStatsChartList.size();
+		String firstDate = "";
+		for (Map<String, Object> date : resultList) {
+			String queryDate = (String) userStatsChartList.get(i).get("accessDt");
+			String allDate = (String) date.get("accessDt");
+			if(j == 0) {
+				firstDate = allDate;
+			}
+			if(allDate.equals(queryDate)) {
+				resultList.get(j).put("cnt", (Integer) userStatsChartList.get(i).get("cnt"));
+				if(i < listSize-1) {
+					i++;
+				}
+			} else {
+				resultList.get(j).put("cnt", 0);
+			}
+			j++;
+		}
+		
+		Gson gson = new Gson();
+		String resultChartList = gson.toJson(resultList);
+		
+		model.addAttribute("resultChartList", resultChartList);
+		model.addAttribute("firstDate", firstDate);
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 회원가입 통계 리스트
+	 * 2. 처리내용 : 회원가입 통계 리스트
+	 * </pre>
+	 * @Method Name : selectMemberStatsAjax
+	 * @date : 2019. 5. 17.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 5. 17.		뷰아떼1				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userStatsVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */ 
+	public Map<String, Object> selectMemberStatsAjax(UserVO userVO) throws Exception {
+		Map<String, Object> rsltMap = new HashMap<>();
+		//페이징 
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(userVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(userVO.getPageUnit());
+		paginationInfo.setPageSize(userVO.getPageSize());
+		
+		userVO.setFirstIndex(paginationInfo.getFirstRecordIndex()+1); 
+		userVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		userVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		
+		List<UserVO> selectList = null;
+		
+		//총 카운트 
+		int cnt = userDao.selectUserListCnt(userVO);
+		paginationInfo.setTotalRecordCount(cnt);
+		
+		if(cnt > 0){
+			//리스트
+			selectList = userDao.selectUserList(userVO);
+			//전화번호 형식(000-000-0000)변환
+			for(int i=0; i<selectList.size(); i++) {
+				selectList.get(i).setMblPno(StringUtil.phone(selectList.get(i).getMblPno()));
+			}
+		}
+		
+		rsltMap.put("selectListCnt", cnt);
+		rsltMap.put("selectList", selectList);
 		
 		return rsltMap;
 	}

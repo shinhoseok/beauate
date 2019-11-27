@@ -14,6 +14,9 @@
 					</otherwise>
 				</choose>
 			</if>
+			<if test="chartDate != null and chartDate != ''">
+				TO_CHAR(JOIN_DT, 'YYYY-MM-DD') = #{chartDate}
+			</if>
 		</where>
 	</sql>
 	
@@ -291,7 +294,7 @@
 		  FROM (SELECT ROW_NUMBER () OVER (ORDER BY a.access_log_id DESC) rNum,
 						a.access_log_id AS accessLogId,
 						a.access_ip AS accessIp,
-						a.access_dt AS accessDt,
+						TO_CHAR(a.access_dt, 'yyyy-MM-dd') AS accessDt,
 						a.u_sq AS usrId,
 						b.u_email AS emailAddr,
 						b.u_nm AS usrNm
@@ -352,5 +355,26 @@
 				  AND B.U_EMAIL = #{emailAddr}
 			</if>
 		</where>
+	</select>
+	
+	<!-- 쿼리명 : 회원가입 통계 차트
+	설명 : 회원가입 통계 차트
+	수정일                     수정자           수정내용
+	==========  ======  ===================
+	2019. 6.23     뷰아떼1           최초 생성
+	작성자 : 뷰아떼1
+	최초작성일 : 2019. 6.23
+	-->
+	<select id="selectUserInsertChart" parameterType="UserStatsVO" resultType="HashMap">
+		<![CDATA[
+		SELECT 
+			COUNT(u_sq) cnt,
+			TO_CHAR(join_dt, 'yyyy-MM-dd') AS accessDt
+		FROM 
+			users
+		WHERE 
+			TO_CHAR(join_dt, 'yyyy-MM-dd') BETWEEN #{startDate} AND #{endDate}
+			GROUP BY TO_CHAR(join_dt, 'yyyy-MM-dd')
+		]]>
 	</select>
 </mapper>

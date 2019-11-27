@@ -32,7 +32,7 @@
 			<%@ include file="/WEB-INF/jsp/beauate/common/leftMenu.jsp"%>
 			<!-- left_menu End -->
 			<div class="contents">
-				<p class="contentTitle">접속통계</p>
+				<p class="contentTitle">회원가입 통계</p>
 				<!-- sub_path Start -->
 				<p class="sub_path">
 					<img src="${imagePath }/ico_home.png" width="10" height="9" />
@@ -113,7 +113,7 @@
 		    	{ type : "focus", start : chartIdx, end : chartIdx}
 		    ],
 		    widget : [
-		    	{ type : "title", text : "접속 통계" },
+		    	{ type : "title", text : "회원가입 통계" },
 		    	{ type : "legend", filter : true },
 		    	{ type : "tooltip" }
 //	 	    	{ type : "scroll" },
@@ -150,7 +150,7 @@
 		params.pageIndex = cuurPage;
 		params.chartDate = staticAccessDt;
 		$.ajax({
-			url: "${basePath}/userstats/r/m/selectUserStatisticsAjax.do",
+			url: "${basePath}/userstats/r/m/selectMemberStatsAjax.do",
 			data: params,
 			type: 'POST',
 			dataType: 'html',
@@ -194,7 +194,7 @@
 			$("#startDate").focus();
 			return;
 		}
-		location.href="${basePath}/userstats/r/m/selectuserStatistics.do?startDate="+sDats+"&endDate="+eDats;
+		location.href="${basePath}/memstats/r/m/selectUserInsertChart.do?startDate="+sDats+"&endDate="+eDats;
 	};
 </script>
 </body>

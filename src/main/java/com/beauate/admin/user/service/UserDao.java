@@ -253,7 +253,6 @@ public interface UserDao {
 	 *	----------- ------------------- ---------------------------------------
 	 *	2019. 6. 22  뷰아떼1			                    최초 작성 
 	 *	-----------------------------------------------------------------------
-	 * 
 	 * @param userStatsVO
 	 * @return
 	 * @throws Exception
@@ -280,4 +279,24 @@ public interface UserDao {
 	 * @throws Exception
 	 */ 
 	public UserVO selectUserDetail(UserVO userVO) throws Exception;
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 회원가입 통계 차트
+	 * 2. 처리내용 :  회원가입 통계 차트
+	 * </pre>
+	 * @Method Name : selectUserInsertChart
+	 * @date : 2019. 6. 22.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일			작성자					변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 6. 22  뷰아떼1			                    최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * @param userStatsVO
+	 * @return
+	 * @throws Exception
+	 */ 
+	List<Map<String, Object>> selectUserInsertChart(UserStatsVO userStatsVO) throws Exception;
 }

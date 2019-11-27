@@ -1,7 +1,6 @@
 package com.beauate.admin.user.service;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import com.beauate.common.service.CommDefaultVO;
 
@@ -13,7 +12,7 @@ public class UserStatsVO extends CommDefaultVO implements Serializable{
 	/** 사용자 로그IP */
 	private String accessIp;
 	/** 사용자 로그날짜 */
-	private Date accessDt;
+	private String accessDt;
 	/** 사용자 통계 시작일 */
 	public String startDate;
 	/** 사용자 통계 종료일 */
@@ -22,13 +21,19 @@ public class UserStatsVO extends CommDefaultVO implements Serializable{
 	private String usrNm;
 	/** 사용자 통계 로우넘버 */
 	private String rNum;
-	/** 사용자 통계 선택한 차트날짜 */
+	/** 사용자 차트날짜 */
 	private String chartDate;
 	
-	public Date getAccessDt() {
+	public String getChartDate() {
+		return chartDate;
+	}
+	public void setChartDate(String chartDate) {
+		this.chartDate = chartDate;
+	}
+	public String getAccessDt() {
 		return accessDt;
 	}
-	public void setAccessDt(Date accessDt) {
+	public void setAccessDt(String accessDt) {
 		this.accessDt = accessDt;
 	}
 	public String getStartDate() {
@@ -66,11 +71,5 @@ public class UserStatsVO extends CommDefaultVO implements Serializable{
 	}
 	public void setrNum(String rNum) {
 		this.rNum = rNum;
-	}
-	public String getChartDate() {
-		return chartDate;
-	}
-	public void setChartDate(String chartDate) {
-		this.chartDate = chartDate;
 	}
 }

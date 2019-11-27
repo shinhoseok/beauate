@@ -1,5 +1,7 @@
 package com.beauate.admin.user.web;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
@@ -37,7 +39,6 @@ public class UserManageController {
 	 *	----------- ------------------- ---------------------------------------
 	 *	2019. 5. 17.		뷰아떼1				최초 작성 
 	 *	-----------------------------------------------------------------------
-	 * 
 	 * @param userVO
 	 * @param model
 	 * @return
@@ -341,5 +342,87 @@ public class UserManageController {
 		userManageService.selectUserStatisticsList(userStatsVO, model);
 		
 		return "/admin/user/userStatistics";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 사용자 통계 게시판 ajax
+	 * 2. 처리내용 : 사용자 통계 게시판 ajax
+	 * </pre>
+	 * @Method Name : selectUserStatisticsAjax
+	 * @date : 2019. 6. 22.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 6. 22.		뷰아떼1				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param userVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/userstats/r/m/selectUserStatisticsAjax.do")
+	public String selectUserStatisticsAjax(@ModelAttribute("userStatsVO") UserStatsVO userStatsVO ,ModelMap model) throws Exception {
+		Map<String, Object> rsltMap = userManageService.selectUserStatisticsAjax(userStatsVO);
+		model.addAttribute("rslt", rsltMap);
+		return "/admin/user/userStatisticsAjax";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 회원가입 통계
+	 * 2. 처리내용 : 회원가입 통계를 조회한다.
+	 * </pre>
+	 * @Method Name : selectuserStatistics
+	 * @date : 2019. 6. 22.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 6. 22.		뷰아떼1				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param userVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/memstats/r/m/selectUserInsertChart.do")
+	public String selectUserInsertChart(@ModelAttribute("userStatsVO") UserStatsVO userStatsVO ,ModelMap model) throws Exception {
+		
+		userManageService.selectUserInsertChart(userStatsVO, model);
+		
+		return "/admin/user/memberStatsChart";
+	}
+	
+	/**
+	 * <pre>
+	 * 1. 개요 : 회원가입 통계 게시판 ajax
+	 * 2. 처리내용 : 회원가입 통계 게시판 ajax
+	 * </pre>
+	 * @Method Name : selectMemberStatsAjax
+	 * @date : 2019. 6. 22.
+	 * @author : 뷰아떼1
+	 * @history : 
+	 *	-----------------------------------------------------------------------
+	 *	변경일				작성자						변경내용  
+	 *	----------- ------------------- ---------------------------------------
+	 *	2019. 6. 22.		뷰아떼1				최초 작성 
+	 *	-----------------------------------------------------------------------
+	 * 
+	 * @param userVO
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/userstats/r/m/selectMemberStatsAjax.do")
+	public String selectMemberStatsAjax(@ModelAttribute("userVO") UserVO userVO,ModelMap model) throws Exception {
+		Map<String, Object> rsltMap = userManageService.selectMemberStatsAjax(userVO);
+		model.addAttribute("rslt", rsltMap);
+		return "/admin/user/memberChartAjax";
 	}
 }
