@@ -87,13 +87,10 @@
 											<div class="swiper-slide">
 												<a href="#">
 													<div class="mentor-link">
-														<p class="txt-name">이산 원장님</p>
-														<p class="txt-msg01">컷트도 과학이다.</p>
-														<p class="txt-msg02">포토로 컷트를 분석하는 법을 배워보세요.</p>
 													</div>
 												</a>
 											</div>
-											<div class="swiper-slide">
+											<!--<div class="swiper-slide">
 												<a href="#">
 													<div class="mentor-link">
 														<p class="txt-name">이산 원장님2222</p>
@@ -101,7 +98,7 @@
 														<p class="txt-msg02">포토로 컷트를 분석하는 법을 배워보세요.</p>
 													</div>
 												</a>
-											</div>
+											</div>-->
 										</div>
 										<div class="swiper-info">
 											<div class="swiper-button-prev"></div>
@@ -123,7 +120,7 @@
 									</script>
 								</div>
 								<div class="link-mentor">
-									<a href="#"> <span class="txt01">멘토지원</span> <span class="txt02">세미나 등록을 원하시면</span>
+									<a href="#"> <!--<span class="txt01">멘토지원</span> <span class="txt02">세미나 등록을 원하시면</span>-->
 									</a>
 								</div>
 							</div>

@@ -57,32 +57,32 @@
 						신규클래스<span class="label_new">N</span>
 					</p>
 					<ul>
-						<li><a href="#"> <img src="${imgPath}/list_main_new_01.jpg" />
+						<li><a href="${basePath}/offclass/a/t/selectOffClassDetail.do?classId=CLS-000027"> <img src="${imgPath}/list_main_new_01.jpg" />
 							<div>데모모델 실습이 포함된 두피문신 원데이 클래스</div>
 							<div class="new_sub">정수리기법과 헤어라인 구렛나루 기법을 한번에!</div>
 							<div class="new_mentor">채우다smp 한정욱대표님</div>
 					</a></li>
-					<li><a href="#"> <img src="${imgPath}/list_main_new_02.jpg" />
+					<li><a href="${basePath}/offclass/a/t/selectOffClassDetail.do?classId=CLS-000032"> <img src="${imgPath}/list_main_new_02.jpg" />
 							<div>마스터 책임제 피부자격증 속성반</div>
 							<div class="new_sub">정부지원 전액면제! (60만원상당) 대표원장 속성반</div>
 							<div class="new_mentor">코코랄하우스</div>
 					</a></li>
-					<li><a href="#"> <img src="${imgPath}/list_main_new_03.jpg" />
+					<li><a href="${basePath}/offclass/a/t/selectOffClassDetail.do?classId=CLS-000000"> <img src="${imgPath}/list_main_new_03.jpg" />
 							<div>2020년 달라진 자격증 완벽대비 헤어자격증 취득반</div>
 							<div class="new_sub">영국 사순스쿨쉽 정식 교육기관</div>
 							<div class="new_mentor">마로아카데미</div>
 					</a></li>
-					<li><a href="#"> <img src="${imgPath}/list_main_new_04.jpg" />
+					<li><a href="${basePath}/offclass/a/t/selectOffClassDetail.do?classId=CLS-000028"> <img src="${imgPath}/list_main_new_04.jpg" />
 							<div>한 달만에 합격! 메이크업 자격증 속성반</div>
 							<div class="new_sub">탄탄한 커리큘럼으로 만들어낸 임뷰티 클래스</div>
 							<div class="new_mentor">임뷰티 아카데미</div>
 					</a></li>
-					<li><a href="#"> <img src="${imgPath}/list_main_new_05.jpg" />
+					<li><a href="${basePath}/offclass/a/t/selectOffClassDetail.do?classId=CLS-000025"> <img src="${imgPath}/list_main_new_05.jpg" />
 							<div>메이크업 미용국가 자격증반</div>
 							<div class="new_sub">28년 역사를 가진 창원크리스챤쇼보 뷰티아카데미</div>
 							<div class="new_mentor">크리스챤쇼보 뷰티아카데미</div>
 					</a></li>
-					<li><a href="#"> <img src="${imgPath}/list_main_new_06.jpg" />
+					<li><a href="${basePath}/offclass/a/t/selectOffClassDetail.do?classId=CLS-000030"> <img src="${imgPath}/list_main_new_06.jpg" />
 							<div>더블락증모 원데이클래스</div>
 							<div class="new_sub">소량 글루사용 But 유지력은 약 6주, 진하고 풍성한 속눈썹 연출</div>
 							<div class="new_mentor">슈엘뷰티 아카데미</div>
@@ -139,15 +139,13 @@
 									<div class="swiper-container">
 										<div class="swiper-wrapper">
 											<div class="swiper-slide">
-												<a href="#">
+												<a href="${basePath }/mento/a/n/mentoApply.do">
 													<div class="mentor-link">
-														<p class="txt-name">이산 원장님</p>
-														<p class="txt-msg01">컷트도 과학이다.</p>
-														<p class="txt-msg02">포토로 컷트를 분석하는 법을 배워보세요.</p>
+														<img src="${imgPath}/main_spe_1.jpg"/>
 													</div>
 												</a>
 											</div>
-											<div class="swiper-slide">
+											<!--<div class="swiper-slide">
 												<a href="#">
 													<div class="mentor-link">
 														<p class="txt-name">이산 원장님2222</p>
@@ -155,7 +153,7 @@
 														<p class="txt-msg02">포토로 컷트를 분석하는 법을 배워보세요.</p>
 													</div>
 												</a>
-											</div>
+											</div>-->
 										</div>
 										<div class="swiper-info">
 											<div class="swiper-button-prev"></div>
@@ -179,7 +177,7 @@
 									</script>
 								</div>
 								<div class="link-mentor">
-									<a href="#"> <span class="txt01">멘토지원</span> <span class="txt02">세미나 등록을 원하시면</span>
+									<a href="https://www.instagram.com/beauate/" target="_black"><img src="${imgPath}/spe_bns_1.jpg"/><!--<span class="txt01">멘토지원</span> <span class="txt02">세미나 등록을 원하시면</span>-->
 									</a>
 								</div>
 							</div>
@@ -290,15 +288,13 @@
 									<div class="swiper-container">
 										<div class="swiper-wrapper">
 											<div class="swiper-slide">
-												<a href="#">
+												<a href="${basePath}/offclass/a/t/selectOffClassDetail.do?classId=CLS-000032">
 													<div class="mentor-link">
-														<p class="txt-name">이산 원장님</p>
-														<p class="txt-msg01">컷트도 과학이다.</p>
-														<p class="txt-msg02">포토로 컷트를 분석하는 법을 배워보세요.</p>
+														<img src="${imgPath}/main_spe_2.jpg"/>
 													</div>
 												</a>
 											</div>
-											<div class="swiper-slide">
+											<!--<div class="swiper-slide">
 												<a href="#">
 													<div class="mentor-link">
 														<p class="txt-name">이산 원장님2222</p>
@@ -306,7 +302,7 @@
 														<p class="txt-msg02">포토로 컷트를 분석하는 법을 배워보세요.</p>
 													</div>
 												</a>
-											</div>
+											</div>-->
 										</div>
 										<div class="swiper-info">
 											<div class="swiper-button-prev"></div>
@@ -330,7 +326,7 @@
 									</script>
 								</div>
 								<div class="link-mentor">
-									<a href="#"> <span class="txt01">멘토지원</span> <span class="txt02">세미나 등록을 원하시면</span>
+									<a href="${basePath}/intro/a/n/intro.do"><img src="${imgPath}/spe_bns_2.jpg"/> <!--<span class="txt01">멘토지원</span> <span class="txt02">세미나 등록을 원하시면</span>-->
 									</a>
 								</div>
 							</div>

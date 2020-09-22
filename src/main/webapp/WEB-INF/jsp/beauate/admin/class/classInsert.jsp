@@ -19,6 +19,17 @@
 <script type="text/javascript" src="${scriptPath}/egovframework/EgovMultiFile.js" ></script>
 <script type="text/javascript" src="${scriptPath}/validation/validation.js"></script>
 <script type="text/javascript" src="${scriptPath}/common.js"></script>
+<style>
+
+.drag-over { background-color: #ff0; }
+
+.thumb { width:200px; padding:5px; float:left; }
+
+.thumb > img { width:100%; }
+
+.thumb > .close { position:absolute; background-color:red; cursor:pointer; }
+
+</style>
 </head>
 <body>
 	<!-- header Start -->
@@ -39,20 +50,6 @@
 						>&nbsp;<c:out value="${list.menuName }"></c:out>
 					</c:forEach>
 				</p>
-				<div class="selectBox">
-					<span class="search_bullet">시작/종료일자</span> 
-					<span class="contents_search_bar"></span>
-					<div class="calendar_wrap">
-						<label for="" class="blind">시작/종료일자</label> 
-						<input type="text" path="startDate" id="startDate"/> ~ 
-						<input type="text" path="endDate" id="endDate"/>
-					</div>
-					<div class="T_btnLayer cn">
-						<button type="button" class="btn-type1" onclick="javascript:fn_parentSearch();">
-							<img src="${imagePath }/ico_search.png" alt="조회 버튼" /> 조회
-						</button>
-					</div>
-				</div>
 				<h4 class="contentTitle_h4">클래스 정보</h4>
 				<form:form commandName="classVO" name="classVO" id="classVO" method="post" enctype="multipart/form-data" action="${basePath}/classmng/w/m/insertOffClassProc.do" >
 					<div class="tableLayer">
@@ -193,7 +190,7 @@
 									<th colspan="2"><span class="thstar"></span>
 										이미지 등록 (상세슬라이드1~5장, 모바일상세1장, 클래스상세1장, 메인이미지 크기 작은 순서로 4장)
 									</th>
-									<td colspan="4">
+									<td colspan="2">
 										<input class="hideFile" name="file_1" id="egovComFileUploader" type="file" title="첨부파일입력" />
 										<span id="atchFileNot" style="margin-left: 5px; display: none;">(* 첨부파일을 더 이상 등록 할 수 없습니다.)</span>
 										<div class="download_list" id="egovComFileList"></div>
@@ -201,6 +198,15 @@
 								</tr>
 							</tbody>
 						</table>
+						  <div id="drop" style="border:1px solid black; width:800px; height:300px; padding:3px">
+
+    여기로 drag & drop
+
+    <div id="thumbnails">
+
+    </div>
+
+  </div>
 					</div>
 				</form:form>
 				<div class="T_btnLayer fr">
@@ -296,6 +302,119 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 	
 // 	document.userVO.zip_no.value = zipNo;
 }
+
+var uploadFiles = [];
+
+var $drop = $("#drop");
+
+
+$drop.on("dragenter", function(e) {  //드래그 요소가 들어왔을떄
+
+  $(this).addClass('drag-over');
+
+}).on("dragleave", function(e) {  //드래그 요소가 나갔을때
+
+  $(this).removeClass('drag-over');
+
+}).on("dragover", function(e) {
+
+  e.stopPropagation();
+
+  e.preventDefault();
+
+}).on('drop', function(e) {  //드래그한 항목을 떨어뜨렸을때
+
+  e.preventDefault();
+
+  $(this).removeClass('drag-over');
+
+
+  var files = e.originalEvent.dataTransfer.files;  //드래그&드랍 항목
+
+
+  for(var i = 0; i < files.length; i++) {
+
+    var file = files[i];
+
+    var size = uploadFiles.push(file);  //업로드 목록에 추가
+
+    preview(file, size - 1);  //미리보기 만들기
+
+  }  
+
+});
+
+
+function preview(file, idx) {
+
+  var reader = new FileReader();
+
+  reader.onload = (function(f, idx) {
+
+    return function(e) {
+
+      var div = '<div class="thumb"> \<div class="close" data-idx="' + idx + '">X</div> \<img src="' + e.target.result + '" title="' + escape(f.name) + '"/> \</div>';
+
+      $("#thumbnails").append(div);
+
+    };
+
+  })(file, idx);
+
+  reader.readAsDataURL(file);
+
+}
+
+
+$("#btnSubmit").on("click", function() {
+
+  var formData = new FormData();
+
+  $.each(uploadFiles, function(i, file) {
+
+    if(file.upload != 'disable')  //삭제하지 않은 이미지만 업로드 항목으로 추가
+
+      formData.append('upload-file', file, file.name);
+
+  });
+
+
+  $.ajax({
+
+    url: '/api/etc/file/upload',
+
+    data : formData,
+
+    type : 'post',
+
+    contentType : false,
+
+    processData: false,
+
+    success : function(ret) {
+
+      alert("완료");
+
+    }
+
+  });
+
+});
+
+
+$("#thumbnails").on("click", ".close", function(e) {
+
+  var $target = $(e.target);
+
+  var idx = $target.attr('data-idx');
+
+  uploadFiles[idx].upload = 'disable';  //삭제된 항목은 업로드하지 않기 위해 플래그 생성
+
+
+  $target.parent().remove();  //프리뷰 삭제
+
+});
+
 </script>
 </body>
 </html>
